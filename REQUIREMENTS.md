@@ -21,7 +21,7 @@ Xây dựng nền tảng website đặt lịch dịch vụ salon tóc trực tuy
 | :--- | :--- | :--- | :--- |
 | **Khách chưa đăng nhập** | Xem thông tin dịch vụ, bảng giá salon | - Xem danh sách dịch vụ, thợ cắt tóc.<br>- Tìm kiếm khung giờ còn trống.<br>- Điền thông tin cá nhân cơ bản để đặt lịch nhanh. | - Không xem được lịch sử hẹn của người khác.<br>- Không được sửa đổi thông tin hệ thống. |
 | **Khách hàng có tài khoản** | Đặt lịch, theo dõi trạng thái và quản lý lịch cá nhân | - Toàn bộ quyền của khách chưa đăng nhập.<br>- Đặt lịch hẹn kèm lưu thông tin cá nhân.<br>- Xem, chỉnh sửa hoặc hủy lịch hẹn cá nhân (trước giờ hẹn). | - Tuyệt đối không được xem hoặc chỉnh sửa lịch hẹn của khách hàng khác.<br>- Không có quyền truy cập trang quản trị. |
-| **Nhân viên Salon / Stylist ** | Tiếp nhận và thực hiện lịch dịch vụ | - Xem danh sách ca làm việc và danh sách khách hẹn theo tên mình.<br>- Cập nhật trạng thái lịch hẹn ("Đang phục vụ", "Hoàn thành"). | - Không được xóa dịch vụ hoặc can thiệp doanh thu toàn hệ thống. |
+| **Nhân viên Salon / Stylist** | Tiếp nhận và thực hiện lịch dịch vụ | - Xem danh sách ca làm việc và danh sách khách hẹn theo tên mình.<br>- Cập nhật trạng thái lịch hẹn ("Đang phục vụ", "Hoàn thành"). | - Không được xóa dịch vụ hoặc can thiệp doanh thu toàn hệ thống. |
 | **Quản trị viên** | Điều phối toàn bộ hoạt động của hệ thống salon | - Toàn quyền thêm, sửa, xóa dịch vụ, giá tiền, thời lượng.<br>- Quản lý lịch biểu của thợ, phê duyệt hoặc điều chuyển lịch hẹn.<br>- Quản lý tài khoản người dùng và xem thống kê lịch đặt. | - Không để lộ thông tin bảo mật/mật khẩu người dùng. |
 
 ## 4. Yêu cầu chức năng
