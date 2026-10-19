@@ -18,7 +18,7 @@
 - **Giai đoạn 1: Khảo sát và xác định yêu cầu (Tuần 1)**
   - *Mục tiêu:* Thống nhất đề tài Website đặt lịch cắt tóc, hoàn thiện bộ 7 file tài liệu Markdown khởi tạo dự án, phân tích đối thủ & AI, thiết lập GitHub Issues.
   - *Kết quả cần đạt:* 01 link GitHub Public đầy đủ 7 file tài liệu và khung Issues phân công.
-  - *Người phụ trách chính:* Cả nhóm (Lead: Ngân, My).
+  - *Người phụ trách chính:* Cả nhóm (Lead: Ngân, Duyên).
 
 - **Giai đoạn 2: Thiết kế giao diện UI/UX (Tuần 2)**
   - *Mục tiêu:* Thiết kế wireframe và prototype Figma hoàn chỉnh cho các luồng: Trang chủ, Danh mục thợ & Dịch vụ cắt tóc, Lịch đặt chỗ, Form xác nhận và Dashboard quản trị salon.
