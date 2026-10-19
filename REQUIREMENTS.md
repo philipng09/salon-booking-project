@@ -15,11 +15,11 @@ Xây dựng nền tảng thương mại điện tử hoạt động theo mô hì
 - **Quản trị phân cấp (Chủ salon):** Chủ salon quản lý thông tin tiệm, menu dịch vụ, đơn giá, danh sách thợ làm tóc, thiết lập ca trực/ngày nghỉ của thợ và cập nhật trạng thái đơn hẹn của salon mình.
 - **Quản trị hệ thống (Admin sàn):** Phê duyệt, quản lý danh sách salon đối tác hoạt động trên nền tảng và quản trị tài khoản người dùng.
 - **Thanh toán:** Áp dụng phương thức thanh toán truyền thống trực tiếp bằng tiền mặt hoặc chuyển khoản tại salon sau khi hoàn tất dịch vụ.
+- Thuật toán so sánh tự động đa tiêu chí nâng cao, tính toán khoảng cách địa lý theo thời gian thực (Google Maps API).
+- Hệ thống gửi đánh giá, chấm điểm sao và đăng ảnh feedback thực tế của khách hàng sau khi làm tóc.
 
 ### Ngoài phạm vi (Phát triển ở các giai đoạn tiếp theo)
 - Tích hợp cổng thanh toán trực tuyến tự động qua bên thứ ba (VNPay, MoMo, ZaloPay, Thẻ quốc tế).
-- Thuật toán so sánh tự động đa tiêu chí nâng cao, tính toán khoảng cách địa lý theo thời gian thực (Google Maps API).
-- Hệ thống gửi đánh giá, chấm điểm sao và đăng ảnh feedback thực tế của khách hàng sau khi làm tóc.
 - Trợ lý ảo Chatbot AI tư vấn kiểu tóc theo khuôn mặt.
 - *Lưu ý nghiệp vụ:* Hoàn toàn không áp dụng nghiệp vụ giao nhận hàng (Shipping/Vận chuyển) do đặc thù 100% là dịch vụ tại chỗ.
 
