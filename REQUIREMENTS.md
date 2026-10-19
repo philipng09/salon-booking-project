@@ -2,7 +2,7 @@
 
 ## 1. Mục tiêu dự án
 Xây dựng nền tảng thương mại điện tử hoạt động theo mô hình trung gian (Marketplace) kết nối trực tiếp người dùng có nhu cầu chăm sóc tóc với hệ thống các salon, barbershop từ bình dân đến chuyên nghiệp tại khu vực Thành phố Hồ Chí Minh.
-- **Giá trị mang lại cho khách hàng:** Khách hàng (đặc biệt là học sinh, sinh viên và nhân viên văn phòng từ 18-35 tuổi) có một không gian số tập trung minh bạch để dễ dàng tìm kiếm salon theo khu vực, tra cứu bảng giá, đối chiếu phong cách, xem lịch trống và chủ động đặt lịch hẹn kèm thợ tạo mẫu tóc mong muốn; chấm dứt tình trạng phải nhắn tin/gọi điện thủ công và chờ đợi phản hồi.
+- **Giá trị mang lại cho khách hàng:** Khách hàng (đặc biệt là học sinh, sinh viên và nhân viên văn phòng từ 16-40 tuổi) có một không gian số tập trung minh bạch để dễ dàng tìm kiếm salon theo khu vực, tra cứu bảng giá, đối chiếu phong cách, xem lịch trống và chủ động đặt lịch hẹn kèm thợ tạo mẫu tóc mong muốn; chấm dứt tình trạng phải nhắn tin/gọi điện thủ công và chờ đợi phản hồi.
 - **Giá trị mang lại cho đối tác (Salon vừa và nhỏ):** Cung cấp công cụ số hóa quy trình quản lý lịch trình, tự động khóa khung giờ đã có khách nhằm triệt tiêu hoàn toàn tình trạng trùng lặp lịch thợ, tối ưu hóa công suất các ngày trong tuần và tiếp cận tệp khách hàng trực tuyến tiềm năng mà không phải tốn chi phí xây dựng website riêng.
 
 ## 2. Phạm vi
