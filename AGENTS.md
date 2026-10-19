@@ -3,7 +3,7 @@
 ## 1. Project context
 Đây là đồ án sinh viên học phần "Phát triển ứng dụng WEB/TMĐT" (UEH).
 Sản phẩm: website đặt lịch dịch vụ tóc (cắt, uốn, nhuộm, gội dưỡng sinh, phục hồi) tại TP.HCM.
-Khách hàng mục tiêu: người 18–35 tuổi tại TP.HCM; chủ/nhân viên salon quản lý lịch hẹn.
+Khách hàng mục tiêu: người 16–340 tuổi tại TP.HCM; chủ/nhân viên salon quản lý lịch hẹn.
 Nhóm 7 thành viên, trình độ lập trình cơ bản.
 Công nghệ dự kiến: HTML/CSS/JavaScript + Bootstrap 5, Node.js + Express, MySQL.
 
