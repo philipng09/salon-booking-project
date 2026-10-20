@@ -1,144 +1,217 @@
-# Quy trình nghiệp vụ đặt lịch SalonBook
+# QUY TRÌNH NGHIỆP VỤ SALONBOOK (BUSINESS WORKFLOW)
 
 ## 1. Mục tiêu, phạm vi và căn cứ
 
-### 1.1. Bối cảnh nghiệp vụ
+### 1.1. Bối cảnh và mục tiêu nghiệp vụ
 
-SalonBook là nền tảng trung gian (marketplace) kết nối khách hàng với **nhiều salon/barbershop tại Thành phố Hồ Chí Minh**, không phải website chỉ phục vụ một salon. Các dịch vụ dự kiến gồm cắt tóc, uốn, nhuộm, gội đầu dưỡng sinh và phục hồi tóc.
+SalonBook là nền tảng trung gian giúp khách hàng tìm kiếm, tìm hiểu và đặt lịch dịch vụ chăm sóc tóc tại **nhiều salon/barbershop** ở TP.HCM. Khách hàng có thể lọc salon theo khu vực, loại hình và nhóm chuyên môn; xem bảng giá, stylist và đánh giá trước khi đặt lịch. Chủ salon quản lý dịch vụ, lịch làm của thợ và tiến trình lịch hẹn **chỉ trong phạm vi salon được phân quyền**. Admin nền tảng phê duyệt/khóa salon, quản lý tài khoản và kiểm duyệt đánh giá.
 
-Bản mô tả đề tài nêu các chức năng cốt lõi của phiên bản đầu tiên:
+Quy trình hướng đến việc giảm thao tác đặt lịch qua điện thoại/tin nhắn, hạn chế trùng lịch stylist và giúp khách chủ động theo dõi lịch sử, hủy lịch đúng quy định.
 
--   Khách hàng xem danh sách salon, tìm kiếm/lọc theo khu vực.
--   Khách hàng xem thông tin dịch vụ, đặt lịch và quản lý lịch sử đặt chỗ cá nhân.
--   Quản trị viên và chủ salon quản lý danh mục dịch vụ, cập nhật giá, theo dõi và xử lý trạng thái lịch hẹn trong ngày.
--   Thanh toán trực tuyến qua cổng điện tử là chức năng nâng cao, không đưa vào workflow MVP hiện tại.
+### 1.2. Phạm vi MVP
 
-Cùng một số chức năng phụ khác như so sánh salon theo giá, phong cách và khoảng cách, cùng hình ảnh thực tế/đánh giá.
-
-### 1.3. Những điểm cần lưu ý trước khi triển khai
-
-| Nội dung trong mô tả đề tài | Tình trạng trong F01--F07 hiện có | Cách xử lý trong tài liệu này |
+| Nhóm nghiệp vụ | F-code | Phạm vi được áp dụng |
 |---|---|---|
-| Marketplace có nhiều salon | F01--F07 chưa thể hiện rõ mã salon trong luồng đặt lịch | Đưa bước chọn salon vào workflow; đề nghị TV3 xác nhận trường `salon_id` và phạm vi dữ liệu |
-| Tìm kiếm/lọc salon theo khu vực; so sánh giá, phong cách, khoảng cách | Chưa có F-code riêng thể hiện đầy đủ | Ghi là khoảng trống cần đối chiếu, không tự gán vào F01 nếu chưa thống nhất |
-| Chủ salon quản lý dịch vụ, giá và lịch hẹn của salon mình | F05/F06 hiện mô tả quyền admin | Đề nghị xác định vai trò chủ salon và giới hạn dữ liệu theo salon |
-| Lịch sử đặt chỗ cá nhân thuộc chức năng MVP | F07 ghi đăng nhập/lịch sử là tùy chọn hoặc giai đoạn sau; F04 yêu cầu tài khoản để tra cứu/hủy | Đánh dấu mâu thuẫn cần TV3 xác nhận |
-| Hình ảnh và đánh giá salon | Được nhắc trong vấn đề kinh doanh/giá trị nền tảng, nhưng không nêu rõ trong danh sách MVP | Chỉ đưa vào MVP sau khi nhóm xác nhận |
-| Thanh toán trực tuyến | Mô tả đề tài xếp vào chức năng nâng cao | Không đưa vào workflow bắt buộc hiện tại |
+| Khám phá salon | F01, F02 | Tìm kiếm/lọc đa tiêu chí; xem thông tin salon, dịch vụ, giá, stylist, không gian tiệm và đánh giá. |
+| Tài khoản và phân quyền | F06 | Đăng ký/đăng nhập; phân biệt Guest, Customer, Salon Owner và Platform Admin. **Chỉ Customer đã đăng nhập được đặt lịch.** |
+| Đặt lịch | F03, liên quan F08 | Chọn salon, dịch vụ, stylist, ngày, giờ còn trống; kiểm tra khả dụng và lưu booking có mã định danh. |
+| Lịch cá nhân và hủy/đổi lịch | F04 | Xem lịch sử của chính mình; hủy trước giờ hẹn ít nhất 2 giờ. Đổi lịch bằng cách hủy lịch cũ rồi đặt lịch mới, **không sửa trực tiếp booking**. |
+| Đánh giá | F05 | Customer có booking đã **Hoàn thành** được chấm 1–5 sao và nhận xét; Guest được xem nhưng không được gửi đánh giá. |
+| Quản lý salon và lịch làm | F07, F08 | Chủ salon cập nhật thông tin/dịch vụ/giá; quản lý stylist, ca trực và ngày nghỉ của salon mình. |
+| Điều phối lịch | F09 | Chủ salon lọc lịch theo ngày/trạng thái, xác nhận và cập nhật trạng thái theo luồng đã quy định. |
+| Quản trị nền tảng | F10 | Admin phê duyệt/khóa salon, quản lý tài khoản và kiểm duyệt đánh giá vi phạm. |
+
+**Ngoài phạm vi MVP:** Chatbot AI, chương trình tích điểm/voucher và tích hợp thanh toán trực tuyến. Khách sử dụng dịch vụ tại salon, sau đó thanh toán trực tiếp tại quầy bằng tiền mặt hoặc chuyển khoản. Không có nghiệp vụ giao hàng/vận chuyển.
+
+### 1.3. Quy tắc nền tảng áp dụng thống nhất
+
+1. **Marketplace nhiều salon:** Mỗi booking phải gắn đúng `salon_id`; dịch vụ và stylist phải thuộc salon đang chọn. Dữ liệu không được lẫn giữa các salon.
+2. **Quyền đặt lịch:** Guest được xem/lọc salon, xem dịch vụ, đánh giá và giờ trống nhưng **không được đặt lịch**. Người dùng phải đăng ký/đăng nhập với vai trò Customer trước khi xác nhận booking.
+3. **Chống trùng lịch:** Thời lượng dịch vụ, lịch làm/ca trực, ngày nghỉ và các booking đã chiếm chỗ được kiểm tra tại backend. Không dựa riêng vào danh sách giờ trống hiển thị trên giao diện.
+4. **Chính sách hủy:** Customer chỉ hủy booking của mình khi còn **ít nhất 2 giờ** trước giờ hẹn; hủy thành công giải phóng khung giờ bị chiếm. Không chỉnh sửa trực tiếp lịch đã tạo.
+5. **Quyền đánh giá:** Chỉ Customer sở hữu lịch đã ở trạng thái **Hoàn thành** mới được gửi đánh giá 1–5 sao và nhận xét; điểm trung bình được cập nhật/hiển thị trên nền tảng.
+6. **Quyền salon:** Salon Owner chỉ được đọc/sửa dữ liệu thuộc `salon_id` được cấp; Platform Admin quản trị ở cấp nền tảng, không thay chủ salon tự ý phân ca hằng ngày.
+7. **Quy ước trạng thái:** Dùng thống nhất **Chờ xác nhận → Đã xác nhận → Đang phục vụ → Hoàn thành**, cùng trạng thái kết thúc **Hủy**, theo F09.
+8. **Quy định đến hẹn:** Theo giả định trong `REQUIREMENTS.md`, khách nên có mặt trước 10 phút; nếu đến muộn quá 15 phút mà không liên hệ, salon có quyền từ chối phục vụ hoặc hủy lịch. Đây **không phải** điều kiện từ chối tạo booking ban đầu.
 
 ## 2. Tác nhân và trách nhiệm
 
-| Tác nhân | Trách nhiệm trong workflow | Ghi chú về phạm vi |
+| Tác nhân | Trách nhiệm / quyền trong quy trình | Giới hạn |
 |---|---|---|
-| Khách chưa đăng nhập | Xem danh sách salon, tìm/lọc theo khu vực, xem dịch vụ/giá, chọn salon, dịch vụ, thợ và giờ, gửi yêu cầu đặt lịch | F03 hiện cho phép gửi booking bằng họ tên và số điện thoại; quyền tra cứu/hủy cần đối chiếu F04 |
-| Khách hàng có tài khoản | Thực hiện các thao tác của khách; xem lịch sử và tra cứu/hủy lịch của chính mình theo quyền được duyệt | Mô tả đề tài coi lịch sử cá nhân là MVP nhưng F07 hiện ghi tùy chọn/giai đoạn sau |
-| Chủ salon / quản lý salon | Quản lý danh mục dịch vụ, giá và theo dõi/xử lý lịch hẹn thuộc salon của mình | Vai trò này có trong mô tả đề tài nhưng chưa được F05/F06 phân quyền rõ |
-| Stylist / thợ | Thực hiện dịch vụ và cập nhật trạng thái lịch theo quyền được thống nhất | Các nhãn trạng thái dành cho stylist cần đồng bộ với F06 |
-| Quản trị viên nền tảng | Quản lý hoạt động theo phạm vi được phân quyền; hỗ trợ quản lý dịch vụ/lịch hẹn nếu yêu cầu được duyệt | Cần phân biệt quyền quản trị toàn nền tảng với quyền chủ salon |
-| Frontend / website | Hiển thị salon, dịch vụ, lựa chọn lịch; nhận thông tin khách; hiển thị kết quả hoặc lỗi | Không tự quyết định cuối cùng rằng slot còn trống |
-| Backend / hệ thống đặt lịch | Kiểm tra dữ liệu, liên kết salon--dịch vụ--stylist, thời lượng, lịch làm và xung đột; lưu booking hợp lệ | Phải kiểm tra lại khi khách gửi yêu cầu, không chỉ dựa vào dữ liệu frontend |
+| **Guest (khách vãng lai)** | Dùng F01, F02 để xem/lọc salon, dịch vụ, giá, stylist, slot trống và đánh giá. | Không đặt lịch, không xem lịch sử cá nhân và không gửi đánh giá; cần đăng nhập để sử dụng F03/F04/F05 ở mức Customer. |
+| **Customer (khách hàng đã đăng nhập)** | Đặt lịch F03; xem lịch sử/hủy F04; đánh giá booking hoàn thành F05. | Chỉ thao tác trên booking của chính mình; không sửa trực tiếp lịch; không truy cập phần quản trị. |
+| **Salon Owner / Manager** | Cập nhật thông tin/dịch vụ/giá F07; quản lý danh sách stylist, ca trực/ngày nghỉ F08; tiếp nhận và cập nhật booking F09; xem phản hồi của salon. | Chỉ dữ liệu thuộc salon được cấp quyền; không sửa/xóa đánh giá tùy tiện hoặc quản lý salon khác. |
+| **Platform Admin** | Phê duyệt/kích hoạt/khóa salon; quản lý tài khoản đối tác; kiểm duyệt/gỡ đánh giá vi phạm F10. | Không trực tiếp làm thay việc phân ca chi tiết hằng ngày của chủ salon. |
+| **Stylist** | Là nguồn lực phục vụ được gắn với salon, dịch vụ và lịch làm để tính slot khả dụng. | `REQUIREMENTS.md` chưa định nghĩa tài khoản/quyền đăng nhập riêng của stylist; trong MVP, việc quản lý lịch thuộc Salon Owner. |
+| **Frontend (website)** | Hiển thị dữ liệu theo quyền, thu nhận lựa chọn, gửi yêu cầu, hiển thị kết quả/thông báo lỗi. | Không tự xác nhận cuối cùng rằng slot còn trống hay người dùng có quyền. |
+| **Backend và cơ sở dữ liệu** | Xác thực/phân quyền; đối chiếu salon–dịch vụ–stylist; xác định slot; chống trùng khi lưu; cập nhật trạng thái và lịch sử. | Chỉ ghi dữ liệu khi toàn bộ điều kiện hợp lệ; bảo vệ dữ liệu từng salon và từng khách. |
 
-## 3. 04.1 --- Quy trình đặt lịch chính
+## 3. 04.1 – Quy trình đặt lịch chính
 
-**Luồng tổng quát:** Truy cập website → xem danh sách salon → tìm/lọc theo khu vực → xem và chọn salon → chọn dịch vụ → chọn ngày → xem thợ/khung giờ trống → nhập thông tin và xác nhận → backend kiểm tra lần cuối → lưu lịch và trả mã lịch hẹn → salon xử lý lịch → khách theo dõi lịch sử.
+### 3.1. Điều kiện trước khi khách đặt lịch
 
-| Bước | Người thực hiện | Dữ liệu đầu vào / hành động | Xử lý của hệ thống | Kết quả đầu ra |
+- Salon đã được Platform Admin **phê duyệt và kích hoạt** (F10); salon bị khóa không xuất hiện trong kết quả tìm kiếm F01.
+- Salon Owner đã thiết lập thông tin salon, dịch vụ/giá, danh sách stylist (F07) và lịch làm/ngày nghỉ của stylist (F08).
+- Dịch vụ đang được cho phép đặt; ngày/giờ được chọn phải ở **tương lai** và thuộc lịch làm hợp lệ.
+- Khách có thể khám phá dịch vụ khi chưa đăng nhập; để **gửi yêu cầu đặt lịch**, phải đăng nhập tài khoản Customer (F06).
+
+### 3.2. Luồng tổng quát
+
+**Chuẩn bị dữ liệu (Admin/Salon):** Admin duyệt và kích hoạt salon (F10) → Chủ salon cấu hình thông tin, dịch vụ, stylist (F07) và ca trực/ngày nghỉ (F08).
+
+**Luồng khách hàng:** Truy cập website → tìm/lọc salon (F01) → xem chi tiết salon (F02) → đăng nhập/đăng ký nếu cần (F06) → chọn salon, dịch vụ, stylist, ngày/giờ (F03) → xác nhận → backend kiểm tra cuối cùng và lưu booking → nhận mã lịch ở trạng thái **Chờ xác nhận** → theo dõi/hủy trong lịch sử cá nhân (F04) → đánh giá sau khi **Hoàn thành** (F05).
+
+**Luồng salon:** Nhận lịch **Chờ xác nhận** → **Đã xác nhận** → **Đang phục vụ** → **Hoàn thành** (F09), hoặc chuyển **Hủy** nếu có căn cứ nghiệp vụ hợp lệ.
+
+```mermaid
+flowchart TD
+    A[Khách truy cập SalonBook] --> B[Tìm/lọc salon F01]
+    B --> C[Xem thông tin salon F02]
+    C --> D{Đã đăng nhập Customer?}
+    D -- Chưa --> E[Đăng ký/đăng nhập F06]
+    E --> D
+    D -- Rồi --> F[Chọn salon, dịch vụ, stylist, ngày và giờ F03]
+    F --> G[Kiểm tra thông tin và xác nhận]
+    G --> H{Backend kiểm tra và giữ slot hợp lệ?}
+    H -- Không --> I[Thông báo lỗi; tải lại lựa chọn khả dụng]
+    I --> F
+    H -- Có --> J[Lưu booking và trả mã: Chờ xác nhận]
+    J --> K[Salon tiếp nhận và xác nhận F09]
+    K --> L[Đã xác nhận]
+    L --> M[Đang phục vụ]
+    M --> N[Hoàn thành]
+    N --> O[Customer có thể đánh giá F05]
+    J --> P[Customer xem lịch sử / hủy F04]
+    L --> P
+    P --> Q{Yêu cầu hủy hợp lệ?}
+    Q -- Có --> R[Đổi trạng thái Hủy; mở lại slot]
+    Q -- Không --> S[Giữ nguyên booking; thông báo lý do]
+```
+
+Sơ đồ biểu diễn nhánh hủy của khách ở các trạng thái có thể hủy. Quy tắc hủy chi tiết ở mục 4 và 5; không hàm ý rằng mọi trạng thái đều cho phép hủy.
+
+### 3.3. Bảng quy trình chi tiết
+
+| Bước | Người thực hiện | Dữ liệu đầu vào / hành động | Hệ thống xử lý | Kết quả đầu ra / F-code |
 |---|---|---|---|---|
-| 1. Truy cập và xem danh sách salon | Khách | Mở website | Hiển thị danh sách salon có trong hệ thống và thông tin cơ bản đã được duyệt để công khai | Danh sách salon có thể khám phá |
-| 2. Tìm kiếm/lọc salon | Khách | Chọn khu vực hoặc tiêu chí tìm kiếm được hỗ trợ | Lọc salon theo dữ liệu khu vực đã lưu; nếu không có kết quả thì hiển thị trạng thái rỗng và cho phép đổi tiêu chí | Danh sách salon phù hợp hoặc thông báo không có kết quả |
-| 3. Xem và so sánh salon | Khách | Mở trang chi tiết salon; xem dịch vụ và bảng giá | Hiển thị thông tin salon, dịch vụ, giá và vị trí theo dữ liệu có sẵn. Ảnh/đánh giá chỉ là bắt buộc nếu nhóm xác nhận đưa vào MVP | Khách có đủ thông tin để chọn salon theo phạm vi chức năng đã thống nhất |
-| 4. Chọn salon | Khách | Chọn một salon cụ thể | Lưu ngữ cảnh salon đã chọn cho các bước tiếp theo | `salon_id` hoặc định danh salon tương ứng được xác định cho booking |
-| 5. Chọn dịch vụ | Khách | Chọn dịch vụ tại salon đã chọn | Kiểm tra dịch vụ thuộc salon đang chọn và có thể đặt; lấy giá/thời lượng từ dữ liệu hệ thống | Dịch vụ được chọn, có thời lượng dùng để tính giờ kết thúc |
-| 6. Chọn ngày | Khách | Chọn ngày muốn đến salon | Tiếp nhận ngày yêu cầu và tải dữ liệu lịch làm/khả năng phục vụ liên quan đến salon, dịch vụ và thợ | Ngày được chọn |
-| 7. Xem thợ và giờ trống | Hệ thống, sau đó khách | Hệ thống truy xuất lựa chọn khả dụng; khách chọn stylist và giờ bắt đầu | Theo F02, chỉ hiển thị/cho chọn slot phù hợp. Phải xét thời lượng dịch vụ, lịch hiện có và lịch làm liên quan | Stylist, giờ bắt đầu và giờ kết thúc dự kiến |
-| 8. Nhập thông tin và xác nhận | Khách | Nhập họ tên, số điện thoại; kiểm tra salon, dịch vụ, thợ, ngày giờ rồi gửi yêu cầu theo F03 | Kiểm tra trường bắt buộc, định dạng dữ liệu và tính hợp lệ của lựa chọn. Không yêu cầu tài khoản để gửi booking nếu F07 vẫn là tùy chọn | Yêu cầu hợp lệ hoặc thông báo lỗi để khách sửa |
-| 9. Kiểm tra khả dụng lần cuối | Backend | Nhận yêu cầu đặt lịch | Đọc lại salon, dịch vụ, stylist, thời lượng, lịch làm và lịch hẹn đã lưu; kiểm tra quan hệ giữa các mã và khoảng thời gian có bị xung đột không | Chấp nhận yêu cầu hoặc trả lỗi cụ thể |
-| 10. Lưu lịch hẹn | Backend / cơ sở dữ liệu | Yêu cầu đã vượt qua mọi kiểm tra | Lưu thông tin salon, dịch vụ, stylist, khách, ngày giờ, trạng thái và thời điểm tạo theo mô hình dữ liệu được duyệt | Bản ghi lịch hẹn hợp lệ và mã lịch hẹn |
-| 11. Trả kết quả đặt lịch | Website | Nhận kết quả từ backend | Nếu lưu thành công, hiển thị mã lịch hẹn và trạng thái; nếu thất bại, không hiển thị thông báo thành công | Khách biết lịch đã được ghi nhận hay cần chọn giờ khác |
-| 12. Tiếp nhận và xử lý lịch | Chủ salon/nhân viên/admin có quyền | Xem lịch theo ngày/trạng thái và xử lý lịch thuộc phạm vi được phân quyền | Cập nhật trạng thái theo F06 và quyền đã thống nhất; không tạo lịch trùng cho cùng stylist | Trạng thái mới được lưu |
-| 13. Xem lịch sử / tra cứu / hủy | Khách hàng | Mở lịch sử hoặc chọn lịch cần tra cứu/hủy | Lịch sử cá nhân là chức năng MVP theo mô tả đề tài, nhưng cách truy cập phải được TV3 xác nhận do F07/F04 chưa thống nhất. Nếu áp dụng F04, chỉ chủ lịch đã đăng nhập được tra cứu/hủy và chỉ hủy trước giờ hẹn ít nhất 2 giờ | Hiển thị lịch sử/trạng thái; nếu hủy hợp lệ thì slot được mở lại |
+| **1. Công khai salon hợp lệ** | Platform Admin; hệ thống | Admin phê duyệt/kích hoạt salon đối tác. | Lưu trạng thái salon; salon bị khóa không xuất hiện ở bộ lọc. | Salon đủ điều kiện hiển thị – **F10**. |
+| **2. Chuẩn bị dữ liệu salon** | Salon Owner | Cập nhật thông tin, tag phân loại, menu, giá, stylist, ca trực/ngày nghỉ. | Lưu trong phạm vi `salon_id`; xác lập dữ liệu dùng để tính slot. | Salon/dịch vụ/lịch làm được cấu hình – **F07, F08**. |
+| **3. Tìm kiếm và lọc salon** | Guest hoặc Customer | Chọn quận/khu vực, Nam/Nữ/Unisex, nhóm chuyên môn; có thể kết hợp bộ lọc. | Chỉ trả các salon đủ điều kiện; áp dụng đúng tiêu chí và hiển thị tên, địa chỉ, ảnh đại diện, tag, điểm trung bình. | Danh sách salon phù hợp – **F01**. |
+| **4. Xem chi tiết salon** | Guest hoặc Customer | Mở một salon trong danh sách. | Đọc dữ liệu đúng `salon_id`: thông tin tiệm, menu dịch vụ, giá, stylist, hình ảnh và đánh giá hiển thị. | Trang chi tiết salon – **F02**, tham chiếu **F05**. |
+| **5. Xác thực khi đặt lịch** | Customer/Guest | Chọn thao tác đặt lịch; nếu chưa đăng nhập thì đăng ký/đăng nhập. | Xác thực tài khoản, xác định vai trò; ngăn Guest gửi booking. | Phiên Customer hợp lệ hoặc yêu cầu đăng nhập – **F06**. |
+| **6. Chọn salon, dịch vụ, stylist** | Customer | Chọn `salon_id`, `service_id`, `stylist_id` trên salon đã xem. | Kiểm tra dịch vụ và stylist thuộc salon, dịch vụ đang có hiệu lực; lấy giá/thời lượng từ backend. | Tổ hợp dịch vụ và thợ hợp lệ – **F03**, dữ liệu từ **F02/F07**. |
+| **7. Chọn ngày và giờ** | Customer | Chọn ngày trong tương lai và khung giờ mong muốn. | Tính slot dựa trên thời lượng dịch vụ, ca trực/ngày nghỉ (F08), lịch hẹn hiện hữu; ẩn/vô hiệu slot không hợp lệ. | Giờ bắt đầu/kết thúc dự kiến – **F03, F08**. |
+| **8. Kiểm tra thông tin và xác nhận** | Customer | Kiểm tra salon, dịch vụ, stylist, giá, ngày/giờ; cung cấp/xác nhận họ tên và SĐT liên hệ. | Kiểm tra dữ liệu bắt buộc; SĐT Việt Nam 10 chữ số và dữ liệu nhập an toàn; gửi yêu cầu tới backend. | Yêu cầu đặt lịch gửi đi hoặc lỗi nhập liệu – **F03**, NFR. |
+| **9. Kiểm tra khả dụng cuối cùng** | Backend | Yêu cầu có tài khoản Customer và các ID/ngày giờ đã chọn. | Kiểm tra lại quyền, trạng thái salon/dịch vụ, mối quan hệ `salon_id`–`service_id`–`stylist_id`, lịch làm, ngày nghỉ, thời lượng và xung đột. | Yêu cầu được chấp nhận để lưu hoặc bị từ chối – **F03/F08**, NFR. |
+| **10. Lưu booking an toàn** | Backend / database | Yêu cầu đã hợp lệ tại bước 9. | Thực hiện thao tác lưu có kiểm soát đồng thời (transaction/locking); tạo booking gắn Customer và các mã liên quan. | Mã booking, lịch ở trạng thái **Chờ xác nhận**, không double booking – **F03**. |
+| **11. Trả kết quả** | Website | Kết quả lưu booking. | Chỉ báo thành công sau khi backend xác nhận đã lưu; hiển thị mã lịch, salon, dịch vụ, stylist, ngày/giờ và trạng thái. | Khách có thông tin lịch đã ghi nhận hoặc thông báo chọn lại – **F03**. |
+| **12. Salon tiếp nhận và xử lý** | Salon Owner | Mở danh sách lịch, lọc theo ngày/trạng thái, chọn booking thuộc salon mình. | Kiểm tra phân quyền; chuyển trạng thái theo quy tắc F09 và cập nhật dữ liệu. | **Chờ xác nhận → Đã xác nhận → Đang phục vụ → Hoàn thành** hoặc **Hủy** hợp lệ – **F09**. |
+| **13. Theo dõi hoặc hủy lịch** | Customer | Mở lịch sử cá nhân; chọn lịch muốn hủy. | Chỉ hiển thị booking của Customer; cho hủy nếu đúng quyền, trạng thái hợp lệ và còn ≥ 2 giờ trước lịch hẹn; giải phóng slot sau khi hủy. | Lịch sử được cập nhật; lịch hợp lệ chuyển **Hủy** – **F04**. |
+| **14. Đánh giá sau dịch vụ** | Customer | Chọn lịch đã **Hoàn thành**, nhập sao 1–5 và nhận xét. | Kiểm tra quyền sở hữu booking, trạng thái, thang điểm; lưu đánh giá và cập nhật điểm trung bình salon. | Đánh giá được ghi nhận/hiển thị theo cơ chế kiểm duyệt – **F05**, liên quan **F10**. |
 
-### 3.1. Dữ liệu đầu vào và đầu ra
+### 3.4. Dữ liệu đầu vào và đầu ra
 
-| Nhóm dữ liệu | Đầu vào | Đầu ra / dữ liệu được lưu |
+| Nhóm dữ liệu | Đầu vào | Đầu ra / yêu cầu lưu và kiểm tra |
 |---|---|---|
-| Salon | Định danh salon được khách chọn | Salon gắn với booking; cần xác nhận trường `salon_id` trong yêu cầu và mô hình dữ liệu |
-| Dịch vụ | Mã dịch vụ do khách chọn | Tên dịch vụ, giá và thời lượng lấy từ dữ liệu hệ thống; dịch vụ phải thuộc salon đã chọn |
-| Stylist | Mã thợ do khách chọn | Stylist được phân công; cần thuộc salon phù hợp và khả dụng trong toàn bộ thời gian phục vụ |
-| Lịch | Ngày, giờ bắt đầu mong muốn | Giờ kết thúc tính từ thời lượng dịch vụ; kết quả kiểm tra khả dụng |
-| Khách | Họ tên, số điện thoại; tài khoản nếu khách đã đăng nhập | Thông tin liên hệ cần thiết và liên kết tài khoản nếu có; chỉ lưu dữ liệu cần cho nghiệp vụ |
-| Booking | Salon + dịch vụ + stylist + ngày/giờ + thông tin khách | Mã lịch hẹn, dữ liệu lịch đã lưu, trạng thái và thời điểm tạo |
-| Lỗi | Thiếu/sai dữ liệu, dịch vụ không thuộc salon, slot hết chỗ hoặc lỗi lưu | Thông báo cụ thể; không tạo bản ghi thành công nếu kiểm tra thất bại |
+| **Salon** | `salon_id` khách chọn. | Booking gắn đúng salon đã được phê duyệt/kích hoạt; chủ salon chỉ thấy dữ liệu của salon được phân quyền. |
+| **Dịch vụ** | `service_id` thuộc salon. | Tên, giá và thời lượng đọc từ hệ thống; dịch vụ còn cho phép đặt và thuộc đúng `salon_id`. |
+| **Stylist** | `stylist_id` khách chọn. | Stylist thuộc salon tương ứng và khả dụng theo ca trực/ngày nghỉ trong toàn bộ khoảng phục vụ. |
+| **Thời gian** | Ngày/giờ bắt đầu mong muốn. | Giờ kết thúc tính từ thời lượng dịch vụ trên server; thời gian tương lai, phù hợp ca làm và không giao lịch. |
+| **Customer** | Tài khoản đã đăng nhập, họ tên và SĐT liên hệ. | Liên kết booking với chủ tài khoản; SĐT hợp lệ 10 chữ số, bảo vệ dữ liệu cá nhân. |
+| **Booking** | Salon + dịch vụ + stylist + thời gian + Customer. | Mã booking duy nhất, thông tin dịch vụ, trạng thái **Chờ xác nhận** và thời điểm tạo; các lần cập nhật trạng thái hợp lệ. |
+| **Đánh giá** | Booking đã **Hoàn thành**, điểm sao 1–5, nhận xét. | Đánh giá gắn với Customer/booking/salon và điểm trung bình salon được cập nhật. |
+| **Kết quả/lỗi** | Kết quả kiểm tra quyền, dữ liệu, slot hoặc lưu trữ. | Thông báo rõ để khách sửa/chọn giờ khác; không xác nhận thành công nếu lưu thất bại. |
 
-### 3.2. Quy tắc kiểm tra trùng lịch
+### 3.5. Quy tắc chống trùng lịch và bảo toàn dữ liệu
 
--   Tính giờ kết thúc từ thời lượng dịch vụ đang lưu trong hệ thống; không tin thời lượng do trình duyệt tự gửi.
--   Hai lịch của cùng stylist bị xem là trùng nếu khoảng thời gian giao nhau: **giờ bắt đầu yêu cầu \< giờ kết thúc lịch hiện có** và **giờ kết thúc yêu cầu \> giờ bắt đầu lịch hiện có**.
--   Phải xác nhận stylist và dịch vụ thuộc đúng salon trong booking; không chấp nhận tổ hợp mã salon/dịch vụ/stylist không hợp lệ.
--   Hai lịch của cùng stylist không được giao nhau. Nếu khác stylist thì vẫn phải kiểm tra các điều kiện khác trước khi cho đặt.
--   Backend phải kiểm tra lại ngay lúc gửi/lưu lịch. Nếu hai khách gửi yêu cầu gần như đồng thời cho cùng slot, chỉ một yêu cầu được lưu; yêu cầu còn lại nhận thông báo slot không còn trống.
--   Khi hủy hợp lệ theo F04, trạng thái phải đổi sang nhãn hủy đã thống nhất và khung giờ được mở lại.
--   Không tự đặt thêm thời gian đệm, bước nhảy slot hoặc giờ đóng cửa cụ thể nếu nhóm chưa định nghĩa trong yêu cầu/cấu hình.
+- Backend lấy **thời lượng dịch vụ chuẩn** từ dữ liệu dịch vụ đã lưu; không tin thời lượng hoặc giá do trình duyệt tự gán.
+- Với các lịch đang **chiếm chỗ** của cùng stylist, có xung đột nếu:
 
-## 4. 04.2 --- Ngoại lệ và quy tắc nghiệp vụ
+  `new_start < existing_end AND new_end > existing_start`
 
-| Tình huống | Điều kiện | Hệ thống xử lý | Trạng thái / kết quả |
+  Trong đó `new_end = new_start + service_duration`.
+- Booking ở trạng thái **Hủy** không tiếp tục chiếm slot; booking đang có hiệu lực được kiểm tra theo toàn bộ khoảng thời gian, không chỉ giờ bắt đầu. Các booking **Hoàn thành** là dữ liệu lịch sử và không mở lại để đặt chồng vào thời gian đã qua.
+- Slot phải nằm trong ca làm hợp lệ, không thuộc ngày nghỉ F08, và thời điểm đặt phải ở tương lai. Kiểm tra `salon_id`, `service_id`, `stylist_id` ở backend kể cả khi frontend đã lọc.
+- Khi hai khách đặt đồng thời, hệ thống phải kiểm tra/lưu trong giao dịch an toàn hoặc cơ chế khóa tương đương, để **chỉ một booking có thể chiếm cùng khoảng thời gian của một stylist**. Khách còn lại nhận thông báo chọn slot khác.
+- Sau khi hủy hợp lệ, giải phóng slot để hiển thị theo điều kiện lịch làm hiện tại. Việc hủy và giải phóng slot phải được lưu nhất quán.
+- `REQUIREMENTS.md` **không quy định** bước nhảy slot, thời gian đệm giữa dịch vụ hoặc số phút làm tròn; không tự mặc định các thông số này trong tài liệu.
+
+## 4. 04.2 – Ngoại lệ và quy tắc nghiệp vụ
+
+| Tình huống | Điều kiện phát sinh | Cách xử lý của hệ thống | Kết quả / căn cứ |
 |---|---|---|---|
-| Không tìm thấy salon theo khu vực | Bộ lọc không trả về kết quả | Hiển thị thông báo không có salon phù hợp và cho phép đổi bộ lọc | Không tạo booking |
-| Salon/dịch vụ không hợp lệ | Mã salon hoặc dịch vụ không tồn tại; dịch vụ không thuộc salon đã chọn | Từ chối yêu cầu và yêu cầu khách chọn lại từ dữ liệu hợp lệ | Không tạo booking |
-| Thiếu họ tên hoặc số điện thoại | Trường bắt buộc bị bỏ trống hoặc dữ liệu không hợp lệ | Hiển thị trường cần sửa; kiểm tra định dạng dữ liệu. Không gửi/lưu booking | Không tạo lịch |
-| Stylist không thuộc salon đã chọn | Mã stylist không liên kết với salon trong yêu cầu | Từ chối tổ hợp dữ liệu; tải lại stylist phù hợp | Không tạo booking |
-| Thợ/slot không khả dụng | Thợ không làm ngày đó hoặc slot đã có lịch | Cập nhật danh sách thợ/giờ trống theo F02; yêu cầu chọn slot khác | Không tạo lịch mới |
-| Thời lượng dịch vụ gây giao nhau | Giờ bắt đầu còn trống nhưng giờ kết thúc tính theo thời lượng chồng lên lịch khác của cùng thợ | Từ chối slot; kiểm tra theo toàn bộ khoảng thời gian, không chỉ giờ bắt đầu | Không tạo lịch mới |
-| Ngoài thời gian làm việc | Slot không nằm trong lịch làm hợp lệ của salon/thợ | Không hiển thị hoặc vô hiệu hóa slot. Cần TV3 xác nhận cách cấu hình giờ làm/ngày nghỉ vì F01--F07 chưa nêu rõ chức năng quản lý lịch làm | Không tạo lịch mới |
-| Hai khách gửi cùng slot gần như đồng thời | Slot có thể đã bị đặt sau lần hiển thị lịch trống | Backend kiểm tra lại và bảo đảm chỉ một booking được lưu cho khoảng thời gian xung đột | Chỉ một lịch được lưu |
-| Chủ salon truy cập lịch của salon khác | Tài khoản chủ salon không có quyền với salon trong yêu cầu | Từ chối truy cập. Đây là nguyên tắc phân quyền đề xuất cho marketplace, cần nhóm xác nhận trong ma trận quyền | Không lộ dữ liệu salon khác |
-| Khách hủy trước giờ hẹn ít nhất 2 giờ | Khách đã đăng nhập, lịch thuộc về chính khách đó và còn đủ thời gian theo F04 | Xác minh quyền sở hữu và thời điểm hẹn; cập nhật trạng thái hủy, mở lại slot | Hủy thành công; slot khả dụng lại |
-| Khách hủy khi còn dưới 2 giờ | Không đáp ứng điều kiện tối thiểu 2 giờ của F04 | Từ chối hủy theo quy tắc hiện tại và hiển thị lý do; không đổi dữ liệu lịch | Giữ nguyên trạng thái |
-| Khách chưa đăng nhập muốn xem lịch sử/tra cứu/hủy | Mô tả đề tài yêu cầu lịch sử cá nhân trong MVP, nhưng F04 yêu cầu tài khoản và F07 để đăng nhập/lịch sử ở giai đoạn sau | Không tự thêm cách tra cứu bằng mã lịch hẹn. Chuyển mâu thuẫn cho TV3 xác nhận | Áp dụng quy tắc sau khi nhóm thống nhất |
-| Hủy lặp hoặc hủy lịch đã hoàn tất | Lịch đã ở trạng thái hủy hoặc hoàn tất | Không xử lý chuyển trạng thái lần nữa; hiển thị trạng thái hiện tại | Trạng thái cũ không đổi |
-| Cập nhật trạng thái trái quyền/sai thứ tự | Vai trò không có quyền hoặc chuyển từ trạng thái không hợp lệ | Từ chối cập nhật và giữ dữ liệu hiện tại | Trạng thái không đổi |
-| Lỗi máy chủ/cơ sở dữ liệu | Không thể lưu an toàn | Báo lỗi, không thông báo đặt thành công; tránh để lại bản ghi một phần | Không có lịch mới hoặc không có thay đổi trạng thái |
+| **Không tìm thấy salon** | Không có salon thỏa đồng thời các bộ lọc. | Hiển thị trạng thái rỗng và cho phép đổi tiêu chí. | Không có booking – **F01**. |
+| **Salon chưa được duyệt hoặc bị khóa** | Salon không đủ điều kiện công khai. | Không đưa salon vào kết quả tìm kiếm; từ chối thao tác đặt lịch tới salon không hợp lệ. | Không tạo booking – **F10, F01, F03**. |
+| **Guest cố đặt lịch** | Người dùng chưa đăng nhập Customer. | Chuyển đến đăng nhập/đăng ký; backend từ chối tạo booking nếu thiếu quyền. | Chưa tạo lịch – **F06, F03**. |
+| **Dịch vụ/stylist không thuộc salon** | Các ID không nhất quán với `salon_id`, hoặc dịch vụ bị ẩn. | Từ chối yêu cầu; làm mới dữ liệu hợp lệ theo salon. | Không tạo booking – **F02, F03, F07**. |
+| **Thông tin liên hệ không hợp lệ** | Thiếu thông tin bắt buộc, SĐT không đúng 10 chữ số hoặc nội dung đầu vào không an toàn. | Thông báo trường cần sửa; kiểm tra ở frontend và backend. | Không tạo lịch – **NFR, F03**. |
+| **Ngày/giờ không hợp lệ** | Thời gian đặt không ở tương lai, nằm ngoài ca trực, trùng ngày nghỉ hoặc không đủ thời lượng thực hiện. | Vô hiệu slot; yêu cầu khách chọn lại. | Không tạo lịch – **F03, F08**. |
+| **Trùng lịch stylist** | Khoảng phục vụ giao với booking còn chiếm chỗ của cùng stylist. | Kiểm tra toàn khoảng thời gian và từ chối slot. | Không tạo lịch – **F03**, NFR. |
+| **Hai khách đặt cùng slot** | Slot thay đổi sau khi hai giao diện cùng tải dữ liệu. | Khóa/giao dịch lưu; chỉ một yêu cầu thành công, yêu cầu còn lại tải lại giờ trống. | Không double booking – **F03**, NFR. |
+| **Customer truy cập lịch của người khác** | ID booking không thuộc tài khoản đã đăng nhập. | Kiểm tra quyền từ backend, từ chối đọc/hủy. | Không lộ hoặc sửa dữ liệu – **F04, F06**. |
+| **Hủy đủ điều kiện** | Customer sở hữu lịch, lịch còn có thể hủy và cách giờ bắt đầu **≥ 2 giờ**. | Chuyển trạng thái **Hủy**, cập nhật lịch sử và mở lại slot. | Hủy thành công – **F04**. |
+| **Hủy muộn hoặc không đúng trạng thái** | Còn **< 2 giờ**, hoặc lịch đã **Hủy/Hoàn thành/Đang phục vụ**. | Từ chối hủy bởi Customer; giữ nguyên trạng thái, nêu lý do. | Không thay đổi booking – **F04, F09**. |
+| **Khách muốn đổi lịch** | Muốn thay ngày/giờ hoặc stylist sau khi booking được tạo. | Không hỗ trợ nút sửa trực tiếp; hướng dẫn **hủy lịch cũ (nếu còn đủ điều kiện) rồi tạo booking mới**. | Hai nghiệp vụ tách biệt – **F04, F03**. |
+| **Khách đến muộn quá 15 phút** | Đến muộn quá 15 phút và không liên hệ trước. | Salon có quyền từ chối phục vụ hoặc cập nhật **Hủy** theo giả định nghiệp vụ, có kiểm tra quyền/trạng thái. | Lịch có thể bị hủy – **REQUIREMENTS mục 6, F09**. |
+| **Guest hoặc khách chưa hoàn tất muốn đánh giá** | Chưa đăng nhập, booking không thuộc Customer hoặc trạng thái chưa **Hoàn thành**. | Không cho gửi đánh giá, thông báo điều kiện. Guest vẫn được đọc đánh giá. | Không tạo đánh giá – **F05, F06**. |
+| **Số sao không hợp lệ** | Điểm nằm ngoài 1–5. | Từ chối và yêu cầu chọn mức hợp lệ. | Không lưu đánh giá – **F05**, NFR. |
+| **Đánh giá vi phạm** | Admin xác định nội dung vi phạm tiêu chuẩn kiểm duyệt. | Platform Admin gỡ/ẩn nhận xét; phản ánh thay đổi vào nội dung hiển thị và điểm trung bình nếu áp dụng loại trừ đánh giá bị gỡ. | Nội dung vi phạm không còn hiển thị – **F10, F05**. |
+| **Chủ salon truy cập salon khác** | Tài khoản Owner thay ID/URL hoặc gửi yêu cầu cập nhật dữ liệu ngoài phạm vi. | Backend kiểm tra salon được cấp quyền; từ chối thao tác. | Không truy cập chéo – **F07, F08, F09**, NFR chống IDOR. |
+| **Chuyển trạng thái sai quy trình** | Vai trò không có quyền hoặc chuyển từ trạng thái kết thúc về trạng thái trước. | Từ chối cập nhật, giữ trạng thái hiện tại. | Không thay đổi booking – **F09**. |
+| **Lỗi server/database** | Không thể kiểm tra hoặc lưu dữ liệu an toàn. | Rollback giao dịch khi cần; hiển thị thất bại, không báo đặt thành công. | Không lưu booking một phần – **F03**, NFR. |
 
-## 5. Trạng thái lịch hẹn
+**Lưu ý về đổi lịch:** Chính sách hủy trước 2 giờ vẫn có hiệu lực khi khách muốn đổi lịch. Nếu lịch cũ không đủ điều kiện hủy, hệ thống không tự động tạo ngoại lệ hay sửa giờ. Việc đặt lịch mới chỉ xác nhận được khi có slot khả dụng, và không được ngầm coi là thao tác chỉnh sửa lịch cũ.
 
-`REQUIREMENTS.md` dùng các nhãn trong F06: **Chờ duyệt, Đã xếp chỗ, Hoàn tất, Hủy**. F04 lại dùng **Đã hủy**; bảng vai trò cho stylist có **Đang phục vụ, Hoàn thành**. Bản mô tả đề tài cũng nói chủ salon theo dõi và xử lý trạng thái lịch, nhưng chưa nêu bộ trạng thái cụ thể. Vì vậy, bảng dưới đây ghi nhận các nhãn hiện có và đánh dấu điểm cần TV3 chuẩn hóa, không tự sửa `REQUIREMENTS.md`.
+## 5. Trạng thái và chuyển tiếp booking
 
-| Trạng thái/nhãn trong tài liệu hiện tại | Ý nghĩa nghiệp vụ | Chuyển tiếp dự kiến | Ghi chú |
+### 5.1. Bộ trạng thái thống nhất theo F09
+
+| Trạng thái | Ý nghĩa | Chuyển tiếp hợp lệ trong workflow | Chủ thể / điều kiện |
 |---|---|---|---|
-| Chờ duyệt | Booking đã được ghi nhận, chờ salon xử lý/phê duyệt | Đã xếp chỗ hoặc Hủy/Đã hủy nếu hủy được phép | Trạng thái khởi tạo đề xuất; TV3 xác nhận |
-| Đã xếp chỗ | Salon đã chấp nhận/điều phối lịch | Đang phục vụ, hoặc Hủy/Đã hủy nếu đáp ứng quy tắc hủy | Cần thống nhất xem nhãn này tương đương "Đã xác nhận" hay không |
-| Đang phục vụ | Stylist đang thực hiện dịch vụ | Hoàn tất/Hoàn thành | Có trong quyền của stylist nhưng chưa có trong danh sách trạng thái F06 |
-| Hoàn tất / Hoàn thành | Dịch vụ đã hoàn thành | Không chuyển tiếp trong luồng thông thường | F06 ghi "Hoàn tất", bảng vai trò ghi "Hoàn thành"; cần chọn một nhãn chuẩn |
-| Hủy / Đã hủy | Booking đã bị hủy | Không chuyển tiếp trong luồng thông thường | F06 ghi "Hủy", F04 ghi "Đã hủy"; cần chọn một nhãn chuẩn |
+| **Chờ xác nhận** | Booking đã được backend lưu, salon chưa xác nhận. | **Đã xác nhận** hoặc **Hủy**. | Owner tiếp nhận F09; Customer có thể hủy theo F04 khi còn ≥ 2 giờ. |
+| **Đã xác nhận** | Salon đã nhận và xác nhận lịch phục vụ. | **Đang phục vụ** hoặc **Hủy**. | Owner cập nhật F09; Customer có thể hủy theo F04 khi còn ≥ 2 giờ. |
+| **Đang phục vụ** | Dịch vụ đang được thực hiện. | **Hoàn thành**. | Owner cập nhật F09; Customer không thể hủy bằng luồng F04 thông thường. |
+| **Hoàn thành** | Dịch vụ đã kết thúc. | Không chuyển tiếp thông thường. | Có thể kích hoạt quyền đánh giá F05. |
+| **Hủy** | Lịch đã bị hủy hợp lệ, không còn chiếm chỗ. | Không chuyển tiếp thông thường. | Customer hủy hợp lệ theo F04 hoặc salon hủy theo chính sách áp dụng trong F09. |
 
-**Nguyên tắc:** Chỉ vai trò được cấp quyền mới được cập nhật trạng thái. Không đánh dấu hoàn tất trước khi dịch vụ kết thúc. Lịch hủy/hoàn tất không được chuyển ngược bằng cập nhật thông thường. Không thêm trạng thái "Từ chối", "Đã thanh toán" hoặc trạng thái khác khi chưa có quyết định của nhóm.
+**Quy chuẩn tên:** F09 trong `REQUIREMENTS.md` sử dụng **“Chờ xác nhận”, “Đã xác nhận”, “Đang phục vụ”, “Hoàn thành”, “Hủy”**. Tài liệu này dùng đúng năm nhãn đó; cụm “đã hủy” chỉ dùng như cách diễn đạt thông thường, không tạo trạng thái thứ sáu.
 
-## 6. 04.3 --- Đối chiếu workflow với F-code của TV3
+### 5.2. Nguyên tắc cập nhật
 
-| Bước / nghiệp vụ | F-code | Mức độ khớp | Ghi chú kiểm tra |
+- Booking mới được ghi nhận ở trạng thái **Chờ xác nhận**; việc cấp mã booking **không đồng nghĩa** salon đã xác nhận phục vụ.
+- Chỉ tài khoản có quyền mới được cập nhật trạng thái. Owner phải thuộc đúng salon của booking; Customer chỉ có quyền hủy theo F04.
+- Không bỏ qua trạng thái **Đang phục vụ** để đánh dấu hoàn thành trong luồng thông thường; không chuyển ngược từ **Hoàn thành/Hủy**.
+- Salon có quyền xử lý khách đến muộn theo giả định của `REQUIREMENTS.md`; cách ghi nhận lý do hủy cần thống nhất khi thiết kế giao diện/dữ liệu.
+- **Hủy** giải phóng slot; **Hoàn thành** cho phép đánh giá và lưu trong lịch sử cá nhân.
+
+## 6. Luồng quản lý liên quan ngoài hành trình đặt lịch
+
+### 6.1. Quản lý salon và năng lực phục vụ (F07–F08)
+
+1. Salon Owner đăng nhập qua F06; backend xác định `salon_id` được cấp.
+2. Owner chỉnh thông tin tiệm, tag chuyên môn, menu dịch vụ và đơn giá; thêm/sửa/ẩn dịch vụ của salon mình (F07).
+3. Owner quản lý stylist, phân ca trực và ngày nghỉ (F08).
+4. Sau khi dữ liệu hợp lệ được lưu, thông tin công khai được cập nhật tại F01/F02; lịch làm mới được dùng tính slot của F03.
+5. Nếu thay đổi ca trực/ngày nghỉ ảnh hưởng đến **booking đã xác nhận**, hệ thống cần quy tắc xử lý riêng; không âm thầm xóa hoặc di chuyển lịch của khách.
+
+### 6.2. Quản trị nền tảng và đánh giá (F10, F05)
+
+1. Platform Admin tiếp nhận và phê duyệt salon đối tác; kích hoạt hoặc khóa salon (F10).
+2. Danh sách tìm kiếm F01 chỉ công khai salon hợp lệ; salon bị vô hiệu hóa không xuất hiện trong bộ lọc.
+3. Admin quản lý tài khoản đối tác, giám sát và xử lý nội dung đánh giá vi phạm theo F10.
+4. Customer đủ điều kiện gửi đánh giá F05; Guest và Customer được xem đánh giá/điểm trung bình ở phần công khai. Chủ salon xem phản hồi nhưng không tùy tiện chỉnh sửa/xóa nhận xét của khách.
+
+## 7. 04.3 – Đối chiếu workflow với REQUIREMENTS.md và README.md
+
+| F-code | Yêu cầu chính thức trong MVP | Vị trí thể hiện trong workflow | Kết quả kiểm tra |
 |---|---|---|---|
-| Xem danh sách salon, tìm/lọc theo khu vực | Chưa có F-code riêng rõ ràng | **Thiếu / cần xác nhận** | Đây là chức năng MVP trong mô tả đề tài nhưng F01--F07 chưa thể hiện rõ |
-| Xem/so sánh salon theo giá, phong cách, khoảng cách | F01 chỉ mô tả xem dịch vụ, mô tả và giá | **Khớp một phần** | Cần xác nhận phạm vi so sánh; ảnh và đánh giá được nhắc trong mô tả kinh doanh nhưng chưa rõ có bắt buộc ở MVP hay không |
-| Xem dịch vụ, mô tả và giá | F01 | **Khớp một phần** | F01 phù hợp với thông tin dịch vụ nhưng cần làm rõ dịch vụ thuộc salon nào và giá nào được hiển thị |
-| Chọn ngày, xem thợ và slot còn trống | F02 | **Khớp một phần** | Cần giữ ngữ cảnh salon; xét thời lượng dịch vụ và lịch hiện có theo `AGENTS.md`; cách quản lý lịch làm/ngày nghỉ chưa rõ |
-| Gửi yêu cầu với họ tên, SĐT, dịch vụ, thợ và giờ; trả mã lịch hẹn | F03 | **Khớp một phần** | Luồng tạo booking phù hợp, nhưng mô hình marketplace cần xác nhận `salon_id` và kiểm tra dịch vụ/stylist thuộc salon đã chọn |
-| Tra cứu/hủy lịch cá nhân; hủy trước ít nhất 2 giờ; mở lại slot | F04 | **Có quy tắc nhưng mâu thuẫn phạm vi** | F04 giới hạn ở khách có tài khoản; mô tả đề tài yêu cầu lịch sử đặt chỗ trong MVP, trong khi F07 để đăng nhập/lịch sử là tùy chọn/giai đoạn sau |
-| Admin thêm/sửa/tạm ẩn dịch vụ | F05 | **Khớp một phần** | Mô tả đề tài yêu cầu chủ salon cũng quản lý danh mục và giá. Cần phân quyền chủ salon với admin nền tảng và giới hạn dữ liệu theo salon |
-| Admin xem lịch theo ngày/trạng thái; cập nhật trạng thái; chống trùng lịch | F06 | **Khớp một phần** | Quy tắc chống trùng được thể hiện; cần bổ sung/đối chiếu quyền chủ salon, phạm vi lịch của từng salon và chuẩn hóa trạng thái |
-| Đăng ký/đăng nhập, lưu lịch sử | F07 | **Mâu thuẫn với MVP** | F07 ghi tùy chọn/giai đoạn sau nhưng mô tả đề tài liệt kê lịch sử đặt chỗ cá nhân trong chức năng bắt buộc của phiên bản đầu |
-| Quản lý lịch làm/ngày nghỉ của salon và stylist | Chưa có F-code riêng rõ ràng | **Cần TV3 xác nhận** | F02 cần dữ liệu lịch làm để tính slot trống; cần xác định ai quản lý và qua chức năng nào |
-| Quản lý hình ảnh/đánh giá salon | Chưa có F-code riêng rõ ràng | **Cần xác nhận phạm vi** | Được nhắc trong vấn đề kinh doanh/giải pháp nhưng chưa có trong danh sách MVP; không tự thêm vào phạm vi |
-| Thanh toán trực tuyến | Ngoài phạm vi bắt buộc theo mô tả đề tài | **Không đưa vào MVP** | Chỉ xem xét ở giai đoạn sau nếu nhóm thống nhất |
-
-### 6.1. Các câu hỏi/phản hồi gửi TV3 --- không tự sửa REQUIREMENTS
-
-1.  **Xác nhận mô hình marketplace:** SalonBook là nền tảng nhiều salon tại TP.HCM. F01--F07 có cần bổ sung luồng danh sách salon và lọc theo khu vực không?
-2.  **Dữ liệu booking:** F03 hiện chưa nêu rõ `salon_id`. Mỗi booking có cần lưu salon và kiểm tra dịch vụ/stylist thuộc salon đó không?
-3.  **Tìm kiếm và so sánh:** Phạm vi MVP có bao gồm lọc salon theo khu vực, so sánh giá/phong cách/khoảng cách không? Hình ảnh và đánh giá là bắt buộc hay để giai đoạn sau?
-4.  **Vai trò chủ salon:** Chủ salon có được quản lý dịch vụ, giá và lịch hẹn của salon mình không? Admin nền tảng có quyền khác gì? Có cần giới hạn chủ salon chỉ xem dữ liệu của salon được phân công không?
-5.  **Lịch sử và tài khoản:** Mô tả đề tài ghi lịch sử đặt chỗ là MVP, nhưng F07 để đăng nhập/lịch sử ở giai đoạn sau. Cần chốt lịch sử có bắt buộc ở phiên bản đầu không và khách đặt nhanh sẽ tra cứu/hủy như thế nào.
-6.  **Chuẩn hóa trạng thái:** F06 liệt kê "Chờ duyệt, Đã xếp chỗ, Hoàn tất, Hủy"; bảng vai trò có "Đang phục vụ, Hoàn thành"; F04 có "Đã hủy". Hãy xác nhận bộ trạng thái chính thức và các chuyển tiếp hợp lệ.
-7.  **Lịch làm/ngày nghỉ:** Ai quản lý giờ làm, ngày nghỉ và lịch stylist? Chức năng này thuộc F02, F06 hay cần F-code riêng?
-8.  **Đổi lịch:** Bảng vai trò hiện tại có đề cập khách có thể chỉnh sửa lịch cá nhân, nhưng F04 chỉ mô tả tra cứu và hủy. Xác nhận đổi lịch có nằm trong phạm vi hay không.
-9.  **Phạm vi triển khai:** Xác nhận thanh toán trực tuyến vẫn ở giai đoạn sau theo mô tả đề tài, không phải tiêu chí nghiệm thu MVP.
+| **F01** | Tìm kiếm và lọc salon theo khu vực, loại hình, nhóm chuyên môn; có thông tin và điểm trung bình. | 3.3 bước 3; 4; 6.2 | **Phù hợp.** Chỉ salon hợp lệ được hiển thị. |
+| **F02** | Xem chi tiết salon, dịch vụ, bảng giá, stylist và không gian tiệm theo `salon_id`. | 3.3 bước 4; 3.4 | **Phù hợp.** Không trộn dữ liệu các salon. |
+| **F03** | Customer đặt salon/dịch vụ/stylist/ngày/slot; chống trùng; lưu các ID và sinh mã booking. | 3.2–3.5; 4 | **Phù hợp.** Có bước xác thực và kiểm tra tại backend. |
+| **F04** | Khách xem lịch sử cá nhân, hủy khi còn ≥ 2 giờ và giải phóng slot; không sửa lịch trực tiếp. | 3.3 bước 13; 4; 5 | **Phù hợp.** Đổi lịch bằng hủy + đặt lại. |
+| **F05** | Đánh giá sao 1–5 và nhận xét sau khi hoàn thành; cập nhật điểm trung bình. | 3.3 bước 14; 4; 5; 6.2 | **Phù hợp.** Guest chỉ xem đánh giá, không gửi. |
+| **F06** | Đăng ký/đăng nhập, phân quyền Guest/Customer/Owner/Admin. | 2; 3.3 bước 5; 4 | **Phù hợp.** Guest không đặt lịch; quyền được xác minh ở backend. |
+| **F07** | Owner quản lý thông tin, menu, giá và dịch vụ của salon mình. | 3.1; 3.3 bước 2; 6.1 | **Phù hợp.** Gắn giới hạn theo `salon_id`. |
+| **F08** | Owner quản lý ca làm, ngày nghỉ stylist; slot nghỉ không xuất hiện. | 3.1; 3.3 bước 2/7/9; 3.5; 6.1 | **Phù hợp.** Dùng lịch làm để tính khả dụng. |
+| **F09** | Owner theo dõi/lọc lịch và xử lý chu trình trạng thái chuẩn. | 3.3 bước 12; 5 | **Phù hợp.** Sử dụng đúng bộ năm trạng thái F09. |
+| **F10** | Admin phê duyệt/khóa salon, quản lý tài khoản, kiểm duyệt đánh giá vi phạm. | 3.3 bước 1; 4; 6.2 | **Phù hợp.** Vai trò và phạm vi tách biệt Owner. |
