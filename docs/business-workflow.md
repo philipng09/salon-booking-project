@@ -1,11 +1,5 @@
 # QUY TRÌNH NGHIỆP VỤ SALONBOOK (BUSINESS WORKFLOW)
 
-> **Dự án:** SalonBook – Website đặt lịch salon tóc trực tuyến  
-> **Mô hình:** Marketplace kết nối nhiều salon/barbershop tại Thành phố Hồ Chí Minh  
-> **Phạm vi:** Phiên bản MVP theo `REQUIREMENTS.md` cập nhật, gồm **F01–F12** và nghiệp vụ **Chatbot AI** được nêu trong phạm vi MVP  
-> **Mục đích:** Mô tả quy trình nghiệp vụ, vai trò, dữ liệu, các luồng chính/phụ, ngoại lệ và đối chiếu với yêu cầu chức năng.  
-> **Quy ước:** Nội dung ghi **“cần xác nhận”** là điểm chưa được tài liệu yêu cầu quyết định chi tiết; không được hiểu là chức năng hoặc quy tắc đã chốt.
-
 ## 1. Mục tiêu, phạm vi và căn cứ
 
 ### 1.1. Bối cảnh nghiệp vụ
