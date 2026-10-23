@@ -1,18 +1,5 @@
 # ĐẶC TẢ GIAO DIỆN UI/UX WEBSITE SALONBOOK – 05 TRANG
 
-**Dự án:** SalonBook – Nền tảng marketplace đặt lịch salon tóc tại TP.HCM  
-**Loại tài liệu:** Đặc tả UI/UX chi tiết để thiết kế Figma, xây prototype, bàn giao frontend và lập test case  
-**Phạm vi:** (1) Trang chủ, (2) Đặt lịch/Khám phá salon, (3) Blog, (4) Tư vấn kiểu tóc, (5) Về chúng tôi  
-**Phiên bản:** 2.0 – mở rộng đặc tả chi tiết, ngày 23/10/2026  
-**Nguồn ưu tiên:** `REQUIREMENTS.md` (F01–F13) → `business-workflow(1).md` → `style.css`, HTML hiện có → `README.md`, `AGENTS.md`, `PROJECT_PLAN.md`  
-**Tính chất:** Đặc tả **đề xuất**, chưa phải xác nhận các trang đã được lập trình. Các số đo, vị trí và microcopy là quyết định thiết kế gợi ý; phần không có F-code được gắn nhãn chờ duyệt.
-
-**Điểm mở rộng v2.0:** Bổ sung grid theo thiết bị, component IDs, copy mẫu, tương tác map–list, chi tiết wizard booking, phân quyền & duyệt Blog, quy tắc giới tính/vị trí trong tư vấn, cấu trúc prompt AI, ma trận lỗi và test case, danh mục frame Figma, nhật ký quyết định.
-
-> **Nguyên tắc phân biệt phạm vi:** Các nghiệp vụ tìm/lọc salon, xem salon, đặt lịch, đăng nhập, phân tích ảnh khuôn mặt, chatbot, tuyển mẫu, đánh giá và phân quyền **được yêu cầu trong F01–F13**. **Trang Blog đa tác giả**, **Google Maps nhúng/bản đồ tương tác**, quy tắc thu thập **giới tính/vị trí để lọc kết quả tư vấn**, cũng như một số chức năng biên tập nội dung **do yêu cầu thiết kế mới đặt ra và/hoặc đề xuất UX**; cần được BA/leader bổ sung hoặc duyệt trong REQUIREMENTS trước khi được coi là hạng mục bắt buộc nghiệm thu. README/PROJECT_PLAN còn dùng F-code cũ (F01–F10), nên việc đối chiếu nghiệp vụ trong tài liệu này dùng REQUIREMENTS mới nhất làm chuẩn.
-
----
-
 ## 1. Mục tiêu trải nghiệm, đối tượng, cấu trúc website
 
 ### 1.1. Mục tiêu trải nghiệm
