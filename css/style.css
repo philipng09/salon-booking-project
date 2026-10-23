@@ -2,10 +2,25 @@
 /*
  * SalonBook - Shared CSS
  * Buoi 2: HTML5 & CSS3
- * Base stylesheet for the four HTML pages.
- * Design colors and layouts will be finalized by the UI team.
+ * Shared foundation for four HTML pages.
+ * Brand colors approved by the group.
  */
 
+/* 1. Design Tokens */
+:root {
+    --color-primary: #355F3B;
+    --color-accent: #C2E8F5;
+    --color-background: #E8DCC4;
+
+    --color-surface: #FFFDF8;
+    --color-text: #26352B;
+    --color-border: #D4CCBA;
+
+    --radius-card: 12px;
+    --radius-button: 8px;
+}
+
+/* 2. Global Styles */
 * {
     box-sizing: border-box;
 }
@@ -14,8 +29,8 @@ body {
     margin: 0;
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    color: #222;
-    background-color: #fff;
+    color: var(--color-text);
+    background-color: var(--color-background);
 }
 
 .container {
@@ -23,8 +38,10 @@ body {
     margin-inline: auto;
 }
 
+/* 3. Shared Header */
 .site-header {
-    border-bottom: 1px solid #ddd;
+    background-color: var(--color-primary);
+    border-bottom: 1px solid var(--color-border);
     padding: 16px 0;
 }
 
@@ -39,10 +56,11 @@ body {
 .site-logo {
     font-size: 24px;
     font-weight: bold;
-    color: inherit;
+    color: var(--color-surface);
     text-decoration: none;
 }
 
+/* 4. Navigation */
 .main-nav {
     display: flex;
     flex-wrap: wrap;
@@ -50,31 +68,43 @@ body {
 }
 
 .main-nav a {
-    color: inherit;
+    color: var(--color-surface);
     text-decoration: none;
+    transition: color 0.2s ease;
 }
 
 .main-nav a:hover {
+    color: var(--color-accent);
     text-decoration: underline;
 }
 
+/* 5. Focus States */
 a:focus-visible,
 button:focus-visible {
-    outline: 2px solid #2563eb;
+    outline: 3px solid var(--color-accent);
     outline-offset: 3px;
 }
 
+/* 6. Main Content */
 main {
     min-height: 60vh;
     padding: 40px 0;
 }
 
+main h1 {
+    color: var(--color-primary);
+}
+
+/* 7. Shared Footer */
 .site-footer {
-    border-top: 1px solid #ddd;
+    background-color: var(--color-primary);
+    color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
     padding: 24px 0;
     text-align: center;
 }
 
+/* 8. Responsive */
 @media (max-width: 768px) {
     .site-header .container {
         flex-direction: column;
