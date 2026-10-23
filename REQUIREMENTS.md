@@ -64,17 +64,17 @@ Xây dựng nền tảng thương mại điện tử hoạt động theo mô hì
 
 ## 5. Yêu cầu phi chức năng
 
-- **Bảo mật và phân vùng dữ liệu (Multi-tenancy):** Kiểm soát phân quyền chặt chẽ từ Backend (ASP.NET Core/EF Core). Khóa quyền truy cập chéo giữa các salon; ngăn chặn triệt để lỗ hổng IDOR.
+- **Bảo mật và phân vùng dữ liệu:** Kiểm soát phân quyền chặt chẽ từ Backend (ASP.NET Core/EF Core). Khóa quyền truy cập chéo giữa các salon; ngăn chặn triệt để lỗ hổng IDOR.
 - **Quy định nguồn dữ liệu & Xử lý khi AI lỗi:** 
   - Nguồn dữ liệu huấn luyện/gợi ý của Chatbot AI và Phân tích khuôn mặt lấy từ cơ sở dữ liệu hệ thống (danh mục dịch vụ, tag chuyên môn salon, bộ sưu tập kiểu tóc chuẩn).
-  - Khi API AI hoặc mô hình xử lý ảnh/chatbot gặp lỗi (timeout, lỗi phản hồi), hệ thống phải tự động bật cơ chế dự phòng (Fallback): Hiển thị thông báo thân thiện *"Hệ thống phân tích tạm bận, vui lòng chọn thủ công"*, đồng thời điều hướng người dùng chọn dáng mặt/danh mục dịch vụ qua bộ lọc truyền thống mà không làm gián đoạn trải nghiệm.
+  - Khi API AI hoặc mô hình xử lý ảnh/chatbot gặp lỗi (timeout, lỗi phản hồi), hệ thống phải tự động bật cơ chế dự phòng: Hiển thị thông báo thân thiện *"Hệ thống phân tích tạm bận, vui lòng chọn thủ công"*, đồng thời điều hướng người dùng chọn dáng mặt/danh mục dịch vụ qua bộ lọc truyền thống mà không làm gián đoạn trải nghiệm.
 - **Quy định xử lý Dữ liệu ảnh khuôn mặt & Ảnh chất tóc:**
-  - **Thời gian lưu trữ:** Ảnh tải lên được lưu trữ tạm thời trên hệ thống lưu trữ đám mây (Cloud Storage) trong vòng tối đa **24 giờ** kể từ thời điểm phân tích xong, sau đó hệ thống tự động xóa vĩnh viễn (auto-purge) để bảo vệ quyền riêng tư.
+  - **Thời gian lưu trữ:** Ảnh tải lên được lưu trữ tạm thời trên hệ thống lưu trữ đám mây trong vòng tối đa **24 giờ** kể từ thời điểm phân tích xong, sau đó hệ thống tự động xóa vĩnh viễn để bảo vệ quyền riêng tư.
   - **Thông báo & Đồng ý:** Trước khi tải ảnh lên, giao diện bắt buộc hiển thị hộp thoại thông báo rõ ràng kèm nút đồng ý: *"Chúng tôi chỉ sử dụng hình ảnh của bạn cho mục đích phân tích dáng mặt/chất tóc và sẽ tự động xóa sau 24 giờ. Bạn có đồng ý không?"*.
 - **Tiêu chuẩn xếp hạng Salon/Stylist “Hàng đầu” & Khớp tag:**
   - Salon/stylist được xếp vào nhóm “phù hợp/hàng đầu” dựa trên sự khớp giữa **Tag chuyên môn của salon** (ví dụ: `Chuyên uốn nhuộm`, `Barbershop nam`) với kết quả phân tích dáng tóc, kết hợp với **Điểm đánh giá trung bình cao (>= 4.5 sao)** và lượng booking hoàn thành nhiều.
 - **Quy trình Kiểm duyệt Tin tuyển mẫu:**
-  - Tin mới đăng nằm ở trạng thái **Chờ duyệt (Pending)**. Admin sàn có quyền duyệt (chuyển sang **Đã duyệt / Public**) hoặc từ chối (trạng thái **Bị từ chối** kèm lý do). Salon được chỉnh sửa và gửi lại (Resubmit) tin bị từ chối. Tiêu chí gỡ/ẩn tin: Tin hết hạn, vi phạm thuần phong mỹ tục hoặc chứa thông tin lừa đảo.
+  - Tin mới đăng nằm ở trạng thái **Chờ duyệt (Pending)**. Admin sàn có quyền duyệt (chuyển sang **Đã duyệt / Public**) hoặc từ chối (trạng thái **Bị từ chối** kèm lý do). Salon được chỉnh sửa và gửi lại tin bị từ chối. Tiêu chí gỡ/ẩn tin: Tin hết hạn, vi phạm thuần phong mỹ tục hoặc chứa thông tin lừa đảo.
 - **Cấu hình thời gian (Time Slots & Business Rules):**
   - Các thông số: **Bước nhảy slot** (thường là 30 phút hoặc 60 phút tùy dịch vụ), **Thời gian đệm** (Buffer time giữa 2 ca của stylist để dọn dẹp: 10–15 phút), **Thời lượng dịch vụ** (định nghĩa sẵn theo từng `service_id`) và **Khung giờ làm việc chuẩn** được định nghĩa tập trung tại bảng cấu hình cơ sở dữ liệu (`SalonSettings` / `ServiceConfigurations`) và quản lý trực tiếp bởi Chủ salon ở trang quản trị.
   - *Điều kiện cắt ngang ca làm/giờ nghỉ:* Nếu Chủ salon thay đổi giờ làm việc hoặc Stylist được xếp lịch nghỉ đột xuất vào khung giờ đã có khách đặt trước (Booking ở trạng thái *Đã xác nhận*), hệ thống sẽ từ chối thay đổi hoặc cảnh báo bắt buộc Chủ salon phải liên hệ khách hàng dời lịch trước khi thực hiện khóa ca/đổi giờ.
