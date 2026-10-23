@@ -1,7 +1,5 @@
 # SalonBook – Website Đặt Lịch Salon Tóc Trực Tuyến
 
-Đồ án Phát triển ứng dụng TMĐT – UEH – Website đặt lịch salon
-
 ---
 
 ## 1. Giới thiệu
