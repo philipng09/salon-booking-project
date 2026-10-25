@@ -187,12 +187,12 @@ h1,h2,h3,p {
 .hero-portrait-wrap {
   position:absolute;
   height:100%;
-  width:47%;
-  right:0%;
+  width:53%;
+  right:0;
   top:0;
-  z-index:-1;
+  z-index:0;
   overflow:hidden;
-  mask-image:linear-gradient(90deg,transparent 0%,#000 25%,#000 100%)
+  mask-image:linear-gradient(90deg,transparent 0%,#000 25%,#000 100%);
 }
 .hero-portrait {
   width:100%;
