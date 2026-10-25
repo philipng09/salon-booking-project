@@ -1,91 +1,189 @@
 
 /*
- * SalonBook - Shared CSS
- * Buoi 2: HTML5 & CSS3
- * Shared foundation for four HTML pages.
- * Brand colors approved by the group.
+ * SALONBOOK - SHARED CSS
+ * Đồng bộ phong cách với homepage-v4.css
+ * Áp dụng cho các trang dùng chung của SalonBook
  */
 
-/* 1. Design Tokens */
+/* 1. DESIGN TOKENS */
 :root {
-    --color-primary: #355F3B;
-    --color-accent: #C2E8F5;
-    --color-background: #E8DCC4;
+    --color-primary: #0C513F;
+    --color-primary-dark: #063E32;
+    --color-accent: #FFC501;
+    --color-background: #FEFBF0;
+    --color-surface: #FFFFFF;
+    --color-text: #0A4336;
+    --color-muted: #587269;
+    --color-border: #DCE7DF;
 
-    --color-surface: #FFFDF8;
-    --color-text: #26352B;
-    --color-border: #D4CCBA;
-
-    --radius-card: 12px;
-    --radius-button: 8px;
+    --radius-card: 20px;
+    --radius-button: 20px;
+    --shadow: 0 15px 42px rgba(6,62,50,.12);
 }
 
-/* 2. Global Styles */
-* {
+/* 2. GLOBAL STYLES */
+*,
+*::before,
+*::after {
     box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: Arial, 'Segoe UI', sans-serif;
     line-height: 1.6;
     color: var(--color-text);
     background-color: var(--color-background);
 }
 
-.container {
-    width: min(100% - 32px, 1200px);
-    margin-inline: auto;
+img {
+    max-width: 100%;
+    display: block;
 }
 
-/* 3. Shared Header */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+.container {
+    width: min(1410px, calc(100% - 76px));
+    margin: auto;
+}
+
+/* 3. SHARED HEADER */
 .site-header {
-    background-color: var(--color-primary);
-    border-bottom: 1px solid var(--color-border);
-    padding: 16px 0;
+    background-color: var(--color-background);
+    position: relative;
+    z-index: 20;
 }
 
 .site-header .container {
+    min-height: 86px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
+    justify-content: space-between;
+    gap: 26px;
 }
 
 .site-logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: var(--color-surface);
-    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: -1.3px;
+    color: var(--color-primary);
+    white-space: nowrap;
 }
 
-/* 4. Navigation */
+.site-logo img {
+    width: 51px;
+    height: 65px;
+    object-fit: contain;
+}
+
+/* Hỗ trợ class logo của homepage-v4 */
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: -1.3px;
+    white-space: nowrap;
+}
+
+.brand img {
+    width: 51px;
+    height: 65px;
+    object-fit: contain;
+}
+
+.brand-thin {
+    font-weight: 600;
+}
+
+/* 4. NAVIGATION */
 .main-nav {
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 16px;
+    gap: clamp(15px, 2.7vw, 43px);
 }
 
 .main-nav a {
-    color: var(--color-surface);
-    text-decoration: none;
-    transition: color 0.2s ease;
+    position: relative;
+    color: var(--color-primary);
+    font-size: 14px;
+    font-weight: 700;
+    padding: 11px 0;
 }
 
-.main-nav a:hover {
-    color: var(--color-accent);
-    text-decoration: underline;
+.main-nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    width: 0;
+    height: 4px;
+    border-radius: 4px;
+    background: var(--color-accent);
+    transition: width .2s ease;
 }
 
-/* 5. Focus States */
+.main-nav a:hover::after,
+.main-nav a.active::after {
+    width: 100%;
+}
+
+/* 5. BUTTONS AND FOCUS */
+.btn {
+    border: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 18px rgba(0,0,0,.11);
+}
+
+.btn-yellow {
+    background: var(--color-accent);
+    color: var(--color-primary-dark);
+}
+
+.btn-top {
+    border-radius: 20px;
+    padding: 15px 25px;
+    font-size: 14px;
+}
+
 a:focus-visible,
-button:focus-visible {
-    outline: 3px solid var(--color-accent);
-    outline-offset: 3px;
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+    outline: 3px solid #FF9D32;
+    outline-offset: 4px;
 }
 
-/* 6. Main Content */
+/* 6. MAIN CONTENT */
 main {
     min-height: 60vh;
     padding: 40px 0;
@@ -95,23 +193,85 @@ main h1 {
     color: var(--color-primary);
 }
 
-/* 7. Shared Footer */
+/* 7. SHARED FOOTER */
 .site-footer {
-    background-color: var(--color-primary);
+    background: var(--color-primary);
     color: var(--color-surface);
-    border-top: 1px solid var(--color-border);
-    padding: 24px 0;
-    text-align: center;
+    padding: 35px 0;
 }
 
-/* 8. Responsive */
-@media (max-width: 768px) {
+.site-footer .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 35px;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 23px;
+    font-weight: 900;
+    color: white;
+}
+
+.footer-brand img {
+    width: 38px;
+    height: 44px;
+    object-fit: contain;
+}
+
+.site-footer p {
+    margin: 0;
+    font-size: 11px;
+    letter-spacing: .18em;
+}
+
+.site-footer small {
+    font-size: 11px;
+    color: #CFE2D8;
+}
+
+/* 8. RESPONSIVE */
+@media (max-width: 760px) {
+    .container {
+        width: calc(100% - 34px);
+    }
+
     .site-header .container {
-        flex-direction: column;
-        align-items: flex-start;
+        min-height: 74px;
+        flex-wrap: wrap;
+        gap: 14px;
+    }
+
+    .site-logo,
+    .brand {
+        font-size: 20px;
+    }
+
+    .site-logo img,
+    .brand img {
+        width: 43px;
+        height: 50px;
+    }
+
+    .main-nav {
+        gap: 14px;
+    }
+
+    .main-nav a {
+        font-size: 12px;
     }
 
     main {
         padding: 24px 0;
+    }
+
+    .site-footer .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
     }
 }
