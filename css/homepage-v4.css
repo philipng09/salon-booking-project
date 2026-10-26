@@ -657,154 +657,161 @@
 }
 
 /* 7. MULTI-SALON DISCOVERY */
+
+/* 7. MULTI-SALON DISCOVERY */
+
 .salon-discovery {
-  padding:52px 0 46px;
+  padding: 52px 0 46px;
 }
 
 .salon-discovery .section-head {
-  align-items:end;
+  align-items: end;
 }
 
 .demo-note {
-  color:var(--muted);
-  font-size:12px;
-  font-weight:600;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
 }
 
+/* Bố cục 3 salon đồng đều */
 .salon-grid {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:19px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 19px;
+  align-items: stretch;
 }
 
+/* Khung thẻ salon */
 .salon-card {
-  border-radius:22px;
-  overflow:hidden;
-  background:#fffefa;
-  border:1px solid var(--line);
-  box-shadow:0 9px 24px rgba(6,62,50,.055);
-  transition:transform .24s ease,box-shadow .24s ease;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  height: 100%;
+  border-radius: 22px;
+  overflow: hidden;
+  background: #fffefa;
+  border: 1px solid var(--line);
+  box-shadow: 0 9px 24px rgba(6, 62, 50, .055);
+  transition: transform .24s ease, box-shadow .24s ease;
 }
 
 .salon-card:hover {
-  transform:translateY(-5px);
-  box-shadow:var(--shadow);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow);
 }
 
+/* Khung ảnh đồng nhất theo tỷ lệ 4:3 */
 .salon-art {
-  position:relative;
-  min-height:195px;
-  overflow:hidden;
-  padding:22px;
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  color:#fff;
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 4 / 3;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #e8dcc4;
 }
 
+/* Bỏ biểu tượng kéo trang trí của phiên bản cũ */
 .salon-art::before {
-  content:"✂";
-  font-size:185px;
-  line-height:1;
-  position:absolute;
-  right:6%;
-  top:-5%;
-  opacity:.18;
-  transform:rotate(-13deg);
+  content: none;
 }
 
-.art-one {
-  background:linear-gradient(135deg,#075842,#0e8b70);
+/* Ảnh lấp đầy khung và không bị kéo méo */
+.salon-art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
-.art-two {
-  background:linear-gradient(135deg,#a75c32,#e59b4a);
-}
-
-.art-three {
-  background:linear-gradient(135deg,#0d6b61,#469f87);
-}
-
-.salon-monogram {
-  font-size:55px;
-  font-weight:900;
-  letter-spacing:-.08em;
-}
-
-.salon-art-label {
-  font-size:10px;
-  letter-spacing:.16em;
-  font-weight:800;
-}
-
+/* Nội dung phía dưới ảnh */
 .salon-card-body {
-  padding:22px 24px 25px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 22px 24px 25px;
 }
 
 .salon-type {
-  color:#658177;
-  font-size:10px;
-  font-weight:800;
-  letter-spacing:.16em;
+  color: #658177;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .16em;
 }
 
 .salon-card h3 {
-  font-size:23px;
-  margin:9px 0 9px;
-  letter-spacing:-.045em;
+  font-size: 23px;
+  margin: 9px 0;
+  letter-spacing: -.045em;
 }
 
 .salon-card p {
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.6;
-  min-height:45px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 45px;
 }
 
+/* Các nút nằm thẳng hàng ở cuối thẻ */
 .salon-card-link {
-  display:inline-flex;
-  gap:10px;
-  align-items:center;
-  border-bottom:2px solid var(--yellow);
-  padding-bottom:5px;
-  font-weight:800;
-  font-size:12px;
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 10px;
+  margin-top: auto;
+  border-bottom: 2px solid var(--yellow);
+  padding-bottom: 5px;
+  font-weight: 800;
+  font-size: 12px;
 }
 
 .salon-card-link:hover {
-  color:#16836b;
+  color: #16836b;
 }
 
 /* 8. RESPONSIVE SALON DISCOVERY */
-@media (max-width:900px) {
+
+/* Tablet: 2 cột */
+@media (min-width: 601px) and (max-width: 900px) {
   .salon-grid {
-    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .salon-card:last-child {
-    grid-column:1/-1;
+    grid-column: auto;
   }
 }
 
-@media (max-width:600px) {
+/* Mobile: 1 cột */
+@media (max-width: 600px) {
   .salon-grid {
-    grid-template-columns:1fr;
+    grid-template-columns: 1fr;
   }
 
   .salon-card:last-child {
-    grid-column:auto;
+    grid-column: auto;
   }
 
   .salon-discovery {
-    padding:38px 0;
+    padding: 38px 0;
   }
 
   .salon-discovery .section-head {
-    flex-direction:column;
-    align-items:flex-start;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .salon-art {
-    min-height:165px;
+    aspect-ratio: 4 / 3;
+  }
+
+  .salon-card-body {
+    padding: 20px;
   }
 }
