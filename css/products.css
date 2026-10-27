@@ -1,0 +1,311 @@
+```css
+/* =========================================
+   SALONBOOK - PRODUCTS PAGE
+   CSS riêng cho trang khám phá salon
+========================================= */
+
+.products-page {
+    padding: 40px 0 70px;
+    color: var(--ink, #0a4336);
+}
+
+.products-heading {
+    margin-bottom: 28px;
+}
+
+.products-heading h1 {
+    margin-bottom: 10px;
+    font-size: clamp(28px, 4vw, 40px);
+}
+
+.products-heading p {
+    color: var(--muted, #587269);
+    line-height: 1.7;
+}
+
+/* Thanh tìm kiếm và sắp xếp */
+
+.products-toolbar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.products-toolbar input,
+.products-toolbar select {
+    min-height: 46px;
+    padding: 10px 14px;
+    border: 1px solid var(--line, #dce7df);
+    border-radius: 10px;
+    background: #fff;
+    color: var(--ink, #0a4336);
+    font: inherit;
+}
+
+.products-toolbar input {
+    flex: 1;
+    min-width: 220px;
+}
+
+.products-toolbar select {
+    min-width: 180px;
+}
+
+.products-toolbar input:focus,
+.products-toolbar select:focus {
+    outline: 2px solid var(--forest, #0c513f);
+    outline-offset: 2px;
+}
+
+/* Bố cục chính */
+
+.products-layout {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+}
+
+/* Bộ lọc bên trái */
+
+.products-sidebar {
+    padding: 22px;
+    border: 1px solid var(--line, #dce7df);
+    border-radius: 16px;
+    background: #fff;
+}
+
+.products-sidebar h2 {
+    margin: 0 0 20px;
+    font-size: 20px;
+}
+
+.filter-group {
+    margin-bottom: 22px;
+}
+
+.filter-group h3 {
+    margin: 0 0 12px;
+    font-size: 15px;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 10px 0;
+    color: var(--muted, #587269);
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.filter-option input {
+    accent-color: var(--forest, #0c513f);
+    cursor: pointer;
+}
+
+.filter-reset {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid var(--forest, #0c513f);
+    border-radius: 9px;
+    background: #fff;
+    color: var(--forest, #0c513f);
+    font: inherit;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+.filter-reset:hover {
+    background: var(--forest, #0c513f);
+    color: #fff;
+}
+
+/* Khu vực danh sách */
+
+.products-results {
+    min-width: 0;
+}
+
+.products-count {
+    margin: 0 0 18px;
+    color: var(--muted, #587269);
+    font-size: 14px;
+}
+
+/* Lưới salon */
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.product-salon-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--line, #dce7df);
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(6, 62, 50, 0.06);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-salon-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow, 0 15px 42px rgba(6, 62, 50, 0.12));
+}
+
+/* Quan trọng: ẩn card khi lọc */
+
+.product-salon-card[hidden] {
+    display: none !important;
+}
+
+/* Ảnh salon */
+
+.salon-image {
+    display: block;
+    width: 100%;
+    height: 210px;
+    object-fit: cover;
+    background: var(--mint, #e5f0e8);
+}
+
+/* Thông tin salon */
+
+.salon-info {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 17px;
+}
+
+.salon-info h2 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.salon-address {
+    margin: 0;
+    color: var(--muted, #587269);
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+.salon-tag {
+    align-self: flex-start;
+    padding: 5px 9px;
+    border-radius: 20px;
+    background: var(--mint, #e5f0e8);
+    color: var(--forest, #0c513f);
+    font-size: 12px;
+}
+
+/* Nút xem chi tiết */
+
+.salon-detail-button {
+    display: block;
+    margin-top: auto;
+    padding: 11px 14px;
+    border-radius: 9px;
+    background: var(--forest, #0c513f);
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.salon-detail-button:hover {
+    background: var(--deep, #063e32);
+}
+
+.salon-detail-button:focus-visible {
+    outline: 2px solid var(--yellow, #ffc501);
+    outline-offset: 3px;
+}
+
+/* Không có kết quả tìm kiếm */
+
+.products-empty {
+    display: none;
+    padding: 36px 16px;
+    border: 1px dashed var(--line, #dce7df);
+    border-radius: 14px;
+    color: var(--muted, #587269);
+    text-align: center;
+}
+
+.products-empty.show {
+    display: block;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+/* Máy tính bảng */
+
+@media (max-width: 1100px) {
+    .products-layout {
+        grid-template-columns: 220px minmax(0, 1fr);
+        gap: 20px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+    }
+}
+
+/* Điện thoại */
+
+@media (max-width: 760px) {
+    .products-page {
+        padding: 28px 0 48px;
+    }
+
+    .products-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .products-sidebar {
+        padding: 18px;
+    }
+
+    .products-toolbar select {
+        flex: 1;
+        min-width: 140px;
+    }
+
+    .salon-image {
+        height: 220px;
+    }
+}
+
+@media (max-width: 480px) {
+    .products-toolbar {
+        flex-direction: column;
+    }
+
+    .products-toolbar input,
+    .products-toolbar select {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .salon-image {
+        height: 230px;
+    }
+}
+```
