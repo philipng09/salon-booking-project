@@ -1,39 +1,258 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0C513F">
+    <meta name="description" content="Giới thiệu SalonBook - dự án nền tảng kết nối khách hàng với các salon và barbershop tại TP.HCM.">
     <title>Giới thiệu | SalonBook</title>
+    <!-- CSS dùng chung từ repo -->
     <link rel="stylesheet" href="css/style.css?v=3">
+    <!-- CSS riêng của trang Giới thiệu -->
+    <link rel="stylesheet" href="css/about.css">
 </head>
 <body>
-    <header class="site-header">
-        <div class="container">
-            <a class="site-logo" href="index.html">SalonBook</a>
-            <nav class="main-nav" aria-label="Điều hướng chính">
-                <a href="index.html">Trang chủ</a>
-                <a href="products.html">Khám phá salon</a>
-                <a href="about.html">Giới thiệu</a>
-            </nav>
-        </div>
-    </header>
+    <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
 
-    <main class="container">
-        <h1>Giới thiệu SalonBook</h1>
-        <p>
-            SalonBook là dự án nền tảng kết nối khách hàng
-            với các salon và barbershop tại TP.HCM.
-        </p>
+    <!-- HEADER DÙNG CHUNG (tải tự động qua js/common.js từ components/header.html) -->
+    <div id="shared-header"></div>
 
-        <!-- TODO: Bổ sung giá trị nền tảng,
-             hình ảnh minh họa và thông tin liên hệ phù hợp -->
+    <main id="main-content" class="about-page">
+
+        <!-- 1. HERO / LỜI GIỚI THIỆU & ẢNH MINH HỌA (Theo Mục 5.1 Đặc tả giao diện) -->
+        <section class="about-hero container" aria-labelledby="about-title">
+            <div class="about-hero-grid">
+                <!-- Cột chữ (ưu tiên hiển thị trước ảnh trên mobile theo đặc tả Responsive) -->
+                <div class="about-hero-content">
+                    <p class="about-overline">VỀ CHÚNG TÔI · SALONBOOK TP.HCM</p>
+                    <h1 id="about-title">Giới thiệu SalonBook</h1>
+                    <p class="about-lead">
+                        SalonBook là dự án nền tảng kết nối khách hàng với các salon và barbershop tại TP.HCM.
+                    </p>
+                    <div class="about-story-box">
+                        <h2>SalonBook là gì?</h2>
+                        <p>
+                            Hoạt động theo mô hình nền tảng trung gian (Marketplace), SalonBook đóng vai trò cầu nối trực tiếp giữa người dùng có nhu cầu chăm sóc tóc (cắt, uốn, nhuộm, gội đầu thư giãn, phục hồi tóc) với hệ thống các tiệm tóc, barbershop và salon từ bình dân đến chuyên nghiệp trên địa bàn Thành phố Hồ Chí Minh.
+                        </p>
+                        <p>
+                            Nền tảng hướng tới việc cung cấp một không gian thông tin tập trung, minh bạch và đồng bộ, giúp người dùng thuận tiện tra cứu thông tin dịch vụ và bảng giá trước khi lựa chọn salon phù hợp.
+                        </p>
+                    </div>
+                    <div class="about-hero-actions">
+                        <a class="btn btn-yellow btn-top" href="products.html">
+                            Khám phá salon →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Cột ảnh minh họa không gian salon (sử dụng đúng ảnh có sẵn trong repo images/) -->
+                <div class="about-hero-media">
+                    <figure class="about-main-figure">
+                        <img src="images/salon-01.jpg" alt="Không gian chăm sóc tóc hiện đại tại salon đối tác của SalonBook" loading="lazy">
+                        <figcaption class="about-figure-caption">
+                            <span>✦ Không gian salon đối tác tại TP.HCM</span>
+                            <strong>Kết nối đa thương hiệu trên một nền tảng</strong>
+                        </figcaption>
+                    </figure>
+                    <div class="about-sub-figures" aria-hidden="true">
+                        <img src="images/salon-02.jpg" alt="" loading="lazy">
+                        <img src="images/salon-03.jpg" alt="" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. GIÁ TRỊ NỀN TẢNG: KHÁCH HÀNG & ĐỐI TÁC SALON (2 khối theo Đặc tả Mục 5.1) -->
+        <section class="about-values container" aria-labelledby="values-title">
+            <div class="about-section-head">
+                <p class="about-overline">GIÁ TRỊ CỐT LÕI CỦA NỀN TẢNG</p>
+                <h2 id="values-title">Giá trị mang lại cho Khách hàng &amp; Salon <span class="heading-star">✳</span></h2>
+                <p class="about-section-sub">
+                    Giải quyết bài toán tìm kiếm thông tin phân tán của khách hàng và mở rộng kênh giới thiệu trực tuyến cho các tiệm tóc địa phương.
+                </p>
+            </div>
+
+            <div class="about-values-grid">
+                <!-- Khối 1: Giá trị cho khách hàng -->
+                <article class="about-value-card">
+                    <div class="value-card-top">
+                        <span class="value-badge">01 / DÀNH CHO KHÁCH HÀNG</span>
+                        <h3>Giá trị cho khách hàng</h3>
+                    </div>
+                    <p class="value-summary">
+                        Dành cho học sinh, sinh viên và nhân viên văn phòng (16–40 tuổi) tại TP.HCM có lịch trình bận rộn, cần không gian tra cứu minh bạch và nhanh chóng.
+                    </p>
+                    <ul class="value-list">
+                        <li>
+                            <strong>Tra cứu dịch vụ &amp; bảng giá thuận tiện:</strong> Xem trước danh mục các gói cắt, uốn, nhuộm, gội thư giãn và phục hồi tóc cùng mức giá tham khảo rõ ràng.
+                        </li>
+                        <li>
+                            <strong>So sánh nhiều salon tại một nơi:</strong> Dễ dàng đối chiếu thông tin, địa chỉ theo Quận/Khu vực tại TP.HCM và phong cách của từng tiệm mà không phải tìm kiếm rời rạc.
+                        </li>
+                        <li>
+                            <strong>Tiếp cận thông tin trực quan:</strong> Tham khảo hình ảnh không gian, thông tin chuyên viên (stylist) trước khi đưa ra quyết định.
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- Khối 2: Giá trị cho đối tác salon -->
+                <article class="about-value-card value-card-accent">
+                    <div class="value-card-top">
+                        <span class="value-badge">02 / DÀNH CHO ĐỐI TÁC SALON</span>
+                        <h3>Giá trị cho salon</h3>
+                    </div>
+                    <p class="value-summary">
+                        Đồng hành cùng các chủ tiệm tóc, barbershop và salon vừa và nhỏ tại TP.HCM trong quá trình chuẩn hóa thông tin và hiện diện số.
+                    </p>
+                    <ul class="value-list">
+                        <li>
+                            <strong>Thêm kênh giới thiệu dịch vụ trực tuyến:</strong> Quảng bá hình ảnh không gian, bảng giá và các gói dịch vụ đặc trưng tới tệp khách hàng trẻ tại TP.HCM mà không tốn chi phí tự xây dựng website riêng.
+                        </li>
+                        <li>
+                            <strong>Chuẩn hóa thông tin tiệm &amp; đội ngũ:</strong> Trình bày danh mục dịch vụ, đơn giá tham khảo và danh sách thợ làm tóc (stylist) rõ ràng, chuyên nghiệp.
+                        </li>
+                        <li>
+                            <strong>Hướng tới số hóa quy trình lịch hẹn:</strong> Đặt nền móng cho việc quản lý khung giờ phục vụ tập trung, giảm thiểu nhầm lẫn khi ghi chép thủ công.
+                        </li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+
+        <!-- 3. THẺ CARD CAM KẾT CHẤT LƯỢNG & NGUYÊN TẮC NỀN TẢNG (Theo Mục 2.2 Báo cáo) -->
+        <section class="about-commitments container" aria-labelledby="commit-title">
+            <div class="about-section-head">
+                <p class="about-overline">ĐỊNH HƯỚNG &amp; CAM KẾT DỊCH VỤ</p>
+                <h2 id="commit-title">Cam kết chất lượng trên SalonBook <span class="heading-star">✳</span></h2>
+            </div>
+
+            <div class="commitment-grid">
+                <article class="commitment-card">
+                    <div class="commitment-thumb">
+                        <img src="images/service-cut.png" alt="Dịch vụ cắt và tạo kiểu tóc" loading="lazy">
+                        <span class="commitment-no">01 / TRANSPARENCY</span>
+                    </div>
+                    <div class="commitment-body">
+                        <h3>Thông tin &amp; Bảng giá minh bạch</h3>
+                        <p>
+                            Mỗi salon và gói dịch vụ trên nền tảng đều hiển thị rõ địa chỉ khu vực, mô tả gói chăm sóc và mức giá tham khảo để khách hàng chủ động lựa chọn.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="commitment-card">
+                    <div class="commitment-thumb">
+                        <img src="images/service-color.png" alt="Đa dạng dịch vụ uốn nhuộm" loading="lazy">
+                        <span class="commitment-no">02 / ECOSYSTEM</span>
+                    </div>
+                    <div class="commitment-body">
+                        <h3>Hệ sinh thái đa thương hiệu</h3>
+                        <p>
+                            Quy tụ nhiều mô hình từ barbershop nam, salon tóc nữ đến tiệm gội đầu dưỡng sinh tại các quận nội thành TP.HCM trong cùng một giao diện thống nhất.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="commitment-card">
+                    <div class="commitment-thumb">
+                        <img src="images/service-care.png" alt="Chăm sóc và phục hồi tóc" loading="lazy">
+                        <span class="commitment-no">03 / EXPERIENCE</span>
+                    </div>
+                    <div class="commitment-body">
+                        <h3>Giao diện trực quan, dễ sử dụng</h3>
+                        <p>
+                            Thiết kế đồng bộ về bảng màu, kiểu chữ và bố cục đáp ứng (Responsive), hỗ trợ tra cứu mượt mà trên cả máy tính lẫn điện thoại di động.
+                        </p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- 4. ĐỘI NGŨ PHÁT TRIỂN DỰ ÁN (7 THÀNH VIÊN THEO PROJECT_PLAN.md & BÁO CÁO) -->
+        <section class="about-team container" aria-labelledby="team-title">
+            <div class="about-section-head">
+                <p class="about-overline">NHÓM THỰC HIỆN ĐỒ ÁN · 7 THÀNH VIÊN</p>
+                <h2 id="team-title">Đội ngũ phát triển SalonBook <span class="heading-star">✳</span></h2>
+                <p class="about-section-sub">
+                    Dự án học tập môn Phát triển ứng dụng Thương mại điện tử – xây dựng và hoàn thiện bởi nhóm 7 thành viên.
+                </p>
+            </div>
+
+            <div class="team-grid">
+                <article class="team-card">
+                    <span class="team-code">TV1 · LEADER / BA</span>
+                    <h3>Ngân</h3>
+                    <p class="team-role">Trưởng nhóm &amp; Phân tích nghiệp vụ</p>
+                    <p class="team-desc">Điều phối tiến độ tổng thể, xác định đề tài, kiểm soát phạm vi yêu cầu và đồng bộ nội dung dự án.</p>
+                </article>
+
+                <article class="team-card">
+                    <span class="team-code">TV2 · RESEARCH &amp; UI</span>
+                    <h3>Duyên</h3>
+                    <p class="team-role">Research, AI Specialist &amp; UI Design</p>
+                    <p class="team-desc">Khảo sát hệ thống đối thủ, phân tích yêu cầu cùng AI, thiết kế Design System và xây dựng CSS chung.</p>
+                </article>
+
+                <article class="team-card">
+                    <span class="team-code">TV3 · REQUIREMENTS</span>
+                    <h3>Hân Nguyễn</h3>
+                    <p class="team-role">Requirements Analyst &amp; Frontend</p>
+                    <p class="team-desc">Đặc tả vai trò người dùng, danh mục chức năng F-code, quy chuẩn phi chức năng và giao diện danh sách salon.</p>
+                </article>
+
+                <article class="team-card">
+                    <span class="team-code">TV4 · WORKFLOW &amp; UX</span>
+                    <h3>Hân Văn</h3>
+                    <p class="team-role">Workflow &amp; UX Designer</p>
+                    <p class="team-desc">Xây dựng luồng nghiệp vụ đặt lịch, xử lý ngoại lệ, viết đặc tả giao diện 4 trang và phát triển trang danh sách.</p>
+                </article>
+
+                <article class="team-card">
+                    <span class="team-code">TV5 · PROJECT PLANNER</span>
+                    <h3>My</h3>
+                    <p class="team-role">Project Manager &amp; Frontend</p>
+                    <p class="team-desc">Lập kế hoạch lộ trình 8 tuần, quản lý phân công nhiệm vụ, kiểm soát rủi ro và xây dựng trang Giới thiệu.</p>
+                </article>
+
+                <article class="team-card">
+                    <span class="team-code">TV6 · TECHNICAL LEAD</span>
+                    <h3>Phi</h3>
+                    <p class="team-role">Technical Lead &amp; Fullstack</p>
+                    <p class="team-desc">Thiết lập cấu trúc repository GitHub, xây dựng thành phần dùng chung, tối ưu Responsive và hiệu ứng tương tác.</p>
+                </article>
+
+                <article class="team-card">
+                    <span class="team-code">TV7 · QA &amp; DOCS</span>
+                    <h3>Thông</h3>
+                    <p class="team-role">QA, Documentation &amp; Frontend</p>
+                    <p class="team-desc">Biên soạn tài liệu README, nhật ký AI Usage Log, xây dựng trang Chi tiết salon &amp; Giới thiệu và kiểm thử hệ thống.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- 5. KÊU GỌI HÀNH ĐỘNG (CTA DẪN TỚI PRODUCTS.HTML THEO ĐẶC TẢ MỤC 5.1 & 6) -->
+        <section class="about-cta container" aria-labelledby="cta-title">
+            <div class="about-cta-box">
+                <div class="about-cta-text">
+                    <p class="cta-eyebrow">YOUR BEAUTY, YOUR TIME</p>
+                    <h2 id="cta-title">Sẵn sàng tìm kiếm salon phù hợp với bạn?</h2>
+                    <p>
+                        Khám phá danh sách các salon và dịch vụ chăm sóc tóc tiêu biểu tại TP.HCM ngay trên SalonBook.
+                    </p>
+                </div>
+                <div class="about-cta-action">
+                    <a class="btn btn-yellow btn-top" href="products.html">
+                        Khám phá salon →
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <p>SalonBook - Dự án học tập</p>
-        </div>
-    </footer>
+    <!-- FOOTER DÙNG CHUNG (tải tự động qua js/common.js từ components/footer.html) -->
+    <div id="shared-footer"></div>
+
+    <script src="js/common.js"></script>
 </body>
 </html>
