@@ -1,0 +1,558 @@
+/* ==========================================================================
+   CSS RIÊNG CHO TRANG GIỚI THIỆU (css/about.css)
+   Sử dụng đồng bộ biến màu (:root) từ file css/style.css của dự án SalonBook:
+   --forest: #0c513f | --deep: #063e32 | --night: #052f28
+   --yellow: #ffc501 | --cream: #fefbf0 | --ink: #0a4336
+   --muted: #587269  | --line: #dce7df  | --mint: #e5f0e8
+   --shadow: 0 15px 42px rgba(6,62,50,.12)
+   ========================================================================== */
+
+.about-page {
+  padding-bottom: 64px;
+}
+
+.about-overline {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 10px;
+}
+
+.heading-star {
+  color: var(--yellow);
+}
+
+/* --------------------------------------------------------------------------
+   1. HERO / LỜI GIỚI THIỆU & ẢNH MINH HỌA (Desktop 2 cột, Mobile 1 cột)
+   -------------------------------------------------------------------------- */
+.about-hero {
+  padding-top: 28px;
+  padding-bottom: 56px;
+}
+
+.about-hero-grid {
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+  gap: 44px;
+  align-items: center;
+  background: linear-gradient(125deg, var(--forest) 0%, var(--deep) 65%, var(--night) 100%);
+  color: #ffffff;
+  border-radius: 36px;
+  padding: 52px 56px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.about-hero-grid::before {
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: -120px;
+  width: 340px;
+  height: 340px;
+  background: rgba(255, 197, 1, 0.14);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.about-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.about-hero-content .about-overline {
+  color: var(--yellow);
+}
+
+.about-hero-content h1 {
+  font-size: clamp(30px, 3.6vw, 46px);
+  line-height: 1.15;
+  font-weight: 900;
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.about-lead {
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.6;
+  color: #e9f5ef;
+  font-weight: 700;
+  margin: 0 0 24px;
+}
+
+.about-story-box {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 20px;
+  padding: 22px 24px;
+  margin-bottom: 28px;
+}
+
+.about-story-box h2 {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--yellow);
+  margin: 0 0 10px;
+}
+
+.about-story-box p {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: #d8ebe2;
+  margin: 0 0 10px;
+}
+
+.about-story-box p:last-child {
+  margin-bottom: 0;
+}
+
+.about-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.about-hero-media {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.about-main-figure {
+  margin: 0;
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  background: var(--night);
+}
+
+.about-main-figure img {
+  width: 100%;
+  height: 310px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.about-main-figure:hover img {
+  transform: scale(1.03);
+}
+
+.about-figure-caption {
+  padding: 14px 18px;
+  background: rgba(5, 47, 40, 0.9);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.about-figure-caption span {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  font-weight: 700;
+}
+
+.about-figure-caption strong {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.about-sub-figures {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.about-sub-figures img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+}
+
+/* --------------------------------------------------------------------------
+   TIÊU ĐỀ PHÂN ĐOẠN DÙNG CHUNG TRONG TRANG ABOUT
+   -------------------------------------------------------------------------- */
+.about-section-head {
+  max-width: 760px;
+  margin-bottom: 28px;
+}
+
+.about-section-head h2 {
+  font-size: clamp(24px, 2.5vw, 34px);
+  font-weight: 900;
+  color: var(--ink);
+  margin: 0 0 10px;
+  letter-spacing: -0.02em;
+}
+
+.about-section-sub {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   2. GIÁ TRỊ NỀN TẢNG (2 KHỐI: KHÁCH HÀNG & ĐỐI TÁC SALON)
+   -------------------------------------------------------------------------- */
+.about-values {
+  padding: 24px 0 56px;
+}
+
+.about-values-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+
+.about-value-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 34px 32px;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-value-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 46px rgba(6, 62, 50, 0.16);
+}
+
+.value-card-accent {
+  background: var(--mint);
+  border-color: #c5ddd0;
+}
+
+.value-card-top {
+  margin-bottom: 14px;
+}
+
+.value-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--forest);
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.value-card-accent .value-badge {
+  background: var(--yellow);
+  color: var(--night);
+}
+
+.about-value-card h3 {
+  font-size: 23px;
+  font-weight: 900;
+  color: var(--ink);
+  margin: 0;
+}
+
+.value-summary {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0 0 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.value-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.value-list li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+.value-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--forest);
+  color: var(--yellow);
+  font-size: 11px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --------------------------------------------------------------------------
+   3. THẺ CARD CAM KẾT CHẤT LƯỢNG DỊCH VỤ (3 THẺ)
+   -------------------------------------------------------------------------- */
+.about-commitments {
+  padding: 12px 0 56px;
+}
+
+.commitment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.commitment-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.commitment-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 42px rgba(6, 62, 50, 0.16);
+}
+
+.commitment-thumb {
+  position: relative;
+  height: 190px;
+  background: var(--mint);
+  overflow: hidden;
+}
+
+.commitment-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.commitment-no {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: rgba(5, 47, 40, 0.88);
+  color: var(--yellow);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  padding: 5px 11px;
+  border-radius: 999px;
+}
+
+.commitment-body {
+  padding: 22px 24px 26px;
+}
+
+.commitment-body h3 {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--ink);
+  margin: 0 0 10px;
+}
+
+.commitment-body p {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   4. ĐỘI NGŨ PHÁT TRIỂN (7 THÀNH VIÊN)
+   -------------------------------------------------------------------------- */
+.about-team {
+  padding: 12px 0 56px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.team-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 22px 20px;
+  box-shadow: 0 8px 24px rgba(6, 62, 50, 0.07);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--forest);
+}
+
+.team-code {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  color: var(--forest);
+  background: var(--mint);
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
+
+.team-card h3 {
+  font-size: 19px;
+  font-weight: 900;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+
+.team-role {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--forest);
+  margin: 0 0 10px;
+}
+
+.team-desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   5. BANNER KÊU GỌI HÀNH ĐỘNG (CTA CUỐI TRANG)
+   -------------------------------------------------------------------------- */
+.about-cta {
+  padding-top: 8px;
+}
+
+.about-cta-box {
+  background: var(--forest);
+  color: #ffffff;
+  border-radius: 28px;
+  padding: 40px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  box-shadow: var(--shadow);
+}
+
+.cta-eyebrow {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: var(--yellow);
+  margin: 0 0 8px;
+}
+
+.about-cta-text h2 {
+  font-size: clamp(22px, 2.3vw, 30px);
+  font-weight: 900;
+  margin: 0 0 8px;
+}
+
+.about-cta-text p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #d8ebe2;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   6. RESPONSIVE (1366px / 768px / 390px theo chuẩn kiểm thử của nhóm)
+   -------------------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  .about-hero-grid {
+    padding: 38px 36px;
+    gap: 30px;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  /* Chuyển Hero thành 1 cột, tiêu đề và nội dung quan trọng đứng trước ảnh */
+  .about-hero-grid {
+    grid-template-columns: 1fr;
+    padding: 30px 24px;
+    border-radius: 26px;
+  }
+
+  .about-values-grid,
+  .commitment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-cta-box {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 30px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-hero {
+    padding-top: 16px;
+    padding-bottom: 36px;
+  }
+
+  .about-hero-grid {
+    padding: 24px 18px;
+    border-radius: 20px;
+  }
+
+  .about-story-box {
+    padding: 16px 18px;
+  }
+
+  .about-main-figure img {
+    height: 220px;
+  }
+
+  .about-sub-figures {
+    grid-template-columns: 1fr;
+  }
+
+  .about-value-card {
+    padding: 24px 20px;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero-actions .btn,
+  .about-cta-action .btn {
+    width: 100%;
+  }
+}
