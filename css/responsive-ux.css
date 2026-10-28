@@ -1,0 +1,275 @@
+/* ==========================================================================
+   SALONBOOK – RESPONSIVE & HIỆU ỨNG TƯƠNG TÁC (Mục 8, Mục 9 – Buổi 2)
+   Phụ trách: Phi (TV6)
+   File được nạp SAU CÙNG trên cả 4 trang, chỉ bổ sung/ghi đè những điểm
+   lỗi đã phát hiện khi kiểm thử; không sửa trực tiếp CSS của từng trang.
+   Mốc kiểm thử: 1366px (máy tính) · 768px (máy tính bảng) · 390px (điện thoại)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. BIẾN DÙNG CHUNG CHO TƯƠNG TÁC
+   -------------------------------------------------------------------------- */
+:root {
+  --focus-inner: #052f28;   /* xanh đậm – nổi trên nền sáng */
+  --focus-outer: #ffc501;   /* vàng thương hiệu – nổi trên nền xanh */
+  --ease: 0.2s ease;
+  --tap-size: 44px;         /* kích thước chạm tối thiểu khuyến nghị */
+}
+
+/* --------------------------------------------------------------------------
+   1. FOCUS THỐNG NHẤT TOÀN WEBSITE (Mục 9)
+   Lỗi: mỗi trang dùng một kiểu viền focus khác nhau (cam, vàng 2px, vàng 3px);
+   viền cam #ff9d32 trên nền kem tương phản thấp, khó nhận ra khi dùng bàn phím.
+   Cách sửa: viền 2 lớp (xanh đậm bên trong + vàng bên ngoài) nhìn rõ trên
+   cả nền sáng lẫn nền xanh của hero/footer.
+   -------------------------------------------------------------------------- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible,
+.btn:focus-visible,
+.salon-detail-button:focus-visible,
+.main-nav a:focus-visible {
+  outline: 3px solid var(--focus-inner);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px var(--focus-outer);
+  border-radius: 6px;
+}
+
+/* Ô chọn trong thanh tìm kiếm: đã có khung label bao ngoài nên chỉ cần viền gọn */
+.booking-bar select:focus-visible,
+.booking-bar input:focus-visible {
+  outline-offset: 4px;
+  box-shadow: none;
+}
+
+/* Khi cả khung label được focus bên trong, làm nổi cả ô cho dễ thấy */
+.booking-bar label:focus-within {
+  background: rgba(255, 197, 1, 0.12);
+  border-radius: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   2. HOVER THỐNG NHẤT (Mục 9)
+   Chỉ áp dụng trên thiết bị có chuột (hover: hover) để tránh hiệu ứng
+   "dính" sau khi chạm trên điện thoại. Chỉ dùng transform/box-shadow nên
+   không làm xê dịch bố cục các thẻ bên cạnh.
+   -------------------------------------------------------------------------- */
+.btn,
+.salon-detail-button,
+.filter-reset,
+.nav-toggle,
+.product-salon-card,
+.salon-card,
+.service-card,
+.detail-service-card,
+.value-card,
+.highlight-card,
+.partner-card {
+  transition: transform var(--ease), box-shadow var(--ease),
+              background-color var(--ease), color var(--ease);
+}
+
+@media (hover: hover) {
+  /* Nút chính: nhấc nhẹ + bóng đổ */
+  .btn:hover,
+  .salon-detail-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(6, 62, 50, 0.18);
+  }
+
+  /* Thẻ salon / dịch vụ: nhấc 4px, không đổi kích thước thẻ */
+  .product-salon-card:hover,
+  .salon-card:hover,
+  .detail-service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px rgba(6, 62, 50, 0.14);
+  }
+
+  /* Nút menu điện thoại trước đây không có trạng thái hover */
+  .nav-toggle:hover {
+    background: var(--mint, #e5f0e8);
+  }
+
+  /* Ô lọc: báo hiệu có thể bấm được */
+  .filter-option:hover {
+    color: var(--forest, #0c513f);
+  }
+}
+
+/* Trạng thái nhấn (áp dụng cả điện thoại) */
+.btn:active,
+.salon-detail-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Tôn trọng người dùng tắt hiệu ứng chuyển động */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  .btn:hover,
+  .salon-detail-button:hover,
+  .product-salon-card:hover,
+  .salon-card:hover,
+  .detail-service-card:hover {
+    transform: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   3. ẢNH KHÔNG BỊ MÉO (dùng chung)
+   -------------------------------------------------------------------------- */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-salon-card img,
+.salon-card img {
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   4. MÁY TÍNH BẢNG – ≤ 768px (Mục 8)
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  /* Nút ☰ chỉ cao 34px → tăng lên vùng chạm 44px */
+  .nav-toggle {
+    width: var(--tap-size);
+    height: var(--tap-size);
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    line-height: 1;
+  }
+
+  /* Liên kết trong menu xổ xuống: tăng vùng chạm */
+  .main-nav a {
+    min-height: var(--tap-size);
+    display: flex;
+    align-items: center;
+  }
+
+  /* Breadcrumb trang chi tiết chỉ cao 15px → khó chạm */
+  .detail-breadcrumb a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+  }
+
+  /* Liên kết quay lại danh sách */
+  .detail-back a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-size);
+  }
+
+  /* Nút mũi tên trên thẻ dịch vụ 39px → 44px */
+  .detail-service-bottom a {
+    width: var(--tap-size);
+    height: var(--tap-size);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   5. ĐIỆN THOẠI – ≤ 480px, kiểm thử ở 390px (Mục 8)
+   -------------------------------------------------------------------------- */
+@media (max-width: 480px) {
+  /* 5.1 Chữ nhãn 10–11px khó đọc trên điện thoại → tối thiểu 12px */
+  .booking-bar small,
+  .hero-perks>div,
+  .card-no,
+  .overline,
+  .detail-label,
+  .detail-service-number,
+  .card-tag,
+  .salon-type,
+  .all-services,
+  .detail-summary-label,
+  .cta-mini-tag,
+  .site-footer small,
+  .site-footer p {
+    font-size: 12px;
+  }
+
+  /* 5.1b Vòng tròn vàng trang trí đè lên dòng chữ vàng "Đặt lịch thật dễ dàng"
+     → chữ gần như mất tương phản. Thu nhỏ và đẩy vòng tròn lên góc phải. */
+  .hero::before {
+    width: 240px;
+    height: 240px;
+    right: -110px;
+    top: -120px;
+  }
+
+  /* Ba ưu điểm dưới tiêu đề: chia 3 cột đều, biểu tượng nằm trên chữ */
+  .hero-perks {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .hero-perks>div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  /* 5.2 Ô chọn trong thanh tìm kiếm chỉ cao 16px → tăng vùng chạm */
+  .booking-bar select,
+  .booking-bar input {
+    min-height: 36px;
+    font-size: 15px;
+  }
+
+  /* 5.3 Bộ lọc trang Khám phá salon: 10 ô xếp 1 cột đẩy salon đầu tiên
+     xuống ~900px. Chuyển ô lọc sang 2 cột để thấy kết quả sớm hơn. */
+  .products-sidebar {
+    padding: 16px;
+  }
+
+  .products-sidebar h2 {
+    margin-bottom: 12px;
+  }
+
+  .filter-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .filter-group h3 {
+    grid-column: 1 / -1;
+    margin-bottom: 4px;
+  }
+
+  .filter-option {
+    margin: 2px 0;
+    min-height: 32px;
+  }
+
+  .filter-reset {
+    min-height: var(--tap-size);
+  }
+
+  /* 5.4 Liên kết dạng chữ trên trang chủ chỉ cao 21–29px */
+  .all-services,
+  .salon-card-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--tap-size);
+  }
+
+  /* 5.5 Nút chính dễ bấm bằng ngón tay */
+  .btn,
+  .salon-detail-button {
+    min-height: var(--tap-size);
+  }
+}
