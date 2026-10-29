@@ -3,7 +3,6 @@
 /* Kế thừa biến màu từ style.css */
 
 /* 1. BREADCRUMB */
-
 .detail-breadcrumb {
   display:flex;
   align-items:center;
@@ -20,7 +19,6 @@
 }
 
 /* 2. GIỚI THIỆU SALON */
-
 .detail-hero {
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -103,7 +101,6 @@
 }
 
 /* 3. DANH SÁCH DỊCH VỤ */
-
 .detail-services {
   padding-bottom:85px;
 }
@@ -206,7 +203,6 @@
 }
 
 /* 4. CHỌN THỢ VÀ LỊCH */
-
 .detail-booking {
   padding:45px 0 70px;
   scroll-margin-top:20px;
@@ -281,7 +277,6 @@
 }
 
 /* 5. TÓM TẮT ĐẶT LỊCH */
-
 .detail-summary {
   background:var(--forest);
   color:white;
@@ -336,7 +331,6 @@
 }
 
 /* 6. QUAY LẠI */
-
 .detail-back {
   padding-bottom:65px;
 }
@@ -353,7 +347,6 @@
 }
 
 /* 7. RESPONSIVE TABLET */
-
 @media (max-width:1000px) {
   .detail-service-grid {
     grid-template-columns:repeat(2,minmax(0,1fr));
@@ -369,7 +362,6 @@
 }
 
 /* 8. RESPONSIVE MOBILE */
-
 @media (max-width:760px) {
   .detail-hero,
   .detail-booking-grid {
@@ -418,5 +410,68 @@
 
   .detail-summary-item {
     gap:12px;
+  }
+}
+
+/* 9. DANH SÁCH SALON KHÁC */
+.other-salons {
+  padding-bottom:75px;
+}
+
+.other-salon-grid {
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:20px;
+}
+
+.other-salon-card {
+  background:white;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:25px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  transition:transform .2s,box-shadow .2s;
+}
+
+.other-salon-card:hover {
+  transform:translateY(-4px);
+  box-shadow:var(--shadow);
+}
+
+.other-salon-card h3 {
+  font-size:21px;
+  line-height:1.3;
+}
+
+.other-salon-card p {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+  flex:1;
+}
+
+.other-salon-card a {
+  color:var(--forest);
+  font-size:13px;
+  font-weight:800;
+}
+
+.other-salon-card a:hover {
+  text-decoration:underline;
+}
+
+/* RESPONSIVE SALON TABLET */
+@media (max-width:1000px) {
+  .other-salon-grid {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+/* RESPONSIVE SALON MOBILE */
+@media (max-width:480px) {
+  .other-salon-grid {
+    grid-template-columns:1fr;
   }
 }
