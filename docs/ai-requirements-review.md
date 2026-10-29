@@ -8,11 +8,17 @@
 
 ## 1. Mục đích và phương pháp thực hiện
 
-Nhóm sử dụng ChatGPT theo Prompt 1 của giảng viên để đề xuất yêu cầu dự án dựa trên thông tin đề tài, vấn đề kinh doanh, khách hàng mục tiêu và kết quả khảo sát 30Shine, Fresha, KiotViet Salon. Nội dung phân tích gồm mục tiêu và phạm vi, nhóm người dùng, chức năng, quy trình nghiệp vụ, yêu cầu phi chức năng, phiên bản đầu tiên, chức năng nâng cao và rủi ro triển khai.
 
-Tiếp theo, Claude được sử dụng theo Prompt 2 để phản biện độc lập các đề xuất của ChatGPT theo sáu khía cạnh: mức độ giải quyết vấn đề kinh doanh, yêu cầu trùng lặp hoặc không cần thiết, tính khả thi, nghiệp vụ còn thiếu, rủi ro dữ liệu và mức độ rõ ràng để lập trình, kiểm thử.
+## 1. Mục đích và phương pháp thực hiện
 
-Kết quả được đối chiếu với mục tiêu và phạm vi SalonBook đã xác định. Nhóm ưu tiên các yêu cầu giải quyết trực tiếp vấn đề đặt lịch, quản lý lịch và vận hành marketplace; đồng thời phân biệt những phương án đã lựa chọn với các đề xuất cần xem xét thêm.
+Nhóm sử dụng ChatGPT theo Prompt 1 của giảng viên để đề xuất các yêu cầu nghiệp vụ cho SalonBook. Nội dung phân tích gồm mục tiêu và phạm vi dự án, nhóm người dùng, chức năng, quy trình nghiệp vụ,
+yêu cầu phi chức năng, chức năng ưu tiên và rủi ro triển khai.
+
+Tiếp theo, Claude được sử dụng theo Prompt 2 để phản biện độc lập các đề xuất của ChatGPT theo sáu khía cạnh: mức độ giải quyết vấn đề kinh doanh, yêu cầu trùng lặp, tính khả thi, nghiệp vụ còn thiếu, rủi ro dữ liệu và mức độ rõ ràng để lập trình, kiểm thử.
+
+Trong quá trình hoàn thiện nghiên cứu, nhóm cập nhật bộ ba website tham khảo thành 30Shine, Fresha và Đông Tây Barbershop. Sự thay đổi này được phản ánh trong tài liệu phân tích đối thủ; các kết quả phản biện AI của lần thực hiện trước vẫn được giữ theo đúng nội dung đã ghi nhận.
+
+Nhóm sử dụng kết quả khảo sát và phản biện để đánh giá những yêu cầu phù hợp với mô hình marketplace nhiều salon độc lập. Các phương án như GPS, bản đồ và hồ sơ stylist mở rộng cần được đối chiếu với phạm vi và nguồn lực trước khi triển khai.
 
 ## 2. Bảng đối chiếu kết quả hai công cụ AI
 
