@@ -207,6 +207,32 @@ Sau khi phân tích và phản biện, nhóm đưa ra các quyết định:
 
 ---
 
+## Cập nhật nguồn website tham khảo
+
+Trong quá trình hoàn thiện nghiên cứu, nhóm thống nhất
+thay website tham khảo thứ ba từ KiotViet Salon
+sang Đông Tây Barbershop.
+
+Bộ ba website tham khảo sau cập nhật gồm:
+
+1. 30Shine: https://30shine.com/
+2. Fresha: https://www.fresha.com/
+3. Đông Tây Barbershop: https://dongtaybarbershop.com/
+
+Đông Tây Barbershop được lựa chọn để tham khảo
+trải nghiệm tìm chi nhánh theo khu vực, tính năng
+tìm cửa hàng gần nhất, giới thiệu đội ngũ barber,
+thông tin dịch vụ và quy trình đặt lịch.
+
+Kết quả phân tích và phản biện AI đã ghi nhận ở
+Lần sử dụng 1 được giữ làm minh chứng lịch sử.
+Việc thay đổi website tham khảo không đồng nghĩa
+với việc ChatGPT hoặc Claude đã thực hiện lại
+quá trình phân tích, phản biện.
+
+Nhóm tiếp tục đối chiếu các đề xuất với phạm vi
+và yêu cầu nghiệp vụ đã được thống nhất.
+
 ## Nguyên tắc sử dụng AI
 
 - AI chỉ được sử dụng như công cụ hỗ trợ nghiên cứu, phân tích và đề xuất.
