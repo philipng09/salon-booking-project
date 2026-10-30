@@ -132,3 +132,102 @@ Các tài liệu phân tích, lập kế hoạch và hướng dẫn được lư
 - [Phân tích và phản biện AI – ai-requirements-review.md](docs/ai-requirements-review.md)
 - [Nhật ký sử dụng AI – AI_USAGE_LOG.md](AI_USAGE_LOG.md)
 - [Hướng dẫn phát triển – AGENTS.md](AGENTS.md)
+
+---
+
+## 8. Hướng dẫn chạy website
+
+SalonBook hiện được triển khai dưới dạng website giao diện
+(frontend prototype) bằng HTML5, CSS3 và JavaScript.
+
+### Truy cập trực tuyến
+
+Website:
+https://philipng09.github.io/salon-booking-project/
+
+Mã nguồn:
+https://github.com/philipng09/salon-booking-project
+
+### Chạy trên máy tính
+
+1. Truy cập GitHub Repository.
+2. Chọn Code → Download ZIP.
+3. Giải nén thư mục dự án.
+4. Mở file index.html bằng trình duyệt.
+5. Sử dụng menu để chuyển giữa các trang.
+
+Các trang chính:
+- index.html: Trang chủ.
+- products.html: Danh sách salon.
+- product-detail.html: Chi tiết salon và giao diện đặt lịch.
+- about.html: Giới thiệu SalonBook.
+
+Lưu ý: Để kiểm tra đầy đủ các thành phần được tải
+bằng JavaScript, nên chạy dự án bằng Live Server
+trong Visual Studio Code hoặc máy chủ HTTP cục bộ.
+
+---
+
+## 9. Hình ảnh minh họa giao diện
+
+Website được thiết kế thống nhất với màu xanh lá,
+vàng và nền sáng, sử dụng CSS Grid và Flexbox.
+
+Các giao diện minh họa:
+- Trang chủ SalonBook.
+- Trang danh sách salon.
+- Trang chi tiết salon.
+- Trang giới thiệu.
+
+Hình ảnh website và tài nguyên giao diện được
+lưu trong thư mục images/ của Repository.
+
+---
+
+## 10. Kiểm thử giao diện
+
+### Nội dung kiểm thử
+
+| Nội dung | Kết quả cần đạt |
+|---|---|
+| Điều hướng | Các trang liên kết chính xác |
+| Danh sách salon | Hiển thị thông tin và hình ảnh salon |
+| Chi tiết salon | Hiển thị đúng salon được lựa chọn |
+| Responsive | Bố cục thích ứng với kích thước màn hình |
+| Hover và Focus | Có phản hồi khi tương tác |
+| Hình ảnh | Tải đúng, không bị lỗi đường dẫn |
+
+### Kiểm thử responsive
+
+Kiểm tra trên trình duyệt Chrome bằng Developer Tools:
+
+- Desktop: 1366px.
+- Tablet: 768px.
+- Mobile: 390px.
+
+Minh chứng kiểm thử được lưu tại:
+docs/test-evidence/
+
+Kết quả thực tế và các lỗi phát hiện được ghi nhận
+trong tài liệu kiểm thử của nhóm.
+
+---
+
+## 11. Giới hạn phiên bản hiện tại
+
+Phiên bản hiện tại tập trung xây dựng và hoàn thiện
+giao diện website phục vụ bài tập HTML5/CSS3.
+
+Các chức năng đã có giao diện minh họa gồm:
+- Khám phá và xem thông tin salon.
+- Xem các nhóm dịch vụ chăm sóc tóc.
+- Chọn dịch vụ và ngày hẹn dự kiến.
+- Hiển thị thông tin tóm tắt đặt lịch.
+
+Những chức năng như xác nhận đặt lịch thực tế,
+đăng nhập, quản lý lịch hẹn, cơ sở dữ liệu,
+phân quyền và tích hợp AI sẽ tiếp tục được phát triển.
+
+Website chưa xử lý giao dịch hay thanh toán thật.
+
+---
