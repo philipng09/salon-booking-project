@@ -184,9 +184,10 @@ lưu trong thư mục images/ của Repository.
 
 ---
 
+
 ## 10. Kiểm thử giao diện
 
-### Nội dung kiểm thử
+### 10.1. Nội dung kiểm thử
 
 | Nội dung | Kết quả cần đạt |
 |---|---|
@@ -197,19 +198,31 @@ lưu trong thư mục images/ của Repository.
 | Hover và Focus | Có phản hồi khi tương tác |
 | Hình ảnh | Tải đúng, không bị lỗi đường dẫn |
 
-### Kiểm thử responsive
+### 10.2. Kết quả kiểm thử Responsive
 
-Kiểm tra trên trình duyệt Chrome bằng Developer Tools:
+Nhóm sử dụng Chrome Developer Tools để kiểm tra
+giao diện trang chi tiết Min Hair Salon trên ba
+kích thước màn hình.
 
-- Desktop: 1366px.
-- Tablet: 768px.
-- Mobile: 390px.
+| Thiết bị | Kết quả | Minh chứng |
+|---|---|---|
+| Desktop (1366px) | Đạt – Bố cục nhiều cột, hiển thị đầy đủ thông tin | [Xem ảnh Desktop](docs/test-evidence/01-responsive-desktop.png) |
+| Tablet (768px) | Đạt – Giao diện điều chỉnh phù hợp, các thẻ dịch vụ hiển thị 2 cột | [Xem ảnh Tablet](docs/test-evidence/02-responsive-tablet.png) |
+| Mobile | Đạt – Nội dung chuyển thành một cột, hình ảnh và thông tin được sắp xếp theo chiều dọc | [Xem ảnh Mobile](docs/test-evidence/03-responsive-mobile.png) |
 
-Minh chứng kiểm thử được lưu tại:
-docs/test-evidence/
+### 10.3. Kết luận kiểm thử
 
-Kết quả thực tế và các lỗi phát hiện được ghi nhận
-trong tài liệu kiểm thử của nhóm.
+Giao diện SalonBook sử dụng CSS Grid, Flexbox và
+Media Queries để thích ứng với các kích thước
+màn hình khác nhau.
+
+Qua kiểm tra trực quan, trang chi tiết salon
+hiển thị phù hợp trên Desktop, Tablet và Mobile.
+
+Các chức năng đặt lịch và xác nhận lịch hẹn
+thực tế chưa thuộc phạm vi kiểm thử giao diện
+của phiên bản hiện tại.
+
 
 ---
 
