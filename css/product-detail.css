@@ -103,11 +103,12 @@
 }
 
 .detail-button {
-  margin-top: auto;
+  margin-top: 20px;
   border-radius: 18px;
   padding: 16px 24px;
   font-size: 14px;
 }
+
 
 /* 3. DANH SÁCH DỊCH VỤ */
 
