@@ -1,530 +1,522 @@
 
-<!DOCTYPE html>
-<html lang="vi">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0c513f">
-  <meta name="description"
-        content="SalonBook - Khám phá thông tin salon, dịch vụ và lựa chọn lịch làm tóc.">
-
-  <title>Chi tiết salon | SalonBook</title>
-
-  <!-- CSS DÙNG CHUNG CỦA NHÓM -->
-  <link rel="stylesheet" href="css/style.css?v=3">
-
-  <!-- CSS RIÊNG TRANG CHI TIẾT - ĐÃ CẬP NHẬT -->
-  <link rel="stylesheet" href="css/product-detail.css?v=6">
-  <link rel="stylesheet" href="css/responsive-ux.css">
-</head>
-
-<body>
-
-  <a class="skip-link" href="#main-content">
-    Chuyển đến nội dung chính
-  </a>
-
-  <!-- HEADER DÙNG CHUNG -->
-  <div id="shared-header"></div>
-
-  <main id="main-content">
-
-    <!-- ĐƯỜNG DẪN ĐIỀU HƯỚNG -->
-    <div class="container">
-      <nav class="detail-breadcrumb"
-           aria-label="Đường dẫn điều hướng">
-        <a href="index.html">Trang chủ</a>
-        <span>/</span>
-        <a href="products.html">Khám phá salon</a>
-        <span>/</span>
-        <span>Chi tiết salon</span>
-      </nav>
-    </div>
-
-    <!-- PHẦN 1: THÔNG TIN CHI TIẾT SALON -->
-    <section class="container detail-hero"
-             aria-labelledby="detail-title">
-
-      <!-- HÌNH ẢNH SALON -->
-      <div class="detail-image">
-        <img src="images/salon-01.jpg"
-             alt="Hình ảnh minh họa salon The Hair Space"
-             loading="lazy">
-      </div>
-
-      <!-- NỘI DUNG GIỚI THIỆU -->
-      <div class="detail-info">
-
-        <p class="detail-label">
-          SALON TÓC · QUẬN 1
-        </p>
-
-        <h1 id="detail-title">
-          The Hair Space
-        </h1>
-
-        <p class="detail-address">
-          📍 34 Phó Đức Chính, Phường Bến Thành,
-          TP. Hồ Chí Minh
-        </p>
-
-        <div class="detail-divider"></div>
-
-        <h2>Giới thiệu salon</h2>
-
-        <p class="detail-description">
-          The Hair Space là salon được giới thiệu
-          trên nền tảng SalonBook.
-
-          Tại đây, người dùng có thể tham khảo
-          thông tin salon và các nhóm dịch vụ
-          chăm sóc tóc trước khi lựa chọn
-          lịch hẹn phù hợp.
-        </p>
-
-        <p class="detail-note">
-          Thông tin chi tiết về chuyên viên,
-          thời gian hoạt động và bảng giá
-          đang được cập nhật.
-        </p>
-
-        <a href="#booking"
-           class="btn btn-yellow detail-button">
-          Xem lựa chọn đặt lịch ↗
-        </a>
-
-      </div>
-    </section>
-
-    <!-- PHẦN 2: DANH SÁCH DỊCH VỤ -->
-    <section class="container detail-services"
-             aria-labelledby="detail-services-title">
-
-      <div class="detail-heading">
-        <p class="detail-label">
-          CHĂM SÓC BẠN THEO CÁCH RIÊNG
-        </p>
-
-        <h2 id="detail-services-title">
-          Dịch vụ salon <span>✳</span>
-        </h2>
-
-        <p>
-          Tham khảo các nhóm dịch vụ làm tóc
-          được giới thiệu trên SalonBook.
-        </p>
-      </div>
-
-      <div class="detail-service-grid">
-
-        <!-- DỊCH VỤ 01 -->
-        <article class="detail-service-card">
-          <span class="detail-service-number">
-            01 / STYLE
-          </span>
-
-          <h3>Cắt &amp; tạo kiểu</h3>
-
-          <p>
-            Lựa chọn dịch vụ cắt tóc và tạo kiểu
-            theo nhu cầu cá nhân.
-          </p>
-
-          <div class="detail-service-bottom">
-            <span>Giá đang cập nhật</span>
-            <a href="#booking"
-               aria-label="Xem lựa chọn lịch cắt và tạo kiểu">
-              ↗
-            </a>
-          </div>
-        </article>
-
-        <!-- DỊCH VỤ 02 -->
-        <article class="detail-service-card">
-          <span class="detail-service-number">
-            02 / COLOR
-          </span>
-
-          <h3>Nhuộm tóc</h3>
-
-          <p>
-            Tham khảo các lựa chọn màu tóc
-            và thay đổi phong cách cá nhân.
-          </p>
-
-          <div class="detail-service-bottom">
-            <span>Giá đang cập nhật</span>
-            <a href="#booking"
-               aria-label="Xem lựa chọn lịch nhuộm tóc">
-              ↗
-            </a>
-          </div>
-        </article>
-
-        <!-- DỊCH VỤ 03 -->
-        <article class="detail-service-card">
-          <span class="detail-service-number">
-            03 / RELAX
-          </span>
-
-          <h3>Gội &amp; thư giãn</h3>
-
-          <p>
-            Nhóm dịch vụ làm sạch tóc,
-            chăm sóc và thư giãn.
-          </p>
-
-          <div class="detail-service-bottom">
-            <span>Giá đang cập nhật</span>
-            <a href="#booking"
-               aria-label="Xem lựa chọn lịch gội và thư giãn">
-              ↗
-            </a>
-          </div>
-        </article>
-
-        <!-- DỊCH VỤ 04 -->
-        <article class="detail-service-card">
-          <span class="detail-service-number">
-            04 / CARE
-          </span>
-
-          <h3>Phục hồi tóc</h3>
-
-          <p>
-            Tham khảo nhóm dịch vụ chăm sóc
-            và hỗ trợ phục hồi tóc.
-          </p>
-
-          <div class="detail-service-bottom">
-            <span>Giá đang cập nhật</span>
-            <a href="#booking"
-               aria-label="Xem lựa chọn lịch phục hồi tóc">
-              ↗
-            </a>
-          </div>
-        </article>
-
-      </div>
-
-      <p class="detail-disclaimer">
-        Các nhóm dịch vụ trên được sử dụng
-        để minh họa giao diện SalonBook.
-        Bảng giá và danh sách dịch vụ thực tế
-        của salon chưa được xác nhận.
-      </p>
-    </section>
-
-    <!-- PHẦN 3: CHỌN THỢ VÀ LỊCH HẸN -->
-    <section class="container detail-booking"
-             id="booking"
-             aria-labelledby="booking-title">
-
-      <div class="detail-heading">
-        <p class="detail-label">
-          YOUR BEAUTY, YOUR TIME
-        </p>
-
-        <h2 id="booking-title">
-          Chọn thợ &amp; lịch hẹn <span>✳</span>
-        </h2>
-
-        <p>
-          Giao diện minh họa các bước lựa chọn
-          dịch vụ, chuyên viên và thời gian.
-        </p>
-      </div>
-
-      <div class="detail-booking-grid">
-
-        <!-- BIỂU MẪU ĐẶT LỊCH -->
-        <div class="detail-booking-form">
-
-          <h3>Thông tin lịch hẹn</h3>
-
-          <!-- CHỌN DỊCH VỤ -->
-          <div class="detail-field">
-            <label for="detail-service-select">
-              01. Chọn dịch vụ
-            </label>
-
-            <select id="detail-service-select"
-                    name="service">
-              <option value="">Chọn dịch vụ</option>
-              <option value="cat-tao-kieu">
-                Cắt &amp; tạo kiểu
-              </option>
-              <option value="nhuom-toc">
-                Nhuộm tóc
-              </option>
-              <option value="goi-thu-gian">
-                Gội &amp; thư giãn
-              </option>
-              <option value="phuc-hoi-toc">
-                Phục hồi tóc
-              </option>
-            </select>
-          </div>
-
-          <!-- CHỌN CHUYÊN VIÊN -->
-          <div class="detail-field">
-            <label for="detail-stylist-select">
-              02. Chọn chuyên viên
-            </label>
-
-            <select id="detail-stylist-select"
-                    name="stylist">
-              <option value="">Chọn chuyên viên</option>
-              <option disabled>
-                Danh sách thợ đang cập nhật
-              </option>
-            </select>
-
-            <small>
-              Chưa có dữ liệu chuyên viên của salon.
-            </small>
-          </div>
-
-          <!-- CHỌN NGÀY -->
-          <div class="detail-field">
-            <label for="detail-date">
-              03. Chọn ngày dự kiến
-            </label>
-
-            <input type="date"
-                   id="detail-date"
-                   name="date">
-
-            <small>
-              Ngày lựa chọn chỉ mang tính minh họa
-              giao diện. Chưa kiểm tra lịch trống thực tế.
-            </small>
-          </div>
-
-          <!-- CHỌN KHUNG GIỜ -->
-          <div class="detail-field">
-            <label>04. Chọn khung giờ</label>
-
-            <div class="detail-time-grid">
-              <button type="button" disabled>
-                Chưa có lịch trống
-              </button>
-            </div>
-
-            <small>
-              Khung giờ khả dụng sẽ được cập nhật
-              sau khi tích hợp dữ liệu lịch làm việc
-              của chuyên viên.
-            </small>
-          </div>
-
-        </div>
-
-        <!-- PHẦN 4: TÓM TẮT ĐẶT LỊCH -->
-        <aside class="detail-summary">
-
-          <span class="detail-summary-label">
-            SALONBOOK / BOOKING
-          </span>
-
-          <h3>Thông tin đặt lịch</h3>
-
-          <div class="detail-summary-item">
-            <span>Salon</span>
-            <strong>The Hair Space</strong>
-          </div>
-
-          <div class="detail-summary-item">
-            <span>Địa điểm</span>
-            <strong>Quận 1, TP. Hồ Chí Minh</strong>
-          </div>
-
-          <div class="detail-summary-item">
-            <span>Dịch vụ</span>
-            <strong>Chưa xác nhận</strong>
-          </div>
-
-          <div class="detail-summary-item">
-            <span>Chuyên viên</span>
-            <strong>Chưa có dữ liệu</strong>
-          </div>
-
-          <div class="detail-summary-item">
-            <span>Thời gian</span>
-            <strong>Chưa xác nhận</strong>
-          </div>
-
-          <div class="detail-summary-item">
-            <span>Giá dự kiến</span>
-            <strong>Đang cập nhật</strong>
-          </div>
-
-          <button type="button"
-                  class="btn btn-yellow detail-confirm"
-                  disabled>
-            Xác nhận đặt lịch
-          </button>
-
-          <p class="detail-summary-note">
-            Nguyên mẫu học tập.
-            Website chưa nhận đặt lịch thật.
-
-            Người dùng cần đăng nhập và
-            hệ thống phải xác minh lịch trống
-            trước khi tạo booking.
-          </p>
-        </aside>
-
-      </div>
-    </section>
-
-    <!-- PHẦN 5: CÁC SALON KHÁC -->
-    <section class="container other-salons"
-             aria-labelledby="other-salons-title">
-
-      <div class="detail-heading">
-        <p class="detail-label">KHÁM PHÁ THÊM</p>
-
-        <h2 id="other-salons-title">
-          Các salon khác <span>✳</span>
-        </h2>
-
-        <p>
-          Tham khảo thêm những salon tại TP.HCM.
-        </p>
-      </div>
-
-      <div class="other-salon-grid">
-
-        <!-- SALON 01: NHẬT HƯNG -->
-        <article class="other-salon-card">
-          <h3>Hair Salon Nhật Hưng</h3>
-          <p>
-            164 Nguyễn Xí, Phường 26,
-            Bình Thạnh, TP.HCM
-          </p>
-        </article>
-
-        <!-- SALON 02: MIN HAIR -->
-        <article class="other-salon-card">
-          <h3>Min Hair Salon</h3>
-          <p>
-            771 Đường Số 05, Khu đô thị
-            An Phú An Khánh, TP.HCM
-          </p>
-          <a href="https://maps.app.goo.gl/DLbeFnSV2qARrepV6"
-             target="_blank"
-             rel="noopener noreferrer">
-            Xem bản đồ ↗
-          </a>
-        </article>
-
-        <!-- SALON 03: JUNO -->
-        <article class="other-salon-card">
-          <h3>JUNO Hair Studio</h3>
-          <p>
-            740/20 Sư Vạn Hạnh,
-            Phường 12, Quận 10, TP.HCM
-          </p>
-          <a href="https://maps.app.goo.gl/2MnwfqcCxjoBgvQB9"
-             target="_blank"
-             rel="noopener noreferrer">
-            Xem bản đồ ↗
-          </a>
-        </article>
-
-        <!-- SALON 04: DOTH HAIR -->
-        <article class="other-salon-card">
-          <h3>DOTH HAIR</h3>
-          <p>
-            150/40 Nguyễn Trãi,
-            Quận 1, TP.HCM
-          </p>
-          <a href="https://maps.app.goo.gl/HKPJV7QwKiwf8GXJ8"
-             target="_blank"
-             rel="noopener noreferrer">
-            Xem bản đồ ↗
-          </a>
-        </article>
-
-        <!-- SALON 05: MAI NGUYỄN -->
-        <article class="other-salon-card">
-          <h3>Hairsalon Mai Nguyễn</h3>
-          <p>
-            411 Tùng Thiện Vương,
-            Phú Định, TP.HCM
-          </p>
-          <a href="https://maps.app.goo.gl/w64wwtwnTo8iqRET7"
-             target="_blank"
-             rel="noopener noreferrer">
-            Xem bản đồ ↗
-          </a>
-        </article>
-
-        <!-- SALON 06: SUSI -->
-        <article class="other-salon-card">
-          <h3>Susi Hair Salon Quận 5</h3>
-          <p>
-            109 Huỳnh Mẫn Đạt,
-            An Đông, TP.HCM
-          </p>
-          <a href="https://maps.app.goo.gl/FQ4cHyg7F896yy3u6"
-             target="_blank"
-             rel="noopener noreferrer">
-            Xem bản đồ ↗
-          </a>
-        </article>
-
-        <!-- SALON 07: NEW HAIR -->
-        <article class="other-salon-card">
-          <h3>New Hair Salon Quận 7</h3>
-          <p>
-            178C Lâm Văn Bền,
-            Quận 7, TP.HCM
-          </p>
-          <a href="https://maps.app.goo.gl/3s9WAr5ZiywYYD2o9"
-             target="_blank"
-             rel="noopener noreferrer">
-            Xem bản đồ ↗
-          </a>
-        </article>
-
-        <!-- SALON 08: THE ONE -->
-        <article class="other-salon-card">
-          <h3>The One Hair Salon Quận 3</h3>
-          <p>
-            436/29 Cách Mạng Tháng Tám,
-            Quận 3, TP.HCM
-          </p>
-          <a href="https://maps.app.goo.gl/aw8iVxtYAK5wCv8MA"
-             target="_blank"
-             rel="noopener noreferrer">
-            Xem bản đồ ↗
-          </a>
-        </article>
-
-      </div>
-    </section>
-
-    <!-- PHẦN 6: QUAY LẠI DANH SÁCH SALON -->
-    <div class="container detail-back">
-      <a href="products.html">
-        ← Quay lại danh sách salon
-      </a>
-    </div>
-
-  </main>
-
-  <!-- FOOTER DÙNG CHUNG -->
-  <div id="shared-footer"></div>
-
-  <!-- JAVASCRIPT CHUNG CỦA NHÓM -->
-  <script src="js/common.js"></script>
-
-  <!-- JAVASCRIPT CHI TIẾT SALON - ĐÃ CẬP NHẬT -->
-  <script src="js/salon-detail.js?v=6"></script>
-
-</body>
-</html>
+/* =========================================
+   SALONBOOK - PRODUCT DETAIL CSS
+   Giao diện trang chi tiết salon
+   Kế thừa biến màu từ style.css
+   ========================================= */
+
+/* 1. BREADCRUMB */
+
+.detail-breadcrumb {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 28px 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.detail-breadcrumb a:hover {
+  color: var(--forest);
+  text-decoration: underline;
+}
+
+/* 2. GIỚI THIỆU SALON */
+
+.detail-hero {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 30px;
+  align-items: stretch;
+  margin-bottom: 75px;
+}
+
+.detail-image {
+  position: relative;
+  border-radius: 26px;
+  overflow: hidden;
+  background: var(--mint);
+  min-height: 410px;
+}
+
+.detail-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.detail-info {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 26px;
+  padding: 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.detail-label {
+  color: #719087;
+  letter-spacing: .16em;
+  font-weight: 800;
+  font-size: 11px;
+  margin-bottom: 14px;
+}
+
+.detail-info h1 {
+  font-size: clamp(36px, 4vw, 58px);
+  line-height: 1.1;
+  letter-spacing: -.05em;
+  margin-bottom: 16px;
+}
+
+.detail-address {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.detail-divider {
+  width: 100%;
+  height: 1px;
+  background: var(--line);
+  margin: 22px 0;
+}
+
+.detail-info h2 {
+  font-size: 22px;
+  margin-bottom: 13px;
+}
+
+.detail-description,
+.detail-note {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.detail-note {
+  font-size: 12px;
+}
+
+.detail-button {
+  margin-top: auto;
+  border-radius: 18px;
+  padding: 16px 24px;
+  font-size: 14px;
+}
+
+/* 3. DANH SÁCH DỊCH VỤ */
+
+.detail-services {
+  padding-bottom: 85px;
+}
+
+.detail-heading {
+  margin-bottom: 30px;
+}
+
+.detail-heading h2 {
+  font-size: clamp(30px, 3vw, 46px);
+  letter-spacing: -.055em;
+  margin-bottom: 12px;
+}
+
+.detail-heading h2 span {
+  color: var(--yellow);
+}
+
+.detail-heading > p:last-child {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.detail-service-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.detail-service-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 25px 22px;
+  display: flex;
+  flex-direction: column;
+  min-height: 250px;
+  min-width: 0;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.detail-service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.detail-service-number {
+  font-size: 11px;
+  font-weight: 800;
+  color: #719087;
+  letter-spacing: .13em;
+}
+
+.detail-service-card h3 {
+  font-size: 23px;
+  letter-spacing: -.04em;
+  margin: 22px 0 12px;
+}
+
+.detail-service-card > p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.detail-service-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.detail-service-bottom span {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.detail-service-bottom a {
+  width: 39px;
+  height: 39px;
+  border-radius: 50%;
+  background: var(--forest);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.detail-service-bottom a:hover {
+  background: var(--deep);
+}
+
+.detail-disclaimer {
+  margin: 20px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* 4. CHỌN THỢ VÀ LỊCH HẸN */
+
+.detail-booking {
+  padding: 45px 0 70px;
+  scroll-margin-top: 20px;
+}
+
+.detail-booking-grid {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.detail-booking-form,
+.detail-summary {
+  background: white;
+  border-radius: 24px;
+  padding: 34px;
+  border: 1px solid var(--line);
+  min-width: 0;
+}
+
+.detail-booking-form h3,
+.detail-summary h3 {
+  font-size: 24px;
+  margin-bottom: 28px;
+}
+
+.detail-field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.detail-field label {
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.detail-field select,
+.detail-field input {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--cream);
+  color: var(--ink);
+  font: inherit;
+}
+
+.detail-field select:focus,
+.detail-field input:focus {
+  outline: 2px solid var(--forest);
+  outline-offset: 2px;
+}
+
+.detail-field small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.detail-time-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.detail-time-grid button {
+  background: var(--mint);
+  color: var(--forest);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 13px 18px;
+}
+
+.detail-time-grid button:disabled {
+  opacity: .7;
+  cursor: not-allowed;
+}
+
+/* 5. TÓM TẮT ĐẶT LỊCH */
+
+.detail-summary {
+  background: var(--forest);
+  color: white;
+}
+
+.detail-summary-label {
+  color: var(--yellow);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+
+.detail-summary h3 {
+  margin-top: 14px;
+  color: white;
+}
+
+.detail-summary-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, .18);
+  padding: 17px 0;
+  font-size: 13px;
+}
+
+.detail-summary-item span {
+  color: #cfe2d8;
+}
+
+.detail-summary-item strong {
+  text-align: right;
+  font-size: 13px;
+  color: white;
+}
+
+.detail-confirm {
+  width: 100%;
+  padding: 17px;
+  border-radius: 16px;
+  margin-top: 25px;
+}
+
+.detail-confirm:disabled {
+  opacity: .75;
+  cursor: not-allowed;
+}
+
+.detail-summary-note {
+  margin: 18px 0 0;
+  font-size: 12px;
+  color: #cfe2d8;
+  line-height: 1.7;
+}
+
+/* 6. QUAY LẠI DANH SÁCH */
+
+.detail-back {
+  padding-bottom: 65px;
+}
+
+.detail-back a {
+  font-size: 14px;
+  font-weight: 800;
+  border-bottom: 2px solid var(--yellow);
+  padding-bottom: 6px;
+}
+
+.detail-back a:hover {
+  color: #16836b;
+}
+
+/* 7. DANH SÁCH SALON KHÁC */
+
+.other-salons {
+  padding-bottom: 75px;
+}
+
+.other-salon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.other-salon-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.other-salon-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow);
+}
+
+.other-salon-image {
+  display: block;
+  width: 100%;
+  height: 175px;
+  object-fit: cover;
+  border-radius: 14px;
+  background: var(--mint);
+}
+
+.other-salon-card h3 {
+  font-size: 21px;
+  line-height: 1.3;
+}
+
+.other-salon-card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  flex: 1;
+}
+
+.other-salon-card a {
+  color: var(--forest);
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.other-salon-card a:hover {
+  text-decoration: underline;
+}
+
+/* 8. RESPONSIVE TABLET */
+
+@media (max-width: 1000px) {
+
+  .detail-service-grid,
+  .other-salon-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .detail-hero {
+    gap: 20px;
+  }
+
+  .detail-info {
+    padding: 30px;
+  }
+
+}
+
+/* 9. RESPONSIVE MOBILE */
+
+@media (max-width: 760px) {
+
+  .detail-hero,
+  .detail-booking-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-hero {
+    margin-bottom: 45px;
+  }
+
+  .detail-image {
+    min-height: 260px;
+    max-height: 350px;
+  }
+
+  .detail-info {
+    padding: 26px;
+  }
+
+  .detail-button {
+    margin-top: 20px;
+  }
+
+  .detail-services {
+    padding-bottom: 40px;
+  }
+
+  .detail-booking {
+    padding-top: 25px;
+  }
+
+  .detail-booking-form,
+  .detail-summary {
+    padding: 24px;
+  }
+
+  .other-salon-image {
+    height: 210px;
+  }
+
+}
+
+/* 10. RESPONSIVE SMALL MOBILE */
+
+@media (max-width: 480px) {
+
+  .detail-service-grid,
+  .other-salon-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-service-card {
+    min-height: 210px;
+  }
+
+  .detail-info h1 {
+    font-size: 36px;
+  }
+
+  .detail-summary-item {
+    gap: 12px;
+  }
+
+}
