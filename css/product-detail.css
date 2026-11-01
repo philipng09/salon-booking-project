@@ -773,3 +773,108 @@
   }
 
 }
+
+/* =========================================
+   SALONBOOK - GOOGLE MAPS BUTTONS
+   Hiển thị nút Google Maps ở trang chi tiết
+   ========================================= */
+
+/* Nút Google Maps trong thông tin salon */
+.detail-info .detail-map-link {
+  display: inline-block !important;
+  width: auto;
+  margin: 16px 0 0;
+  padding: 0;
+  color: #0c513f !important;
+  font-size: 14px;
+  font-weight: 700;
+  background: transparent !important;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.detail-info .detail-map-link:hover {
+  color: #16836b !important;
+}
+
+/* Chuyển nút đặt lịch xuống dưới liên kết bản đồ */
+.detail-info .detail-button {
+  margin-top: 20px;
+}
+
+/* Bố cục danh sách salon khác */
+.other-salon-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* Nút xem chi tiết */
+.other-salon-card a.other-salon-detail-link {
+  display: block;
+  width: 100%;
+  padding: 13px 16px;
+  margin-top: auto;
+  background: #0c513f;
+  color: #ffffff;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.other-salon-card a.other-salon-detail-link:hover {
+  background: #083e30;
+  color: #ffffff;
+}
+
+/* Nút Xem bản đồ của các salon liên quan */
+.other-salon-card a.other-salon-map-link {
+  display: inline-block !important;
+  width: auto !important;
+  padding: 0 !important;
+  margin-top: 4px !important;
+  background: transparent !important;
+  color: #0c513f !important;
+  border-radius: 0;
+  text-align: left !important;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* Ghi đè CSS cũ từng ẩn nút bản đồ */
+.other-salon-card a.other-salon-map-link[href*="maps.app.goo.gl"] {
+  display: inline-block !important;
+  background: transparent !important;
+  color: #0c513f !important;
+}
+
+.other-salon-card a.other-salon-map-link:hover {
+  text-decoration: underline;
+}
+
+/* Tablet */
+@media (max-width: 1000px) {
+  .other-salon-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .other-salon-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+/* Focus khi dùng bàn phím */
+.detail-map-link:focus-visible,
+.other-salon-detail-link:focus-visible,
+.other-salon-map-link:focus-visible {
+  outline: 3px solid #ffc400;
+  outline-offset: 3px;
+}
