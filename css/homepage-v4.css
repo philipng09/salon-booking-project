@@ -813,5 +813,69 @@
 
   .salon-card-body {
     padding: 20px;
+  
+/* =========================================
+   SALONBOOK - GOOGLE MAPS HOMEPAGE
+   Đồng bộ 2 liên kết cho 3 salon nổi bật
+   ========================================= */
+
+/* Nhóm nút ở cuối thẻ salon */
+.salon-discovery .salon-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 18px;
+}
+
+/* Nút xem chi tiết */
+.salon-discovery .salon-card-actions
+.salon-card-link {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  width: auto;
+  margin-top: 0;
+  padding-bottom: 5px;
+  border-bottom: 2px solid var(--yellow);
+  background: transparent;
+  color: var(--forest);
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* Nút xem bản đồ */
+.salon-discovery .salon-card-actions
+.salon-home-map-link {
+  display: inline-flex !important;
+  align-items: center;
+  align-self: flex-start;
+  width: auto;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: transparent !important;
+  color: var(--forest) !important;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+/* Hiệu ứng */
+.salon-discovery .salon-card-actions a:hover {
+  color: #16836b !important;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Focus */
+.salon-discovery .salon-card-actions a:focus-visible {
+  outline: 2px solid var(--forest);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
   }
 }
