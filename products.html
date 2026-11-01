@@ -3,29 +3,60 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Tìm kiếm và lọc salon tóc tại TP.HCM trên SalonBook.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta
+    name="description"
+    content="Tìm kiếm và lọc salon tóc tại TP.HCM trên SalonBook."
+  >
+
   <title>Khám phá salon | SalonBook</title>
+
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/products.css">
   <link rel="stylesheet" href="css/responsive-ux.css">
+
   <style>
+    /* Ẩn các salon không khớp bộ lọc */
     .products-grid .product-salon-card[hidden] {
       display: none !important;
     }
-    .products-empty:not(.show) {
+
+    /* Thông báo không tìm thấy */
+    .products-empty:not(.show),
+    .products-empty[hidden] {
       display: none !important;
     }
+
+    /* Điều chỉnh thanh công cụ */
     .products-toolbar input,
     .products-toolbar select {
       min-width: 0;
     }
-    @media (max-width:680px) {
+
+    /* Ẩn các liên kết bản đồ */
+    .products-grid a[href*="google.com/maps"],
+    .products-grid a[href*="maps.google"],
+    .products-grid a[href*="maps.app.goo.gl"],
+    .products-grid .salon-map-link,
+    .products-grid .salon-map-button {
+      display: none !important;
+    }
+
+    /* Giữ nút xem chi tiết hiển thị */
+    .products-grid .salon-detail-button {
+      display: block;
+      text-align: center;
+    }
+
+    /* Responsive mobile */
+    @media (max-width: 680px) {
       .products-toolbar {
         display: flex;
         flex-direction: column;
         gap: 12px;
       }
+
       .products-toolbar input,
       .products-toolbar select {
         width: 100%;
@@ -33,278 +64,882 @@
     }
   </style>
 </head>
+
 <body>
-<div id="shared-header"></div>
 
-<main class="products-page">
-  <div class="container">
-    <section class="products-heading">
-      <h1>Khám phá salon</h1>
-      <p>Tìm salon phù hợp với phong cách và nhu cầu làm đẹp của bạn.</p>
-    </section>
+  <!-- Header dùng chung -->
+  <div id="shared-header"></div>
 
-    <div class="products-toolbar">
-      <input type="search" id="salon-search"
-        placeholder="Tìm tên salon hoặc địa chỉ..."
-        aria-label="Tìm kiếm salon">
-      <select id="sort-salon" aria-label="Sắp xếp salon">
-        <option value="default">Thứ tự mặc định</option>
-        <option value="name">Tên salon A–Z</option>
-      </select>
-    </div>
+  <main class="products-page">
+    <div class="container">
 
-    <div class="products-layout">
-      <aside class="products-sidebar" aria-label="Bộ lọc salon">
-        <h2>Bộ lọc</h2>
-
-        <div class="filter-group">
-          <h3>Khu vực</h3>
-          <label class="filter-option"><input type="checkbox" name="district" value="quan-1"> Quận 1</label>
-          <label class="filter-option"><input type="checkbox" name="district" value="quan-3"> Quận 3</label>
-          <label class="filter-option"><input type="checkbox" name="district" value="quan-5"> Quận 5</label>
-          <label class="filter-option"><input type="checkbox" name="district" value="quan-7"> Quận 7</label>
-          <label class="filter-option"><input type="checkbox" name="district" value="quan-10"> Quận 10</label>
-          <label class="filter-option"><input type="checkbox" name="district" value="binh-thanh"> Bình Thạnh</label>
-          <label class="filter-option"><input type="checkbox" name="district" value="khac"> Khu vực khác</label>
-        </div>
-
-        <div class="filter-group">
-          <h3>Dịch vụ</h3>
-          <label class="filter-option"><input type="checkbox" name="service" value="cat"> Cắt tóc</label>
-          <label class="filter-option"><input type="checkbox" name="service" value="nhuom"> Nhuộm tóc</label>
-          <label class="filter-option"><input type="checkbox" name="service" value="tao-kieu"> Tạo kiểu</label>
-        </div>
-
-        <button type="button" class="filter-reset" id="reset-filters">Xóa bộ lọc</button>
-      </aside>
-
-      <section class="products-results" aria-label="Danh sách salon">
-        <p class="products-count" id="salon-count" aria-live="polite">Đang hiển thị 10 salon</p>
-
-        <div class="products-grid" id="salon-grid">
-
-          <article class="product-salon-card" data-name="The Hair Space" data-district="quan-1" data-services="cat nhuom tao-kieu">
-            <img class="salon-image" src="images/salon-01.jpg" alt="The Hair Space" loading="lazy">
-            <div class="salon-info">
-              <span class="salon-tag">Salon tóc</span>
-              <h2>The Hair Space</h2>
-              <p class="salon-address">📍 34 Phó Đức Chính, Phường Bến Thành, Quận 1, TP.HCM</p>
-              <a class="salon-detail-button" href="product-detail.html?salon=the-hair-space">Xem chi tiết</a>
-            </div>
-          </article>
-
-          <article class="product-salon-card" data-name="JUNO HAIR STUDIO" data-district="quan-10" data-services="cat nhuom tao-kieu">
-            <img class="salon-image" src="images/salon-02.jpg" alt="JUNO HAIR STUDIO" loading="lazy">
-            <div class="salon-info">
-              <span class="salon-tag">Salon tóc</span>
-              <h2>JUNO HAIR STUDIO</h2>
-              <p class="salon-address">📍 740/20 Sư Vạn Hạnh, Phường 12, Quận 10, TP.HCM</p>
-              <a class="salon-detail-button" href="product-detail.html?salon=juno-hair-studio">Xem chi tiết</a>
-            </div>
-          </article>
-
-          <article class="product-salon-card" data-name="Khánh Hair" data-district="khac" data-services="cat">
-            <img class="salon-image" src="images/salon-03.jpg" alt="Khánh Hair" loading="lazy">
-            <div class="salon-info">
-              <span class="salon-tag">Salon tóc</span>
-              <h2>Khánh Hair</h2>
-              <p class="salon-address">📍 245 Nhật Tảo, Phường Diên Hồng, TP.HCM</p>
-              <a class="salon-detail-button" href="product-detail.html?salon=khanh-hair">Xem chi tiết</a>
-            </div>
-          </article>
-
-          <article class="product-salon-card" data-name="Hair salon NHẬT HƯNG" data-district="binh-thanh" data-services="cat nhuom tao-kieu">
-            <img class="salon-image" src="images/salon-04.png" alt="Hair salon NHẬT HƯNG" loading="lazy">
-            <div class="salon-info">
-              <span class="salon-tag">Salon tóc</span>
-              <h2>Hair salon NHẬT HƯNG</h2>
-              <p class="salon-address">📍 164 Nguyễn Xí, Phường 26, Bình Thạnh, TP.HCM</p>
-              <a class="salon-detail-button" href="product-detail.html?salon=nhat-hung">Xem chi tiết</a>
-            </div>
-          </article>
-
-          <article class="product-salon-card" data-name="Min Hair Salon" data-district="khac" data-services="cat nhuom tao-kieu">
-            <img class="salon-image" src="images/salon-05.png" alt="Min Hair Salon" loading="lazy">
-            <div class="salon-info">
-              <span class="salon-tag">Salon tóc</span>
-              <h2>Min Hair Salon</h2>
-              <p class="salon-address">📍 771 Đường Số 05, Khu đô thị An Phú An Khánh, TP.HCM</p>
-              <a class="salon-detail-button" href="product-detail.html?salon=min-hair">Xem chi tiết</a>
-            </div>
-          </article>
-
-          <article class="product-salon-card" data-name="DOTH HAIR" data-district="quan-1" data-services="cat nhuom tao-kieu">
-            <img class="salon-image" src="images/salon-06.png" alt="DOTH HAIR" loading="lazy">
-            <div class="salon-info">
-              <span class="salon-tag">Salon tóc</span>
-              <h2>DOTH HAIR</h2>
-              <p class="salon-address">📍 150/40 Nguyễn Trãi, Quận 1, TP.HCM</p>
-              <a class="salon-detail-button" href="product-detail.html?salon=doth-hair">Xem chi tiết</a>
-            </div>
-          </article>
-
-          <article class="product-salon-card" data-name="Hairsalon Mai Nguyễn" data-district="khac" data-services="cat nhuom">
-            <img class="salon-image" src="images/salon-07.webp" alt="Hairsalon Mai Nguyễn" loading="lazy">
-            <div class="salon-info">
-              <span class="salon-tag">Salon tóc</span>
-              <h2>Hairsalon Mai Nguyễn</h2>
-              <p class="salon-address">📍 411 Tùng Thiện Vương, Phú Định, TP.HCM</p>
-              <a class="salon-detail-button" href="product-detail.html?salon=mai-nguyen">Xem chi tiết</a>
-            </div>
-          </article>
-
-          <article class="product-salon-card" data-name="Susi Hair Salon Quận 5" data-district="quan-5" data-services="cat nhuom tao-kieu">
-            <img class="salon-image" src="images/salon-08.webp" alt="Susi Hair Salon Quận 5" loading="lazy">
-            <div class="salon-info">
-              <span class="salon-tag">Salon tóc</span>
-              <h2>Susi Hair Salon Quận 5</h2>
-              <p class="salon-address">📍 109 Huỳnh Mẫn Đạt, Quận 5, TP.HCM</p>
-              <a class="salon-detail-button" href="product-detail.html?salon=susi-hair">Xem chi tiết</a>
-            </div>
-          </article>
-
-          <article class="product-salon-card" data-name="New Hair Salon" data-district="quan-7" data-services="cat nhuom tao-kieu">
-            <img class="salon-image" src="images/salon-09.jpg" alt="New Hair Salon" loading="lazy">
-            <div class="salon-info">
-              <span class="salon-tag">Salon tóc</span>
-              <h2>New Hair Salon</h2>
-              <p class="salon-address">📍 178C Lâm Văn Bền, Quận 7, TP.HCM</p>
-              <a class="salon-detail-button" href="product-detail.html?salon=new-hair">Xem chi tiết</a>
-            </div>
-          </article>
-
-          <article class="product-salon-card" data-name="The One Hair Salon Quận 3" data-district="quan-3" data-services="cat nhuom tao-kieu">
-            <img class="salon-image" src="images/salon-10.jpg" alt="The One Hair Salon Quận 3" loading="lazy">
-            <div class="salon-info">
-              <span class="salon-tag">Salon tóc</span>
-              <h2>The One Hair Salon Quận 3</h2>
-              <p class="salon-address">📍 436/29 Cách Mạng Tháng Tám, Quận 3, TP.HCM</p>
-              <a class="salon-detail-button" href="product-detail.html?salon=the-one">Xem chi tiết</a>
-            </div>
-          </article>
-
-        </div>
-
-        <div class="products-empty" id="salon-empty" role="status">
-          Không tìm thấy salon phù hợp. Hãy thử thay đổi bộ lọc nhé!
-        </div>
+      <!-- Tiêu đề -->
+      <section class="products-heading">
+        <h1>Khám phá salon</h1>
+        <p>
+          Tìm salon phù hợp với phong cách
+          và nhu cầu làm đẹp của bạn.
+        </p>
       </section>
+
+      <!-- Thanh tìm kiếm và sắp xếp -->
+      <div class="products-toolbar">
+
+        <input
+          type="search"
+          id="salon-search"
+          placeholder="Tìm tên salon hoặc địa chỉ..."
+          aria-label="Tìm kiếm salon"
+        >
+
+        <select
+          id="sort-salon"
+          aria-label="Sắp xếp salon"
+        >
+          <option value="default">
+            Thứ tự mặc định
+          </option>
+
+          <option value="name">
+            Tên salon A–Z
+          </option>
+        </select>
+
+      </div>
+
+      <div class="products-layout">
+
+        <!-- Bộ lọc -->
+        <aside
+          class="products-sidebar"
+          aria-label="Bộ lọc salon"
+        >
+
+          <h2>Bộ lọc</h2>
+
+          <!-- Lọc khu vực -->
+          <div class="filter-group">
+            <h3>Khu vực</h3>
+
+            <label class="filter-option">
+              <input
+                type="checkbox"
+                name="district"
+                value="quan-1"
+              >
+              Quận 1
+            </label>
+
+            <label class="filter-option">
+              <input
+                type="checkbox"
+                name="district"
+                value="quan-3"
+              >
+              Quận 3
+            </label>
+
+            <label class="filter-option">
+              <input
+                type="checkbox"
+                name="district"
+                value="quan-5"
+              >
+              Quận 5
+            </label>
+
+            <label class="filter-option">
+              <input
+                type="checkbox"
+                name="district"
+                value="quan-7"
+              >
+              Quận 7
+            </label>
+
+            <label class="filter-option">
+              <input
+                type="checkbox"
+                name="district"
+                value="quan-10"
+              >
+              Quận 10
+            </label>
+
+            <label class="filter-option">
+              <input
+                type="checkbox"
+                name="district"
+                value="binh-thanh"
+              >
+              Bình Thạnh
+            </label>
+
+            <label class="filter-option">
+              <input
+                type="checkbox"
+                name="district"
+                value="khac"
+              >
+              Khu vực khác
+            </label>
+
+          </div>
+
+          <!-- Lọc dịch vụ -->
+          <div class="filter-group">
+            <h3>Dịch vụ</h3>
+
+            <label class="filter-option">
+              <input
+                type="checkbox"
+                name="service"
+                value="cat"
+              >
+              Cắt tóc
+            </label>
+
+            <label class="filter-option">
+              <input
+                type="checkbox"
+                name="service"
+                value="nhuom"
+              >
+              Nhuộm tóc
+            </label>
+
+            <label class="filter-option">
+              <input
+                type="checkbox"
+                name="service"
+                value="tao-kieu"
+              >
+              Tạo kiểu
+            </label>
+
+          </div>
+
+          <button
+            type="button"
+            class="filter-reset"
+            id="reset-filters"
+          >
+            Xóa bộ lọc
+          </button>
+
+        </aside>
+
+        <!-- Danh sách salon -->
+        <section
+          class="products-results"
+          aria-label="Danh sách salon"
+        >
+
+          <p
+            class="products-count"
+            id="salon-count"
+            aria-live="polite"
+          >
+            Đang hiển thị 10 / 10 salon
+          </p>
+
+          <div
+            class="products-grid"
+            id="salon-grid"
+          >
+
+            <!-- SALON 01 -->
+            <article
+              class="product-salon-card"
+              data-name="The Hair Space"
+              data-district="quan-1"
+              data-services="cat nhuom tao-kieu"
+            >
+
+              <img
+                class="salon-image"
+                src="images/salon-01.jpg"
+                alt="The Hair Space"
+                loading="lazy"
+              >
+
+              <div class="salon-info">
+
+                <span class="salon-tag">
+                  Salon tóc
+                </span>
+
+                <h2>The Hair Space</h2>
+
+                <p class="salon-address">
+                  📍 34 Phó Đức Chính,
+                  Phường Bến Thành,
+                  Quận 1, TP.HCM
+                </p>
+
+                <a
+                  class="salon-detail-button"
+                  href="product-detail.html?salon=the-hair-space"
+                >
+                  Xem chi tiết
+                </a>
+
+              </div>
+            </article>
+
+            <!-- SALON 02 -->
+            <article
+              class="product-salon-card"
+              data-name="JUNO HAIR STUDIO"
+              data-district="quan-10"
+              data-services="cat nhuom tao-kieu"
+            >
+
+              <img
+                class="salon-image"
+                src="images/salon-02.jpg"
+                alt="JUNO HAIR STUDIO"
+                loading="lazy"
+              >
+
+              <div class="salon-info">
+
+                <span class="salon-tag">
+                  Salon tóc
+                </span>
+
+                <h2>JUNO HAIR STUDIO</h2>
+
+                <p class="salon-address">
+                  📍 740/20 Sư Vạn Hạnh,
+                  Phường 12,
+                  Quận 10, TP.HCM
+                </p>
+
+                <a
+                  class="salon-detail-button"
+                  href="product-detail.html?salon=juno-hair-studio"
+                >
+                  Xem chi tiết
+                </a>
+
+              </div>
+            </article>
+
+            <!-- SALON 03 -->
+            <article
+              class="product-salon-card"
+              data-name="Khánh Hair"
+              data-district="quan-10"
+              data-services="cat"
+            >
+
+              <img
+                class="salon-image"
+                src="images/salon-03.jpg"
+                alt="Khánh Hair"
+                loading="lazy"
+              >
+
+              <div class="salon-info">
+
+                <span class="salon-tag">
+                  Salon tóc
+                </span>
+
+                <h2>Khánh Hair</h2>
+
+                <p class="salon-address">
+                  📍 245 Nhật Tảo,
+                  Phường Diên Hồng,
+                  TP.HCM
+                </p>
+
+                <a
+                  class="salon-detail-button"
+                  href="product-detail.html?salon=khanh-hair"
+                >
+                  Xem chi tiết
+                </a>
+
+              </div>
+            </article>
+
+            <!-- SALON 04 -->
+            <article
+              class="product-salon-card"
+              data-name="Hair salon NHẬT HƯNG"
+              data-district="binh-thanh"
+              data-services="cat nhuom tao-kieu"
+            >
+
+              <img
+                class="salon-image"
+                src="images/salon-04.png"
+                alt="Hair salon NHẬT HƯNG"
+                loading="lazy"
+              >
+
+              <div class="salon-info">
+
+                <span class="salon-tag">
+                  Salon tóc
+                </span>
+
+                <h2>Hair salon NHẬT HƯNG</h2>
+
+                <p class="salon-address">
+                  📍 164 Nguyễn Xí,
+                  Phường 26,
+                  Bình Thạnh, TP.HCM
+                </p>
+
+                <a
+                  class="salon-detail-button"
+                  href="product-detail.html?salon=nhat-hung"
+                >
+                  Xem chi tiết
+                </a>
+
+              </div>
+            </article>
+
+            <!-- SALON 05 -->
+            <article
+              class="product-salon-card"
+              data-name="Min Hair Salon"
+              data-district="khac"
+              data-services="cat nhuom tao-kieu"
+            >
+
+              <img
+                class="salon-image"
+                src="images/salon-05.png"
+                alt="Min Hair Salon"
+                loading="lazy"
+              >
+
+              <div class="salon-info">
+
+                <span class="salon-tag">
+                  Salon tóc
+                </span>
+
+                <h2>Min Hair Salon</h2>
+
+                <p class="salon-address">
+                  📍 771 Đường Số 05,
+                  Khu đô thị An Phú An Khánh,
+                  TP.HCM
+                </p>
+
+                <a
+                  class="salon-detail-button"
+                  href="product-detail.html?salon=min-hair"
+                >
+                  Xem chi tiết
+                </a>
+
+              </div>
+            </article>
+
+            <!-- SALON 06 -->
+            <article
+              class="product-salon-card"
+              data-name="DOTH HAIR"
+              data-district="quan-1"
+              data-services="cat nhuom tao-kieu"
+            >
+
+              <img
+                class="salon-image"
+                src="images/salon-06.png"
+                alt="DOTH HAIR"
+                loading="lazy"
+              >
+
+              <div class="salon-info">
+
+                <span class="salon-tag">
+                  Salon tóc
+                </span>
+
+                <h2>DOTH HAIR</h2>
+
+                <p class="salon-address">
+                  📍 150/40 Nguyễn Trãi,
+                  Quận 1, TP.HCM
+                </p>
+
+                <a
+                  class="salon-detail-button"
+                  href="product-detail.html?salon=doth-hair"
+                >
+                  Xem chi tiết
+                </a>
+
+              </div>
+            </article>
+
+            <!-- SALON 07 -->
+            <article
+              class="product-salon-card"
+              data-name="Hairsalon Mai Nguyễn"
+              data-district="khac"
+              data-services="cat nhuom"
+            >
+
+              <img
+                class="salon-image"
+                src="images/salon-07.webp"
+                alt="Hairsalon Mai Nguyễn"
+                loading="lazy"
+              >
+
+              <div class="salon-info">
+
+                <span class="salon-tag">
+                  Salon tóc
+                </span>
+
+                <h2>Hairsalon Mai Nguyễn</h2>
+
+                <p class="salon-address">
+                  📍 411 Tùng Thiện Vương,
+                  Phú Định, TP.HCM
+                </p>
+
+                <a
+                  class="salon-detail-button"
+                  href="product-detail.html?salon=mai-nguyen"
+                >
+                  Xem chi tiết
+                </a>
+
+              </div>
+            </article>
+
+            <!-- SALON 08 -->
+            <article
+              class="product-salon-card"
+              data-name="Susi Hair Salon Quận 5"
+              data-district="quan-5"
+              data-services="cat nhuom tao-kieu"
+            >
+
+              <img
+                class="salon-image"
+                src="images/salon-08.webp"
+                alt="Susi Hair Salon Quận 5"
+                loading="lazy"
+              >
+
+              <div class="salon-info">
+
+                <span class="salon-tag">
+                  Salon tóc
+                </span>
+
+                <h2>Susi Hair Salon Quận 5</h2>
+
+                <p class="salon-address">
+                  📍 109 Huỳnh Mẫn Đạt,
+                  Quận 5, TP.HCM
+                </p>
+
+                <a
+                  class="salon-detail-button"
+                  href="product-detail.html?salon=susi-hair"
+                >
+                  Xem chi tiết
+                </a>
+
+              </div>
+            </article>
+
+            <!-- SALON 09 -->
+            <article
+              class="product-salon-card"
+              data-name="New Hair Salon"
+              data-district="quan-7"
+              data-services="cat nhuom tao-kieu"
+            >
+
+              <img
+                class="salon-image"
+                src="images/salon-09.jpg"
+                alt="New Hair Salon"
+                loading="lazy"
+              >
+
+              <div class="salon-info">
+
+                <span class="salon-tag">
+                  Salon tóc
+                </span>
+
+                <h2>New Hair Salon</h2>
+
+                <p class="salon-address">
+                  📍 178C Lâm Văn Bền,
+                  Quận 7, TP.HCM
+                </p>
+
+                <a
+                  class="salon-detail-button"
+                  href="product-detail.html?salon=new-hair"
+                >
+                  Xem chi tiết
+                </a>
+
+              </div>
+            </article>
+
+            <!-- SALON 10 -->
+            <article
+              class="product-salon-card"
+              data-name="The One Hair Salon Quận 3"
+              data-district="quan-3"
+              data-services="cat nhuom tao-kieu"
+            >
+
+              <img
+                class="salon-image"
+                src="images/salon-10.jpg"
+                alt="The One Hair Salon Quận 3"
+                loading="lazy"
+              >
+
+              <div class="salon-info">
+
+                <span class="salon-tag">
+                  Salon tóc
+                </span>
+
+                <h2>The One Hair Salon Quận 3</h2>
+
+                <p class="salon-address">
+                  📍 436/29 Cách Mạng Tháng Tám,
+                  Quận 3, TP.HCM
+                </p>
+
+                <a
+                  class="salon-detail-button"
+                  href="product-detail.html?salon=the-one"
+                >
+                  Xem chi tiết
+                </a>
+
+              </div>
+            </article>
+
+          </div>
+
+          <!-- Không tìm thấy salon -->
+          <div
+            class="products-empty"
+            id="salon-empty"
+            role="status"
+            hidden
+          >
+            Không tìm thấy salon phù hợp.
+            Hãy thử thay đổi bộ lọc nhé!
+          </div>
+
+        </section>
+      </div>
     </div>
-  </div>
-</main>
+  </main>
 
-<div id="shared-footer"></div>
+  <!-- Footer dùng chung -->
+  <div id="shared-footer"></div>
 
-<script src="js/common.js" defer></script>
-<script>
-(function () {
-  'use strict';
+  <script src="js/common.js" defer></script>
 
-  function initialize() {
-    const search = document.getElementById('salon-search');
-    const sort = document.getElementById('sort-salon');
-    const grid = document.getElementById('salon-grid');
-    const count = document.getElementById('salon-count');
-    const empty = document.getElementById('salon-empty');
-    const reset = document.getElementById('reset-filters');
+  <script>
+    (function () {
+      "use strict";
 
-    if (![search, sort, grid, count, empty, reset].every(Boolean)) return;
+      function initialize() {
 
-    const cards = [...grid.querySelectorAll('.product-salon-card')];
-    const checks = [...document.querySelectorAll(
-      'input[name="district"], input[name="service"]'
-    )];
+        const search = document.getElementById("salon-search");
+        const sort = document.getElementById("sort-salon");
+        const grid = document.getElementById("salon-grid");
+        const count = document.getElementById("salon-count");
+        const empty = document.getElementById("salon-empty");
+        const reset = document.getElementById("reset-filters");
 
-    const normalize = value => String(value || '')
-      .toLocaleLowerCase('vi')
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/đ/g, 'd')
-      .trim();
+        if (!search || !sort || !grid ||
+            !count || !empty || !reset) {
+          return;
+        }
 
-    const params = new URLSearchParams(window.location.search);
-    const keywordFromHome = params.get('search') || params.get('q') || '';
-    const districtFromHome = params.get('district') || params.get('area') || '';
-    const serviceFromHome = params.get('service') || '';
-
-    if (keywordFromHome) search.value = keywordFromHome;
-
-    checks.forEach(box => {
-      if (box.name === 'district' && districtFromHome.split(',').includes(box.value)) {
-        box.checked = true;
-      }
-      if (box.name === 'service' && serviceFromHome.split(',').includes(box.value)) {
-        box.checked = true;
-      }
-    });
-
-    function refresh() {
-      const query = normalize(search.value);
-      const selectedDistricts = checks
-        .filter(c => c.checked && c.name === 'district')
-        .map(c => c.value);
-      const selectedServices = checks
-        .filter(c => c.checked && c.name === 'service')
-        .map(c => c.value);
-
-      let visible = 0;
-
-      cards.forEach(card => {
-        const text = normalize(
-          card.dataset.name + ' ' +
-          (card.querySelector('.salon-address')?.textContent || '')
+        const cards = Array.from(
+          grid.querySelectorAll(".product-salon-card")
         );
-        const services = (card.dataset.services || '').split(/\s+/);
 
-        const matched =
-          text.includes(query) &&
-          (!selectedDistricts.length ||
-            selectedDistricts.includes(card.dataset.district)) &&
-          (!selectedServices.length ||
-            selectedServices.some(service => services.includes(service)));
-
-        card.hidden = !matched;
-        if (matched) visible += 1;
-      });
-
-      count.textContent = `Đang hiển thị ${visible} / ${cards.length} salon`;
-      empty.classList.toggle('show', visible === 0);
-      empty.hidden = visible !== 0;
-    }
-
-    function reorder() {
-      const ordered = [...cards];
-
-      if (sort.value === 'name') {
-        ordered.sort((a, b) =>
-          a.dataset.name.localeCompare(b.dataset.name, 'vi')
+        const checks = Array.from(
+          document.querySelectorAll(
+            'input[name="district"], input[name="service"]'
+          )
         );
+
+        /* Chuẩn hóa chữ tiếng Việt để tìm kiếm */
+        function normalize(value) {
+          return String(value || "")
+            .toLocaleLowerCase("vi")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/đ/g, "d")
+            .trim();
+        }
+
+        /* Nhận bộ lọc từ trang chủ */
+        const params = new URLSearchParams(
+          window.location.search
+        );
+
+        const keywordFromHome =
+          params.get("search") ||
+          params.get("q") ||
+          "";
+
+        const districtFromHome =
+          params.get("district") ||
+          params.get("area") ||
+          "";
+
+        const serviceFromHome =
+          params.get("service") ||
+          "";
+
+        if (keywordFromHome) {
+          search.value = keywordFromHome;
+        }
+
+        checks.forEach(function (box) {
+
+          if (
+            box.name === "district" &&
+            districtFromHome.split(",").includes(box.value)
+          ) {
+            box.checked = true;
+          }
+
+          if (
+            box.name === "service" &&
+            serviceFromHome.split(",").includes(box.value)
+          ) {
+            box.checked = true;
+          }
+
+        });
+
+        /* Lọc salon */
+        function refresh() {
+
+          const query = normalize(search.value);
+
+          const selectedDistricts = checks
+            .filter(function (box) {
+              return box.checked &&
+                     box.name === "district";
+            })
+            .map(function (box) {
+              return box.value;
+            });
+
+          const selectedServices = checks
+            .filter(function (box) {
+              return box.checked &&
+                     box.name === "service";
+            })
+            .map(function (box) {
+              return box.value;
+            });
+
+          let visible = 0;
+
+          cards.forEach(function (card) {
+
+            const addressElement =
+              card.querySelector(".salon-address");
+
+            const text = normalize(
+              card.dataset.name + " " +
+              (addressElement
+                ? addressElement.textContent
+                : "")
+            );
+
+            const services = (
+              card.dataset.services || ""
+            ).split(/\s+/);
+
+            const matchSearch = text.includes(query);
+
+            const matchDistrict =
+              selectedDistricts.length === 0 ||
+              selectedDistricts.includes(
+                card.dataset.district
+              );
+
+            const matchService =
+              selectedServices.length === 0 ||
+              selectedServices.some(function (service) {
+                return services.includes(service);
+              });
+
+            const matched =
+              matchSearch &&
+              matchDistrict &&
+              matchService;
+
+            card.hidden = !matched;
+
+            if (matched) {
+              visible++;
+            }
+
+          });
+
+          count.textContent =
+            "Đang hiển thị " +
+            visible +
+            " / " +
+            cards.length +
+            " salon";
+
+          empty.hidden = visible !== 0;
+
+          empty.classList.toggle(
+            "show",
+            visible === 0
+          );
+        }
+
+        /* Sắp xếp salon */
+        function reorder() {
+
+          const ordered = cards.slice();
+
+          if (sort.value === "name") {
+
+            ordered.sort(function (a, b) {
+              return a.dataset.name.localeCompare(
+                b.dataset.name,
+                "vi"
+              );
+            });
+
+          }
+
+          ordered.forEach(function (card) {
+            grid.appendChild(card);
+          });
+
+          refresh();
+        }
+
+        /* Xóa liên kết bản đồ được thêm tự động */
+        function removeMapLinks() {
+
+          const links = grid.querySelectorAll("a");
+
+          links.forEach(function (link) {
+
+            const text = normalize(
+              link.textContent
+            );
+
+            const href = (
+              link.getAttribute("href") || ""
+            ).toLowerCase();
+
+            const isMapLink =
+              text.includes("xem ban do") ||
+              text.includes("google maps") ||
+              href.includes("google.com/maps") ||
+              href.includes("maps.google") ||
+              href.includes("maps.app.goo.gl") ||
+              link.classList.contains("salon-map-link") ||
+              link.classList.contains("salon-map-button");
+
+            if (isMapLink) {
+              link.remove();
+            }
+
+          });
+        }
+
+        /* Theo dõi nếu script khác thêm nút bản đồ */
+        const observer = new MutationObserver(
+          function () {
+            removeMapLinks();
+          }
+        );
+
+        observer.observe(grid, {
+          childList: true,
+          subtree: true
+        });
+
+        /* Sự kiện tìm kiếm */
+        search.addEventListener(
+          "input",
+          refresh
+        );
+
+        /* Sự kiện bộ lọc */
+        checks.forEach(function (box) {
+          box.addEventListener(
+            "change",
+            refresh
+          );
+        });
+
+        /* Sự kiện sắp xếp */
+        sort.addEventListener(
+          "change",
+          reorder
+        );
+
+        /* Xóa toàn bộ bộ lọc */
+        reset.addEventListener(
+          "click",
+          function () {
+
+            search.value = "";
+
+            checks.forEach(function (box) {
+              box.checked = false;
+            });
+
+            sort.value = "default";
+
+            reorder();
+          }
+        );
+
+        /* Khởi tạo */
+        removeMapLinks();
+        refresh();
       }
 
-      ordered.forEach(card => grid.appendChild(card));
-      refresh();
-    }
+      if (document.readyState === "loading") {
 
-    search.addEventListener('input', refresh);
-    checks.forEach(box => box.addEventListener('change', refresh));
-    sort.addEventListener('change', reorder);
+        document.addEventListener(
+          "DOMContentLoaded",
+          initialize
+        );
 
-    reset.addEventListener('click', () => {
-      search.value = '';
-      checks.forEach(c => c.checked = false);
-      sort.value = 'default';
-      reorder();
-    });
+      } else {
 
-    refresh();
-  }
+        initialize();
+      }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initialize);
-  } else {
-    initialize();
-  }
-})();
-</script>
+    })();
+  </script>
+
 </body>
 </html>
