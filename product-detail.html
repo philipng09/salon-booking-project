@@ -321,7 +321,142 @@
 
   <div id="shared-footer"></div>
 
-  <script src="js/common.js"></script>
-  <script src="js/salon-detail.js?v=12"></script>
+
+<!-- JAVASCRIPT CHUNG -->
+<script src="js/common.js"></script>
+
+<!-- JAVASCRIPT CHI TIẾT SALON -->
+<script src="js/salon-detail.js?v=13"></script>
+
+<!-- GOOGLE MAPS CHO 10 SALON -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  const salonMaps = {
+    "the-hair-space":
+      "https://maps.app.goo.gl/72ytADTaG9YJMTUX6",
+
+    "juno-hair-studio":
+      "https://maps.app.goo.gl/2MnwfqcCxjoBgvQB9",
+
+    "khanh-hair":
+      "https://maps.app.goo.gl/kdUWxMfpS8smfffh9",
+
+    "nhat-hung":
+      "https://maps.app.goo.gl/cGyHf4iEcGfuUX5u7",
+
+    "min-hair":
+      "https://maps.app.goo.gl/DLbeFnSV2qARrepV6",
+
+    "doth-hair":
+      "https://maps.app.goo.gl/HKPJV7QwKiwf8GXJ8",
+
+    "mai-nguyen":
+      "https://maps.app.goo.gl/w64wwtwnTo8iqRET7",
+
+    "susi-hair":
+      "https://maps.app.goo.gl/FQ4cHyg7F896yy3u6",
+
+    "new-hair":
+      "https://maps.app.goo.gl/3s9WAr5ZiywYYD2o9",
+
+    "the-one":
+      "https://maps.app.goo.gl/aw8iVxtYAK5wCv8MA"
+  };
+
+  const params = new URLSearchParams(
+    window.location.search
+  );
+
+  const salonId = params.get("salon") || "the-hair-space";
+  const mapUrl = salonMaps[salonId];
+
+  const detailInfo = document.querySelector(".detail-info");
+  const bookingButton = document.querySelector(".detail-button");
+
+  if (!detailInfo || !mapUrl) return;
+
+  // Loại bỏ nút bản đồ cũ để không bị trùng
+  detailInfo.querySelectorAll("a").forEach(function(link) {
+    const href = link.getAttribute("href") || "";
+
+    if (
+      link.classList.contains("detail-map-link") ||
+      href.includes("maps.app.goo.gl") ||
+      href.includes("google.com/maps")
+    ) {
+      link.remove();
+    }
+  });
+
+  // Tạo nút bản đồ mới
+  const mapButton = document.createElement("a");
+
+  mapButton.href = mapUrl;
+  mapButton.target = "_blank";
+  mapButton.rel = "noopener noreferrer";
+  mapButton.className = "salon-google-map-fixed";
+
+  mapButton.textContent = "📍 Xem bản đồ ↗";
+
+  // Đảm bảo không bị CSS cũ ẩn
+  mapButton.style.setProperty(
+    "display", "inline-flex", "important"
+  );
+
+  mapButton.style.setProperty(
+    "visibility", "visible", "important"
+  );
+
+  mapButton.style.setProperty(
+    "opacity", "1", "important"
+  );
+
+  mapButton.style.setProperty(
+    "color", "#0c513f", "important"
+  );
+
+  mapButton.style.setProperty(
+    "background", "transparent", "important"
+  );
+
+  mapButton.style.setProperty(
+    "font-size", "15px"
+  );
+
+  mapButton.style.setProperty(
+    "font-weight", "700"
+  );
+
+  mapButton.style.setProperty(
+    "text-decoration", "underline"
+  );
+
+  mapButton.style.setProperty(
+    "margin", "15px 0 5px"
+  );
+
+  mapButton.style.setProperty(
+    "padding", "0"
+  );
+
+  // Chèn bản đồ ngay phía trên nút đặt lịch
+  if (
+    bookingButton &&
+    bookingButton.parentElement === detailInfo
+  ) {
+    detailInfo.insertBefore(
+      mapButton,
+      bookingButton
+    );
+  } else {
+    detailInfo.appendChild(mapButton);
+  }
+
+});
+</script>
+</body>
+</html>
+
 </body>
 </html>
