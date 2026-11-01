@@ -5,7 +5,9 @@
    Kế thừa biến màu từ style.css
    ========================================= */
 
-/* 1. BREADCRUMB */
+/* =========================================
+   1. BREADCRUMB
+   ========================================= */
 
 .detail-breadcrumb {
   display: flex;
@@ -17,12 +19,20 @@
   color: var(--muted);
 }
 
+.detail-breadcrumb a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .detail-breadcrumb a:hover {
   color: var(--forest);
   text-decoration: underline;
 }
 
-/* 2. GIỚI THIỆU SALON */
+
+/* =========================================
+   2. GIỚI THIỆU SALON
+   ========================================= */
 
 .detail-hero {
   display: grid;
@@ -52,9 +62,11 @@
   border: 1px solid var(--line);
   border-radius: 26px;
   padding: 45px;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
   min-width: 0;
 }
 
@@ -71,6 +83,7 @@
   line-height: 1.1;
   letter-spacing: -.05em;
   margin-bottom: 16px;
+  overflow-wrap: anywhere;
 }
 
 .detail-address {
@@ -110,7 +123,9 @@
 }
 
 
-/* 3. DANH SÁCH DỊCH VỤ */
+/* =========================================
+   3. DANH SÁCH DỊCH VỤ
+   ========================================= */
 
 .detail-services {
   padding-bottom: 85px;
@@ -147,11 +162,16 @@
   border: 1px solid var(--line);
   border-radius: 22px;
   padding: 25px 22px;
+
   display: flex;
   flex-direction: column;
+
   min-height: 250px;
   min-width: 0;
-  transition: transform .2s, box-shadow .2s;
+
+  transition:
+    transform .2s,
+    box-shadow .2s;
 }
 
 .detail-service-card:hover {
@@ -183,6 +203,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+
   margin-top: auto;
   padding-top: 14px;
 }
@@ -196,10 +217,13 @@
   width: 39px;
   height: 39px;
   border-radius: 50%;
+
   background: var(--forest);
   color: white;
+
   display: grid;
   place-items: center;
+
   font-size: 23px;
   text-decoration: none;
   flex-shrink: 0;
@@ -216,7 +240,10 @@
   color: var(--muted);
 }
 
-/* 4. CHỌN THỢ VÀ LỊCH HẸN */
+
+/* =========================================
+   4. CHỌN THỢ VÀ LỊCH HẸN
+   ========================================= */
 
 .detail-booking {
   padding: 45px 0 70px;
@@ -261,8 +288,10 @@
 .detail-field input {
   width: 100%;
   padding: 15px;
+
   border: 1px solid var(--line);
   border-radius: 12px;
+
   background: var(--cream);
   color: var(--ink);
   font: inherit;
@@ -289,8 +318,10 @@
 .detail-time-grid button {
   background: var(--mint);
   color: var(--forest);
+
   border: 1px solid var(--line);
   border-radius: 12px;
+
   padding: 13px 18px;
 }
 
@@ -299,7 +330,10 @@
   cursor: not-allowed;
 }
 
-/* 5. TÓM TẮT ĐẶT LỊCH */
+
+/* =========================================
+   5. TÓM TẮT ĐẶT LỊCH
+   ========================================= */
 
 .detail-summary {
   background: var(--forest);
@@ -322,7 +356,10 @@
   display: flex;
   justify-content: space-between;
   gap: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, .18);
+
+  border-bottom:
+    1px solid rgba(255, 255, 255, .18);
+
   padding: 17px 0;
   font-size: 13px;
 }
@@ -356,7 +393,10 @@
   line-height: 1.7;
 }
 
-/* 6. QUAY LẠI DANH SÁCH */
+
+/* =========================================
+   6. QUAY LẠI DANH SÁCH
+   ========================================= */
 
 .detail-back {
   padding-bottom: 65px;
@@ -367,81 +407,186 @@
   font-weight: 800;
   border-bottom: 2px solid var(--yellow);
   padding-bottom: 6px;
+  text-decoration: none;
 }
 
 .detail-back a:hover {
   color: #16836b;
 }
 
-/* 7. DANH SÁCH SALON KHÁC */
+
+/* =========================================
+   7. DANH SÁCH SALON KHÁC
+   FIX GIAO DIỆN
+   ========================================= */
 
 .other-salons {
+  padding-top: 30px;
   padding-bottom: 75px;
 }
 
+/* Tiêu đề */
+.other-salons .detail-heading {
+  margin-bottom: 30px;
+}
+
+/* Lưới salon */
 .other-salon-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 20px;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 24px;
+  align-items: stretch;
+
+  width: 100%;
 }
 
+/* Thẻ salon */
 .other-salon-card {
-  background: white;
+  background: #ffffff;
+
   border: 1px solid var(--line);
   border-radius: 22px;
-  padding: 25px;
+
+  padding: 20px;
+
   display: flex;
   flex-direction: column;
+
   gap: 14px;
   min-width: 0;
+  height: 100%;
+
   overflow: hidden;
-  transition: transform .2s, box-shadow .2s;
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    border-color .2s ease;
 }
 
+/* Hover */
 .other-salon-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow);
+  border-color: #b7d3c5;
 }
 
-.other-salon-image {
+/* Hình salon */
+.other-salon-card .other-salon-image,
+.other-salon-card .salon-image,
+.other-salon-card > img {
   display: block;
+
   width: 100%;
-  height: 175px;
+  height: 210px;
+
   object-fit: cover;
+  object-position: center;
+
   border-radius: 14px;
   background: var(--mint);
+
+  flex-shrink: 0;
 }
 
+/* Tên salon */
 .other-salon-card h3 {
-  font-size: 21px;
-  line-height: 1.3;
+  color: var(--forest);
+
+  font-size: 20px;
+  font-weight: 800;
+
+  line-height: 1.4;
+  letter-spacing: -.02em;
+
+  margin: 0;
+  overflow-wrap: anywhere;
 }
 
+/* Địa chỉ salon */
 .other-salon-card p {
   color: var(--muted);
-  font-size: 13px;
+
+  font-size: 14px;
   line-height: 1.7;
-  flex: 1;
+
+  margin: 0;
+  flex-grow: 1;
+
+  overflow-wrap: anywhere;
 }
 
-.other-salon-card a {
-  color: var(--forest);
-  font-size: 13px;
+/* Nút xem chi tiết */
+.other-salon-card a:not([href*="maps"]) {
+  display: block;
+
+  width: 100%;
+  padding: 13px 16px;
+
+  background: var(--forest);
+  color: #ffffff;
+
+  border-radius: 12px;
+
+  text-align: center;
+  font-size: 14px;
   font-weight: 800;
+
+  text-decoration: none;
+
+  margin-top: auto;
+
+  transition:
+    background .2s ease,
+    transform .2s ease;
+}
+
+/* Hover nút */
+.other-salon-card a:not([href*="maps"]):hover {
+  background: var(--deep);
+  color: #ffffff;
   text-decoration: none;
 }
 
-.other-salon-card a:hover {
-  text-decoration: underline;
+/* Ẩn toàn bộ nút Xem bản đồ */
+.other-salon-card a[href*="maps.google"],
+.other-salon-card a[href*="google.com/maps"],
+.other-salon-card a[href*="maps.app.goo.gl"],
+.other-salon-card .salon-map-link,
+.other-salon-card .salon-map-button {
+  display: none !important;
 }
 
-/* 8. RESPONSIVE TABLET */
+/* Khi thẻ salon không có ảnh */
+.other-salon-card:not(:has(img)) {
+  min-height: 220px;
+}
+
+/* Không để hình bị kéo giãn */
+.other-salon-card img {
+  max-width: 100%;
+}
+
+
+/* =========================================
+   8. RESPONSIVE TABLET
+   ========================================= */
 
 @media (max-width: 1000px) {
 
-  .detail-service-grid,
+  .detail-service-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
   .other-salon-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
   }
 
   .detail-hero {
@@ -452,12 +597,26 @@
     padding: 30px;
   }
 
+  .other-salon-card {
+    padding: 18px;
+  }
+
+  .other-salon-card .other-salon-image,
+  .other-salon-card .salon-image,
+  .other-salon-card > img {
+    height: 200px;
+  }
+
 }
 
-/* 9. RESPONSIVE MOBILE */
+
+/* =========================================
+   9. RESPONSIVE MOBILE
+   ========================================= */
 
 @media (max-width: 760px) {
 
+  /* Hero */
   .detail-hero,
   .detail-booking-grid {
     grid-template-columns: 1fr;
@@ -480,10 +639,12 @@
     margin-top: 20px;
   }
 
+  /* Dịch vụ */
   .detail-services {
     padding-bottom: 40px;
   }
 
+  /* Đặt lịch */
   .detail-booking {
     padding-top: 25px;
   }
@@ -493,18 +654,50 @@
     padding: 24px;
   }
 
-  .other-salon-image {
-    height: 210px;
+  /* Salon khác */
+  .other-salons {
+    padding-top: 20px;
+    padding-bottom: 50px;
+  }
+
+  .other-salon-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 16px;
+  }
+
+  .other-salon-card {
+    padding: 16px;
+    border-radius: 18px;
+    gap: 12px;
+  }
+
+  .other-salon-card h3 {
+    font-size: 17px;
+  }
+
+  .other-salon-card p {
+    font-size: 13px;
+  }
+
+  .other-salon-card .other-salon-image,
+  .other-salon-card .salon-image,
+  .other-salon-card > img {
+    height: 170px;
   }
 
 }
 
-/* 10. RESPONSIVE SMALL MOBILE */
+
+/* =========================================
+   10. RESPONSIVE SMALL MOBILE
+   ========================================= */
 
 @media (max-width: 480px) {
 
-  .detail-service-grid,
-  .other-salon-grid {
+  /* Dịch vụ */
+  .detail-service-grid {
     grid-template-columns: 1fr;
   }
 
@@ -512,12 +705,71 @@
     min-height: 210px;
   }
 
+  /* Tiêu đề salon */
   .detail-info h1 {
     font-size: 36px;
   }
 
+  /* Thông tin lịch */
   .detail-summary-item {
     gap: 12px;
+  }
+
+  /* Salon khác - 1 cột */
+  .other-salon-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .other-salon-card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .other-salon-card .other-salon-image,
+  .other-salon-card .salon-image,
+  .other-salon-card > img {
+    height: 215px;
+  }
+
+  .other-salon-card h3 {
+    font-size: 20px;
+  }
+
+  .other-salon-card p {
+    font-size: 14px;
+  }
+
+  .other-salon-card a:not([href*="maps"]) {
+    padding: 14px 16px;
+  }
+
+}
+
+
+/* =========================================
+   11. ACCESSIBILITY
+   ========================================= */
+
+.other-salon-card a:focus-visible,
+.detail-button:focus-visible,
+.detail-back a:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+/* Giảm hiệu ứng khi người dùng yêu cầu */
+@media (prefers-reduced-motion: reduce) {
+
+  .other-salon-card,
+  .detail-service-card,
+  .other-salon-card a {
+    transition: none;
+  }
+
+  .other-salon-card:hover,
+  .detail-service-card:hover {
+    transform: none;
   }
 
 }
