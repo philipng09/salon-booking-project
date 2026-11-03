@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0C513F">
+    <meta name="description" content="Giới thiệu SalonBook - Nền tảng khám phá và đặt lịch với nhiều salon trong khu vực. Your beauty, your time.">
+    <title>Blog làm đẹp | SalonBook</title>
+    <!-- CSS dùng chung từ dự án -->
+    <link rel="stylesheet" href="css/style.css?v=3">
+    <!-- CSS riêng cho trang Giới thiệu -->
+    <link rel="stylesheet" href="css/blog.css">
+  <link rel="stylesheet" href="css/responsive-ux.css">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+
+<!-- HEADER DÙNG CHUNG: chép trực tiếp từ components/header.html (sửa cả 4 trang khi thay đổi) -->
+<header class="site-header">
+    <div class="container nav-shell">
+
+        <!-- Logo -->
+        <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
+            <img src="images/salonbook-mark.png" alt="" width="46" height="54">
+            <span>SALON<span class="brand-thin">BOOK</span></span>
+        </a>
+
+        <!-- Menu điện thoại -->
+        <button class="nav-toggle"
+                type="button"
+                aria-controls="main-nav"
+                aria-expanded="false"
+                aria-label="Mở menu">☰</button>
+
+        <!-- Menu chính -->
+        <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+            <a href="index.html">Trang chủ</a>
+            <a href="products.html">Khám phá salon</a>
+            <a href="about.html">Giới thiệu</a>
+        </nav>
+
+        <!-- Nút hành động chính: dẫn tới thanh tìm salon/đặt lịch -->
+        <div class="nav-actions">
+            <a class="btn btn-yellow btn-top" href="index.html#booking">
+                Đặt lịch ngay
+            </a>
+        </div>
+
+    </div>
+</header>
+
+    <main id="main-content" class="blog-page">
+
+      <!-- TIÊU ĐỀ TRANG -->
+      <section class="container blog-hero" aria-labelledby="blog-title">
+        <p class="blog-eyebrow">BLOG LÀM ĐẸP</p>
+        <h1 id="blog-title">Cẩm nang làm tóc</h1>
+        <p class="blog-hero-desc">Xu hướng kiểu tóc, kiến thức chăm sóc tóc và kinh nghiệm chọn salon tại TP.HCM, được tổng hợp bởi SalonBook và các salon đối tác.</p>
+      </section>
+
+      <!-- CHUYÊN MỤC -->
+      <nav class="container blog-tabs" aria-label="Chuyên mục bài viết">
+        <a href="#" class="is-active" aria-current="true">Tất cả</a>
+        <a href="#">Xu hướng tóc</a>
+        <a href="#">Chăm sóc tóc</a>
+        <a href="#">Review salon</a>
+        <a href="#">Mẹo đặt lịch</a>
+      </nav>
+
+      <div class="container blog-layout">
+
+        <!-- DANH SÁCH BÀI VIẾT -->
+        <section class="blog-main" aria-labelledby="list-title">
+          <div class="list-head">
+            <h2 id="list-title">Tất cả bài viết <span>(24)</span></h2>
+            <p>Hiển thị 1–6 trong 24 bài viết · Trang 1 / 4</p>
+          </div>
+          <div class="news-list">
+            <article class="news-item">
+              <a class="news-thumb" href="#" aria-label="Đọc bài: Tóc layer Hàn Quốc 2026: 5 kiểu hợp gương mặt tròn"><img src="images/service-cut.png" alt="" loading="lazy"></a>
+              <div class="news-body">
+                <p class="news-meta"><span class="news-tag">Xu hướng tóc</span><span>Thứ Tư, 28/10/2026</span><span aria-hidden="true">·</span><span>6 phút đọc</span></p>
+                <h3><a href="#">Tóc layer Hàn Quốc 2026: 5 kiểu hợp gương mặt tròn</a></h3>
+                <p class="news-sub">Bí quyết chọn độ dài và cách tỉa để gương mặt thon gọn hơn.</p>
+                <p class="news-excerpt">Layer là kiểu tóc được nhiều bạn trẻ lựa chọn nhờ tạo độ bồng tự nhiên. Bài viết tổng hợp 5 biến thể dễ chăm sóc, kèm gợi ý độ dài phù hợp từng dáng mặt và cách trao đổi với thợ khi đặt lịch.</p>
+                <a class="news-more" href="#">Đọc thêm <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+            <article class="news-item">
+              <a class="news-thumb" href="#" aria-label="Đọc bài: Phục hồi tóc sau khi uốn nhuộm: nên bắt đầu từ đâu?"><img src="images/service-care.png" alt="" loading="lazy"></a>
+              <div class="news-body">
+                <p class="news-meta"><span class="news-tag">Chăm sóc tóc</span><span>Chủ Nhật, 25/10/2026</span><span aria-hidden="true">·</span><span>5 phút đọc</span></p>
+                <h3><a href="#">Phục hồi tóc sau khi uốn nhuộm: nên bắt đầu từ đâu?</a></h3>
+                <p class="news-sub">Phân biệt hấp dầu, phục hồi keratin và dưỡng tại nhà.</p>
+                <p class="news-excerpt">Sau khi uốn hoặc nhuộm, tóc dễ khô và gãy rụng. Bài viết giúp bạn nhận biết mức độ hư tổn, chọn đúng liệu trình tại salon và duy trì kết quả bằng những bước chăm sóc đơn giản tại nhà.</p>
+                <a class="news-more" href="#">Đọc thêm <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+            <article class="news-item">
+              <a class="news-thumb" href="#" aria-label="Đọc bài: Một buổi làm tóc tại JUNO Hair Studio, Quận 10"><img src="images/salon-02.jpg" alt="" loading="lazy"></a>
+              <div class="news-body">
+                <p class="news-meta"><span class="news-tag">Review salon</span><span>Thứ Năm, 22/10/2026</span><span aria-hidden="true">·</span><span>7 phút đọc</span></p>
+                <h3><a href="#">Một buổi làm tóc tại JUNO Hair Studio, Quận 10</a></h3>
+                <p class="news-sub">Trải nghiệm từ lúc đặt lịch, tư vấn kiểu đến khi hoàn thiện.</p>
+                <p class="news-excerpt">Ghi lại trọn vẹn một buổi làm tóc: đặt lịch qua SalonBook, thời gian chờ, cách stylist tư vấn và kết quả sau khi hoàn thiện, kèm bảng giá tham khảo các dịch vụ phổ biến.</p>
+                <a class="news-more" href="#">Đọc thêm <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+            <article class="news-item">
+              <a class="news-thumb" href="#" aria-label="Đọc bài: Đặt lịch cuối tuần không phải chờ: 4 mẹo nhỏ"><img src="images/salon-05.png" alt="" loading="lazy"></a>
+              <div class="news-body">
+                <p class="news-meta"><span class="news-tag">Mẹo đặt lịch</span><span>Thứ Hai, 19/10/2026</span><span aria-hidden="true">·</span><span>4 phút đọc</span></p>
+                <h3><a href="#">Đặt lịch cuối tuần không phải chờ: 4 mẹo nhỏ</a></h3>
+                <p class="news-sub">Chọn khung giờ, chọn thợ và ghi chú yêu cầu trước khi đến salon.</p>
+                <p class="news-excerpt">Cuối tuần là thời điểm các salon đông khách nhất. Chỉ với vài thao tác như đặt trước 2 ngày, chọn khung giờ sáng và ghi rõ kiểu tóc mong muốn, bạn có thể rút ngắn đáng kể thời gian chờ.</p>
+                <a class="news-more" href="#">Đọc thêm <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+            <article class="news-item">
+              <a class="news-thumb" href="#" aria-label="Đọc bài: Màu nhuộm không cần tẩy cho dân văn phòng"><img src="images/service-color.png" alt="" loading="lazy"></a>
+              <div class="news-body">
+                <p class="news-meta"><span class="news-tag">Xu hướng tóc</span><span>Thứ Năm, 15/10/2026</span><span aria-hidden="true">·</span><span>5 phút đọc</span></p>
+                <h3><a href="#">Màu nhuộm không cần tẩy cho dân văn phòng</a></h3>
+                <p class="news-sub">Những tông nâu lạnh, nâu trà sữa lên màu tốt trên tóc đen.</p>
+                <p class="news-excerpt">Không phải màu nào cũng cần tẩy tóc. Bài viết gợi ý các tông màu nhẹ nhàng, phù hợp môi trường công sở, giữ màu lâu và ít gây hư tổn cho tóc.</p>
+                <a class="news-more" href="#">Đọc thêm <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+            <article class="news-item">
+              <a class="news-thumb" href="#" aria-label="Đọc bài: Gội đầu dưỡng sinh có thật sự tốt cho da đầu?"><img src="images/service-wash.jpg" alt="" loading="lazy"></a>
+              <div class="news-body">
+                <p class="news-meta"><span class="news-tag">Chăm sóc tóc</span><span>Thứ Hai, 12/10/2026</span><span aria-hidden="true">·</span><span>6 phút đọc</span></p>
+                <h3><a href="#">Gội đầu dưỡng sinh có thật sự tốt cho da đầu?</a></h3>
+                <p class="news-sub">Lợi ích, tần suất phù hợp và lưu ý khi chọn dịch vụ.</p>
+                <p class="news-excerpt">Gội đầu dưỡng sinh ngày càng phổ biến tại các salon. Cùng tìm hiểu lợi ích thực tế đối với da đầu, tần suất nên sử dụng và những điểm cần lưu ý để chọn được nơi uy tín.</p>
+                <a class="news-more" href="#">Đọc thêm <span aria-hidden="true">→</span></a>
+              </div>
+            </article>
+          </div>
+
+          <nav class="pagination" aria-label="Phân trang">
+            <a href="#" class="page-btn is-disabled" aria-disabled="true">Trước</a>
+            <a href="#" class="page-num is-active" aria-current="page">1</a>
+            <a href="#" class="page-num">2</a>
+            <a href="#" class="page-num">3</a>
+            <a href="#" class="page-num">4</a>
+            <a href="#" class="page-btn">Sau</a>
+          </nav>
+        </section>
+
+        <!-- CỘT BÊN -->
+        <aside class="blog-side" aria-label="Thông tin thêm">
+          <section class="side-box">
+            <h2>Bài viết nổi bật</h2>
+            <ol class="side-list">
+              <li><a class="side-post" href="#"><img src="images/salon-01.jpg" alt="" loading="lazy"><span><strong>Chọn salon lần đầu: 6 điều cần xem trước khi đặt lịch</strong><small>30/10/2026</small></span></a></li>
+              <li><a class="side-post" href="#"><img src="images/salon-09.jpg" alt="" loading="lazy"><span><strong>Bảng giá cắt tóc tại TP.HCM: mức nào là hợp lý?</strong><small>26/10/2026</small></span></a></li>
+              <li><a class="side-post" href="#"><img src="images/salon-03.jpg" alt="" loading="lazy"><span><strong>3 salon có không gian yên tĩnh cho dân văn phòng</strong><small>20/10/2026</small></span></a></li>
+              <li><a class="side-post" href="#"><img src="images/salon-10.jpg" alt="" loading="lazy"><span><strong>Nên gội đầu trước hay sau khi cắt tóc?</strong><small>14/10/2026</small></span></a></li>
+            </ol>
+          </section>
+          <section class="side-box">
+            <h2>Chuyên mục</h2>
+            <ul class="side-cats">
+              <li><a href="#">Xu hướng tóc <span>8</span></a></li>
+              <li><a href="#">Chăm sóc tóc <span>7</span></a></li>
+              <li><a href="#">Review salon <span>5</span></a></li>
+              <li><a href="#">Mẹo đặt lịch <span>4</span></a></li>
+            </ul>
+          </section>
+          <section class="side-box side-cta">
+            <h2>Tìm được kiểu tóc ưng ý?</h2>
+            <p>Đặt lịch với salon phù hợp gần bạn chỉ trong vài bước.</p>
+            <a class="btn btn-yellow" href="products.html">Khám phá salon</a>
+          </section>
+        </aside>
+      </div>
+
+      <!-- KÊU GỌI CUỐI TRANG -->
+      <section class="container blog-bottom" aria-labelledby="bottom-title">
+        <h2 id="bottom-title">Đừng bỏ lỡ bài viết mới</h2>
+        <p>Theo dõi SalonBook để cập nhật xu hướng tóc, mẹo chăm sóc và ưu đãi từ các salon đối tác.</p>
+        <div class="blog-bottom-actions">
+          <a class="btn btn-yellow" href="index.html">Về trang chủ</a>
+          <a class="btn btn-outline-light" href="about.html">Về SalonBook</a>
+        </div>
+      </section>
+
+    </main>
+
+<!-- FOOTER DÙNG CHUNG: chép trực tiếp từ components/footer.html -->
+<footer class="site-footer">
+    <div class="container footer-inner">
+
+        <a class="footer-brand" href="index.html">
+            <img src="images/salonbook-mark-white.png"
+                 alt=""
+                 width="44"
+                 height="50">
+            SALONBOOK
+        </a>
+
+        <p>YOUR BEAUTY, YOUR TIME</p>
+
+        <small>
+            Nguyên mẫu học tập · Nền tảng kết nối nhiều salon ·
+            Chưa nhận đặt lịch thật
+        </small>
+
+    </div>
+</footer>
+
+    <script src="js/common.js"></script>
+</body>
+</html>
