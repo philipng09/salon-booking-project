@@ -1,56 +1,122 @@
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
   <meta name="theme-color" content="#0c513f">
-  <meta name="description" content="SalonBook - Thông tin chi tiết salon và lựa chọn lịch làm tóc.">
+
+  <meta name="description"
+        content="SalonBook - Khám phá thông tin salon, dịch vụ và lựa chọn lịch làm tóc.">
 
   <title>Chi tiết salon | SalonBook</title>
 
-  <link rel="stylesheet" href="css/style.css?v=7">
-  <link rel="stylesheet" href="css/product-detail.css?v=12">
-  <link rel="stylesheet" href="css/responsive-ux.css?v=7">
+  <!-- CSS DÙNG CHUNG CỦA NHÓM -->
+  <link rel="stylesheet" href="css/style.css?v=3">
+
+  <!-- CSS RIÊNG TRANG CHI TIẾT -->
+  <link rel="stylesheet" href="css/product-detail.css">
+  <link rel="stylesheet" href="css/responsive-ux.css">
 </head>
 
 <body>
+
   <a class="skip-link" href="#main-content">
     Chuyển đến nội dung chính
   </a>
 
-  <div id="shared-header"></div>
+<!-- HEADER DÙNG CHUNG: chép trực tiếp từ components/header.html (sửa cả 4 trang khi thay đổi) -->
+<header class="site-header">
+    <div class="container nav-shell">
+
+        <!-- Logo -->
+        <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
+            <img src="images/salonbook-mark.png" alt="" width="46" height="54">
+            <span>SALON<span class="brand-thin">BOOK</span></span>
+        </a>
+
+        <!-- Menu điện thoại -->
+        <button class="nav-toggle"
+                type="button"
+                aria-controls="main-nav"
+                aria-expanded="false"
+                aria-label="Mở menu">☰</button>
+
+        <!-- Menu chính -->
+        <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+            <a href="index.html">Trang chủ</a>
+            <a href="products.html" class="active" aria-current="page">Khám phá salon</a>
+            <a href="blog.html">Blog</a>
+            <a href="about.html">Giới thiệu</a>
+        </nav>
+
+        <!-- Nút hành động chính: dẫn tới thanh tìm salon/đặt lịch -->
+        <div class="nav-actions">
+            <a class="btn btn-yellow btn-top" href="index.html#booking">
+                Đặt lịch ngay
+            </a>
+        </div>
+
+    </div>
+</header>
 
   <main id="main-content">
 
-    <!-- BREADCRUMB -->
+    <!-- ĐƯỜNG DẪN ĐIỀU HƯỚNG -->
     <div class="container">
-      <nav class="detail-breadcrumb" aria-label="Đường dẫn điều hướng">
-        <a href="index.html">Trang chủ</a>
+
+      <nav class="detail-breadcrumb"
+           aria-label="Đường dẫn điều hướng">
+
+        <a href="index.html">
+          Trang chủ
+        </a>
+
         <span>/</span>
-        <a href="products.html">Khám phá salon</a>
+
+        <a href="products.html">
+          Khám phá salon
+        </a>
+
         <span>/</span>
+
         <span>Chi tiết salon</span>
+
       </nav>
+
     </div>
 
-    <!-- 1. THÔNG TIN SALON -->
-    <section class="container detail-hero" aria-labelledby="detail-title">
+    <!-- PHẦN 1: THÔNG TIN CHI TIẾT SALON -->
+    <section class="container detail-hero"
+             aria-labelledby="detail-title">
 
+      <!-- HÌNH ẢNH SALON -->
       <div class="detail-image">
-        <img
-          src="images/salon-01.jpg"
-          alt="Hình ảnh salon The Hair Space"
-        >
+
+        <img src="images/salon-01.jpg"
+             alt="Hình ảnh minh họa salon The Hair Space"
+             loading="lazy">
+
       </div>
 
+      <!-- NỘI DUNG GIỚI THIỆU -->
       <div class="detail-info">
-        <p class="detail-label">SALON TÓC · QUẬN 1</p>
 
-        <h1 id="detail-title">The Hair Space</h1>
+        <p class="detail-label">
+          SALON TÓC · QUẬN 1
+        </p>
+
+        <h1 id="detail-title">
+          The Hair Space
+        </h1>
 
         <p class="detail-address">
-          📍 34 Phó Đức Chính, Phường Bến Thành, Quận 1, TP.HCM
+          📍 34 Phó Đức Chính, Phường Bến Thành,
+          TP. Hồ Chí Minh
         </p>
 
         <div class="detail-divider"></div>
@@ -58,183 +124,312 @@
         <h2>Giới thiệu salon</h2>
 
         <p class="detail-description">
-          The Hair Space là salon được giới thiệu trên nền tảng SalonBook.
-          Bạn có thể tham khảo thông tin, địa chỉ và các nhóm dịch vụ
-          chăm sóc tóc trước khi lựa chọn lịch hẹn phù hợp.
+          The Hair Space là salon được giới thiệu
+          trên nền tảng SalonBook.
+
+          Tại đây, người dùng có thể tham khảo
+          thông tin salon và các nhóm dịch vụ
+          chăm sóc tóc trước khi lựa chọn
+          lịch hẹn phù hợp.
         </p>
 
         <p class="detail-note">
-          Thông tin chi tiết về chuyên viên, thời gian hoạt động
-          và bảng giá đang được cập nhật.
+          Thông tin chi tiết về chuyên viên,
+          thời gian hoạt động và bảng giá
+          đang được cập nhật.
         </p>
 
-        <!-- JS sẽ thêm nút Xem bản đồ ở đây -->
-        <a href="#booking" class="btn btn-yellow detail-button">
+        <!-- NÚT ĐIỀU HƯỚNG -->
+        <a href="#booking"
+           class="btn btn-yellow detail-button">
+
           Xem lựa chọn đặt lịch ↗
+
         </a>
+
       </div>
+
     </section>
 
-    <!-- 2. DANH SÁCH DỊCH VỤ -->
-    <section
-      class="container detail-services"
-      aria-labelledby="detail-services-title"
-    >
+    <!-- PHẦN 2: DANH SÁCH DỊCH VỤ -->
+    <section class="container detail-services"
+             aria-labelledby="detail-services-title">
+
       <div class="detail-heading">
-        <p class="detail-label">CHĂM SÓC BẠN THEO CÁCH RIÊNG</p>
+
+        <p class="detail-label">
+          CHĂM SÓC BẠN THEO CÁCH RIÊNG
+        </p>
+
         <h2 id="detail-services-title">
           Dịch vụ salon <span>✳</span>
         </h2>
+
         <p>
-          Tham khảo các nhóm dịch vụ làm tóc được giới thiệu trên SalonBook.
+          Tham khảo các nhóm dịch vụ làm tóc
+          được giới thiệu trên SalonBook.
         </p>
+
       </div>
 
       <div class="detail-service-grid">
 
+        <!-- DỊCH VỤ 01 -->
         <article class="detail-service-card">
-          <span class="detail-service-number">01 / STYLE</span>
+
+          <span class="detail-service-number">
+            01 / STYLE
+          </span>
+
           <h3>Cắt &amp; tạo kiểu</h3>
+
           <p>
-            Lựa chọn dịch vụ cắt tóc và tạo kiểu theo nhu cầu cá nhân.
+            Lựa chọn dịch vụ cắt tóc và tạo kiểu
+            theo nhu cầu cá nhân.
           </p>
+
           <div class="detail-service-bottom">
+
             <span>Giá đang cập nhật</span>
-            <a href="#booking" aria-label="Xem lựa chọn lịch cắt tóc">
+
+            <a href="#booking"
+               aria-label="Xem lựa chọn lịch cắt và tạo kiểu">
               ↗
             </a>
+
           </div>
+
         </article>
 
+        <!-- DỊCH VỤ 02 -->
         <article class="detail-service-card">
-          <span class="detail-service-number">02 / COLOR</span>
+
+          <span class="detail-service-number">
+            02 / COLOR
+          </span>
+
           <h3>Nhuộm tóc</h3>
+
           <p>
-            Tham khảo các lựa chọn màu tóc và thay đổi phong cách cá nhân.
+            Tham khảo các lựa chọn màu tóc
+            và thay đổi phong cách cá nhân.
           </p>
+
           <div class="detail-service-bottom">
+
             <span>Giá đang cập nhật</span>
-            <a href="#booking" aria-label="Xem lựa chọn lịch nhuộm tóc">
+
+            <a href="#booking"
+               aria-label="Xem lựa chọn lịch nhuộm tóc">
               ↗
             </a>
+
           </div>
+
         </article>
 
+        <!-- DỊCH VỤ 03 -->
         <article class="detail-service-card">
-          <span class="detail-service-number">03 / RELAX</span>
+
+          <span class="detail-service-number">
+            03 / RELAX
+          </span>
+
           <h3>Gội &amp; thư giãn</h3>
+
           <p>
-            Nhóm dịch vụ làm sạch tóc, chăm sóc và thư giãn.
+            Nhóm dịch vụ làm sạch tóc,
+            chăm sóc và thư giãn.
           </p>
+
           <div class="detail-service-bottom">
+
             <span>Giá đang cập nhật</span>
-            <a href="#booking" aria-label="Xem lựa chọn lịch gội đầu">
+
+            <a href="#booking"
+               aria-label="Xem lựa chọn lịch gội và thư giãn">
               ↗
             </a>
+
           </div>
+
         </article>
 
+        <!-- DỊCH VỤ 04 -->
         <article class="detail-service-card">
-          <span class="detail-service-number">04 / CARE</span>
+
+          <span class="detail-service-number">
+            04 / CARE
+          </span>
+
           <h3>Phục hồi tóc</h3>
+
           <p>
-            Tham khảo nhóm dịch vụ chăm sóc và hỗ trợ phục hồi tóc.
+            Tham khảo nhóm dịch vụ chăm sóc
+            và hỗ trợ phục hồi tóc.
           </p>
+
           <div class="detail-service-bottom">
+
             <span>Giá đang cập nhật</span>
-            <a href="#booking" aria-label="Xem lựa chọn lịch phục hồi tóc">
+
+            <a href="#booking"
+               aria-label="Xem lựa chọn lịch phục hồi tóc">
               ↗
             </a>
+
           </div>
+
         </article>
 
       </div>
 
       <p class="detail-disclaimer">
-        Các nhóm dịch vụ được sử dụng để minh họa giao diện SalonBook.
-        Bảng giá và danh sách dịch vụ thực tế chưa được xác nhận.
+        Các nhóm dịch vụ trên được sử dụng
+        để minh họa giao diện SalonBook.
+
+        Bảng giá và danh sách dịch vụ thực tế
+        của salon chưa được xác nhận.
       </p>
+
     </section>
 
-    <!-- 3. CHỌN THỢ VÀ LỊCH HẸN -->
-    <section
-      class="container detail-booking"
-      id="booking"
-      aria-labelledby="booking-title"
-    >
+    <!-- PHẦN 3: CHỌN THỢ VÀ LỊCH HẸN -->
+    <section class="container detail-booking"
+             id="booking"
+             aria-labelledby="booking-title">
+
       <div class="detail-heading">
-        <p class="detail-label">YOUR BEAUTY, YOUR TIME</p>
+
+        <p class="detail-label">
+          YOUR BEAUTY, YOUR TIME
+        </p>
+
         <h2 id="booking-title">
           Chọn thợ &amp; lịch hẹn <span>✳</span>
         </h2>
+
         <p>
-          Giao diện minh họa các bước lựa chọn dịch vụ,
-          chuyên viên và thời gian.
+          Giao diện minh họa các bước lựa chọn
+          dịch vụ, chuyên viên và thời gian.
         </p>
+
       </div>
 
       <div class="detail-booking-grid">
 
+        <!-- BIỂU MẪU ĐẶT LỊCH -->
         <div class="detail-booking-form">
+
           <h3>Thông tin lịch hẹn</h3>
 
+          <!-- CHỌN DỊCH VỤ -->
           <div class="detail-field">
+
             <label for="detail-service-select">
               01. Chọn dịch vụ
             </label>
 
-            <select id="detail-service-select" name="service">
-              <option value="">Chọn dịch vụ</option>
-              <option value="cat-tao-kieu">Cắt &amp; tạo kiểu</option>
-              <option value="nhuom-toc">Nhuộm tóc</option>
-              <option value="goi-thu-gian">Gội &amp; thư giãn</option>
-              <option value="phuc-hoi-toc">Phục hồi tóc</option>
+            <select id="detail-service-select"
+                    name="service">
+
+              <option value="">
+                Chọn dịch vụ
+              </option>
+
+              <option value="cat-tao-kieu">
+                Cắt &amp; tạo kiểu
+              </option>
+
+              <option value="nhuom-toc">
+                Nhuộm tóc
+              </option>
+
+              <option value="goi-thu-gian">
+                Gội &amp; thư giãn
+              </option>
+
+              <option value="phuc-hoi-toc">
+                Phục hồi tóc
+              </option>
+
             </select>
+
           </div>
 
+          <!-- CHỌN CHUYÊN VIÊN -->
           <div class="detail-field">
+
             <label for="detail-stylist-select">
               02. Chọn chuyên viên
             </label>
 
-            <select id="detail-stylist-select" name="stylist">
-              <option value="">Chọn chuyên viên</option>
-              <option disabled>Danh sách thợ đang cập nhật</option>
+            <select id="detail-stylist-select"
+                    name="stylist">
+
+              <option value="">
+                Chọn chuyên viên
+              </option>
+
+              <option disabled>
+                Danh sách thợ đang cập nhật
+              </option>
+
             </select>
 
-            <small>Chưa có dữ liệu chuyên viên của salon.</small>
+            <small>
+              Chưa có dữ liệu chuyên viên
+              của salon.
+            </small>
+
           </div>
 
+          <!-- CHỌN NGÀY -->
           <div class="detail-field">
+
             <label for="detail-date">
               03. Chọn ngày dự kiến
             </label>
 
-            <input type="date" id="detail-date" name="date">
+            <input type="date"
+                   id="detail-date"
+                   name="date">
 
             <small>
-              Ngày lựa chọn chỉ mang tính minh họa giao diện.
+              Ngày lựa chọn chỉ mang tính
+              minh họa giao diện.
+
               Chưa kiểm tra lịch trống thực tế.
             </small>
+
           </div>
 
+          <!-- CHỌN KHUNG GIỜ -->
           <div class="detail-field">
-            <label>04. Chọn khung giờ</label>
+
+            <label>
+              04. Chọn khung giờ
+            </label>
 
             <div class="detail-time-grid">
+
               <button type="button" disabled>
                 Chưa có lịch trống
               </button>
+
             </div>
 
             <small>
-              Khung giờ khả dụng sẽ được cập nhật sau khi
-              tích hợp lịch làm việc của chuyên viên.
+              Khung giờ khả dụng sẽ được cập nhật
+              sau khi tích hợp dữ liệu
+              lịch làm việc của chuyên viên.
             </small>
+
           </div>
+
         </div>
 
-        <!-- 4. TÓM TẮT ĐẶT LỊCH -->
+        <!-- PHẦN 4: TÓM TẮT THÔNG TIN ĐẶT LỊCH -->
         <aside class="detail-summary">
 
           <span class="detail-summary-label">
@@ -243,220 +438,122 @@
 
           <h3>Thông tin đặt lịch</h3>
 
+          <!-- SALON -->
           <div class="detail-summary-item">
+
             <span>Salon</span>
+
             <strong>The Hair Space</strong>
+
           </div>
 
+          <!-- ĐỊA ĐIỂM -->
           <div class="detail-summary-item">
+
             <span>Địa điểm</span>
-            <strong>Quận 1, TP.HCM</strong>
+
+            <strong>
+              Quận 1, TP. Hồ Chí Minh
+            </strong>
+
           </div>
 
+          <!-- DỊCH VỤ -->
           <div class="detail-summary-item">
+
             <span>Dịch vụ</span>
+
             <strong>Chưa xác nhận</strong>
+
           </div>
 
+          <!-- CHUYÊN VIÊN -->
           <div class="detail-summary-item">
+
             <span>Chuyên viên</span>
+
             <strong>Chưa có dữ liệu</strong>
+
           </div>
 
+          <!-- THỜI GIAN -->
           <div class="detail-summary-item">
+
             <span>Thời gian</span>
+
             <strong>Chưa xác nhận</strong>
+
           </div>
 
+          <!-- GIÁ DỊCH VỤ -->
           <div class="detail-summary-item">
+
             <span>Giá dự kiến</span>
+
             <strong>Đang cập nhật</strong>
+
           </div>
 
-          <button
-            type="button"
-            class="btn btn-yellow detail-confirm"
-            disabled
-          >
+          <!-- NÚT XÁC NHẬN MINH HỌA -->
+          <button type="button"
+                  class="btn btn-yellow detail-confirm"
+                  disabled>
+
             Xác nhận đặt lịch
+
           </button>
 
           <p class="detail-summary-note">
-            Nguyên mẫu học tập. Website chưa nhận đặt lịch thật.
-            Người dùng cần đăng nhập và hệ thống phải xác minh
-            lịch trống trước khi tạo booking.
+            Nguyên mẫu học tập.
+
+            Website chưa nhận đặt lịch thật.
+
+            Người dùng cần đăng nhập và
+            hệ thống phải xác minh lịch trống
+            trước khi tạo booking.
           </p>
+
         </aside>
 
       </div>
+
     </section>
 
-    <!-- 5. CÁC SALON KHÁC -->
-    <section
-      class="container other-salons"
-      aria-labelledby="other-salons-title"
-    >
-      <div class="detail-heading">
-        <p class="detail-label">KHÁM PHÁ THÊM</p>
-
-        <h2 id="other-salons-title">
-          Các salon khác <span>✳</span>
-        </h2>
-
-        <p>Tham khảo thêm những salon tại TP.HCM.</p>
-      </div>
-
-      <!-- JavaScript tự thêm các salon còn lại -->
-      <div class="other-salon-grid"></div>
-    </section>
-
-    <!-- 6. QUAY LẠI -->
+    <!-- PHẦN 5: QUAY LẠI DANH SÁCH SALON -->
     <div class="container detail-back">
+
       <a href="products.html">
         ← Quay lại danh sách salon
       </a>
+
     </div>
 
   </main>
 
-  <div id="shared-footer"></div>
+<!-- FOOTER DÙNG CHUNG: chép trực tiếp từ components/footer.html -->
+<footer class="site-footer">
+    <div class="container footer-inner">
 
+        <a class="footer-brand" href="index.html">
+            <img src="images/salonbook-mark-white.png"
+                 alt=""
+                 width="44"
+                 height="50">
+            SALONBOOK
+        </a>
 
-<!-- JAVASCRIPT CHUNG -->
-<script src="js/common.js"></script>
+        <p>YOUR BEAUTY, YOUR TIME</p>
 
-<!-- JAVASCRIPT CHI TIẾT SALON -->
-<script src="js/salon-detail.js?v=13"></script>
+        <small>
+            Nguyên mẫu học tập · Nền tảng kết nối nhiều salon ·
+            Chưa nhận đặt lịch thật
+        </small>
 
-<!-- GOOGLE MAPS CHO 10 SALON -->
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+    </div>
+</footer>
 
-  const salonMaps = {
-    "the-hair-space":
-      "https://maps.app.goo.gl/72ytADTaG9YJMTUX6",
-
-    "juno-hair-studio":
-      "https://maps.app.goo.gl/2MnwfqcCxjoBgvQB9",
-
-    "khanh-hair":
-      "https://maps.app.goo.gl/kdUWxMfpS8smfffh9",
-
-    "nhat-hung":
-      "https://maps.app.goo.gl/cGyHf4iEcGfuUX5u7",
-
-    "min-hair":
-      "https://maps.app.goo.gl/DLbeFnSV2qARrepV6",
-
-    "doth-hair":
-      "https://maps.app.goo.gl/HKPJV7QwKiwf8GXJ8",
-
-    "mai-nguyen":
-      "https://maps.app.goo.gl/w64wwtwnTo8iqRET7",
-
-    "susi-hair":
-      "https://maps.app.goo.gl/FQ4cHyg7F896yy3u6",
-
-    "new-hair":
-      "https://maps.app.goo.gl/3s9WAr5ZiywYYD2o9",
-
-    "the-one":
-      "https://maps.app.goo.gl/aw8iVxtYAK5wCv8MA"
-  };
-
-  const params = new URLSearchParams(
-    window.location.search
-  );
-
-  const salonId = params.get("salon") || "the-hair-space";
-  const mapUrl = salonMaps[salonId];
-
-  const detailInfo = document.querySelector(".detail-info");
-  const bookingButton = document.querySelector(".detail-button");
-
-  if (!detailInfo || !mapUrl) return;
-
-  // Loại bỏ nút bản đồ cũ để không bị trùng
-  detailInfo.querySelectorAll("a").forEach(function(link) {
-    const href = link.getAttribute("href") || "";
-
-    if (
-      link.classList.contains("detail-map-link") ||
-      href.includes("maps.app.goo.gl") ||
-      href.includes("google.com/maps")
-    ) {
-      link.remove();
-    }
-  });
-
-  // Tạo nút bản đồ mới
-  const mapButton = document.createElement("a");
-
-  mapButton.href = mapUrl;
-  mapButton.target = "_blank";
-  mapButton.rel = "noopener noreferrer";
-  mapButton.className = "salon-google-map-fixed";
-
-  mapButton.textContent = "📍 Xem bản đồ ↗";
-
-  // Đảm bảo không bị CSS cũ ẩn
-  mapButton.style.setProperty(
-    "display", "inline-flex", "important"
-  );
-
-  mapButton.style.setProperty(
-    "visibility", "visible", "important"
-  );
-
-  mapButton.style.setProperty(
-    "opacity", "1", "important"
-  );
-
-  mapButton.style.setProperty(
-    "color", "#0c513f", "important"
-  );
-
-  mapButton.style.setProperty(
-    "background", "transparent", "important"
-  );
-
-  mapButton.style.setProperty(
-    "font-size", "15px"
-  );
-
-  mapButton.style.setProperty(
-    "font-weight", "700"
-  );
-
-  mapButton.style.setProperty(
-    "text-decoration", "underline"
-  );
-
-  mapButton.style.setProperty(
-    "margin", "15px 0 5px"
-  );
-
-  mapButton.style.setProperty(
-    "padding", "0"
-  );
-
-  // Chèn bản đồ ngay phía trên nút đặt lịch
-  if (
-    bookingButton &&
-    bookingButton.parentElement === detailInfo
-  ) {
-    detailInfo.insertBefore(
-      mapButton,
-      bookingButton
-    );
-  } else {
-    detailInfo.appendChild(mapButton);
-  }
-
-});
-</script>
-</body>
-</html>
+  <!-- JAVASCRIPT CHUNG CỦA NHÓM -->
+  <script src="js/common.js"></script>
 
 </body>
 </html>
