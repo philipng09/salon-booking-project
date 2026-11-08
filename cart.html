@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giỏ dịch vụ | SalonBook</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive-ux.css">
+  <link rel="stylesheet" href="css/cart.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
+        <img src="images/salonbook-mark.png" alt="" width="46" height="54">
+        <span>SALON<span class="brand-thin">BOOK</span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="index.html">Trang chủ</a><a href="products.html">Khám phá salon</a>
+        <a href="blog.html">Blog</a><a href="about.html">Giới thiệu</a>
+      </nav>
+      <div class="nav-actions"><a class="btn btn-yellow btn-top" href="products.html">Khám phá salon</a></div>
+    </div>
+  </header>
+  <main class="cart-page">
+    <div class="container">
+      <span class="cart-eyebrow">SALONBOOK / YOUR SELECTION</span>
+      <h1>Giỏ dịch vụ của bạn</h1>
+      <p class="cart-lead">Chọn các dịch vụ chăm sóc tóc yêu thích và xem tổng chi phí dự kiến. Đây là giỏ dịch vụ minh họa, chưa phải đơn đặt lịch.</p>
+      <section class="cart-empty cart-panel" id="cart-empty" hidden aria-live="polite">
+        <div class="cart-empty-icon" aria-hidden="true">🛍</div>
+        <h2>Giỏ dịch vụ đang trống</h2>
+        <p>Bạn chưa thêm dịch vụ nào. Khám phá các salon để bắt đầu nhé!</p>
+        <a class="cart-back" href="products.html">Khám phá salon</a>
+      </section>
+      <div class="cart-layout" id="cart-filled" hidden>
+        <section class="cart-panel" aria-labelledby="cart-list-title">
+          <h2 id="cart-list-title">Dịch vụ đã chọn</h2>
+          <div id="cart-items" aria-live="polite"></div>
+        </section>
+        <aside class="cart-summary" aria-label="Tổng kết chi phí">
+          <h2>Tóm tắt giỏ dịch vụ</h2>
+          <div class="cart-summary-line"><span>Tổng số lượng</span><strong id="cart-total-quantity">0</strong></div>
+          <div class="cart-summary-line cart-summary-total"><span>Tạm tính</span><strong id="cart-total-money">0 ₫</strong></div>
+          <p class="cart-footnote">Giá được tính theo bảng giá dịch vụ trong dữ liệu SalonBook, chưa có ưu đãi hoặc thanh toán. Việc đặt lịch thật cần chọn thợ, ngày, giờ và xác nhận slot còn trống.</p>
+          <a class="cart-back" href="products.html">+ Tiếp tục chọn dịch vụ</a>
+        </aside>
+      </div>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="footer-brand" href="index.html"><img src="images/salonbook-mark-white.png" alt="" width="44" height="50"> SALONBOOK</a>
+      <p>YOUR BEAUTY, YOUR TIME</p>
+      <small>Nguyên mẫu học tập · Nền tảng kết nối nhiều salon · Chưa nhận đặt lịch thật</small>
+    </div>
+  </footer>
+  <script src="js/common.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+</body>
+</html>

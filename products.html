@@ -11,6 +11,7 @@
     <!-- CSS riêng của trang danh sách salon -->
     <link rel="stylesheet" href="css/products.css">
     <link rel="stylesheet" href="css/responsive-ux.css">
+    <link rel="stylesheet" href="css/cart.css">
 </head>
 
 <body>
@@ -62,7 +63,7 @@
                 <input
                     type="search"
                     id="salon-search"
-                    placeholder="Tìm tên salon hoặc địa chỉ..."
+                    placeholder="Tìm tên salon..."
                     aria-label="Tìm kiếm salon"
                 >
 
@@ -79,6 +80,17 @@
                 <!-- Bộ lọc -->
                 <aside class="products-sidebar">
                     <h2>Bộ lọc</h2>
+
+                    <div class="filter-group">
+                        <h3>Danh mục</h3>
+
+                        <label class="filter-option">
+                            <input type="checkbox"
+                                   name="category"
+                                   value="Salon tóc">
+                            Salon tóc
+                        </label>
+                    </div>
 
                     <div class="filter-group">
                         <h3>Khu vực</h3>
@@ -190,82 +202,143 @@
     <script src="js/products.js"></script>
 
     <!-- 3. Hàm renderProducts() -->
-    <script src="js/render-products.js"></script>
+        <script src="js/cart.js"></script>
+    <script src="js/cart-list.js"></script>
+<script src="js/render-products.js"></script>
 
     <!-- 4. Logic tìm kiếm, lọc và sắp xếp chạy trực tiếp trên mảng products -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // Bước 1: Vẽ toàn bộ danh sách salon từ JS ngay khi mở trang
-            renderProducts(products);
+        
+document.addEventListener("DOMContentLoaded", function () {
+    // 1. Lấy các phần tử giao diện
+    const searchInput = document.getElementById("salon-search");
+    const sortSelect = document.getElementById("sort-salon");
+    const resetButton = document.getElementById("reset-filters");
 
-            const searchInput = document.getElementById("salon-search");
-            const sortSelect = document.getElementById("sort-salon");
-            const resetButton = document.getElementById("reset-filters");
+    // Hiển thị danh sách ban đầu
+    renderProducts(products);
 
-            function normalizeText(text) {
-                return String(text || "")
-                    .toLocaleLowerCase("vi")
-                    .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "")
-                    .replace(/đ/g, "d");
-            }
+    // 2. Chuẩn hóa văn bản tìm kiếm
+    function normalizeText(text) {
+        return String(text || "")
+            .toLocaleLowerCase("vi")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/đ/g, "d");
+    }
 
-            function applyFilters() {
-                const keyword = normalizeText(searchInput.value.trim());
+    // 3. Tìm kiếm salon theo tên
+    function searchProducts(list, keyword) {
+        const normalizedKeyword = normalizeText(keyword.trim());
 
-                const districts = Array.from(
-                    document.querySelectorAll('input[name="district"]:checked')
-                ).map(input => input.value);
+        if (!normalizedKeyword) return [...list];
 
-                const services = Array.from(
-                    document.querySelectorAll('input[name="service"]:checked')
-                ).map(input => input.value);
+        return list.filter(salon =>
+            normalizeText(salon.name).includes(normalizedKeyword)
+        );
+    }
 
-                // Lọc trực tiếp trên mảng products gốc (không thay đổi mảng gốc)
-                let filtered = products.filter(salon => {
-                    const name = normalizeText(salon.name);
-                    const address = normalizeText(salon.address);
+    // 4. Lọc salon theo danh mục, khu vực và dịch vụ
+    function filterProducts(list, categories, districts, services) {
+        return list.filter(salon => {
+            const matchesCategory =
+                categories.length === 0 ||
+                categories.includes(salon.category);
 
-                    const matchesKeyword = name.includes(keyword) || address.includes(keyword);
-                    const matchesDistrict = districts.length === 0 || districts.includes(salon.district);
+            const matchesDistrict =
+                districts.length === 0 ||
+                districts.includes(salon.district);
 
-                    const salonServices = (salon.services || "").split(" ");
-                    const matchesService = services.length === 0 || services.every(s => salonServices.includes(s));
+            const salonServices = (salon.services || "").split(" ");
 
-                    return matchesKeyword && matchesDistrict && matchesService;
-                });
+            const matchesService =
+                services.length === 0 ||
+                services.every(service =>
+                    salonServices.includes(service)
+                );
 
-                // Sắp xếp
-                if (sortSelect.value === "name") {
-                    filtered.sort((a, b) => a.name.localeCompare(b.name, "vi"));
-                } else if (sortSelect.value === "price-asc") {
-                    filtered.sort((a, b) => a.price - b.price);
-                } else if (sortSelect.value === "price-desc") {
-                    filtered.sort((a, b) => b.price - a.price);
-                }
-
-                // Gọi hàm vẽ lại giao diện với mảng đã lọc
-                renderProducts(filtered);
-            }
-
-            // Gắn sự kiện
-            searchInput.addEventListener("input", applyFilters);
-
-            document.querySelectorAll('input[name="district"], input[name="service"]').forEach(input => {
-                input.addEventListener("change", applyFilters);
-            });
-
-            sortSelect.addEventListener("change", applyFilters);
-
-            resetButton.addEventListener("click", function () {
-                searchInput.value = "";
-                document.querySelectorAll('input[name="district"], input[name="service"]').forEach(input => {
-                    input.checked = false;
-                });
-                sortSelect.value = "default";
-                renderProducts(products);
-            });
+            return matchesCategory &&
+                   matchesDistrict &&
+                   matchesService;
         });
+    }
+
+    // 5. Sắp xếp salon theo giá hoặc tên
+    function sortProducts(list, sortType) {
+        const sortedList = [...list];
+
+        if (sortType === "price-asc") {
+            sortedList.sort((a, b) => a.price - b.price);
+        } else if (sortType === "price-desc") {
+            sortedList.sort((a, b) => b.price - a.price);
+        } else if (sortType === "name") {
+            sortedList.sort((a, b) =>
+                a.name.localeCompare(b.name, "vi")
+            );
+        }
+
+        return sortedList;
+    }
+
+    // 6. Kết hợp tìm kiếm, lọc và sắp xếp
+    function applyFilters() {
+        const categories = Array.from(
+            document.querySelectorAll('input[name="category"]:checked')
+        ).map(input => input.value);
+
+        const districts = Array.from(
+            document.querySelectorAll('input[name="district"]:checked')
+        ).map(input => input.value);
+
+        const services = Array.from(
+            document.querySelectorAll('input[name="service"]:checked')
+        ).map(input => input.value);
+
+        // Thực hiện lần lượt trên các mảng kết quả mới
+        let result = searchProducts(products, searchInput.value);
+
+        result = filterProducts(
+            result,
+            categories,
+            districts,
+            services
+        );
+
+        result = sortProducts(result, sortSelect.value);
+
+        // Cập nhật giao diện
+        renderProducts(result);
+    }
+
+    // 7. Gắn sự kiện tìm kiếm
+    searchInput.addEventListener("input", applyFilters);
+
+    // 8. Gắn sự kiện các bộ lọc
+    document.querySelectorAll(
+        'input[name="category"], input[name="district"], input[name="service"]'
+    ).forEach(input => {
+        input.addEventListener("change", applyFilters);
+    });
+
+    // 9. Gắn sự kiện sắp xếp
+    sortSelect.addEventListener("change", applyFilters);
+
+    // 10. Xóa điều kiện và khôi phục danh sách
+    resetButton.addEventListener("click", function () {
+        searchInput.value = "";
+
+        document.querySelectorAll(
+            'input[name="category"], input[name="district"], input[name="service"]'
+        ).forEach(input => {
+            input.checked = false;
+        });
+
+        sortSelect.value = "default";
+
+        applyFilters();
+    });
+});
+
     </script>
 </body>
 </html>
