@@ -152,6 +152,31 @@
          id="booking-message"
          role="status"
          aria-live="polite"></div>
+    <!-- KẾT QUẢ SALON ĐỀ XUẤT TẠI TRANG CHỦ -->
+<section class="salon-discovery container"
+         id="homepage-search-results"
+         hidden>
+    <div class="section-head">
+        <div>
+            <p class="overline">SALONBOOK / GỢI Ý DÀNH CHO BẠN</p>
+            <h2>Salon đề xuất phù hợp</h2>
+            <p id="homepage-result-description"></p>
+        </div>
+    </div>
+
+    <p id="homepage-result-count"></p>
+
+    <div class="salon-grid" id="homepage-result-grid"></div>
+
+    <p id="homepage-result-empty" hidden>
+        Không tìm thấy salon phù hợp. Bạn hãy thử chọn khu vực
+        hoặc dịch vụ khác nhé!
+    </p>
+
+    <a href="products.html" class="btn btn-yellow">
+        Khám phá tất cả salon
+    </a>
+</section>
 
     <!-- DỊCH VỤ NỔI BẬT -->
     <section class="services container"
@@ -401,32 +426,114 @@
     </div>
 </footer>
 
- 
-<!-- TÌM KIẾM SALON: chuyển điều kiện sang trang danh sách hiện có -->
-<script>
-    const bookingDate = document.querySelector('#booking-date');
-    const currentDate = new Date();
-    const today = new Date(
-      currentDate.getTime() - currentDate.getTimezoneOffset() * 60000
-    ).toISOString().slice(0, 10);
-
-    bookingDate.min = today;
-
-    document.querySelector('.booking-bar').addEventListener('submit', function (event) {
-        event.preventDefault();
-        const params = new URLSearchParams({
-            area: document.querySelector('#area-select').value,
-            service: document.querySelector('#service-select').value,
-            date: bookingDate.value
-        });
-        window.location.href = `products.html?${params.toString()}`;
-    });
-</script>
 
 <!-- JAVASCRIPT HEADER/FOOTER DÙNG CHUNG -->
 <script src="js/common.js"></script>
 
   <script src="js/products.js"></script>
+  
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector(".booking-bar");
+    const dateInput = document.getElementById("booking-date");
+
+    const today = new Date();
+    dateInput.min = new Date(
+        today.getTime() - today.getTimezoneOffset() * 60000
+    ).toISOString().slice(0, 10);
+
+    const resultSection = document.getElementById("homepage-search-results");
+    const resultGrid = document.getElementById("homepage-result-grid");
+    const resultCount = document.getElementById("homepage-result-count");
+    const resultDescription = document.getElementById("homepage-result-description");
+    const emptyMessage = document.getElementById("homepage-result-empty");
+
+    const serviceMap = {
+        "Cắt & tạo kiểu": "cat-tao-kieu",
+        "Nhuộm tóc": "nhuom-toc",
+        "Gội & thư giãn": "goi-thu-gian",
+        "Phục hồi tóc": "phuc-hoi-toc"
+    };
+
+    const districtMap = {
+        "Quận 1": "quan-1",
+        "Quận 3": "quan-3",
+        "Bình Thạnh": "binh-thanh",
+        "Gò Vấp": "go-vap"
+    };
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const area = document.getElementById("area-select").value;
+        const service = document.getElementById("service-select").value;
+        const date = dateInput.value;
+
+        if (!area || !service || !date) {
+            return;
+        }
+
+        const district = districtMap[area];
+        const serviceValue = serviceMap[service];
+
+        // Lọc từ dữ liệu salon hiện có, không thay đổi mảng products
+        const results = products.filter(salon => {
+            const matchesArea =
+                area === "Khu vực khác"
+                    ? !["quan-1", "quan-3", "quan-5", "quan-7",
+                        "quan-10", "binh-thanh", "go-vap"].includes(salon.district)
+                    : salon.district === district;
+
+            const matchesService = (salon.servicesList || []).some(
+                item => item.value === serviceValue
+            );
+
+            return matchesArea && matchesService;
+        });
+
+        resultSection.hidden = false;
+        emptyMessage.hidden = results.length > 0;
+
+        resultDescription.textContent =
+            `${area} · ${service} · Ngày dự kiến: ${date}`;
+
+        resultCount.textContent =
+            `Tìm thấy ${results.length} salon phù hợp`;
+
+        resultGrid.innerHTML = results.map(salon => `
+            <article class="salon-card">
+                <div class="salon-art">
+                    <img src="${salon.image}"
+                         alt="${salon.name}"
+                         loading="lazy"
+                         style="width:100%;height:100%;object-fit:cover;"
+                         onerror="this.src='images/salonbook-mark.png'">
+                </div>
+                <div class="salon-card-body">
+                    <span class="salon-type">
+                        ${salon.category} · ${salon.districtName}
+                    </span>
+                    <h3>${salon.name}</h3>
+                    <p>📍 ${salon.address}</p>
+                    <p><strong>Giá từ:</strong>
+                        ${new Intl.NumberFormat("vi-VN").format(salon.price)}đ
+                    </p>
+                    <a href="product-detail.html?id=${salon.id}"
+                       class="salon-card-link">
+                        Xem chi tiết salon ↗
+                    </a>
+                </div>
+            </article>
+        `).join("");
+
+        resultSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    });
+});
+</script>
+
   <script src="js/cart.js"></script>
 </body>
 </html>
