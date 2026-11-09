@@ -21,21 +21,26 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // --- A. GẮN THÔNG TIN SALON BAN ĐẦU ---
+// --- A. GẮN THÔNG TIN SALON BAN ĐẦU ---
     const titleEl = document.getElementById("detail-title");
     const descEl = document.querySelector(".detail-description");
     const addressEl = document.getElementById("detail-address") || document.querySelector(".detail-address");
-    const mapLinkEl = document.getElementById("detail-map-link");
     const imgEl = document.querySelector(".detail-image img");
 
     if (titleEl) titleEl.textContent = product.name;
     if (descEl) descEl.textContent = product.description;
+
+    // THAY THẾ TOÀN BỘ NỘI DUNG ĐỊA CHỈ (SẠCH SẼ, KHÔNG BỊ DẮM LẠI CHỮ CŨ)
     if (addressEl) {
         addressEl.innerHTML = `
-            <div style="margin-bottom: 10px; line-height: 1.5; color: #0a4336;">📍 ${product.address}</div>
-            <a id="detail-map-link" href="${product.map || '#'}" target="_blank" class="btn-map-highlight">
-                📍 Xem vị trí trên Google Maps ↗
-            </a>
+            <div style="font-size: 14px; color: #0a4336; margin-bottom: 12px; font-weight: 500;">
+                📍 ${product.address}
+            </div>
+            <div>
+                <a href="${product.map || '#'}" target="_blank" class="btn-map-highlight">
+                    📍 Xem vị trí trên Google Maps ↗
+                </a>
+            </div>
             <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;">
                 <span style="font-size: 12px; background: #fefbf0; border: 1px solid #ffc501; color: #0c513f; padding: 4px 10px; border-radius: 12px; font-weight: 700;">✨ Xác nhận ngay</span>
                 <span style="font-size: 12px; background: #f2f7f1; color: #587269; padding: 4px 10px; border-radius: 12px; font-weight: 600;">🅿️ Giữ xe miễn phí</span>
@@ -48,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
         imgEl.src = product.image;
         imgEl.alt = product.name;
     }
-
     // Đổ tên Salon & Địa điểm ban đầu lên Bảng Xanh
     const summarySalonName = document.getElementById("summary-salon-name");
     const summarySalonLocation = document.getElementById("summary-salon-location");
