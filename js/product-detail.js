@@ -175,20 +175,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-   // --- E. BẤM "+ THÊM DỊCH VỤ VÀO GIỎ" ---
+  // --- E. BẤM "+ THÊM DỊCH VỤ VÀO GIỎ" ---
     const addToCartBtn = document.getElementById("add-to-cart-btn") || document.querySelector(".btn-outline");
 
     if (addToCartBtn) {
         addToCartBtn.addEventListener("click", (e) => {
             e.preventDefault();
 
-            // Kiểm tra xem đã chọn đủ bên trái chưa
+            // 1. Kiểm tra điều kiện chọn đủ 4 mục
             if (!currentSelection.serviceId) return alert("Vui lòng chọn 01. Dịch vụ!");
             if (!currentSelection.stylistName) return alert("Vui lòng chọn 02. Chuyên viên!");
             if (!currentSelection.date) return alert("Vui lòng chọn 03. Ngày dự kiến!");
             if (!currentSelection.time) return alert("Vui lòng chọn 04. Khung giờ!");
 
-            // 1. Cập nhật Bảng Xanh bên phải
+            // 2. Cập nhật Bảng Xanh bên phải
             if (summaryServiceName) summaryServiceName.textContent = currentSelection.serviceName;
             if (summaryStylistName) summaryStylistName.textContent = currentSelection.stylistName;
             if (summaryTime) summaryTime.textContent = `${currentSelection.time} - ${currentSelection.date}`;
@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 summaryPrice.textContent = currentSelection.servicePrice.toLocaleString("vi-VN") + " ₫";
             }
 
-            // 2. Mở khóa nút vàng "Xác nhận đặt lịch"
+            // 3. Mở khóa nút "Xác nhận đặt lịch"
             const submitBtn = document.getElementById("btn-submit-booking") || document.querySelector(".detail-confirm");
             if (submitBtn) {
                 submitBtn.disabled = false;
@@ -204,43 +204,38 @@ document.addEventListener("DOMContentLoaded", () => {
                 submitBtn.style.cursor = "pointer";
             }
 
-            // 3. Gọi lưu giỏ hàng chuẩn từ cart.js (hàm addToCart này sẽ TỰ ĐỘNG bắn Toast xanh ở dưới)
+            // 4. Lưu dữ liệu vào giỏ hàng của SalonCart
             if (typeof window.SalonCart !== "undefined") {
                 window.SalonCart.addToCart(product.id, currentSelection.serviceId);
             } else if (typeof window.addToCart === "function") {
                 window.addToCart(product.id, currentSelection.serviceId);
-            } else {
-                // Nếu vì lý do gì hàm trong cart.js chưa kích hoạt Toast, tự hiện Toast bằng tay:
-                showCustomToast("Đã thêm dịch vụ vào giỏ!");
             }
+
+            // 5. ÉP BẮN TOAST HIỂN THỊ CHUẨN THEO CART.CSS
+            showCartToast("Đã thêm dịch vụ vào giỏ!");
         });
     }
 
-    // Hàm phụ trợ tạo Toast bong bóng xanh ở góc dưới (nếu cần)
-    function showCustomToast(message) {
+    // Hàm gọi Toast ăn theo đúng class is-visible của cart.css
+    function showCartToast(message) {
         let toast = document.getElementById("cart-toast");
         if (!toast) {
             toast = document.createElement("div");
             toast.id = "cart-toast";
-            toast.style.cssText = `
-                position: fixed;
-                bottom: 24px;
-                right: 24px;
-                background-color: #0c513f;
-                color: #fff;
-                padding: 12px 20px;
-                border-radius: 20px;
-                font-weight: 600;
-                font-size: 14px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                z-index: 9999;
-                transition: opacity 0.3s ease;
-            `;
+            toast.setAttribute("role", "status");
+            toast.setAttribute("aria-live", "polite");
             document.body.appendChild(toast);
         }
+        
         toast.textContent = message;
-        toast.style.opacity = "1";
-        setTimeout(() => { toast.style.opacity = "0"; }, 2200);
+        // Bật hiển thị
+        toast.classList.add("is-visible");
+
+        // Tự tắt sau 2.5 giây
+        if (window.toastTimer) clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+            toast.classList.remove("is-visible");
+        }, 2500);
     }
 
     // --- F. BẤM "XÁC NHẬN ĐẶT LỊCH" -> CHUYỂN SANG CART.HTML ---
