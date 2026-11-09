@@ -885,3 +885,26 @@
   color: #0c513f !important;        /* Màu xanh lục đậm đặc trưng */
   letter-spacing: -0.02em;
 }
+/* NÚT HOẶC DÒNG GOOGLE MAPS NỔI BẬT NẰM HÀNG DƯỚI */
+.btn-map-highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  padding: 6px 14px;
+  background-color: #e5f0e8;          /* Nền xanh mint dịu nhẹ */
+  color: #0c513f !important;           /* Chữ xanh lục đậm */
+  border: 1px solid #0c513f;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.btn-map-highlight:hover {
+  background-color: #0c513f;          /* Đổi nền xanh lục khi rê chuột */
+  color: #ffffff !important;           /* Chữ trắng nổi bật */
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(12, 81, 63, 0.15);
+}
