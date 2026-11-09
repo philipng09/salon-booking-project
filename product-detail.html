@@ -292,128 +292,103 @@
 
     </section>
 
-    <!-- PHẦN 3: CHỌN THỢ VÀ LỊCH HẸN -->
-    <section class="container detail-booking"
-             id="booking"
-             aria-labelledby="booking-title">
+  <!-- PHẦN 3: CHỌN THỢ VÀ LỊCH HẸN -->
+    <section class="container detail-booking" id="booking" aria-labelledby="booking-title">
 
       <div class="detail-heading">
-
-        <p class="detail-label">
-          YOUR BEAUTY, YOUR TIME
-        </p>
-
-        <h2 id="booking-title">
-          Chọn thợ &amp; lịch hẹn <span>✳</span>
-        </h2>
-
-        <p>
-          Giao diện minh họa các bước lựa chọn
-          dịch vụ, chuyên viên và thời gian.
-        </p>
-
+        <p class="detail-label">YOUR BEAUTY, YOUR TIME</p>
+        <h2 id="booking-title">Chọn thợ & lịch hẹn <span>✳</span></h2>
+        <p>Giao diện lựa chọn dịch vụ, chuyên viên và thời gian đặt lịch.</p>
       </div>
 
       <div class="detail-booking-grid">
 
-        <!-- BIỂU MẪU ĐẶT LỊCH -->
+        <!-- BIỂU MẪU ĐẶT LỊCH (BÊN TRÁI) -->
         <div class="detail-booking-form">
-
           <h3>Thông tin lịch hẹn</h3>
 
           <!-- CHỌN DỊCH VỤ -->
           <div class="detail-field">
-
-            <label for="detail-service-select">
-              01. Chọn dịch vụ
-            </label>
-
-            <select id="detail-service-select"
-                    name="service">
-
-              <option value="">
-                Chọn dịch vụ
-              </option>
-
-              <option value="cat-tao-kieu">
-                Cắt &amp; tạo kiểu
-              </option>
-
-              <option value="nhuom-toc">
-                Nhuộm tóc
-              </option>
-
-              <option value="goi-thu-gian">
-                Gội &amp; thư giãn
-              </option>
-
-              <option value="phuc-hoi-toc">
-                Phục hồi tóc
-              </option>
-
+            <label for="detail-service-select">01. Chọn dịch vụ</label>
+            <select id="detail-service-select" name="service">
+              <option value="">Chọn dịch vụ</option>
             </select>
-
           </div>
+
+          <!-- NÚT THÊM VÀO GIỎ / TÓM TẮT -->
+          <button type="button" id="add-to-cart-btn" class="btn btn-outline" style="width: 100%; margin: 12px 0 20px; padding: 12px; border: 2px solid #0c513f; border-radius: 10px; background: #fff; color: #0c513f; font-weight: 700; cursor: pointer;">
+            + Thêm dịch vụ đã chọn vào giỏ
+          </button>
 
           <!-- CHỌN CHUYÊN VIÊN -->
           <div class="detail-field">
-
-            <label for="detail-stylist-select">
-              02. Chọn chuyên viên
-            </label>
-
+            <label for="detail-stylist-select">02. Chọn chuyên viên</label>
             <select id="detail-stylist-select">
-  <option value="">Chọn chuyên viên</option>
-  <option disabled>Danh sách thợ đang cập nhật</option>
-</select>
-
+              <option value="">Chọn chuyên viên</option>
+            </select>
           </div>
 
           <!-- CHỌN NGÀY -->
           <div class="detail-field">
-
-            <label for="detail-date">
-              03. Chọn ngày dự kiến
-            </label>
-
-            <input type="date"
-                   id="detail-date"
-                   name="date">
-
-            <small>
-              Ngày lựa chọn chỉ mang tính
-              minh họa giao diện.
-
-              Chưa kiểm tra lịch trống thực tế.
-            </small>
-
+            <label for="detail-date">03. Chọn ngày dự kiến</label>
+            <input type="date" id="detail-date" name="date">
+            <small>Ngày lựa chọn chỉ mang tính minh họa giao diện.</small>
           </div>
 
           <!-- CHỌN KHUNG GIỜ -->
           <div class="detail-field">
-
-            <label>
-              04. Chọn khung giờ
-            </label>
-
-            <div class="detail-time-grid">
-
-              <button type="button" disabled>
-                Chưa có lịch trống
-              </button>
-
+            <label>04. Chọn khung giờ</label>
+            <div class="detail-time-grid" id="detail-time-grid">
+              <button type="button" disabled>Vui lòng chọn chuyên viên để xem lịch trống</button>
             </div>
-
-            <small>
-              Khung giờ khả dụng sẽ được cập nhật
-              sau khi tích hợp dữ liệu
-              lịch làm việc của chuyên viên.
-            </small>
-
           </div>
-
         </div>
 
+        <!-- BẢNG TÓM TẮT THÔNG TIN ĐẶT LỊCH (BẢNG XANH BÊN PHẢI) -->
+        <aside class="detail-summary">
+          <span class="detail-summary-label">SALONBOOK / BOOKING</span>
+          <h3>Thông tin đặt lịch</h3>
+
+          <div class="detail-summary-item">
+            <span>Salon</span>
+            <strong id="summary-salon-name">Đang cập nhật</strong>
+          </div>
+
+          <div class="detail-summary-item">
+            <span>Địa điểm</span>
+            <strong id="summary-salon-location">Đang cập nhật</strong>
+          </div>
+
+          <div class="detail-summary-item">
+            <span>Dịch vụ</span>
+            <strong id="summary-service-name">Chưa xác nhận</strong>
+          </div>
+
+          <div class="detail-summary-item">
+            <span>Chuyên viên</span>
+            <strong id="summary-stylist-name">Chưa có dữ liệu</strong>
+          </div>
+
+          <div class="detail-summary-item">
+            <span>Thời gian</span>
+            <strong id="summary-time">Chưa xác nhận</strong>
+          </div>
+
+          <div class="detail-summary-item">
+            <span>Giá dự kiến</span>
+            <strong id="summary-price">Đang cập nhật</strong>
+          </div>
+
+          <button type="button" id="btn-submit-booking" class="btn btn-yellow detail-confirm" disabled style="opacity: 0.5; cursor: not-allowed;">
+            Xác nhận đặt lịch
+          </button>
+
+  
+        </aside>
+
+      </div>
+
+    </section>
         <!-- PHẦN 4: TÓM TẮT THÔNG TIN ĐẶT LỊCH -->
         <aside class="detail-summary">
 
