@@ -125,18 +125,23 @@
                         <h3>Dịch vụ</h3>
 
                         <label class="filter-option">
-                            <input type="checkbox" name="service" value="cat">
-                            Cắt tóc
+                            <input type="checkbox" name="service" value="cat-tao-kieu">
+                            Cắt &amp; tạo kiểu
                         </label>
 
                         <label class="filter-option">
-                            <input type="checkbox" name="service" value="nhuom">
+                            <input type="checkbox" name="service" value="nhuom-toc">
                             Nhuộm tóc
                         </label>
 
                         <label class="filter-option">
-                            <input type="checkbox" name="service" value="tao-kieu">
-                            Tạo kiểu
+                            <input type="checkbox" name="service" value="goi-thu-gian">
+                            Gội &amp; thư giãn
+                        </label>
+
+                        <label class="filter-option">
+                            <input type="checkbox" name="service" value="phuc-hoi-toc">
+                            Phục hồi tóc
                         </label>
                     </div>
 
@@ -254,6 +259,7 @@ document.addEventListener("DOMContentLoaded", function () {
         );
     }
 
+    
     // 4. Lọc salon theo danh mục, khu vực và dịch vụ
     function filterProducts(list, categories, districts, services, requestedService) {
         return list.filter(salon => {
@@ -265,20 +271,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 districts.length === 0 ||
                 districts.includes(salon.district);
 
-            const salonServices = (salon.services || "").split(" ");
+            // Lấy mã các dịch vụ salon đang cung cấp
+            const salonServices = (salon.servicesList || [])
+                .map(item => item.value);
 
+            // Kiểm tra dịch vụ được chọn trong bộ lọc
             const matchesCheckedServices =
                 services.length === 0 ||
                 services.every(service => salonServices.includes(service));
 
-            // Đối chiếu dịch vụ chọn từ trang chủ với dịch vụ có sẵn của salon
+            // Kiểm tra dịch vụ được chọn từ trang chủ
             const normalizedRequested = normalizeText(requestedService || "");
+
             const matchesRequestedService = !normalizedRequested ||
-                (salon.servicesList || []).some(item => {
-                    const serviceName = normalizeText(item.name);
-                    return serviceName.includes(normalizedRequested) ||
-                           normalizedRequested.includes(serviceName);
-                });
+                (salon.servicesList || []).some(item =>
+                    normalizeText(item.name).includes(normalizedRequested) ||
+                    normalizedRequested.includes(normalizeText(item.name))
+                );
 
             return matchesCategory &&
                    matchesDistrict &&
