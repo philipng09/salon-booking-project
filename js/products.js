@@ -24,7 +24,6 @@ const products = [
     servicesList: [
       { id: "s1_1", name: "Cắt & tạo kiểu", duration: "45 phút", price: 150000, value: "cat-tao-kieu" },
       { id: "s1_2", name: "Nhuộm tóc", duration: "90 phút", price: 650000, value: "nhuom-toc" },
-      { id: "s1_3", name: "Gội & thư giãn", duration: "40 phút", price: 120000, value: "goi-thu-gian" },
       { id: "s1_4", name: "Phục hồi tóc", duration: "60 phút", price: 450000, value: "phuc-hoi-toc" }
     ]
   },
@@ -48,7 +47,6 @@ const products = [
     servicesList: [
       { id: "s2_1", name: "Cắt & tạo kiểu", duration: "45 phút", price: 180000, value: "cat-tao-kieu" },
       { id: "s2_2", name: "Nhuộm tóc", duration: "120 phút", price: 850000, value: "nhuom-toc" },
-      { id: "s2_3", name: "Gội & thư giãn", duration: "50 phút", price: 150000, value: "goi-thu-gian" },
       { id: "s2_4", name: "Phục hồi tóc", duration: "60 phút", price: 500000, value: "phuc-hoi-toc" }
     ]
   },
@@ -120,7 +118,6 @@ const products = [
     servicesList: [
       { id: "s5_1", name: "Cắt & tạo kiểu", duration: "50 phút", price: 200000, value: "cat-tao-kieu" },
       { id: "s5_2", name: "Nhuộm tóc", duration: "150 phút", price: 950000, value: "nhuom-toc" },
-      { id: "s5_3", name: "Gội & thư giãn", duration: "45 phút", price: 160000, value: "goi-thu-gian" },
       { id: "s5_4", name: "Phục hồi tóc", duration: "120 phút", price: 550000, value: "phuc-hoi-toc" }
     ]
   },
