@@ -347,3 +347,18 @@ h1,h2,h3,p {
   }
 }
 
+/* Sửa lỗi BUG-02 (kiểm thử Buổi 3): footer 4 cột không có quy tắc cho màn hình nhỏ,
+   gây tràn ngang 36px ở độ rộng 390px trên mọi trang. */
+@media (max-width: 900px) {
+  .footer-main {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
+}
+
+@media (max-width: 560px) {
+  .footer-main {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+}
