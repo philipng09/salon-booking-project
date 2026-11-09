@@ -30,8 +30,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (titleEl) titleEl.textContent = product.name;
     if (descEl) descEl.textContent = product.description;
 
-    // THAY THẾ TOÀN BỘ NỘI DUNG ĐỊA CHỈ (SẠCH SẼ, KHÔNG BỊ DẮM LẠI CHỮ CŨ)
+    // QUÉT SẠCH THẺ CỦ TRƯỚC KHI GÁN NỘI DUNG MỚI
     if (addressEl) {
+        addressEl.textContent = ""; // Xóa toàn bộ chữ và link cũ trong HTML
         addressEl.innerHTML = `
             <div style="font-size: 14px; color: #0a4336; margin-bottom: 12px; font-weight: 500;">
                 📍 ${product.address}
