@@ -31,13 +31,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (titleEl) titleEl.textContent = product.name;
     if (descEl) descEl.textContent = product.description;
     if (addressEl) {
-        if (addressEl.tagName === "P") {
-            addressEl.innerHTML = `📍 ${product.address} <a id="detail-map-link" href="${product.map || '#'}" target="_blank" style="margin-left: 8px; color: #0c513f; font-weight: 600;">[Xem Google Maps]</a>`;
-        } else {
-            addressEl.textContent = product.address;
-            if (mapLinkEl && product.map) mapLinkEl.href = product.map;
-        }
+        addressEl.innerHTML = `
+            <div style="margin-bottom: 10px; line-height: 1.5; color: #0a4336;">📍 ${product.address}</div>
+            <a id="detail-map-link" href="${product.map || '#'}" target="_blank" class="btn-map-highlight">
+                📍 Xem vị trí trên Google Maps ↗
+            </a>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;">
+                <span style="font-size: 12px; background: #fefbf0; border: 1px solid #ffc501; color: #0c513f; padding: 4px 10px; border-radius: 12px; font-weight: 700;">✨ Xác nhận ngay</span>
+                <span style="font-size: 12px; background: #f2f7f1; color: #587269; padding: 4px 10px; border-radius: 12px; font-weight: 600;">🅿️ Giữ xe miễn phí</span>
+                <span style="font-size: 12px; background: #f2f7f1; color: #587269; padding: 4px 10px; border-radius: 12px; font-weight: 600;">📶 Wi-Fi tốc độ cao</span>
+            </div>
+        `;
     }
+
     if (imgEl) {
         imgEl.src = product.image;
         imgEl.alt = product.name;
