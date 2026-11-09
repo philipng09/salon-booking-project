@@ -1,265 +1,199 @@
-<!DOCTYPE html>
-<html lang="vi">
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Đọc ID salon từ URL (?id=1)
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id") || 1;
+    const product = typeof products !== "undefined" ? products.find(p => String(p.id) === String(productId)) : null;
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0c513f">
-  <meta name="description" content="SalonBook - Khám phá thông tin salon, dịch vụ và lựa chọn lịch làm tóc.">
-  <title>Chi tiết salon | SalonBook</title>
+    if (!product) return;
 
-  <!-- CSS DÙNG CHUNG CỦA NHÓM -->
-  <link rel="stylesheet" href="css/style.css?v=3">
-  <!-- CSS RIÊNG TRANG CHI TIẾT -->
-  <link rel="stylesheet" href="css/product-detail.css">
-  <link rel="stylesheet" href="css/responsive-ux.css">
-  <link rel="stylesheet" href="css/cart.css">
-</head>
+    // --- A. CẬP NHẬT THÔNG TIN SALON BAN ĐẦU ---
+    const titleEl = document.getElementById("detail-title");
+    const descEl = document.querySelector(".detail-description");
+    const addressEl = document.getElementById("detail-address") || document.querySelector(".detail-address");
+    const mapLinkEl = document.getElementById("detail-map-link");
+    const imgEl = document.querySelector(".detail-image img");
 
-<body>
+    if (titleEl) titleEl.textContent = product.name;
+    if (descEl) descEl.textContent = product.description;
+    if (addressEl) {
+        if (addressEl.tagName === "P") {
+            addressEl.innerHTML = `📍 ${product.address} <a id="detail-map-link" href="${product.map || '#'}" target="_blank" style="margin-left: 8px; color: #0c513f; font-weight: 600;">[Xem Google Maps]</a>`;
+        } else {
+            addressEl.textContent = product.address;
+            if (mapLinkEl && product.map) mapLinkEl.href = product.map;
+        }
+    }
+    if (imgEl) imgEl.src = product.image;
 
-  <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+    // Gán thông tin sang Bảng Xanh
+    const summarySalonName = document.getElementById("summary-salon-name");
+    const summarySalonLocation = document.getElementById("summary-salon-location");
+    if (summarySalonName) summarySalonName.textContent = product.name;
+    if (summarySalonLocation) summarySalonLocation.textContent = product.districtName || product.address;
 
-  <!-- HEADER DÙNG CHUNG -->
-  <header class="site-header">
-    <div class="container nav-shell">
-      <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
-        <img src="images/salonbook-mark.png" alt="" width="46" height="54">
-        <span>SALON<span class="brand-thin">BOOK</span></span>
-      </a>
+    // --- B. ĐỔ GIÁ THẬT VÀO 4 THẺ DỊCH VỤ Ở PHẦN 2 ---
+    const serviceCards = document.querySelectorAll(".detail-service-card");
+    if (serviceCards.length > 0 && product.servicesList) {
+        serviceCards.forEach((card, index) => {
+            const serviceData = product.servicesList[index];
+            if (serviceData) {
+                // Đổi tên dịch vụ nếu muốn khớp 100%
+                const titleNode = card.querySelector("h3");
+                if (titleNode) titleNode.textContent = serviceData.name;
 
-      <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
+                // Đổi chữ "Giá đang cập nhật" -> Giá thật
+                const priceNode = card.querySelector(".detail-service-bottom span");
+                if (priceNode) {
+                    priceNode.textContent = `${serviceData.price.toLocaleString("vi-VN")} ₫`;
+                    priceNode.style.fontWeight = "700";
+                    priceNode.style.color = "#0c513f";
+                }
+            }
+        });
+    }
 
-      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
-        <a href="index.html">Trang chủ</a>
-        <a href="products.html" class="active" aria-current="page">Khám phá salon</a>
-        <a href="blog.html">Blog</a>
-        <a href="about.html">Giới thiệu</a>
-      </nav>
+    // --- C. ĐỔ DỮ LIỆU FORM CHỌN (BÊN TRÁI) ---
+    const serviceSelect = document.getElementById("detail-service-select");
+    const stylistSelect = document.getElementById("detail-stylist-select");
+    const dateInput = document.getElementById("detail-date");
+    const timeGrid = document.getElementById("detail-time-grid");
 
-      <div class="nav-actions">
-        <a class="btn btn-yellow btn-top" href="index.html#booking">Đặt lịch ngay</a>
-      </div>
-    </div>
-  </header>
+    let currentSelection = {
+        serviceId: "",
+        serviceName: "",
+        servicePrice: 0,
+        stylistName: "",
+        date: "",
+        time: ""
+    };
 
-  <main id="main-content">
+    // 1. Đổ Dropdown Dịch vụ
+    if (serviceSelect && product.servicesList) {
+        let html = '<option value="">Chọn dịch vụ</option>';
+        product.servicesList.forEach(s => {
+            html += `<option value="${s.id}" data-name="${s.name}" data-price="${s.price}">${s.name} - ${s.price.toLocaleString("vi-VN")} ₫</option>`;
+        });
+        serviceSelect.innerHTML = html;
+    }
 
-    <!-- ĐƯỜNG DẪN ĐIỀU HƯỚNG -->
-    <div class="container">
-      <nav class="detail-breadcrumb" aria-label="Đường dẫn điều hướng">
-        <a href="index.html">Trang chủ</a>
-        <span>/</span>
-        <a href="products.html">Khám phá salon</a>
-        <span>/</span>
-        <span>Chi tiết salon</span>
-      </nav>
-    </div>
+    // 2. Đổ Dropdown Chuyên viên
+    if (stylistSelect && product.stylists) {
+        let html = '<option value="">Chọn chuyên viên</option>';
+        product.stylists.forEach(tho => {
+            html += `<option value="${tho.id}" data-name="${tho.name}">${tho.name} (${tho.experience})</option>`;
+        });
+        stylistSelect.innerHTML = html;
+    }
 
-    <!-- PHẦN 1: THÔNG TIN CHI TIẾT SALON -->
-    <section class="container detail-hero" aria-labelledby="detail-title">
-      <div class="detail-image">
-        <img src="images/salon-01.jpg" alt="Hình ảnh salon" loading="lazy">
-      </div>
+    // --- D. LẮNG NGHE SỰ KIỆN FORM BÊN TRÁI ---
 
-      <div class="detail-info">
-        <p class="detail-label">SALON TÓC · QUẬN 1</p>
-        <h1 id="detail-title">The Hair Space</h1>
+    // Chọn Dịch vụ
+    if (serviceSelect) {
+        serviceSelect.addEventListener("change", (e) => {
+            const opt = e.target.options[e.target.selectedIndex];
+            if (e.target.value) {
+                currentSelection.serviceId = e.target.value;
+                currentSelection.serviceName = opt.getAttribute("data-name");
+                currentSelection.servicePrice = parseInt(opt.getAttribute("data-price"));
+            } else {
+                currentSelection.serviceId = "";
+                currentSelection.serviceName = "";
+                currentSelection.servicePrice = 0;
+            }
+        });
+    }
 
-        <p class="detail-address">
-          📍 <span id="detail-address">34 Phó Đức Chính, Phường Bến Thành, TP. Hồ Chí Minh</span>
-          <a id="detail-map-link" href="#" target="_blank" style="margin-left: 8px; color: #0c513f; font-weight: 600;">[Xem Google Maps]</a>
-        </p>
+    // Chọn Chuyên viên -> Tạo các nút khung giờ
+    if (stylistSelect) {
+        stylistSelect.addEventListener("change", (e) => {
+            const selectedStylistId = e.target.value;
+            const selectedStylist = product.stylists ? product.stylists.find(st => String(st.id) === String(selectedStylistId)) : null;
 
-        <div class="detail-divider"></div>
+            if (selectedStylist) {
+                currentSelection.stylistName = selectedStylist.name;
 
-        <h2>Giới thiệu salon</h2>
-        <p class="detail-description">
-          The Hair Space là salon được giới thiệu trên nền tảng SalonBook.
-        </p>
+                if (timeGrid && selectedStylist.availableHours) {
+                    timeGrid.innerHTML = selectedStylist.availableHours.map(hour => `
+                        <button type="button" class="btn-time-slot" data-time="${hour}" style="padding: 8px 14px; margin: 4px; border: 1px solid #0c513f; border-radius: 6px; background: #fff; cursor: pointer; font-weight: 600;">
+                            ${hour}
+                        </button>
+                    `).join("");
 
-        <a href="#booking" class="btn btn-yellow detail-button">
-          Xem lựa chọn đặt lịch ↗
-        </a>
-      </div>
-    </section>
+                    const timeBtns = timeGrid.querySelectorAll(".btn-time-slot");
+                    timeBtns.forEach(btn => {
+                        btn.addEventListener("click", () => {
+                            timeBtns.forEach(b => { b.style.background = "#fff"; b.style.color = "#000"; });
+                            btn.style.background = "#ffc501";
+                            btn.style.color = "#0c513f";
+                            currentSelection.time = btn.getAttribute("data-time");
+                        });
+                    });
+                }
+            } else {
+                currentSelection.stylistName = "";
+                currentSelection.time = "";
+                if (timeGrid) timeGrid.innerHTML = '<button type="button" disabled>Vui lòng chọn chuyên viên để xem lịch trống</button>';
+            }
+        });
+    }
 
-    <!-- PHẦN 2: DANH SÁCH DỊCH VỤ -->
-    <section class="container detail-services" aria-labelledby="detail-services-title">
-      <div class="detail-heading">
-        <p class="detail-label">CHĂM SÓC BẠN THEO CÁCH RIÊNG</p>
-        <h2 id="detail-services-title">Dịch vụ salon <span>✳</span></h2>
-        <p>Tham khảo các nhóm dịch vụ làm tóc được giới thiệu trên SalonBook.</p>
-      </div>
+    // Chọn Ngày
+    if (dateInput) {
+        dateInput.addEventListener("change", (e) => {
+            currentSelection.date = e.target.value;
+        });
+    }
 
-      <div class="detail-service-grid">
-        <article class="detail-service-card">
-          <span class="detail-service-number">01 / STYLE</span>
-          <h3>Cắt & tạo kiểu</h3>
-          <p>Lựa chọn dịch vụ cắt tóc và tạo kiểu theo nhu cầu cá nhân.</p>
-          <div class="detail-service-bottom">
-            <span>Giá đang cập nhật</span>
-            <a href="#booking">↗</a>
-          </div>
-        </article>
+    // --- E. BẤM "+ THÊM DỊCH VỤ VÀO GIỎ" -> ĐỔ SANG BẢNG XANH ---
+    const addToCartBtn = document.getElementById("add-to-cart-btn") || document.querySelector(".btn-outline");
 
-        <article class="detail-service-card">
-          <span class="detail-service-number">02 / COLOR</span>
-          <h3>Nhuộm tóc</h3>
-          <p>Tham khảo các lựa chọn màu tóc và thay đổi phong cách cá nhân.</p>
-          <div class="detail-service-bottom">
-            <span>Giá đang cập nhật</span>
-            <a href="#booking">↗</a>
-          </div>
-        </article>
+    if (addToCartBtn) {
+        addToCartBtn.addEventListener("click", (e) => {
+            e.preventDefault();
 
-        <article class="detail-service-card">
-          <span class="detail-service-number">03 / RELAX</span>
-          <h3>Gội & thư giãn</h3>
-          <p>Nhóm dịch vụ làm sạch tóc, chăm sóc và thư giãn.</p>
-          <div class="detail-service-bottom">
-            <span>Giá đang cập nhật</span>
-            <a href="#booking">↗</a>
-          </div>
-        </article>
+            if (!currentSelection.serviceId) return alert("Vui lòng chọn 01. Dịch vụ!");
+            if (!currentSelection.stylistName) return alert("Vui lòng chọn 02. Chuyên viên!");
+            if (!currentSelection.date) return alert("Vui lòng chọn 03. Ngày dự kiến!");
+            if (!currentSelection.time) return alert("Vui lòng chọn 04. Khung giờ!");
 
-        <article class="detail-service-card">
-          <span class="detail-service-number">04 / CARE</span>
-          <h3>Phục hồi tóc</h3>
-          <p>Tham khảo nhóm dịch vụ chăm sóc và hỗ trợ phục hồi tóc.</p>
-          <div class="detail-service-bottom">
-            <span>Giá đang cập nhật</span>
-            <a href="#booking">↗</a>
-          </div>
-        </article>
-      </div>
+            // 1. Cập nhật Bảng Xanh bên phải
+            const summaryServiceName = document.getElementById("summary-service-name");
+            const summaryStylistName = document.getElementById("summary-stylist-name");
+            const summaryTime = document.getElementById("summary-time");
+            const summaryPrice = document.getElementById("summary-price");
 
-      <p class="detail-disclaimer">
-        Các nhóm dịch vụ trên được sử dụng để minh họa giao diện SalonBook.
-      </p>
-    </section>
+            if (summaryServiceName) summaryServiceName.textContent = currentSelection.serviceName;
+            if (summaryStylistName) summaryStylistName.textContent = currentSelection.stylistName;
+            if (summaryTime) summaryTime.textContent = `${currentSelection.time} - ${currentSelection.date}`;
+            if (summaryPrice) {
+                summaryPrice.textContent = currentSelection.servicePrice.toLocaleString("vi-VN") + " ₫";
+            }
 
-    <!-- PHẦN 3: CHỌN THỢ VÀ LỊCH HẸN -->
-    <section class="container detail-booking" id="booking" aria-labelledby="booking-title">
+            // 2. Mở khóa nút "Xác nhận đặt lịch"
+            const submitBtn = document.getElementById("btn-submit-booking") || document.querySelector(".detail-confirm");
+            if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = "1";
+                submitBtn.style.cursor = "pointer";
+            }
 
-      <div class="detail-heading">
-        <p class="detail-label">YOUR BEAUTY, YOUR TIME</p>
-        <h2 id="booking-title">Chọn thợ & lịch hẹn <span>✳</span></h2>
-        <p>Giao diện lựa chọn dịch vụ, chuyên viên và thời gian đặt lịch.</p>
-      </div>
+            // 3. Gọi lưu vào giỏ hàng của cart.js
+            if (typeof window.SalonCart !== "undefined") {
+                window.SalonCart.addToCart(product.id, currentSelection.serviceId);
+            } else if (typeof window.addToCart === "function") {
+                window.addToCart(product.id, currentSelection.serviceId);
+            }
 
-      <div class="detail-booking-grid">
+            alert("✅ Đã thêm dịch vụ vào giỏ!");
+        });
+    }
 
-        <!-- BIỂU MẪU ĐẶT LỊCH (BÊN TRÁI) -->
-        <div class="detail-booking-form">
-          <h3>Thông tin lịch hẹn</h3>
-
-          <!-- CHỌN DỊCH VỤ -->
-          <div class="detail-field">
-            <label for="detail-service-select">01. Chọn dịch vụ</label>
-            <select id="detail-service-select" name="service">
-              <option value="">Chọn dịch vụ</option>
-            </select>
-          </div>
-
-          <!-- CHỌN CHUYÊN VIÊN -->
-          <div class="detail-field">
-            <label for="detail-stylist-select">02. Chọn chuyên viên</label>
-            <select id="detail-stylist-select">
-              <option value="">Chọn chuyên viên</option>
-            </select>
-          </div>
-
-          <!-- CHỌN NGÀY -->
-          <div class="detail-field">
-            <label for="detail-date">03. Chọn ngày dự kiến</label>
-            <input type="date" id="detail-date" name="date">
-            <small>Ngày lựa chọn chỉ mang tính minh họa giao diện.</small>
-          </div>
-
-          <!-- CHỌN KHUNG GIỜ -->
-          <div class="detail-field">
-            <label>04. Chọn khung giờ</label>
-            <div class="detail-time-grid" id="detail-time-grid">
-              <button type="button" disabled>Vui lòng chọn chuyên viên để xem lịch trống</button>
-            </div>
-          </div>
-
-          <!-- ĐÚNG 1 NÚT THÊM VÀO GIỎ Ở DƯỚI CÙNG FORM BÊN TRÁI -->
-          <button type="button" id="add-to-cart-btn" class="btn btn-outline" style="width: 100%; margin-top: 15px; padding: 12px; border: 2px solid #0c513f; border-radius: 10px; background: #fff; color: #0c513f; font-weight: 700; cursor: pointer;">
-            + Thêm dịch vụ đã chọn vào giỏ
-          </button>
-        </div>
-
-        <!-- BẢNG TÓM TẮT THÔNG TIN ĐẶT LỊCH (BẢNG XANH BÊN PHẢI) -->
-        <aside class="detail-summary">
-          <span class="detail-summary-label">SALONBOOK / BOOKING</span>
-          <h3>Thông tin đặt lịch</h3>
-
-          <div class="detail-summary-item">
-            <span>Salon</span>
-            <strong id="summary-salon-name">The Hair Space</strong>
-          </div>
-
-          <div class="detail-summary-item">
-            <span>Địa điểm</span>
-            <strong id="summary-salon-location">Quận 1, TP. Hồ Chí Minh</strong>
-          </div>
-
-          <div class="detail-summary-item">
-            <span>Dịch vụ</span>
-            <strong id="summary-service-name">Chưa xác nhận</strong>
-          </div>
-
-          <div class="detail-summary-item">
-            <span>Chuyên viên</span>
-            <strong id="summary-stylist-name">Chưa có dữ liệu</strong>
-          </div>
-
-          <div class="detail-summary-item">
-            <span>Thời gian</span>
-            <strong id="summary-time">Chưa xác nhận</strong>
-          </div>
-
-          <div class="detail-summary-item">
-            <span>Giá dự kiến</span>
-            <strong id="summary-price">Đang cập nhật</strong>
-          </div>
-
-          <button type="button" id="btn-submit-booking" class="btn btn-yellow detail-confirm" disabled style="opacity: 0.5; cursor: not-allowed;">
-            Xác nhận đặt lịch
-          </button>
-        </aside>
-
-      </div>
-
-    </section>
-
-    <!-- PHẦN 4: QUAY LẠI DANH SÁCH SALON -->
-    <div class="container detail-back">
-      <a href="products.html">← Quay lại danh sách salon</a>
-    </div>
-
-  </main>
-
-  <!-- FOOTER DÙNG CHUNG -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <a class="footer-brand" href="index.html">
-        <img src="images/salonbook-mark-white.png" alt="" width="44" height="50">
-        SALONBOOK
-      </a>
-      <p>YOUR BEAUTY, YOUR TIME</p>
-      <small>Nguyên mẫu học tập · Nền tảng kết nối nhiều salon</small>
-    </div>
-  </footer>
-
-  <!-- JAVASCRIPT CHUNG CỦA NHÓM -->
-  <script src="js/common.js"></script>
-  <script src="js/products.js"></script>
-  <script src="js/cart.js"></script>
-  <!-- COMMENT LẠI CART-DETAIL.JS ĐỂ KHÔNG BỊ CHÈN NÚT TRÙNG -->
-  <!-- <script src="js/cart-detail.js"></script> -->
-  <script src="js/product-detail.js"></script>
-</body>
-</html>
+    // --- F. BẤM "XÁC NHẬN ĐẶT LỊCH" -> SANG CART.HTML ---
+    const submitBtn = document.getElementById("btn-submit-booking") || document.querySelector(".detail-confirm");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", () => {
+            if (submitBtn.disabled) return;
+            window.location.href = "cart.html";
+        });
+    }
+});
