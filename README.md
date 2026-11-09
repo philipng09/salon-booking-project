@@ -1,3 +1,4 @@
+
 # SalonBook – Website Đặt Lịch Salon Tóc Trực Tuyến
 
 ---
@@ -6,7 +7,7 @@
 
 **SalonBook** là nền tảng thương mại điện tử hoạt động theo mô hình trung gian (Marketplace), kết nối khách hàng có nhu cầu chăm sóc tóc với các salon và barbershop tại Thành phố Hồ Chí Minh.
 
-Website hỗ trợ khách hàng tìm kiếm, so sánh và đặt lịch trực tuyến cho các dịch vụ như cắt tóc, uốn, nhuộm, gội đầu dưỡng sinh và phục hồi tóc.
+Ở phiên bản bài tập nhóm Buổi 3, website hỗ trợ khám phá salon, tìm kiếm/lọc/sắp xếp, xem thông tin chi tiết, chọn dịch vụ – stylist – ngày – giờ và lưu các lựa chọn vào giỏ dịch vụ. Việc xác nhận lịch hẹn thực tế trên máy chủ vẫn thuộc giai đoạn phát triển sau.
 
 ### Vấn đề kinh doanh cần giải quyết
 
@@ -39,7 +40,7 @@ Website hỗ trợ khách hàng tìm kiếm, so sánh và đặt lịch trực t
 
 ## 3. Chức năng chính
 
-Hệ thống dự kiến phát triển 13 chức năng chính trong phiên bản đầu tiên (MVP):
+Hệ thống định hướng phát triển 13 chức năng chính trong phiên bản MVP. Bảng này mô tả **phạm vi mục tiêu**; tiến độ thực tế của bài tập Buổi 3 được cập nhật tại Mục 9–11:
 
 | Mã | Chức năng | Mô tả |
 |---|---|---|
@@ -83,11 +84,15 @@ Nhóm thực hiện gồm 7 thành viên:
 | 6 | Phi | Technical Lead & Fullstack | Thiết lập hệ thống, phát triển frontend, backend và triển khai website. |
 | 7 | Thông | QA & Documentation | Kiểm thử hệ thống, quản lý tài liệu và hoàn thiện README. |
 
+**Phân công cụ thể cho bài tập JavaScript Buổi 3:** xem Mục 9.1.
+
 ---
 
-## 5. Công nghệ dự kiến
+## 5. Công nghệ sử dụng và dự kiến
 
-Các công nghệ được đề xuất sử dụng trong quá trình phát triển:
+**Đang sử dụng (Buổi 3):** HTML5, CSS3, JavaScript (DOM, mảng đối tượng, URLSearchParams, localStorage), CSS Grid/Flexbox/Media Queries, Git/GitHub, GitHub Pages. Nhóm dùng Chrome DevTools để kiểm thử trình duyệt và Node.js (`node --test`) để kiểm thử logic giỏ hàng.
+
+**Định hướng phát triển:**
 
 | Thành phần | Công nghệ |
 |---|---|
@@ -137,8 +142,7 @@ Các tài liệu phân tích, lập kế hoạch và hướng dẫn được lư
 
 ## 8. Hướng dẫn chạy website
 
-SalonBook hiện được triển khai dưới dạng website giao diện
-(frontend prototype) bằng HTML5, CSS3 và JavaScript.
+SalonBook hiện là **frontend prototype tương tác** bằng HTML5, CSS3 và JavaScript. Giỏ dịch vụ được lưu trong `localStorage`, chưa đồng bộ với máy chủ.
 
 ### Truy cập trực tuyến
 
@@ -153,94 +157,146 @@ https://github.com/philipng09/salon-booking-project
 1. Truy cập GitHub Repository.
 2. Chọn Code → Download ZIP.
 3. Giải nén thư mục dự án.
-4. Mở file index.html bằng trình duyệt.
-5. Sử dụng menu để chuyển giữa các trang.
+4. Mở thư mục bằng Visual Studio Code và chạy **Live Server** (hoặc một máy chủ HTTP cục bộ).
+5. Mở `index.html`, sau đó kiểm tra tìm kiếm, lọc, trang chi tiết và giỏ dịch vụ.
+
+**Không nên mở trực tiếp bằng `file://`:** `js/common.js` dùng `fetch()` để tải `components/footer.html`, có thể bị trình duyệt chặn khi mở file trực tiếp (BUG-03).
 
 Các trang chính:
 - index.html: Trang chủ.
 - products.html: Danh sách salon.
 - product-detail.html: Chi tiết salon và giao diện đặt lịch.
 - about.html: Giới thiệu SalonBook.
+- cart.html: Giỏ dịch vụ, thay đổi số lượng, xóa và xem tổng tiền.
+- blog.html: Trang nội dung.
 
-Lưu ý: Để kiểm tra đầy đủ các thành phần được tải
-bằng JavaScript, nên chạy dự án bằng Live Server
-trong Visual Studio Code hoặc máy chủ HTTP cục bộ.
+**Kiểm thử tự động giỏ hàng** (cần cài Node.js):
 
----
+```bash
+node --test tests/cart.test.cjs tests/cart-booking.test.cjs
+```
 
-## 9. Hình ảnh minh họa giao diện
+Theo báo cáo ngày 09/11/2026, bộ kiểm thử này đạt **25/25 ca Pass**.
 
-Website được thiết kế thống nhất với màu xanh lá,
-vàng và nền sáng, sử dụng CSS Grid và Flexbox.
-
-Các giao diện minh họa:
-- Trang chủ SalonBook.
-- Trang danh sách salon.
-- Trang chi tiết salon.
-- Trang giới thiệu.
-
-Hình ảnh website và tài nguyên giao diện được
-lưu trong thư mục images/ của Repository.
+Lưu ý: Để kiểm tra đầy đủ các thành phần được tải bằng JavaScript, nên chạy dự án bằng Live Server trong Visual Studio Code hoặc máy chủ HTTP cục bộ.
 
 ---
 
+## 9. Kết quả triển khai JavaScript – Bài tập nhóm Buổi 3
 
-## 10. Kiểm thử giao diện
+### 9.1. Phân công triển khai
 
-### 10.1. Nội dung kiểm thử
+Các vai trò dài hạn của nhóm được trình bày tại Mục 4. Riêng bài tập Buổi 3, nhiệm vụ thực tế được phân như sau:
 
-| Nội dung | Kết quả cần đạt |
+| Thành viên | Phần việc Buổi 3 |
 |---|---|
-| Điều hướng | Các trang liên kết chính xác |
-| Danh sách salon | Hiển thị thông tin và hình ảnh salon |
-| Chi tiết salon | Hiển thị đúng salon được lựa chọn |
-| Responsive | Bố cục thích ứng với kích thước màn hình |
-| Hover và Focus | Có phản hồi khi tương tác |
-| Hình ảnh | Tải đúng, không bị lỗi đường dẫn |
+| Thanh Ngân | Chuẩn hóa dữ liệu `js/products.js`, hiển thị danh sách salon |
+| Mai Duyên | Tìm kiếm, lọc đa tiêu chí, sắp xếp |
+| Trà My | Trang chi tiết động theo ID và nút thêm vào giỏ |
+| Văn Ngọc Hân | Logic giỏ hàng: thêm, sửa, xóa, tính tiền |
+| Nguyễn Bảo Hân | Lưu và đồng bộ giỏ hàng bằng `localStorage` |
+| Nhật Phi | Kiểm thử chức năng, khắc phục lỗi tích hợp |
+| Hiển Thông, Thanh Ngân, Mai Duyên | GitHub, tích hợp mã nguồn, báo cáo và cập nhật README |
+| Cả nhóm | Chuẩn bị và trả lời 10 câu hỏi kiến thức |
 
-### 10.2. Kết quả kiểm thử Responsive
+### 9.2. Dữ liệu dùng chung và cấu trúc mã nguồn
 
-Nhóm sử dụng Chrome Developer Tools để kiểm tra
-giao diện trang chi tiết Min Hair Salon trên ba
-kích thước màn hình.
+Dữ liệu tập trung trong `js/products.js` dưới dạng mảng `products` gồm **10 salon**. Mỗi salon có thông tin định danh (`id`, `slug`), tên, giá tham khảo, nhóm/khu vực, hình ảnh, địa chỉ, mô tả; đồng thời có `stylists` (gồm `availableHours`) và `servicesList` (tên dịch vụ, thời lượng, đơn giá). Các trang đọc chung dữ liệu để tránh khai báo sai lệch.
 
-| Thiết bị | Kết quả | Minh chứng |
+Các tệp quan trọng của luồng tương tác:
+
+```text
+salon-booking-project/
+├── index.html                  # Trang chủ
+├── products.html               # Khám phá, tìm/lọc/sắp xếp salon
+├── product-detail.html         # Trang chi tiết và chọn lịch dự kiến
+├── cart.html                   # Giỏ dịch vụ và tổng tiền
+├── about.html, blog.html, tu-van.html
+├── components/footer.html      # Footer được nạp bởi JavaScript
+├── css/                        # Giao diện và responsive
+├── js/
+│   ├── products.js             # Dữ liệu salon dùng chung
+│   ├── render-products.js      # renderProducts(list)
+│   ├── product-detail.js       # Xử lý trang chi tiết và thông tin lịch
+│   ├── cart.js                 # Module SalonCart + localStorage
+│   └── common.js               # Các thành phần dùng chung
+├── tests/
+│   ├── cart.test.cjs           # 13 ca kiểm thử giỏ hàng cơ bản
+│   └── cart-booking.test.cjs   # 12 ca kiểm thử dữ liệu lịch hẹn
+├── images/
+├── docs/
+└── README.md
+```
+
+Một số xử lý tìm kiếm/lọc được mô tả và minh họa trực tiếp trong `products.html` ở báo cáo Buổi 3; không mặc định mọi chức năng đều nằm trong file JS riêng. `js/cart-detail.js` đã được **tắt tại trang chi tiết** để tránh tạo nút thêm giỏ trùng với `js/product-detail.js`.
+
+### 9.3. Chức năng đã thực hiện
+
+| Hạng mục | Kết quả triển khai Buổi 3 |
+|---|---|
+| Hiển thị salon | `renderProducts(list)` hiển thị 10 salon từ dữ liệu JS, có tên/ảnh/địa chỉ/giá và thông báo khi không có kết quả |
+| Tìm kiếm | Tìm theo tên, không phân biệt dấu tiếng Việt và hoa/thường |
+| Bộ lọc | Lọc theo khu vực và dịch vụ; kết hợp tìm kiếm, lọc, sắp xếp |
+| Sắp xếp | Giá tăng/giảm và tên A–Z; không sửa dữ liệu gốc ngoài ý muốn |
+| Trang chi tiết | Dùng `URLSearchParams` lấy ID, hiển thị đúng salon, xử lý ID không tồn tại và liên kết quay lại |
+| Chọn dịch vụ | Chọn dịch vụ, chuyên viên, ngày và khung giờ trước khi thêm vào giỏ |
+| Giỏ dịch vụ | Thêm, gộp trùng nếu cùng khóa lịch, thay đổi số lượng, xóa, tính thành tiền/tổng tiền và đồng bộ badge |
+| Lịch dự kiến trong giỏ | Lưu `stylistId`, `date`, `time`; khác giờ/chuyên viên là các dòng khác nhau; có xử lý sửa/bổ sung lịch |
+| localStorage | Lưu/khôi phục khóa `cart`, xử lý JSON hỏng, dữ liệu không hợp lệ và dữ liệu giỏ cũ |
+
+**Quy ước giỏ hàng:** Chỉ thêm dịch vụ từ trang chi tiết sau khi chọn đủ dịch vụ, stylist, ngày và giờ. Khóa gộp mục giỏ gồm salon + dịch vụ + stylist + ngày + giờ; số lượng tối đa 99. Giá được tra từ `servicesList`. Dữ liệu trong `localStorage` là **lựa chọn lịch dự kiến**, không phải đơn đặt lịch được xác nhận trên backend.
+
+### 9.4. Cách chạy và kiểm tra
+
+Xem hướng dẫn đầy đủ tại Mục 8. Dùng **GitHub Pages** hoặc **Live Server** thay vì `file://` để các thành phần tải bằng `fetch()` hoạt động ổn định. Dùng Chrome DevTools (Console, Application → Local Storage, Network) để kiểm tra tương tác và đường dẫn.
+
+### 9.5. Sử dụng AI
+
+Nhóm sử dụng AI (có ghi nhận minh chứng sử dụng Gemini/Claude trong báo cáo) để tham khảo phân công, phân tích chức năng, đề xuất trường hợp kiểm thử và rà soát giải pháp.
+
+Với Prompt kiểm thử, nhóm đối chiếu kết quả AI với mã nguồn thật và chạy kiểm thử thực tế; **không coi câu trả lời AI là bằng chứng Pass**.
+
+Chi tiết xem [AI_USAGE_LOG.md](AI_USAGE_LOG.md).
+
+### 9.6. Phạm vi chưa triển khai
+
+Website chưa tích hợp backend, cơ sở dữ liệu người dùng, đăng nhập/phân quyền, đặt lịch xác nhận trên máy chủ, xử lý trùng lịch đa người dùng hoặc thanh toán thật. Các chức năng AI phân tích khuôn mặt/chatbot và quản trị salon vẫn thuộc định hướng dự án tại Mục 3.
+
+---
+
+## 10. Kiểm thử chức năng, tích hợp và giao diện
+
+### 10.1. Môi trường và phương pháp
+
+Nhóm kiểm thử trên **Chrome** qua máy chủ cục bộ, ở độ rộng **1366px** (desktop) và **390px** (mobile), dùng DevTools Console/Application/Network. Bảng kiểm thử và ảnh chụp chi tiết nằm trong **Báo cáo NHÓM-3-BTNC3, Mục 8**.
+
+### 10.2. Kết quả kiểm thử Buổi 3
+
+| Phạm vi | Kết quả theo báo cáo ngày 09/11/2026 |
+|---|---|
+| Chức năng trình duyệt TC01–TC20 | **20/20 Pass** ở lần chạy đầu |
+| Tích hợp + giao diện TC01–TC22 | Lần đầu **20/22 Pass**, TC21 và TC22 Fail |
+| Retest sau khi sửa BUG-01 và BUG-02 | **22/22 Pass** |
+| Kiểm thử tự động `tests/cart.test.cjs` | **13/13 Pass** |
+| Kiểm thử tự động mở rộng `tests/cart-booking.test.cjs` | **12/12 Pass**; tổng cộng **25/25 Pass**, 0 Fail, 0 Skipped |
+
+Các kịch bản đã kiểm tra gồm hiển thị 10 salon, tìm `juno`/`khanh`, lọc Quận 1 và Nhuộm tóc, sắp xếp giá, mở chi tiết theo `id`, thêm dịch vụ sau khi chọn đủ thông tin, gộp lịch trùng, tăng/giảm/xóa số lượng, lưu/khôi phục `localStorage`, xử lý dữ liệu hỏng và trạng thái rỗng. Console không ghi nhận lỗi JavaScript chưa xử lý trong lần kiểm thử lại theo báo cáo.
+
+### 10.3. Kiểm thử responsive và minh chứng
+
+Bài tập trước đã ghi nhận giao diện trang chi tiết Min Hair Salon ở Desktop 1366px, Tablet 768px và Mobile. Buổi 3 tiếp tục kiểm tra ở 1366px và 390px, bao gồm trang danh sách và giỏ dịch vụ, sau đó sửa hai lỗi tích hợp liên quan tới màn hình nhỏ.
+
+- [Ảnh responsive desktop](docs/test-evidence/01-responsive-desktop.png)
+- [Ảnh responsive tablet](docs/test-evidence/02-responsive-tablet.png)
+- [Ảnh responsive mobile](docs/test-evidence/03-responsive-mobile.png)
+
+Các ảnh minh chứng BUG-01/BUG-02 và bảng kết quả TC01–TC22 được trình bày trong báo cáo nhóm Buổi 3; không mặc định đã được upload vào thư mục `docs/test-evidence/` nếu chưa kiểm tra GitHub.
+
+### 10.4. Lỗi đã sửa và vấn đề còn theo dõi
+
+| Mã lỗi | Nguyên nhân | Hướng xử lý và trạng thái |
 |---|---|---|
-| Desktop (1366px) | Đạt – Bố cục nhiều cột, hiển thị đầy đủ thông tin | [Xem ảnh Desktop](docs/test-evidence/01-responsive-desktop.png) |
-| Tablet (768px) | Đạt – Giao diện điều chỉnh phù hợp, các thẻ dịch vụ hiển thị 2 cột | [Xem ảnh Tablet](docs/test-evidence/02-responsive-tablet.png) |
-| Mobile | Đạt – Nội dung chuyển thành một cột, hình ảnh và thông tin được sắp xếp theo chiều dọc | [Xem ảnh Mobile](docs/test-evidence/03-responsive-mobile.png) |
-
-### 10.3. Kết luận kiểm thử
-
-Giao diện SalonBook sử dụng CSS Grid, Flexbox và
-Media Queries để thích ứng với các kích thước
-màn hình khác nhau.
-
-Qua kiểm tra trực quan, trang chi tiết salon
-hiển thị phù hợp trên Desktop, Tablet và Mobile.
-
-Các chức năng đặt lịch và xác nhận lịch hẹn
-thực tế chưa thuộc phạm vi kiểm thử giao diện
-của phiên bản hiện tại.
-
-
----
-
-## 11. Giới hạn phiên bản hiện tại
-
-Phiên bản hiện tại tập trung xây dựng và hoàn thiện
-giao diện website phục vụ bài tập HTML5/CSS3.
-
-Các chức năng đã có giao diện minh họa gồm:
-- Khám phá và xem thông tin salon.
-- Xem các nhóm dịch vụ chăm sóc tóc.
-- Chọn dịch vụ và ngày hẹn dự kiến.
-- Hiển thị thông tin tóm tắt đặt lịch.
-
-Những chức năng như xác nhận đặt lịch thực tế,
-đăng nhập, quản lý lịch hẹn, cơ sở dữ liệu,
-phân quyền và tích hợp AI sẽ tiếp tục được phát triển.
-
-Website chưa xử lý giao dịch hay thanh toán thật.
-
----
+| **BUG-01** – Menu mobile bấm không mở | `js/common.js` đăng ký hai handler click cùng toggle menu, khiến menu mở rồi đóng ngay | **Đã sửa:** gộp thành một `DOMContentLoaded`; TC21 retest **Pass** (Phi sửa, Thông theo dõi tích hợp) |
+| **BUG-02** – Tràn ngang 36px ở 390px | Footer 4 cột không có quy tắc responsive phù hợp | **Đã sửa:** `.footer-main` thành 2 cột dưới 900px và 1 cột dưới 560px; TC22 retest **Pass** (Phi sửa) |
+| **BUG-03** – Footer không tải đúng khi mở `file://` | `fetch()` bị trình duyệt hạn chế trên file cục bộ | **Đã ghi nhận/hướng dẫn:** chạy qua Live Server hoặc GitHub Pages; còn phương án thay đổi triển khai ở giai đoạn sau |
+| **BUG-04** – Mô tả nút thêm giỏ không khớp code | Tài liệu cũ nhắc `js/cart-detail.js` dù trang chi tiết đã tắt file đó | **Cần đồng bộ tài liệu:** mô tả luồng thật là chọn đủ dịch vụ/stylist/ngày/giờ rồi nhấn “Thêm vào giỏ” trong `product-detail.js` |
