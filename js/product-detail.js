@@ -88,6 +88,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const dateInput = document.getElementById("detail-date");
     const timeGrid = document.getElementById("detail-time-grid");
 
+    // Giới hạn chọn từ ngày hiện tại, dùng ngày địa phương (không lấy UTC trực tiếp).
+    const todayDate = new Date();
+    const todayLocal = new Date(todayDate.getTime() - todayDate.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    if (dateInput) dateInput.min = todayLocal;
+
+
     const summaryServiceName = document.getElementById("summary-service-name");
     const summaryStylistName = document.getElementById("summary-stylist-name");
     const summaryTime = document.getElementById("summary-time");
@@ -236,6 +242,32 @@ document.addEventListener("DOMContentLoaded", () => {
     // Khởi tạo trạng thái ô giờ ban đầu
     renderTimeSlots();
 
+    // Từ giỏ hàng: sửa dịch vụ/chuyên viên/ngày/giờ của mục đã lưu.
+    // Tham số editKey chỉ dùng nếu mục đó thuộc đúng salon đang mở.
+    const cartBookingEditKey = new URLSearchParams(window.location.search).get('editKey');
+    const cartBookingEditItem = cartBookingEditKey && window.SalonCart
+        ? window.SalonCart.getCart().find(item => item.key === cartBookingEditKey && String(item.salonId) === String(product.id))
+        : null;
+    if (cartBookingEditItem) {
+        if (serviceSelect) {
+            serviceSelect.value = cartBookingEditItem.serviceId;
+            serviceSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        if (stylistSelect && cartBookingEditItem.stylistId) {
+            stylistSelect.value = cartBookingEditItem.stylistId;
+            stylistSelect.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        if (dateInput && cartBookingEditItem.date && cartBookingEditItem.date >= todayLocal) {
+            dateInput.value = cartBookingEditItem.date;
+            dateInput.dispatchEvent(new Event('change', { bubbles: true }));
+            const originalSlot = timeGrid?.querySelector('.btn-time-slot[data-time="' + cartBookingEditItem.time + '"]');
+            if (originalSlot) originalSlot.click();
+        }
+        const button = document.getElementById('add-to-cart-btn');
+        if (button) button.textContent = '✓ Lưu thay đổi lịch hẹn';
+    }
+    // cart-booking-edit-key: marker tránh chèn trùng khi chạy script nhiều lần.
+
     // --- E. BẤM NÚT "+ THÊM DỊCH VỤ ĐÃ CHỌN VÀO GIỎ" ---
     const addToCartBtn = document.getElementById("add-to-cart-btn") || document.querySelector(".btn-outline");
 
@@ -249,6 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!currentSelection.stylistName) return alert("Vui lòng chọn 02. Chuyên viên!");
             if (!currentSelection.date) return alert("Vui lòng chọn 03. Ngày dự kiến!");
             if (!currentSelection.time) return alert("Vui lòng chọn 04. Khung giờ!");
+            if (currentSelection.date < todayLocal) return alert("Ngày đã qua, vui lòng chọn lại ngày dự kiến!");
 
             // 2. Mở khóa nút "Xác nhận đặt lịch"
             const submitBtn = document.getElementById("btn-submit-booking") || document.querySelector(".detail-confirm");
@@ -259,11 +292,16 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             // 3. Gọi lưu giỏ hàng của SalonCart trong cart.js
-            if (typeof window.SalonCart !== "undefined" && typeof window.SalonCart.addToCart === "function") {
-                window.SalonCart.addToCart(product.id, currentSelection.serviceId);
-            } else if (typeof window.addToCart === "function") {
-                window.addToCart(product.id, currentSelection.serviceId);
-            }
+            if (!window.SalonCart) return alert("Giỏ hàng chưa sẵn sàng. Vui lòng tải lại trang.");
+            const booking = {
+                stylistId: stylistSelect?.value,
+                date: currentSelection.date,
+                time: currentSelection.time
+            };
+            const saved = cartBookingEditItem
+                ? window.SalonCart.updateBooking(cartBookingEditItem.key, {...booking, serviceId: currentSelection.serviceId})
+                : window.SalonCart.addToCart(product.id, currentSelection.serviceId, 1, booking);
+            if (!saved) return alert("Không lưu được lịch hẹn. Hãy kiểm tra lại chuyên viên, ngày và giờ.");
 
             // 4. BẮN TOAST THÔNG BÁO XANH Ở GÓC DƯỚI BÊN PHẢI MÀN HÌNH
             showToastSuccess("Đã thêm dịch vụ vào giỏ!");

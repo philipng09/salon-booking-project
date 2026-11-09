@@ -1,0 +1,36 @@
+/* Chỉ bổ sung chi tiết đặt lịch, giữ nguyên bảng màu SalonBook */
+.cart-booking-info {
+  margin: 14px 0 12px;
+  padding: 16px 17px;
+  border: 1px solid var(--line, #dce7df);
+  border-radius: 15px;
+  background: #f4f9f5;
+}
+.cart-booking-heading {
+  margin: 0 0 12px;
+  color: var(--forest, #0c513f);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+.cart-booking-grid {display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px 20px; margin: 0}
+.cart-booking-grid div {min-width:0}
+.cart-booking-grid dt {font-size: 12px; color:var(--muted, #587269); margin-bottom: 4px}
+.cart-booking-grid dd {font-size: 14px; font-weight:700; color:var(--ink,#0a4336);margin:0;overflow-wrap:anywhere}
+.cart-booking-warning {font-size:12px;line-height:1.55;color:#9c4925;background:#fff5e7;border:1px solid #f5d3a7;border-radius:8px;padding:9px 11px;margin:12px 0 0}
+.cart-edit-booking {display:inline-flex;margin-top:12px;font-size:12px;line-height:1.3;text-decoration:underline;text-underline-offset:3px;color:var(--forest,#0c513f);font-weight:800}
+.cart-item-incomplete .cart-booking-info {border-color:#e9c8a2}
+/* Các dòng thông tin chi tiết cần đủ khoảng ngang, không bị ép từ 3 cột cũ */
+.cart-item {grid-template-columns:102px minmax(0,1fr); align-items:start}
+.cart-item-image {width:102px;height:112px}
+.cart-item-details {min-width:0}
+.cart-item-side {grid-column:2;flex-direction:row;justify-content:space-between;align-items:center;gap:12px;padding-top:6px}
+@media(max-width:700px) {
+  .cart-item {grid-template-columns:74px minmax(0,1fr);gap:10px}
+  .cart-item-image {width:74px;height:82px}
+  .cart-booking-info {padding:12px 13px}
+  .cart-booking-grid {gap:10px}
+  .cart-booking-grid dd {font-size:13px}
+  .cart-item-side {grid-column:1 / -1; padding-left:0;}
+}
+@media(max-width:375px) {.cart-booking-grid {grid-template-columns:1fr}}
