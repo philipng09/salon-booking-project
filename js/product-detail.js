@@ -49,25 +49,28 @@ document.addEventListener("DOMContentLoaded", () => {
     if (summarySalonName) summarySalonName.textContent = product.name;
     if (summarySalonLocation) summarySalonLocation.textContent = product.districtName || product.address;
 
-    // --- B. ĐỔ GIÁ THẬT VÀO 4 THẺ DỊCH VỤ Ở PHẦN 2 ---
+   // --- B. ĐỔ GIÁ THẬT VÀO CÁC THẺ DỊCH VỤ Ở PHẦN 2 ---
     const serviceCards = document.querySelectorAll(".detail-service-card");
     if (serviceCards.length > 0 && product.servicesList) {
         serviceCards.forEach((card, index) => {
             const serviceData = product.servicesList[index];
             if (serviceData) {
+                card.style.display = "block"; // Hiện thẻ nếu salon có dịch vụ này
                 const titleNode = card.querySelector("h3");
                 if (titleNode) titleNode.textContent = serviceData.name;
 
                 const priceNode = card.querySelector(".detail-service-bottom span");
                 if (priceNode) {
                     priceNode.textContent = `${serviceData.price.toLocaleString("vi-VN")} ₫`;
-                    priceNode.style.fontWeight = "700";
+                    priceNode.style.fontSize = "18px";
+                    priceNode.style.fontWeight = "800";
                     priceNode.style.color = "#0c513f";
                 }
+            } else {
+                card.style.display = "none"; // Tự ẩn thẻ nếu salon không làm dịch vụ này
             }
         });
     }
-
     // --- C. KHỞI TẠO BIẾN THÀNH PHẦN FORM & BẢNG XANH ---
     const serviceSelect = document.getElementById("detail-service-select");
     const stylistSelect = document.getElementById("detail-stylist-select");
