@@ -878,3 +878,10 @@
   outline: 3px solid #ffc400;
   outline-offset: 3px;
 }
+/* TĂNG KÍCH THƯỚC VÀ ĐỘ DÀY CHO GIÁ TIỀN THẺ DỊCH VỤ */
+.detail-service-bottom span {
+  font-size: 18px !important;       /* Tăng cỡ chữ to hơn */
+  font-weight: 800 !important;      /* Chữ siêu đậm nổi bật */
+  color: #0c513f !important;        /* Màu xanh lục đậm đặc trưng */
+  letter-spacing: -0.02em;
+}
