@@ -402,32 +402,25 @@
 </footer>
 
  
-<!-- TƯƠNG TÁC DEMO -->
+<!-- TÌM KIẾM SALON: chuyển điều kiện sang trang danh sách hiện có -->
 <script>
-    const date = document.querySelector('#booking-date');
-    const now = new Date();
+    const bookingDate = document.querySelector('#booking-date');
+    const currentDate = new Date();
     const today = new Date(
-      now.getTime() - now.getTimezoneOffset() * 60000
+      currentDate.getTime() - currentDate.getTimezoneOffset() * 60000
     ).toISOString().slice(0, 10);
 
-    date.min = today;
+    bookingDate.min = today;
 
-    document.querySelector('.booking-bar')
-      .addEventListener('submit', e => {
-        e.preventDefault();
-
-        const area = document.querySelector('#area-select').value;
-        const service = document.querySelector('#service-select').value;
-        const day = date.value;
-
-        document.querySelector('#booking-message').textContent =
-          `Bạn đang tìm salon tại ${area}, dịch vụ ${service}, ngày ${day}. ` +
-          `Đây là giao diện demo: chưa có dữ liệu salon thật ` +
-          `và chưa thực hiện tìm kiếm/đặt lịch.`;
-
-        document.querySelector('#booking-message')
-          .scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
+    document.querySelector('.booking-bar').addEventListener('submit', function (event) {
+        event.preventDefault();
+        const params = new URLSearchParams({
+            area: document.querySelector('#area-select').value,
+            service: document.querySelector('#service-select').value,
+            date: bookingDate.value
+        });
+        window.location.href = `products.html?${params.toString()}`;
+    });
 </script>
 
 <!-- JAVASCRIPT HEADER/FOOTER DÙNG CHUNG -->

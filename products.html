@@ -215,7 +215,33 @@ document.addEventListener("DOMContentLoaded", function () {
     const sortSelect = document.getElementById("sort-salon");
     const resetButton = document.getElementById("reset-filters");
 
-    // Hiển thị danh sách ban đầu
+    // Nhận điều kiện tìm kiếm được chuyển từ trang chủ
+    const searchParams = new URLSearchParams(window.location.search);
+    const selectedArea = searchParams.get("area") || "";
+    const selectedService = searchParams.get("service") || "";
+    const selectedDate = searchParams.get("date") || "";
+
+    // Chọn sẵn khu vực tương ứng trên trang danh sách
+    const areaValues = {
+        "Quận 1": "quan-1",
+        "Quận 3": "quan-3",
+        "Bình Thạnh": "binh-thanh",
+        "Khu vực khác": "khac"
+    };
+    if (areaValues[selectedArea]) {
+        const districtInput = document.querySelector(
+            `input[name="district"][value="${areaValues[selectedArea]}"]`
+        );
+        if (districtInput) districtInput.checked = true;
+    }
+
+    // Hiển thị điều kiện người dùng đã chọn
+    if (selectedDate) {
+        const heading = document.querySelector(".products-heading p");
+        if (heading) heading.textContent = `Salon đề xuất cho ${selectedService} tại ${selectedArea} · Ngày dự kiến: ${selectedDate}`;
+    }
+
+    // Hiển thị danh sách ban đầu; applyFilters sẽ lọc nếu có điều kiện từ trang chủ
     renderProducts(products);
 
     // 2. Chuẩn hóa văn bản tìm kiếm
@@ -239,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // 4. Lọc salon theo danh mục, khu vực và dịch vụ
-    function filterProducts(list, categories, districts, services) {
+    function filterProducts(list, categories, districts, services, requestedService) {
         return list.filter(salon => {
             const matchesCategory =
                 categories.length === 0 ||
@@ -251,15 +277,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const salonServices = (salon.services || "").split(" ");
 
-            const matchesService =
+            const matchesCheckedServices =
                 services.length === 0 ||
-                services.every(service =>
-                    salonServices.includes(service)
-                );
+                services.every(service => salonServices.includes(service));
+
+            // Đối chiếu dịch vụ chọn từ trang chủ với dịch vụ có sẵn của salon
+            const normalizedRequested = normalizeText(requestedService || "");
+            const matchesRequestedService = !normalizedRequested ||
+                (salon.servicesList || []).some(item => {
+                    const serviceName = normalizeText(item.name);
+                    return serviceName.includes(normalizedRequested) ||
+                           normalizedRequested.includes(serviceName);
+                });
 
             return matchesCategory &&
                    matchesDistrict &&
-                   matchesService;
+                   matchesCheckedServices &&
+                   matchesRequestedService;
         });
     }
 
@@ -301,7 +335,8 @@ document.addEventListener("DOMContentLoaded", function () {
             result,
             categories,
             districts,
-            services
+            services,
+            selectedService
         );
 
         result = sortProducts(result, sortSelect.value);
@@ -309,6 +344,9 @@ document.addEventListener("DOMContentLoaded", function () {
         // Cập nhật giao diện
         renderProducts(result);
     }
+
+    // Áp dụng điều kiện được chuyển từ trang chủ ngay khi mở trang kết quả
+    applyFilters();
 
     // 7. Gắn sự kiện tìm kiếm
     searchInput.addEventListener("input", applyFilters);
