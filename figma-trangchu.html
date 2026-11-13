@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SalonBook – Trang chủ (bản dựng để nhập Figma)</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Design tokens – khớp Bảng 3.3 và mục 2.2.7.3 */
+:root{
+  --color-brand-primary:#0c513f; --color-brand-accent:#ffc501; --color-surface-page:#fefbf0;
+  --color-surface-card:#fff; --color-surface-accent-soft:#fff0c8; --color-text-default:#0a4336;
+  --color-text-muted:#587269; --color-border-default:#dce7df;
+  --space-xs:4px; --space-sm:8px; --space-md:16px; --space-lg:24px; --space-xl:32px; --space-2xl:48px; --space-3xl:64px;
+  --radius-card:20px; --radius-button:999px; --layout-max-width:1150px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Be Vietnam Pro",Arial,sans-serif;background:var(--color-surface-page);color:var(--color-text-default)}
+img{max-width:100%;display:block}
+.container{width:min(var(--layout-max-width),100% - 2*var(--space-lg));margin:0 auto}
+
+/* Header */
+.header{background:#fff;border-bottom:1px solid var(--color-border-default)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-lg);min-height:72px}
+.logo{display:flex;align-items:center;gap:10px;font-size:20px;color:var(--color-text-default);text-decoration:none}
+.logo-mark{width:30px;height:30px;border-radius:8px;background:var(--color-brand-primary);display:grid;place-items:center}
+.logo-mark span{width:12px;height:2px;background:var(--color-brand-accent);box-shadow:0 -5px 0 var(--color-brand-accent),0 5px 0 var(--color-brand-accent)}
+.logo b{font-weight:800}
+.main-navigation{display:flex;gap:var(--space-xl)}
+.main-navigation a{font-size:14px;font-weight:600;color:var(--color-text-default);text-decoration:none;padding:8px 0}
+.main-navigation a.is-active{border-bottom:3px solid var(--color-brand-accent)}
+.button-secondary{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 18px;border:1.5px solid var(--color-text-default);border-radius:var(--radius-button);font-size:13px;font-weight:700;color:var(--color-text-default);text-decoration:none;background:#fff}
+.nav-toggle{display:none;width:44px;height:44px;border:0;border-radius:12px;background:#e5f0e8;font-size:22px;color:var(--color-text-default)}
+
+/* Hero */
+.main-content{display:flex;flex-direction:column;gap:var(--space-3xl);padding:var(--space-2xl) 0 var(--space-3xl)}
+.hero-section{display:flex;align-items:center;justify-content:space-between;gap:var(--space-xl);padding:var(--space-2xl);border-radius:24px;background:var(--color-brand-primary);color:#fff;overflow:hidden}
+.hero-content{flex:1;max-width:560px}
+.overline-pill{display:inline-block;padding:6px 14px;border-radius:999px;background:#1d6a55;color:var(--color-brand-accent);font-size:11px;font-weight:800;letter-spacing:.06em}
+.hero-section h1{margin:var(--space-md) 0;font-size:42px;line-height:1.2}
+.hero-description{margin:0 0 var(--space-lg);font-size:15px;line-height:1.6;color:#e5f0e8}
+.search-bar{display:flex;gap:var(--space-sm);padding:var(--space-sm);max-width:560px;background:#fff;border-radius:16px}
+.search-bar input{flex:1;min-width:0;border:0;font:inherit;font-size:14px;padding:0 var(--space-md);color:var(--color-text-default)}
+.button-primary{min-height:44px;padding:0 var(--space-lg);border:0;border-radius:12px;background:var(--color-brand-accent);color:#052f28;font:inherit;font-weight:800}
+.decor-hero-illustration{flex:0 0 300px}
+
+/* Section heading */
+.section-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-md);margin-bottom:var(--space-lg)}
+.overline{margin:0 0 6px;font-size:11px;font-weight:800;letter-spacing:.08em}
+.section-heading h2{margin:0 0 6px;font-size:28px}
+.section-description{margin:0;font-size:14px;color:var(--color-text-muted)}
+.button-link{font-size:14px;font-weight:800;color:var(--color-text-default);text-decoration:none;white-space:nowrap}
+
+/* Service list */
+.service-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--space-md)}
+.service-card{padding:var(--space-md);border:1px solid var(--color-border-default);border-radius:16px;background:#fff}
+.icon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:var(--space-md)}
+.icon svg{width:24px;height:24px}
+.service-card h3{margin:0 0 4px;font-size:16px}
+.card-description{margin:0;font-size:13px;color:var(--color-text-muted)}
+
+/* Salon list */
+.salon-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-lg)}
+.salon-card{padding:var(--space-sm);border:1px solid var(--color-border-default);border-radius:var(--radius-card);background:#fff}
+.salon-image{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:14px}
+.salon-body{padding:var(--space-md) var(--space-sm) var(--space-sm)}
+.salon-card h3{margin:0 0 4px;font-size:18px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.salon-row{display:flex;align-items:center;justify-content:space-between;gap:var(--space-sm);margin-top:var(--space-md)}
+.price{font-size:13px;font-weight:700}
+.price strong{font-size:18px;font-weight:800;margin-left:4px}
+.button-detail{min-height:40px;padding:0 var(--space-md);border-radius:999px;background:var(--color-surface-accent-soft);color:var(--color-text-default);font-size:13px;font-weight:800;text-decoration:none;display:inline-flex;align-items:center}
+
+/* Footer */
+.footer{background:var(--color-brand-primary);color:#fff}
+.footer-inner{display:flex;justify-content:space-between;gap:var(--space-lg);padding:var(--space-xl) 0}
+.footer-brand b{font-size:18px}
+.footer-brand p,.copyright{margin:6px 0 0;font-size:12px;color:#cfe3d8}
+.footer-links{display:flex;gap:var(--space-xl);font-size:13px}
+.footer-links a{color:#fff;text-decoration:none}
+
+/* Tablet 768–1023px */
+@media (max-width:1023px){
+  .main-navigation{gap:var(--space-md)}
+  .decor-hero-illustration{flex-basis:200px}
+  .service-grid,.salon-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .footer-inner{display:grid;grid-template-columns:repeat(2,1fr)}
+}
+/* Mobile <768px */
+@media (max-width:767px){
+  .main-navigation,.header .button-secondary{display:none}
+  .nav-toggle{display:block}
+  .hero-section{flex-direction:column;align-items:stretch;padding:var(--space-lg)}
+  .decor-hero-illustration{display:none}
+  .hero-section h1{font-size:28px}
+  .search-bar{max-width:none}
+  .service-grid{gap:var(--space-sm)}
+  .salon-grid{grid-template-columns:1fr}
+  .section-heading h2{font-size:22px}
+  .footer-inner{grid-template-columns:1fr}
+  .footer-links{flex-direction:column;gap:var(--space-sm)}
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="container header-inner">
+    <a class="logo" href="#"><span class="logo-mark"><span></span></span><span><b>Salon</b>Book</span></a>
+    <nav class="main-navigation" aria-label="Điều hướng chính">
+      <a href="#" class="is-active">Trang chủ</a><a href="#">Khám phá salon</a><a href="#">Dịch vụ</a><a href="#">Giới thiệu</a>
+    </nav>
+    <a class="button-secondary" href="#">👤 Tài khoản</a>
+    <button class="nav-toggle" type="button" aria-label="Mở menu">☰</button>
+  </div>
+</header>
+
+<main class="container main-content">
+  <section class="hero-section">
+    <div class="hero-content">
+      <span class="overline-pill">KHÁM PHÁ SALON ĐẸP</span>
+      <h1>Đẹp theo cách bạn chọn, đặt lịch thật dễ dàng.</h1>
+      <p class="hero-description">Tìm salon phù hợp, chọn dịch vụ yêu thích và sẵn sàng cho diện mạo mới của bạn.</p>
+      <form class="search-bar" onsubmit="return false">
+        <input type="search" placeholder="🔍  Tên salon, dịch vụ hoặc khu vực..." aria-label="Tìm kiếm">
+        <button class="button-primary" type="submit">Tìm kiếm</button>
+      </form>
+    </div>
+    <svg class="decor-hero-illustration" viewBox="0 0 300 260" aria-hidden="true">
+      <circle cx="170" cy="130" r="125" fill="#2f7a62" opacity=".55"/>
+      <g transform="rotate(6 160 125)">
+        <rect x="70" y="35" width="175" height="180" rx="16" fill="#f3e2c2" stroke="#fff6e3" stroke-width="8"/>
+        <path d="M95 200 Q158 120 222 200 Z" fill="#4b7d63"/>
+        <circle cx="158" cy="110" r="34" fill="#e8b98f"/>
+        <path d="M122 104 Q150 58 194 98 Q170 84 140 92 Z" fill="#1d2a26"/>
+        <rect x="185" y="178" width="56" height="20" rx="10" fill="#ffc501"/>
+        <text x="213" y="192" font-size="10" font-weight="700" text-anchor="middle" fill="#0a4336">STYLE</text>
+      </g>
+      <circle cx="262" cy="34" r="9" fill="#ffc501"/><circle cx="270" cy="204" r="7" fill="#ffc501"/>
+    </svg>
+  </section>
+
+  <section class="service-list">
+    <div class="section-heading"><div><p class="overline">DỊCH VỤ NỔI BẬT</p><h2>Chọn dịch vụ bạn yêu thích</h2><p class="section-description">Bắt đầu từ dịch vụ phù hợp với nhu cầu của bạn.</p></div></div>
+    <div class="service-grid">
+      <article class="service-card"><div class="icon" style="background:#e5f0e8"><svg viewBox="0 0 24 24" fill="none" stroke="#0c513f" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12"/></svg></div><h3>Cắt &amp; tạo kiểu</h3><p class="card-description">Tạo phong cách mới</p></article>
+      <article class="service-card"><div class="icon" style="background:#fff0c8"><svg viewBox="0 0 24 24" fill="none" stroke="#c98a00" stroke-width="2"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></div><h3>Nhuộm tóc</h3><p class="card-description">Làm mới diện mạo</p></article>
+      <article class="service-card"><div class="icon" style="background:#e3f1f1"><svg viewBox="0 0 24 24" fill="none" stroke="#2a7a7a" stroke-width="2"><path d="M12 3s6 7 6 11a6 6 0 0 1-12 0c0-4 6-11 6-11z"/></svg></div><h3>Gội &amp; thư giãn</h3><p class="card-description">Chăm sóc nhẹ nhàng</p></article>
+      <article class="service-card"><div class="icon" style="background:#fbe9ef"><svg viewBox="0 0 24 24" fill="none" stroke="#b5476d" stroke-width="2"><path d="M12 2l2.5 7.5L22 12l-7.5 2.5L12 22l-2.5-7.5L2 12l7.5-2.5z"/></svg></div><h3>Phục hồi tóc</h3><p class="card-description">Dưỡng tóc chắc khỏe</p></article>
+    </div>
+  </section>
+
+  <section class="salon-list">
+    <div class="section-heading"><div><p class="overline">ĐỊA ĐIỂM DÀNH CHO BẠN</p><h2>Salon được quan tâm</h2><p class="section-description">Khám phá những không gian làm đẹp nổi bật.</p></div><a class="button-link" href="#">Xem tất cả</a></div>
+    <div class="salon-grid">
+      <article class="salon-card"><img class="salon-image" src="images/salon-01.jpg" alt="The Hair Space"><div class="salon-body"><h3>The Hair Space</h3><p class="card-description">Cắt &amp; tạo kiểu · Nhuộm tóc</p><div class="salon-row"><span class="price">Từ<strong>150.000đ</strong></span><a class="button-detail" href="#">Xem chi tiết</a></div></div></article>
+      <article class="salon-card"><img class="salon-image" src="images/salon-02.jpg" alt="Sắc Việt Hair Salon"><div class="salon-body"><h3>Sắc Việt Hair Salon</h3><p class="card-description">Ảnh salon do nhóm cung cấp</p><div class="salon-row"><span class="price">Giá theo dịch vụ</span><a class="button-detail" href="#">Xem chi tiết</a></div></div></article>
+      <article class="salon-card"><img class="salon-image" src="images/salon-03.jpg" alt="Khánh Salon"><div class="salon-body"><h3>Khánh Salon</h3><p class="card-description">Ảnh salon do nhóm cung cấp</p><div class="salon-row"><span class="price">Giá theo dịch vụ</span><a class="button-detail" href="#">Xem chi tiết</a></div></div></article>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand"><b>SalonBook</b><p>Đặt lịch làm đẹp dễ dàng hơn.</p></div>
+    <div><nav class="footer-links"><a href="#">Trang chủ</a><a href="#">Khám phá salon</a><a href="#">Liên hệ</a></nav><p class="copyright">© SalonBook · Bản thiết kế sơ bộ / Stage 01</p></div>
+  </div>
+</footer>
+</body>
+</html>
