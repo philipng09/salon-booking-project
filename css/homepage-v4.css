@@ -549,3 +549,159 @@
 .cart-link:hover {
   opacity: 0.85;
 }
+/* ==========================================================================
+   FIX TRIỆT ĐỂ: BLEND MÀU DỊCH VỤ NỔI BẬT & BỐ CỤC 3 BƯỚC ĐẶT LỊCH
+   ========================================================================== */
+
+/* 1. SỬA LẠI HIỆN THỊ VÀ BLEND MÀU CHO THẺ DỊCH VỤ NỔI BẬT */
+.service-card {
+  background: var(--yellow, #ffc501);
+  border-radius: 20px;
+  min-height: 233px;
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  padding: 25px 18px;
+}
+
+/* Khung chứa ảnh dịch vụ nằm đúng bên phải, không bị đè che chữ */
+.service-card img {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 55%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 1;
+  /* Hiệu ứng blend màu chuẩn giúp ảnh hòa vào nền vàng mượt mà */
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+}
+
+/* Lớp phủ chuyển sắc bảo vệ vùng chữ bên trái */
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--yellow) 0%, var(--yellow) 45%, rgba(255,197,1,0.6) 70%, transparent 100%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Đảm bảo phần chữ và giá tiền nằm nổi lên trên lớp phủ */
+.service-text,
+.service-card h3,
+.service-card p,
+.service-price-tag,
+.service-go,
+.card-no {
+  position: relative;
+  z-index: 3;
+}
+
+.service-text {
+  padding: 0;
+  max-width: 65%;
+}
+
+.service-card h3 {
+  margin: 10px 0 6px;
+  font-size: clamp(18px, 1.4vw, 22px);
+  color: #092c25;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.service-card p {
+  font-size: 12px;
+  font-weight: 650;
+  color: #153d31;
+  line-height: 1.4;
+  margin-bottom: 35px;
+}
+
+.service-price-tag {
+  display: block;
+  font-weight: 800;
+  color: #0c513f;
+  font-size: 13px;
+  margin-top: auto;
+}
+
+.service-go {
+  position: absolute;
+  left: 18px;
+  bottom: 20px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  background: var(--forest, #0c513f);
+  color: white;
+  font-size: 22px;
+  text-decoration: none;
+  z-index: 4;
+  transition: transform .2s;
+}
+
+.service-go:hover {
+  transform: rotate(45deg);
+}
+
+
+/* 2. SỬA BỐ CỤC 3 BƯỚC ĐẶT LỊCH (Trở về dạng 2 cột chuẩn) */
+.how-it-works {
+  padding: 85px 0 95px;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.how-it-works h2 {
+  font-size: clamp(30px, 3vw, 46px);
+  letter-spacing: -.06em;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.how-it-works h2 em {
+  font-style: normal;
+  color: #19856d;
+}
+
+.how-it-works ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.how-it-works li {
+  display: flex;
+  gap: 21px;
+  border-bottom: 1px solid var(--line, #e2e8f0);
+  padding: 18px 0;
+  align-items: flex-start;
+}
+
+.how-it-works li > span {
+  font-size: 13px;
+  color: #a47f00;
+  font-weight: 900;
+  min-width: 24px;
+}
+
+.how-it-works strong {
+  font-size: 17px;
+  color: var(--forest, #0c513f);
+}
+
+.how-it-works li p {
+  font-size: 13px;
+  color: var(--muted, #64748b);
+  margin: 5px 0 0;
+}
