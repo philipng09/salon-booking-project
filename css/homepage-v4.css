@@ -833,5 +833,42 @@ img, video {
   
   .header-search-box input {
     width: 110px;
+     /* ==========================================================================
+   SỬA TRIỆT ĐỂ LỖI BỐ CỤC BỊ BÓP HẸP KHI XEM TRÊN THIẾT BỊ DI ĐỘNG
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  /* 1. Ép toàn bộ khung bao bọc (container & header) co giãn 100% theo màn hình mobile */
+  .container, 
+  .site-header .container,
+  .nav-shell {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 2. Ép Header và các nút hành động tự động xuống dòng hoặc thu nhỏ hợp lý trên mobile */
+  .site-header .nav-actions {
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  /* 3. Khắc phục hoàn toàn banner Hero bị bó hẹp thành khung dọc kỳ cục */
+  .hero {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    border-radius: 0 0 24px 24px !important;
+    min-height: 500px !important;
+  }
+
+  .hero-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 30px 15px 120px !important;
+  }
+}
   }
 }
