@@ -16,40 +16,44 @@
 <body>
     <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
 
-<!-- HEADER DÙNG CHUNG: chép trực tiếp từ components/header.html (sửa cả 4 trang khi thay đổi) -->
 <header class="site-header">
     <div class="container nav-shell">
-
-        <!-- Logo -->
         <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
             <img src="images/salonbook-mark.png" alt="" width="46" height="54">
             <span>SALON<span class="brand-thin">BOOK</span></span>
         </a>
 
-        <!-- Menu điện thoại -->
-        <button class="nav-toggle"
-                type="button"
-                aria-controls="main-nav"
-                aria-expanded="false"
-                aria-label="Mở menu">☰</button>
+        <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
 
-        <!-- Menu chính -->
         <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
-            <a href="index.html">Trang chủ</a>
-            <a href="products.html">Khám phá salon</a>
+            <a href="index.html" >Trang chủ</a>
+            <a href="products.html">Đặt lịch</a>
             <a href="blog.html">Blog</a>
-            <a href="about.html" class="active" aria-current="page">Giới thiệu</a>
+            <a href="tuvan.html"class="active" aria-current="page">>Tư vấn</a>
+            <a href="about.html">Giới thiệu</a>
+           
         </nav>
 
-        <!-- Nút hành động chính: dẫn tới thanh tìm salon/đặt lịch -->
         <div class="nav-actions">
-            <a class="btn btn-yellow btn-top" href="index.html#booking">
-                Đăng ký/Đăng nhập
-            </a>
-        </div>
+            <!-- 1. Ô tìm kiếm nhanh -->
+           <div class="header-search-box">
+    <!-- Icon kính lúp SVG nét thanh mảnh, hiện đại -->
+    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" placeholder="Tìm kiếm salon,..." id="header-quick-search">
+</div>
 
+            <!-- 3. Nút Đăng ký / Đăng nhập nằm cuối -->
+            <div id="auth-action-container">
+                <a class="btn btn-yellow btn-top" href="auth.html">
+                    Đăng ký / Đăng nhập
+                </a>
+            </div>
+        </div>
     </div>
-</header>
+  </header>
 
     <main id="main-content" class="about-page">
 
