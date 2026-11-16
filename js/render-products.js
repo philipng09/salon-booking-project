@@ -55,9 +55,9 @@ function renderProducts(list) {
         <div class="salon-info">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <!-- BỔ SUNG THÊM HIỂN THỊ GENDER VÀO ĐÂY -->
-            <span class="salon-tag">
-              ${salon.gender ? salon.gender + ' · ' : ''}${salon.category} · ${salon.districtName}
-            </span>
+           <span class="salon-tag">
+  ${getSalonTypeLabel(salon.salonType)} · ${salon.districtName}
+</span>
             <span class="salon-rating" style="font-size: 0.9rem; font-weight: 600; color: #d97706;">
               ⭐ ${salon.rating || 5.0} (${salon.reviewCount || 0} đánh giá)
             </span>
