@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -15,55 +14,64 @@
 
 <body>
   <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
-<!-- HEADER DÙNG CHUNG: chép trực tiếp từ components/header.html (sửa cả 4 trang khi thay đổi) -->
-<header class="site-header">
-    <div class="container nav-shell">
 
-        <!-- Logo -->
+  <!-- HEADER DÙNG CHUNG -->
+  <header class="site-header">
+    <div class="container nav-shell">
         <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
             <img src="images/salonbook-mark.png" alt="" width="46" height="54">
             <span>SALON<span class="brand-thin">BOOK</span></span>
         </a>
 
-        <!-- Menu điện thoại -->
-        <button class="nav-toggle"
-                type="button"
-                aria-controls="main-nav"
-                aria-expanded="false"
-                aria-label="Mở menu">☰</button>
+        <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
 
-        <!-- Menu chính -->
         <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
             <a href="index.html" class="active" aria-current="page">Trang chủ</a>
             <a href="products.html">Khám phá salon</a>
             <a href="blog.html">Blog</a>
+            <a href="tuvan.html">Tư vấn</a>
             <a href="about.html">Giới thiệu</a>
+            
         </nav>
 
-        <!-- Nút hành động chính: dẫn tới thanh tìm salon/đặt lịch -->
         <div class="nav-actions">
-            <a class="btn btn-yellow btn-top" href="index.html#booking">
-                Đăng ký/Đăng nhập
+            <!-- Ô tìm kiếm nhanh trên Header -->
+            <div class="header-search-box">
+                <span style="font-size: 14px; color: var(--muted);">🔍</span>
+                <input type="text" placeholder="Tìm kiếm salon,..." id="header-quick-search">
+            </div>
+
+            <!-- Nút giỏ dịch vụ kèm icon túi mua sắm chuẩn Figma -->
+            <a href="cart.html" class="cart-icon-link" aria-label="Giỏ dịch vụ">
+                <svg class="custom-bag-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6h-2.5A3.5 3.5 0 0 0 12 2.5 3.5 3.5 0 0 0 8.5 6H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2z"></path>
+                    <path d="M10 10c0 1.1.9 2 2 2s2-.9 2-2"></path>
+                </svg>
+                <span>Giỏ dịch vụ</span>
+                <span id="cart-badge" class="cart-badge">0</span>
             </a>
+
+            <div id="auth-action-container">
+                <a class="btn btn-yellow btn-top" href="auth.html">
+                    Đăng ký / Đăng nhập
+                </a>
+            </div>
         </div>
-
     </div>
-</header>
-  <main id="main-content">
+  </header>
 
+  <main id="main-content">
     <!-- HERO -->
     <section class="hero" id="top" aria-labelledby="hero-title">
       <div class="hero-deco hero-orb" aria-hidden="true"></div>
 
       <div class="hero-portrait-wrap" aria-hidden="true">
-        <img class="hero-portrait"
-             src="images/hero-beauty.png" alt="">
+        <img class="hero-portrait" src="images/hero-beauty.png" alt="">
       </div>
 
       <div class="hero-content">
         <div class="hero-brand">
-          <img src="images/salonbook-mark-white.png"
-               alt="" width="80" height="92">
+          <img src="images/salonbook-mark-white.png" alt="" width="80" height="92">
           <span>SALONBOOK</span>
         </div>
 
@@ -75,42 +83,42 @@
         </h1>
 
         <p class="hero-copy">
-          Khám phá nhiều salon trong khu vực, chọn dịch vụ
-          phù hợp và gửi yêu cầu đặt lịch - tất cả ở một nơi.
+          Khám phá nhiều salon trong khu vực, chọn dịch vụ phù hợp và gửi yêu cầu đặt lịch - tất cả ở một nơi.
         </p>
-<a class="btn btn-yellow btn-top"
-   href="products.html">
-    Khám phá salon
-</a>
+
+        <a class="btn btn-yellow btn-top" href="products.html">
+          Khám phá salon ➔
+        </a>
+
         <div class="hero-perks">
           <div>
-            <span class="perk-icon" aria-hidden="true">▦</span>
+            <span class="perk-icon" aria-hidden="true">🔍</span>
             <span>Tìm salon<br>dễ dàng</span>
           </div>
           <div>
-            <span class="perk-icon" aria-hidden="true">♥</span>
+            <span class="perk-icon" aria-hidden="true">🏢</span>
             <span>Nhiều salon<br>để lựa chọn</span>
           </div>
           <div>
-            <span class="perk-icon" aria-hidden="true">✦</span>
+            <span class="perk-icon" aria-hidden="true">⏰</span>
             <span>Chủ động<br>thời gian</span>
           </div>
         </div>
       </div>
 
-
       <!-- THANH TÌM KIẾM SALON -->
-      <form class="booking-bar" id="booking"
-            aria-label="Tìm salon theo khu vực và dịch vụ">
-
+      <form class="booking-bar" id="booking" aria-label="Tìm salon theo khu vực và dịch vụ">
         <label>
           <span class="field-icon" aria-hidden="true">⌖</span>
           <span>
-            <small>Khu vực</small>
+            <small>KHU VỰC</small>
             <select id="area-select" name="area" required>
               <option value="">Chọn khu vực</option>
               <option value="Quận 1">Quận 1</option>
               <option value="Quận 3">Quận 3</option>
+              <option value="Quận 5">Quận 5</option>
+              <option value="Quận 7">Quận 7</option>
+              <option value="Quận 10">Quận 10</option>
               <option value="Bình Thạnh">Bình Thạnh</option>
               <option value="Gò Vấp">Gò Vấp</option>
               <option value="Khu vực khác">Khu vực khác</option>
@@ -121,68 +129,71 @@
         <label>
           <span class="field-icon" aria-hidden="true">✂</span>
           <span>
-            <small>Dịch vụ</small>
+            <small>DỊCH VỤ</small>
             <select id="service-select" name="service" required>
               <option value="">Chọn dịch vụ</option>
-              <option>Cắt &amp; tạo kiểu</option>
+              <option>Cắt & tạo kiểu</option>
               <option>Nhuộm tóc</option>
-              <option>Gội &amp; thư giãn</option>
+              <option>Gội & thư giãn</option>
               <option>Phục hồi tóc</option>
             </select>
           </span>
         </label>
 
         <label>
-          <span class="field-icon" aria-hidden="true">▦</span>
+          <span class="field-icon" aria-hidden="true">📅</span>
           <span>
-            <small>Ngày dự kiến</small>
-            <input id="booking-date" name="date"
-                   type="date" required>
+            <small>NGÀY DỰ KIẾN</small>
+            <input id="booking-date" name="date" type="date" required>
           </span>
         </label>
 
-        <button class="btn btn-yellow booking-submit"
-                type="submit">
+        <button class="btn btn-yellow booking-submit" type="submit">
           Tìm salon 
         </button>
       </form>
     </section>
 
-    <div class="booking-note container"
-         id="booking-message"
-         role="status"
-         aria-live="polite"></div>
-    <!-- KẾT QUẢ SALON ĐỀ XUẤT TẠI TRANG CHỦ -->
-<section class="salon-discovery container"
-         id="homepage-search-results"
-         hidden>
-    <div class="section-head">
-        <div>
-            <p class="overline">SALONBOOK / GỢI Ý DÀNH CHO BẠN</p>
-            <h2>Salon đề xuất phù hợp</h2>
-            <p id="homepage-result-description"></p>
-        </div>
+    <!-- THANH BỘ LỌC NHANH DƯỚI HERO -->
+    <div class="container filter-chips-bar">
+      <a href="products.html" class="filter-chip active">⚙ Tất cả bộ lọc</a>
+      <a href="products.html?type=nam" class="filter-chip">Salon Nam / Barbershop</a>
+      <a href="products.html?type=nu" class="filter-chip">Salon Nữ</a>
+      <a href="products.html?type=unisex" class="filter-chip">Salon Unisex</a>
+      <a href="products.html?service=uon-nhuom" class="filter-chip">Chuyên Uốn / Nhuộm</a>
+      <a href="products.html?service=goi-duong-sinh" class="filter-chip">Gội đầu dưỡng sinh</a>
+      <a href="products.html?service=phuc-hoi" class="filter-chip">Phục hồi tóc</a>
     </div>
 
-    <p id="homepage-result-count"></p>
+    <div class="booking-note container" id="booking-message" role="status" aria-live="polite"></div>
 
-    <div class="salon-grid" id="homepage-result-grid"></div>
+    <!-- KẾT QUẢ TÌM KIẾM TẠI TRANG CHỦ -->
+    <section class="salon-discovery container" id="homepage-search-results" hidden>
+      <div class="section-head">
+          <div>
+              <p class="overline">SALONBOOK / GỢI Ý DÀNH CHO BẠN</p>
+              <h2>Salon đề xuất phù hợp</h2>
+              <p id="homepage-result-description"></p>
+          </div>
+      </div>
+      <p id="homepage-result-count"></p>
+      <div class="salon-grid" id="homepage-result-grid"></div>
+      <p id="homepage-result-empty" hidden>Không tìm thấy salon phù hợp. Bạn hãy thử chọn khu vực hoặc dịch vụ khác nhé!</p>
+    </section>
 
-    <p id="homepage-result-empty" hidden>
-        Không tìm thấy salon phù hợp. Bạn hãy thử chọn khu vực
-        hoặc dịch vụ khác nhé!
-    </p>
-
-    <a href="products.html" class="btn btn-yellow">
-        Khám phá tất cả salon
-    </a>
-</section>
+    <!-- MỤC: SALON BẠN VỪA XEM (Render động từ products.js) -->
+    <section class="salon-discovery container" id="recently-viewed-section">
+      <div class="section-head history-head">
+        <div>
+          <h2>Salon bạn vừa xem</h2>
+        </div>
+        <button id="clear-history-btn" class="clear-history-link">🗑️ Xóa lịch sử</button>
+      </div>
+      <div class="salon-grid" id="recently-viewed-grid"></div>
+    </section>
 
     <!-- DỊCH VỤ NỔI BẬT -->
-    <section class="services container"
-             id="services"
-             aria-labelledby="services-title">
-
+    <section class="services container" id="services" aria-labelledby="services-title">
       <div class="section-head">
         <div>
           <p class="overline">CHĂM SÓC BẠN THEO CÁCH RIÊNG</p>
@@ -191,23 +202,19 @@
             <span class="heading-star">✳</span>
           </h2>
         </div>
-       <a href="products.html" class="all-services">
-    Xem các salon ↗
-</a>
+       <a href="products.html" class="all-services">Xem các salon ↗</a>
       </div>
 
       <div class="service-grid">
-
         <article class="service-card">
           <div class="service-text">
             <span class="card-no">01 / STYLE</span>
-            <h3>Cắt &amp; tạo kiểu</h3>
+            <h3>Cắt & tạo kiểu</h3>
             <p>Thay đổi nhỏ,<br>cảm hứng lớn.</p>
-            <a href="#booking" class="service-go"
-               aria-label="Chọn dịch vụ Cắt và tạo kiểu">↗</a>
+            <span class="service-price-tag">Từ 80.000đ</span>
+            <a href="#booking" class="service-go" aria-label="Chọn dịch vụ Cắt và tạo kiểu">↗</a>
           </div>
-          <img src="images/service-cut.png"
-               alt="Mẫu tóc ngắn tạo kiểu" loading="lazy">
+          <img src="images/service-cut.png" alt="Mẫu tóc ngắn tạo kiểu" loading="lazy" onerror="this.src='images/salonbook-mark.png';">
         </article>
 
         <article class="service-card">
@@ -215,24 +222,21 @@
             <span class="card-no">02 / COLOR</span>
             <h3>Nhuộm tóc</h3>
             <p>Sắc màu mới,<br>cá tính mới.</p>
-            <a href="#booking" class="service-go"
-               aria-label="Chọn dịch vụ Nhuộm tóc">↗</a>
+            <span class="service-price-tag">Từ 350.000đ</span>
+            <a href="#booking" class="service-go" aria-label="Chọn dịch vụ Nhuộm tóc">↗</a>
           </div>
-          <img src="images/service-color.png"
-               alt="Mẫu tóc uốn nhuộm nâu" loading="lazy">
+          <img src="images/service-color.png" alt="Mẫu tóc uốn nhuộm nâu" loading="lazy" onerror="this.src='images/salonbook-mark.png';">
         </article>
 
         <article class="service-card">
           <div class="service-text">
             <span class="card-no">03 / RELAX</span>
-            <h3>Gội &amp; thư giãn</h3>
+            <h3>Gội & thư giãn</h3>
             <p>Chăm chút một chút,<br>thư thái nhiều hơn.</p>
-            <a href="#booking" class="service-go"
-               aria-label="Chọn dịch vụ Gội và thư giãn">↗</a>
+            <span class="service-price-tag">Từ 80.000đ</span>
+            <a href="#booking" class="service-go" aria-label="Chọn dịch vụ Gội và thư giãn">↗</a>
           </div>
-          <img src="images/service-wash.png"
-               alt="Trải nghiệm gội và thư giãn tại salon"
-               loading="lazy">
+          <img src="images/service-wash.png" alt="Trải nghiệm gội và thư giãn tại salon" loading="lazy" onerror="this.src='images/salonbook-mark.png';">
         </article>
 
         <article class="service-card">
@@ -240,133 +244,96 @@
             <span class="card-no">04 / CARE</span>
             <h3>Phục hồi tóc</h3>
             <p>Nuôi dưỡng tóc,<br>tự tin mỗi ngày.</p>
-            <a href="#booking" class="service-go"
-               aria-label="Chọn dịch vụ Phục hồi tóc">↗</a>
+            <span class="service-price-tag">Từ 250.000đ</span>
+            <a href="#booking" class="service-go" aria-label="Chọn dịch vụ Phục hồi tóc">↗</a>
           </div>
-          <img src="images/service-care.png"
-               alt="Mẫu tóc dài mượt sau chăm sóc"
-               loading="lazy">
+          <img src="images/service-care.png" alt="Mẫu tóc dài mượt sau chăm sóc" loading="lazy" onerror="this.src='images/salonbook-mark.png';">
         </article>
-
       </div>
     </section>
 
-    
-<!-- KHÁM PHÁ NHIỀU SALON -->
-<section class="salon-discovery container"
-         id="salons"
-         aria-labelledby="salons-title">
-
-  <div class="section-head">
-    <div>
-      <p class="overline">
-        NHIỀU LỰA CHỌN / MỘT NỀN TẢNG
-      </p>
-      <h2 id="salons-title">
-        Khám phá salon gần bạn
-        <span class="heading-star">✳</span>
-      </h2>
-    </div>
-
-  </div>
-
-  <div class="salon-grid">
-
-    <!-- SALON 01 -->
-    <article class="salon-card">
-      <div class="salon-art art-one">
-        <img src="images/salon-01.jpg"
-             alt="Hình ảnh minh họa salon tạo kiểu"
-             loading="lazy"
-             style="width:100%; height:100%; object-fit:cover; display:block;">
+    <!-- KHÁM PHÁ SALON GẦN BẠN -->
+    <section class="salon-discovery container" id="salons" aria-labelledby="salons-title">
+      <div class="section-head">
+        <div>
+          <p class="overline">NHIỀU LỰA CHỌN / MỘT NỀN TẢNG</p>
+          <h2 id="salons-title">
+            Khám phá salon gần bạn
+            <span class="heading-star">✳</span>
+          </h2>
+        </div>
       </div>
 
-      <div class="salon-card-body">
-        <span class="salon-type">SALON TÓC · QUẬN 1</span>
-        <h3>The Hair Space</h3>
-        <p>📍 34 Phó Đức Chính, Phường Bến Thành,
-        TP. Hồ Chí Minh</p>
-        <a href="#booking" class="salon-card-link">
-          Xem chi tiết Salon ↗
-        </a>
+      <div class="salon-grid">
+        <article class="salon-card">
+          <div class="salon-art">
+            <img src="images/salon-01.jpg" alt="The Hair Space" loading="lazy" onerror="this.src='images/salonbook-mark.png';">
+          </div>
+          <div class="salon-card-body">
+            <span class="salon-type">SALON TÓC · QUẬN 1</span>
+            <h3>The Hair Space</h3>
+            <p class="card-rating">⭐ 4.8 (124 đánh giá)</p>
+            <p>📍 34 Phó Đức Chính, Phường Bến Thành, Quận 1, TP.HCM</p>
+            <div class="salon-card-footer-links">
+              <a href="product-detail.html?id=1" class="salon-card-link">Xem chi tiết Salon ↗</a>
+              <a href="https://maps.app.goo.gl/72ytADTaG9YJMTUX6" target="_blank" class="salon-card-link map-link">Xem bản đồ ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="salon-card">
+          <div class="salon-art">
+            <img src="images/salon-02.jpg" alt="JUNO HAIR STUDIO" loading="lazy" onerror="this.src='images/salonbook-mark.png';">
+          </div>
+          <div class="salon-card-body">
+            <span class="salon-type">SALON TÓC · QUẬN 10</span>
+            <h3>JUNO HAIR STUDIO</h3>
+            <p class="card-rating">⭐ 5 (198 đánh giá)</p>
+            <p>📍 740/20 Sư Vạn Hạnh, Phường 12, Quận 10, TP.HCM</p>
+            <div class="salon-card-footer-links">
+              <a href="product-detail.html?id=2" class="salon-card-link">Xem chi tiết Salon ↗</a>
+              <a href="https://maps.app.goo.gl/2MnwfqcCxjoBgvQB9" target="_blank" class="salon-card-link map-link">Xem bản đồ ↗</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="salon-card">
+          <div class="salon-art">
+            <img src="images/salon-03.jpg" alt="Khánh Hair" loading="lazy" onerror="this.src='images/salonbook-mark.png';">
+          </div>
+          <div class="salon-card-body">
+            <span class="salon-type">SALON TÓC · KHU VỰC KHÁC</span>
+            <h3>KHÁNH HAIR</h3>
+            <p class="card-rating">⭐ 4.8 (145 đánh giá)</p>
+            <p>📍 245 Nhật Tảo, Diên Hồng, Hồ Chí Minh</p>
+            <div class="salon-card-footer-links">
+              <a href="product-detail.html?id=3" class="salon-card-link">Xem chi tiết Salon ↗</a>
+              <a href="https://maps.app.goo.gl/kdUWxMfpS8smfffh9" target="_blank" class="salon-card-link map-link">Xem bản đồ ↗</a>
+            </div>
+          </div>
+        </article>
       </div>
-    </article>
+    </section>
 
-    <!-- SALON 02 -->
-    <article class="salon-card">
-      <div class="salon-art art-two">
-        <img src="images/salon-02.jpg"
-             alt="Hình ảnh minh họa salon nhuộm tóc"
-             loading="lazy"
-             style="width:100%; height:100%; object-fit:cover; display:block;">
-      </div>
-
-      <div class="salon-card-body">
-        <span class="salon-type">SALON TÓC · QUẬN 10</span>
-        <h3>JUNO HAIR STUDIO</h3>
-        <p>📍 740/20 Sư Vạn Hạnh, Phường 12,
-        Quận 10, TP. Hồ Chí Minh</p>
-        <a href="#booking" class="salon-card-link">
-         Xem chi tiết Salon ↗
-        </a>
-      </div>
-    </article>
-
-    <!-- SALON 03 -->
-    <article class="salon-card">
-      <div class="salon-art art-three">
-        <img src="images/salon-03.jpg"
-             alt="Hình ảnh minh họa salon chăm sóc tóc"
-             loading="lazy"
-             style="width:100%; height:100%; object-fit:cover; display:block;">
-      </div>
-
-      <div class="salon-card-body">
-        <span class="salon-type">SALON TÓC · QUẬN 10</span>
-        <h3>KHÁNH HAIR</h3>
-        <p>📍 245 Nhật Tảo, Diên Hồng, Hồ Chí Minh </p>
-        <a href="#booking" class="salon-card-link">
-          Xem chi tiết Salon ↗
-        </a>
-      </div>
-    </article>
-
-  </div>
-</section>
-
-    <!-- LỢI ÍCH -->
-    <section class="benefits container"
-             aria-label="Điểm nổi bật của SalonBook">
-
-      <div>
-        <span class="benefit-icon">✓</span>
-        <span>
-          <strong>Nhiều salon để chọn</strong>
-          <small>Khám phá các salon trong khu vực</small>
-        </span>
+    <!-- MỤC: ƯU ĐÃI & DỊCH VỤ THỊNH HÀNH (Render động từ products.js) -->
+    <section class="salon-discovery container" id="trending-services">
+      <div class="section-head">
+        <div>
+          <p class="overline">ĐẶT LỊCH NHANH CHÓNG · TIẾT KIỆM TỐI ĐA</p>
+          <h2>Ưu đãi & Dịch vụ thịnh hành ✳</h2>
+        </div>
       </div>
 
-      <div>
-        <span class="benefit-icon">♥</span>
-        <span>
-          <strong>So sánh dễ dàng</strong>
-          <small>Chọn dịch vụ và salon phù hợp</small>
-        </span>
+      <div class="trending-tabs">
+        <button class="btn btn-yellow tab-btn-active">Ưu đãi hot</button>
+        <button class="tab-btn-inactive">Thịnh hành</button>
       </div>
 
-      <div>
-        <span class="benefit-icon">✦</span>
-        <span>
-          <strong>Đặt lịch chủ động</strong>
-          <small>Gửi yêu cầu đến salon đã chọn</small>
-        </span>
-      </div>
-
+      <div class="salon-grid" id="trending-grid"></div>
     </section>
 
     <!-- QUY TRÌNH ĐẶT LỊCH -->
     <section class="how-it-works container" id="steps">
-
       <div>
         <p class="overline">SALONBOOK / 03 STEPS</p>
         <h2>
@@ -383,7 +350,6 @@
             <p>Chọn khu vực và dịch vụ bạn quan tâm.</p>
           </div>
         </li>
-
         <li>
           <span>02</span>
           <div>
@@ -391,7 +357,6 @@
             <p>Xem salon phù hợp, chọn dịch vụ và thời gian.</p>
           </div>
         </li>
-
         <li>
           <span>03</span>
           <div>
@@ -401,139 +366,120 @@
         </li>
       </ol>
     </section>
-
   </main>
 
-<!-- FOOTER DÙNG CHUNG: chép trực tiếp từ components/footer.html -->
-<footer class="site-footer">
-    <div class="container footer-inner">
+  <!-- FOOTER DÙNG CHUNG -->
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <div class="footer-col footer-brand-col">
+        <div class="footer-brand-header">
+          <img src="images/salonbook-mark-white.png" alt="SalonBook Logo" width="40" height="46" onerror="this.style.display='none';">
+          <div>
+            <h3>SALONBOOK</h3>
+            <p class="footer-tagline">YOUR BEAUTY, YOUR TIME</p>
+          </div>
+        </div>
+        <p class="footer-desc">
+          Sàn đặt lịch salon tóc, kết nối bạn với salon phù hợp. Dễ dàng chọn dịch vụ và chủ động thời gian làm đẹp.
+        </p>
+      </div>
 
-        <a class="footer-brand" href="index.html">
-            <img src="images/salonbook-mark-white.png"
-                 alt=""
-                 width="44"
-                 height="50">
-            SALONBOOK
-        </a>
+      <div class="footer-col">
+        <h4>VỀ CHÚNG TÔI</h4>
+        <ul>
+          <li><a href="about.html">Giới thiệu</a></li>
+          <li><a href="about.html#mission">Sứ mệnh & Giá trị</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
 
-        <p>YOUR BEAUTY, YOUR TIME</p>
+      <div class="footer-col">
+        <h4>HỖ TRỢ KHÁCH HÀNG</h4>
+        <ul>
+          <li><a href="#">Trung tâm trợ giúp</a></li>
+          <li><a href="index.html#steps">Hướng dẫn đặt lịch</a></li>
+          <li><a href="#">Chính sách hủy lịch</a></li>
+        </ul>
+      </div>
 
-        <small>
-            Nguyên mẫu học tập · Nền tảng kết nối nhiều salon ·
-            Chưa nhận đặt lịch thật
-        </small>
-
+      <div class="footer-col">
+        <h4>CHÍNH SÁCH & ĐIỀU KHOẢN</h4>
+        <ul>
+          <li><a href="#">Điều khoản dịch vụ</a></li>
+          <li><a href="#">Chính sách quyền riêng tư</a></li>
+          <li><a href="#">Quy chế hoạt động</a></li>
+        </ul>
+      </div>
     </div>
-</footer>
 
+    <div class="container footer-bottom">
+      <p>© 2026 SALONBOOK. Tất cả quyền lợi được bảo lưu.</p>
+    </div>
+  </footer>
 
-<!-- JAVASCRIPT HEADER/FOOTER DÙNG CHUNG -->
-<script src="js/common.js"></script>
-
+  <script src="js/common.js"></script>
   <script src="js/products.js"></script>
-  
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector(".booking-bar");
-    const dateInput = document.getElementById("booking-date");
-
-    const today = new Date();
-    dateInput.min = new Date(
-        today.getTime() - today.getTimezoneOffset() * 60000
-    ).toISOString().slice(0, 10);
-
-    const resultSection = document.getElementById("homepage-search-results");
-    const resultGrid = document.getElementById("homepage-result-grid");
-    const resultCount = document.getElementById("homepage-result-count");
-    const resultDescription = document.getElementById("homepage-result-description");
-    const emptyMessage = document.getElementById("homepage-result-empty");
-
-    const serviceMap = {
-        "Cắt & tạo kiểu": "cat-tao-kieu",
-        "Nhuộm tóc": "nhuom-toc",
-        "Gội & thư giãn": "goi-thu-gian",
-        "Phục hồi tóc": "phuc-hoi-toc"
-    };
-
-    const districtMap = {
-        "Quận 1": "quan-1",
-        "Quận 3": "quan-3",
-        "Bình Thạnh": "binh-thanh",
-        "Gò Vấp": "go-vap"
-    };
-
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        const area = document.getElementById("area-select").value;
-        const service = document.getElementById("service-select").value;
-        const date = dateInput.value;
-
-        if (!area || !service || !date) {
-            return;
-        }
-
-        const district = districtMap[area];
-        const serviceValue = serviceMap[service];
-
-        // Lọc từ dữ liệu salon hiện có, không thay đổi mảng products
-        const results = products.filter(salon => {
-            const matchesArea =
-                area === "Khu vực khác"
-                    ? !["quan-1", "quan-3", "quan-5", "quan-7",
-                        "quan-10", "binh-thanh", "go-vap"].includes(salon.district)
-                    : salon.district === district;
-
-            const matchesService = (salon.servicesList || []).some(
-                item => item.value === serviceValue
-            );
-
-            return matchesArea && matchesService;
-        });
-
-        resultSection.hidden = false;
-        emptyMessage.hidden = results.length > 0;
-
-        resultDescription.textContent =
-            `${area} · ${service} · Ngày dự kiến: ${date}`;
-
-        resultCount.textContent =
-            `Tìm thấy ${results.length} salon phù hợp`;
-
-        resultGrid.innerHTML = results.map(salon => `
-            <article class="salon-card">
-                <div class="salon-art">
-                    <img src="${salon.image}"
-                         alt="${salon.name}"
-                         loading="lazy"
-                         style="width:100%;height:100%;object-fit:cover;"
-                         onerror="this.src='images/salonbook-mark.png'">
-                </div>
-                <div class="salon-card-body">
-                    <span class="salon-type">
-                        ${salon.category} · ${salon.districtName}
-                    </span>
-                    <h3>${salon.name}</h3>
-                    <p>📍 ${salon.address}</p>
-                    <p><strong>Giá từ:</strong>
-                        ${new Intl.NumberFormat("vi-VN").format(salon.price)}đ
-                    </p>
-                    <a href="product-detail.html?id=${salon.id}"
-                       class="salon-card-link">
-                        Xem chi tiết salon ↗
-                    </a>
-                </div>
-            </article>
-        `).join("");
-
-        resultSection.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-    });
-});
-</script>
-
   <script src="js/cart.js"></script>
+  
+  <!-- Script đồng bộ tự động dữ liệu từ products.js lên trang chủ -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (typeof products === "undefined") return;
+
+      // 1. RENDER MỤC "SALON BẠN VỪA XEM" (Lấy từ id 6 và id 1)
+      const historyGrid = document.getElementById("recently-viewed-grid");
+      if (historyGrid) {
+        const historySalons = products.filter(s => s.id === 6 || s.id === 1);
+        historyGrid.innerHTML = historySalons.map(salon => `
+          <article class="salon-card">
+            <div class="salon-art">
+              <img src="${salon.image}" alt="${salon.name}" loading="lazy" onerror="this.src='images/salonbook-mark.png';">
+            </div>
+            <div class="salon-card-body">
+              <span class="salon-type">${salon.category} · ${salon.districtName}</span>
+              <h3>${salon.name}</h3>
+              <p class="card-rating">⭐ ${salon.rating} (${salon.reviewCount} đánh giá)</p>
+              <p>📍 ${salon.address}</p>
+              <a href="product-detail.html?id=${salon.id}" class="salon-card-link">Xem chi tiết ↗</a>
+            </div>
+          </article>
+        `).join("");
+      }
+
+      // 2. RENDER MỤC "ƯU ĐÃI & DỊCH VỤ THỊNH HÀNH" (Tự động lấy dịch vụ đầu tiên từ products.js)
+      const trendingGrid = document.getElementById("trending-grid");
+      if (trendingGrid) {
+        const trendingItems = [
+          { salon: products[0], service: products[0].servicesList[1] || products[0].servicesList[0] },
+          { salon: products[1], service: products[1].servicesList[1] || products[1].servicesList[0] },
+          { salon: products[2], service: products[2].servicesList[0] }
+        ];
+
+        trendingGrid.innerHTML = trendingItems.map(item => {
+          const originalPrice = item.service.price;
+          const discountPrice = Math.round(originalPrice * 0.8 / 1000) * 1000;
+
+          return `
+            <article class="salon-card trending-card">
+              <span class="discount-badge">-20%</span>
+              <div class="salon-art">
+                <img src="${item.salon.image}" alt="${item.service.name}" loading="lazy" onerror="this.src='images/salonbook-mark.png';">
+              </div>
+              <div class="salon-card-body">
+                <h3 class="trending-title">${item.service.name}</h3>
+                <p class="trending-salon">${item.salon.name}</p>
+                <p class="card-rating">⭐ ${item.salon.rating} (${item.salon.reviewCount} đánh giá)</p>
+                <div class="trending-price-box">
+                  <span class="new-price">${new Intl.NumberFormat("vi-VN").format(discountPrice)}đ</span>
+                  <span class="old-price">${new Intl.NumberFormat("vi-VN").format(originalPrice)}đ</span>
+                </div>
+                <a href="product-detail.html?id=${item.salon.id}" class="btn btn-yellow trending-book-btn">Đặt lịch ngay</a>
+              </div>
+            </article>
+          `;
+        }).join("");
+      }
+    });
+  </script>
 </body>
 </html>
