@@ -872,3 +872,50 @@ img, video {
 }
   }
 }
+/* ==========================================================================
+   ÉP TOÀN BỘ TRANG (BAO GỒM HEADER VÀ HERO) CO GIÃN THEO THIẾT BỊ DI ĐỘNG
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  /* 1. Ép toàn bộ khung nền, header tràn viền 100% màn hình */
+  body, 
+  .site-header, 
+  .site-header .container, 
+  .nav-shell,
+  .hero {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 2. Gom và thu nhỏ các nút hành động trên Header cho khớp với màn hình nhỏ */
+  .site-header .nav-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .header-search-box {
+    max-width: 120px !important;
+  }
+
+  .header-search-box input {
+    width: 70px !important;
+  }
+
+  /* 3. Đảm bảo banner Hero bung đều, không bị bó hẹp cục bộ */
+  .hero {
+    border-radius: 16px !important;
+    min-height: 450px !important;
+  }
+
+  .hero-content {
+    padding: 20px 10px 100px !important;
+    max-width: 100% !important;
+  }
+}
