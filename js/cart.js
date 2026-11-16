@@ -183,14 +183,21 @@
     if (typeof document === 'undefined') return;
     const host = document.querySelector('.nav-actions');
     const mobileNav = document.querySelector('.main-nav');
-    let link = host?.querySelector('[data-cart-link]');
+   let link = host?.querySelector('[data-cart-link]');
     if (host && !link) {
       link = document.createElement('a');
       link.href = 'cart.html';
       link.className = 'cart-nav-link';
       link.setAttribute('data-cart-link', '');
       link.innerHTML = '<span aria-hidden="true">🛍</span> Giỏ dịch vụ <span class="cart-badge" data-cart-badge>0</span>';
-      host.insertBefore(link, host.firstChild);
+      
+      // CHÈN NẰM NGAY SAU THANH TÌM KIẾM:
+      const searchBox = host.querySelector('.header-search-box');
+      if (searchBox) {
+        searchBox.insertAdjacentElement('afterend', link);
+      } else {
+        host.appendChild(link); // Fallback nếu không thấy ô tìm kiếm
+      }
     }
     let mobileLink = mobileNav?.querySelector('[data-cart-mobile-link]');
     if (mobileNav && !mobileLink) {
