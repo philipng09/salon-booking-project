@@ -40,7 +40,7 @@ function renderProducts(list) {
       minPrice = Math.min(...salon.servicesList.map(s => s.price));
     }
 
-    return `
+ return `
       <article class="product-salon-card"
                data-id="${salon.id}"
                data-name="${salon.name}"
@@ -54,7 +54,10 @@ function renderProducts(list) {
 
         <div class="salon-info">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <span class="salon-tag">${salon.category} · ${salon.districtName}</span>
+            <!-- BỔ SUNG THÊM HIỂN THỊ GENDER VÀO ĐÂY -->
+            <span class="salon-tag">
+              ${salon.gender ? salon.gender + ' · ' : ''}${salon.category} · ${salon.districtName}
+            </span>
             <span class="salon-rating" style="font-size: 0.9rem; font-weight: 600; color: #d97706;">
               ⭐ ${salon.rating || 5.0} (${salon.reviewCount || 0} đánh giá)
             </span>
