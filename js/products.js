@@ -52,8 +52,8 @@ const products = [
     lat: 10.7756,
     lng: 106.6681,
     description: "Studio chuyên các tone màu nhuộm cá tính, bọc phục hồi collagen chống xơ rối.",
-    rating: 4.9,
-    reviewCount: 98,
+    rating: 5,
+    reviewCount: 198,
     openingHours: {
       days: "Thứ Hai - Thứ Bảy",
       open: "09:00",
@@ -86,8 +86,8 @@ const products = [
     lat: 10.7580,
     lng: 106.6620,
     description: "Tiệm tóc trẻ trung chuyên cắt tạo form gọn gàng, sấy định hình nhanh chóng cho học sinh - sinh viên.",
-    rating: 4.6,
-    reviewCount: 45,
+    rating: 4.8,
+    reviewCount: 145,
     openingHours: {
       days: "Thứ Hai - Chủ Nhật",
       open: "08:30",
@@ -121,7 +121,7 @@ const products = [
     lat: 10.8120,
     lng: 106.7090,
     description: "Kỹ thuật uốn nếp giữ form lâu kết hợp cắt tạo kiểu bồng bềnh tự nhiên.",
-    rating: 4.7,
+    rating: 4.9,
     reviewCount: 82,
     openingHours: {
       days: "Thứ Hai - Chủ Nhật",
@@ -190,8 +190,8 @@ const products = [
     lat: 10.7680,
     lng: 106.6900,
     description: "Chăm sóc tóc toàn diện từ cắt tóc thời thượng đến massage trị liệu thư giãn da đầu.",
-    rating: 4.5,
-    reviewCount: 50,
+    rating: 4.8,
+    reviewCount: 250,
     openingHours: {
       days: "Thứ Hai - Chủ Nhật",
       open: "09:00",
@@ -225,8 +225,8 @@ const products = [
     lat: 10.7450,
     lng: 106.6350,
     description: "Thế mạnh về nhuộm phủ bạc thảo dược và cắt tóc cơ bản, tay nghề thợ lâu năm.",
-    rating: 4.4,
-    reviewCount: 30,
+    rating: 4.9,
+    reviewCount: 230,
     openingHours: {
       days: "Thứ Hai - Thứ Bảy",
       open: "08:00",
@@ -295,7 +295,7 @@ const products = [
     lat: 10.7380,
     lng: 106.7150,
     description: "Duỗi cúp tự nhiên, ép phồng chân tóc với dòng sản phẩm hữu cơ nhập khẩu an toàn.",
-    rating: 4.7,
+    rating: 4.8,
     reviewCount: 75,
     openingHours: {
       days: "Thứ Hai - Chủ Nhật",
