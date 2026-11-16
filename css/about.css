@@ -936,3 +936,45 @@ textarea:focus-visible {
     justify-content: center;
   }
 }
+/* Gộp viền ra khung bao lớn (.header-search-box) để tạo thành một khối thống nhất */
+.header-search-box {
+  display: inline-flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 999px; /* Bo tròn kiểu viên thuốc */
+  padding: 6px 14px;
+  gap: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Hiệu ứng sáng viền chung của cả cụm khi click vào */
+.header-search-box:focus-within {
+  border-color: #006450;
+  box-shadow: 0 0 0 3px rgba(0, 100, 80, 0.15);
+}
+
+/* Icon kính lúp có màu sắc nhẹ nhàng, nằm phía trong */
+.header-search-box .search-icon {
+  width: 16px;
+  height: 16px;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+/* Ô input bỏ viền riêng đi để chìm hẳn vào khung chung */
+.header-search-box input {
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+  font-size: 14px;
+  color: #1f2937;
+  width: 140px;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.header-search-box input::placeholder {
+  color: #9ca3af;
+}
