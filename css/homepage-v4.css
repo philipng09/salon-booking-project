@@ -705,3 +705,54 @@
   color: var(--muted, #64748b);
   margin: 5px 0 0;
 }
+/* Đưa nút mũi tên về đúng vị trí góc bên trái, ngay dưới phần chữ */
+.service-go {
+  position: absolute !important;
+  left: 18px !important;
+  top: 165px !important; /* Cố định chiều cao từ trên xuống */
+  bottom: auto !important;
+  border-radius: 50% !important;
+  width: 40px !important;
+  height: 40px !important;
+  display: grid !important;
+  place-items: center !important;
+  background: var(--forest, #0c513f) !important;
+  color: white !important;
+  font-size: 22px !important;
+  text-decoration: none !important;
+  z-index: 5 !important;
+  transition: transform .2s !important;
+}
+
+.service-go:hover {
+  transform: rotate(45deg);
+}
+
+/* Đảm bảo phần giá tiền nằm ngay dưới chữ và không bị đè nút mũi tên */
+.service-price-tag {
+  display: block;
+  font-weight: 800;
+  color: #0c513f;
+  font-size: 13px;
+  margin-top: 15px;
+}
+/* Tăng độ đậm và nét cho các chữ tiêu đề phụ (overline) và tiêu đề chính */
+.overline {
+  font-size: 11px !important;
+  font-weight: 900 !important; /* Đẩy độ đậm lên mức cao nhất */
+  letter-spacing: .17em !important;
+  color: #52796f !important; /* Màu xanh đậm rõ nét hơn */
+  margin: 0 0 10px !important;
+  text-transform: uppercase;
+}
+
+.section-head h2, 
+.how-it-works h2, 
+.salon-discovery h2 {
+  font-size: clamp(30px, 3vw, 46px) !important;
+  letter-spacing: -.06em !important;
+  font-weight: 850 !important; /* Đảm bảo chữ tiêu đề lớn luôn dày dặn */
+  margin: 0;
+  line-height: 1.1;
+  color: var(--forest, #0c513f);
+}
