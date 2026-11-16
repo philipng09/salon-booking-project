@@ -3,11 +3,14 @@
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Đọc ID salon từ URL (?id=1)
-    const params = new URLSearchParams(window.location.search);
-    const productId = params.get("id") || 1;
-    const product = typeof products !== "undefined" ? products.find(p => String(p.id) === String(productId)) : null;
-
+// 1. Đọc đúng salon theo salonId (tương thích ngược với ?id= hoặc ?salon=) và serviceId
+const params = new URLSearchParams(window.location.search);
+const rawSalonId = params.get("salonId") || params.get("id") || params.get("salon") || "1";
+const requestedServiceId = params.get("serviceId") || "";
+const product = typeof products !== "undefined"
+    ? products.find(p => String(p.id) === String(rawSalonId) || String(p.slug) === String(rawSalonId))
+    : null;
+   
     if (!product) {
         const mainEl = document.getElementById("main-content");
         if (mainEl) {
