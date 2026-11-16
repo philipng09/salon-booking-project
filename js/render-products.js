@@ -1,5 +1,5 @@
 /**
- * HÀM HIỂN THỊ DANH SÁCH SALON TỪ DỮ LIỆU JS
+ * HÀM HIỂN THỊ DANH SÁCH SALON TỪ DỮ LIỆU JS (Đã cập nhật theo cấu trúc mới)
  */
 
 function renderProducts(list) {
@@ -33,32 +33,46 @@ function renderProducts(list) {
   };
 
   // 5. Tạo các thẻ salon động bằng map() và template literals
-  const htmlCards = list.map((salon) => `
-    <article class="product-salon-card"
-             data-name="${salon.name}"
-             data-district="${salon.district}"
-             data-services="${salon.services}">
+  const htmlCards = list.map((salon) => {
+    // Tìm giá thấp nhất từ danh sách dịch vụ để hiển thị "Giá chỉ từ"
+    let minPrice = 0;
+    if (salon.servicesList && salon.servicesList.length > 0) {
+      minPrice = Math.min(...salon.servicesList.map(s => s.price));
+    }
 
-      <img class="salon-image"
-           src="${salon.image}"
-           alt="${salon.name}"
-           loading="lazy"
-           onerror="this.src='images/salonbook-mark.png';">
+    return `
+      <article class="product-salon-card"
+               data-id="${salon.id}"
+               data-name="${salon.name}"
+               data-district="${salon.district}">
 
-      <div class="salon-info">
-        <span class="salon-tag">${salon.category} · ${salon.districtName}</span>
-        <h2>${salon.name}</h2>
-        <p class="salon-address">📍 ${salon.address}</p>
+        <img class="salon-image"
+             src="${salon.image}"
+             alt="${salon.name}"
+             loading="lazy"
+             onerror="this.src='images/salonbook-mark.png';">
 
-        <div class="salon-price" style="font-weight: 700; color: #0c513f; font-size: 1.05rem; margin: 8px 0 12px 0;">
-          Giá chỉ từ: <span style="color: #d97706;">${formatCurrency(salon.price)}</span>
+        <div class="salon-info">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span class="salon-tag">${salon.category} · ${salon.districtName}</span>
+            <span class="salon-rating" style="font-size: 0.9rem; font-weight: 600; color: #d97706;">
+              ⭐ ${salon.rating || 5.0} (${salon.reviewCount || 0} đánh giá)
+            </span>
+          </div>
+
+          <h2>${salon.name}</h2>
+          <p class="salon-address">📍 ${salon.address}</p>
+
+          <div class="salon-price" style="font-weight: 700; color: #0c513f; font-size: 1.05rem; margin: 8px 0 12px 0;">
+            Giá chỉ từ: <span style="color: #d97706;">${formatCurrency(minPrice)}</span>
+          </div>
+
+          <a class="salon-detail-button"
+             href="product-detail.html?id=${salon.id}">Xem chi tiết</a>
         </div>
-
-        <a class="salon-detail-button"
-           href="product-detail.html?id=${salon.id}">Xem chi tiết</a>
-      </div>
-    </article>
-  `).join("");
+      </article>
+    `;
+  }).join("");
 
   // 6. Gắn HTML đã tạo vào lưới salon-grid
   salonGrid.innerHTML = htmlCards;
