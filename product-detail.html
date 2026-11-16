@@ -20,41 +20,40 @@
 
   <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
 
-  <!-- HEADER DÙNG CHUNG -->
-  <header class="site-header">
+ <header class="site-header">
     <div class="container nav-shell">
-      <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
-        <img src="images/salonbook-mark.png" alt="" width="46" height="54">
-        <span>SALON<span class="brand-thin">BOOK</span></span>
-      </a>
+        <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
+            <img src="images/salonbook-mark.png" alt="" width="46" height="54">
+            <span>SALON<span class="brand-thin">BOOK</span></span>
+        </a>
 
-      <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
+        <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
 
-      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
-        <a href="index.html">Trang chủ</a>
-        <a href="products.html" class="active" aria-current="page">Khám phá salon</a>
-        <a href="blog.html">Blog</a>
-        <a href="about.html">Giới thiệu</a>
-      </nav>
+        <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+            <a href="index.html" class="active" aria-current="page">Trang chủ</a>
+            <a href="products.html">Đặt lịch</a>
+            <a href="blog.html">Blog</a>
+            <a href="tuvan.html">Tư vấn</a>
+            <a href="about.html">Giới thiệu</a>
+           
+        </nav>
 
-      <div class="nav-actions">
-        <a class="btn btn-yellow btn-top" href="index.html#booking">Đăng ký/Đăng nhập</a>
-      </div>
+        <div class="nav-actions">
+            <!-- 1. Ô tìm kiếm nhanh -->
+            <div class="header-search-box">
+                <span style="font-size: 14px; color: var(--muted);">🔍</span>
+                <input type="text" placeholder="Tìm kiếm salon,..." id="header-quick-search">
+            </div>
+
+            <!-- 3. Nút Đăng ký / Đăng nhập nằm cuối -->
+            <div id="auth-action-container">
+                <a class="btn btn-yellow btn-top" href="auth.html">
+                    Đăng ký / Đăng nhập
+                </a>
+            </div>
+        </div>
     </div>
   </header>
-
-  <main id="main-content">
-
-    <!-- ĐƯỜNG DẪN ĐIỀU HƯỚNG -->
-    <div class="container">
-      <nav class="detail-breadcrumb" aria-label="Đường dẫn điều hướng">
-        <a href="index.html">Trang chủ</a>
-        <span>/</span>
-        <a href="products.html">Khám phá salon</a>
-        <span>/</span>
-        <span>Chi tiết salon</span>
-      </nav>
-    </div>
 
     <!-- PHẦN 1: THÔNG TIN CHI TIẾT SALON -->
     <section class="container detail-hero" aria-labelledby="detail-title">
