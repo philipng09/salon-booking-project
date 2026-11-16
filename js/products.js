@@ -1,5 +1,5 @@
 /**
- * NGUỒN DỮ LIỆU DÙNG CHUNG - SALONBOOK (Đã bổ sung Đánh giá & Chuẩn hóa)
+ * NGUỒN DỮ LIỆU DÙNG CHUNG - SALONBOOK (Đã bổ sung Phân loại Salon Nam/Nữ/Unisex)
  * Phụ trách: Mai Thanh Ngân (TV1)
  */
 const products = [
@@ -8,6 +8,7 @@ const products = [
     slug: "the-hair-space",
     name: "The Hair Space",
     category: "Salon tóc",
+    salonType: "unisex", // Salon tổng hợp Hàn Quốc
     district: "quan-1",
     districtName: "Quận 1",
     image: "images/salon-01.jpg",
@@ -44,6 +45,7 @@ const products = [
     slug: "juno-hair-studio",
     name: "JUNO HAIR STUDIO",
     category: "Salon tóc",
+    salonType: "unisex", // Studio nhuộm thời trang
     district: "quan-10",
     districtName: "Quận 10",
     image: "images/salon-02.jpg",
@@ -78,6 +80,7 @@ const products = [
     slug: "khanh-hair",
     name: "Khánh Hair",
     category: "Salon tóc",
+    salonType: "nam", // Tiệm thiên hướng cắt nam / học sinh sinh viên nhanh gọn
     district: "khac",
     districtName: "Khu vực khác",
     image: "images/salon-03.jpg",
@@ -113,6 +116,7 @@ const products = [
     slug: "nhat-hung",
     name: "Hair salon NHẬT HƯNG",
     category: "Salon tóc",
+    salonType: "unisex",
     district: "binh-thanh",
     districtName: "Bình Thạnh",
     image: "images/salon-04.png",
@@ -148,6 +152,7 @@ const products = [
     slug: "min-hair",
     name: "Min Hair Salon",
     category: "Salon tóc",
+    salonType: "unisex",
     district: "khac",
     districtName: "Khu vực khác",
     image: "images/salon-05.png",
@@ -182,6 +187,7 @@ const products = [
     slug: "doth-hair",
     name: "DOTH HAIR",
     category: "Salon tóc",
+    salonType: "unisex",
     district: "quan-1",
     districtName: "Quận 1",
     image: "images/salon-06.png",
@@ -217,6 +223,7 @@ const products = [
     slug: "mai-nguyen",
     name: "Hairsalon Mai Nguyễn",
     category: "Salon tóc",
+    salonType: "nu", // Chuyên chăm sóc tóc nữ, phủ bạc thảo dược
     district: "khac",
     districtName: "Khu vực khác",
     image: "images/salon-07.webp",
@@ -252,6 +259,7 @@ const products = [
     slug: "susi-hair",
     name: "Susi Hair Salon Quận 5",
     category: "Salon tóc",
+    salonType: "nu", // Chuyên cắt layer nữ bồng bềnh
     district: "quan-5",
     districtName: "Quận 5",
     image: "images/salon-08.webp",
@@ -287,6 +295,7 @@ const products = [
     slug: "new-hair",
     name: "New Hair Salon",
     category: "Salon tóc",
+    salonType: "unisex",
     district: "quan-7",
     districtName: "Quận 7",
     image: "images/salon-09.jpg",
@@ -322,6 +331,7 @@ const products = [
     slug: "the-one",
     name: "The One Hair Salon Quận 3",
     category: "Salon tóc",
+    salonType: "unisex",
     district: "quan-3",
     districtName: "Quận 3",
     image: "images/salon-10.jpg",
