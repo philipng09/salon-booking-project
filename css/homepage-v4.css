@@ -756,3 +756,65 @@
   line-height: 1.1;
   color: var(--forest, #0c513f);
 }
+/* ==========================================================================
+   RESPONSIVE DESIGN - TƯƠNG THÍCH MỌI THIẾT BỊ (DESKTOP, TABLET, MOBILE)
+   ========================================================================== */
+
+/* 1. Màn hình Tablet & Laptop nhỏ (Dưới 1024px) */
+@media (max-width: 1024px) {
+  .container, 
+  .site-header .container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  .service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  
+  .salon-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  
+  .how-it-works {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}
+
+/* 2. Màn hình Điện thoại / Mobile (Dưới 768px) */
+@media (max-width: 768px) {
+  /* Banner Hero co giãn theo màn hình di động */
+  .hero {
+    margin: 0 10px !important;
+    width: calc(100% - 20px) !important;
+    min-height: 480px !important;
+    border-radius: 24px !important;
+  }
+
+  .hero-content {
+    padding: 40px 20px 120px !important;
+    max-width: 100% !important;
+  }
+
+  .hero h1 {
+    font-size: 34px !important;
+  }
+
+  /* Lưới dịch vụ và salon xếp thành 1 cột dọc trên điện thoại */
+  .service-grid,
+  .salon-grid {
+    grid-template-columns: 1fr !important;
+    gap: 15px !important;
+  }
+
+  /* Thanh tìm kiếm trên Header thu gọn lại cho vừa màn hình */
+  .header-search-box input {
+    width: 90px !important;
+  }
+
+  /* Ẩn bớt các menu phụ nếu cần trên mobile */
+  .main-nav {
+    display: none; 
+  }
+}
