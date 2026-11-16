@@ -15,7 +15,7 @@
 <body>
   <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
 
-  <!-- HEADER DÙNG CHUNG -->
+ <!-- HEADER DÙNG CHUNG (Giữ nguyên giỏ hàng cũ, sắp xếp lại vị trí) -->
   <header class="site-header">
     <div class="container nav-shell">
         <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
@@ -27,30 +27,27 @@
 
         <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
             <a href="index.html" class="active" aria-current="page">Trang chủ</a>
-            <a href="products.html">Khám phá salon</a>
+            <a href="products.html">Đặt lịch</a>
             <a href="blog.html">Blog</a>
             <a href="tuvan.html">Tư vấn</a>
             <a href="about.html">Giới thiệu</a>
-            
+           
         </nav>
 
         <div class="nav-actions">
-            <!-- Ô tìm kiếm nhanh trên Header -->
+            <!-- 1. Ô tìm kiếm nhanh -->
             <div class="header-search-box">
                 <span style="font-size: 14px; color: var(--muted);">🔍</span>
                 <input type="text" placeholder="Tìm kiếm salon,..." id="header-quick-search">
             </div>
 
-            <!-- Nút giỏ dịch vụ kèm icon túi mua sắm chuẩn Figma -->
-            <a href="cart.html" class="cart-icon-link" aria-label="Giỏ dịch vụ">
-                <svg class="custom-bag-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M18 6h-2.5A3.5 3.5 0 0 0 12 2.5 3.5 3.5 0 0 0 8.5 6H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2z"></path>
-                    <path d="M10 10c0 1.1.9 2 2 2s2-.9 2-2"></path>
-                </svg>
-                <span>Giỏ dịch vụ</span>
+            <!-- 2. Giỏ dịch vụ cũ (đã chuyển ra sau thanh tìm kiếm) -->
+            <a href="cart.html" class="cart-link" aria-label="Giỏ dịch vụ">
+                <span>🛒 Giỏ dịch vụ</span>
                 <span id="cart-badge" class="cart-badge">0</span>
             </a>
 
+            <!-- 3. Nút Đăng ký / Đăng nhập nằm cuối -->
             <div id="auth-action-container">
                 <a class="btn btn-yellow btn-top" href="auth.html">
                     Đăng ký / Đăng nhập
