@@ -30,8 +30,8 @@
         <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
 
         <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
-            <a href="index.html" class="active" aria-current="page">Trang chủ</a>
-            <a href="products.html">Đặt lịch</a>
+            <a href="index.html" >Trang chủ</a>
+            <a href="products.html" class="active" aria-current="page">Đặt lịch</a>
             <a href="blog.html">Blog</a>
             <a href="tuvan.html">Tư vấn</a>
             <a href="about.html">Giới thiệu</a>
@@ -40,10 +40,14 @@
 
         <div class="nav-actions">
             <!-- 1. Ô tìm kiếm nhanh -->
-            <div class="header-search-box">
-                <span style="font-size: 14px; color: var(--muted);">🔍</span>
-                <input type="text" placeholder="Tìm kiếm salon,..." id="header-quick-search">
-            </div>
+        <div class="header-search-box">
+    <!-- Icon kính lúp nằm chung trong khung -->
+    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" placeholder="Tìm kiếm salon,..." id="header-quick-search">
+</div>
 
             <!-- 3. Nút Đăng ký / Đăng nhập nằm cuối -->
             <div id="auth-action-container">
