@@ -82,7 +82,7 @@ const products = [
     category: "Salon tóc",
     salonType: "nam", // Tiệm thiên hướng cắt nam / học sinh sinh viên nhanh gọn
     district: "khac",
-    districtName: "Khu vực khác",
+    districtName: "Quận 10",
     image: "images/salon-03.jpg",
     address: "245 Nhật Tảo, Diên Hồng, Hồ Chí Minh",
     map: "https://maps.app.goo.gl/kdUWxMfpS8smfffh9",
@@ -154,7 +154,7 @@ const products = [
     category: "Salon tóc",
     salonType: "unisex",
     district: "khac",
-    districtName: "Khu vực khác",
+    districtName: "Quận 2",
     image: "images/salon-05.png",
     address: "771 Đường Số 05, Khu đô thị An Phú An Khánh, TP.HCM",
     map: "https://maps.app.goo.gl/DLbeFnSV2qARrepV6",
@@ -225,7 +225,7 @@ const products = [
     category: "Salon tóc",
     salonType: "nu", // Chuyên chăm sóc tóc nữ, phủ bạc thảo dược
     district: "khac",
-    districtName: "Khu vực khác",
+    districtName: "Phú Định",
     image: "images/salon-07.webp",
     address: "411 Tùng Thiện Vương, Phú Định, TP.HCM",
     map: "https://maps.app.goo.gl/w64wwtwnTo8iqRET7",
