@@ -58,12 +58,13 @@ const product = typeof products !== "undefined"
         imgEl.alt = product.name;
     }
     // Đổ tên Salon & Địa điểm ban đầu lên Bảng Xanh
-    const summarySalonName = document.getElementById("summary-salon-name");
+    
     const summarySalonLocation = document.getElementById("summary-salon-location");
     if (summarySalonName) summarySalonName.textContent = product.name;
     if (summarySalonLocation) summarySalonLocation.textContent = product.districtName || product.address;
 
    // --- B. ĐỔ GIÁ THẬT VÀO CÁC THẺ DỊCH VỤ Ở PHẦN 2 ---
+    const summarySalonName = document.getElementById("summary-salon-name");
     const serviceCards = document.querySelectorAll(".detail-service-card");
     if (serviceCards.length > 0 && product.servicesList) {
         serviceCards.forEach((card, index) => {
@@ -144,7 +145,31 @@ const product = typeof products !== "undefined"
         });
         serviceSelect.innerHTML = html;
     }
-
+   if (serviceSelect) {
+        serviceSelect.addEventListener("change", (e) => {
+            const opt = e.target.options[e.target.selectedIndex];
+            if (e.target.value) {
+                currentSelection.serviceId = e.target.value;
+                currentSelection.serviceName = opt.getAttribute("data-name");
+                currentSelection.servicePrice = parseInt(opt.getAttribute("data-price"));
+            } else {
+                currentSelection.serviceId = "";
+                currentSelection.serviceName = "";
+                currentSelection.servicePrice = 0;
+            }
+            updateSummaryUI();
+        });
+    }
+// Tự động chọn sẵn dịch vụ nếu URL có ?serviceId=...
+  if (requestedServiceId && serviceSelect) {
+      const matchedService = product.servicesList?.find(
+          s => String(s.id) === String(requestedServiceId) || String(s.value) === String(requestedServiceId)
+      );
+      if (matchedService) {
+          serviceSelect.value = String(matchedService.id);
+          serviceSelect.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+  }
     // Nạp danh sách Chuyên viên vào dropdown 02
     if (stylistSelect && product.stylists) {
         let html = '<option value="">Chọn chuyên viên</option>';
@@ -157,21 +182,7 @@ const product = typeof products !== "undefined"
     // --- D. LẮNG NGHE CHỌN FORM (LOGIC: CHỌN NGÀY XONG MỚI HIỆN GIỜ) ---
 
     // 1. Chọn Dịch vụ
-    if (serviceSelect) {
-        serviceSelect.addEventListener("change", (e) => {
-            const opt = e.target.options[e.target.selectedIndex];
-            if (e.target.value) {
-                currentSelection.serviceId = e.target.value;
-                currentSelection.serviceName = opt.getAttribute("data-name");
-                currentSelection.servicePrice = parseInt(opt.getAttribute("data-price"));
-            } else {
-                currentSelection.serviceId = "";
-                currentSelection.serviceName = "";
-                currentSelection.servicePrice = 0;
-            }
-            updateSummaryUI();
-        });
-    }
+    
 
     // Hàm render danh sách nút Khung giờ trống
     function renderTimeSlots() {
