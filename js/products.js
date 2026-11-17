@@ -26,9 +26,9 @@ const products = [
       closedDays: []
     },
     stylists: [
-      { id: "st1_1", salonId: 1, name: "Minh Trí", experience: "8 năm" },
-      { id: "st1_2", salonId: 1, name: "Hải Yến", experience: "5 năm" },
-      { id: "st1_3", salonId: 1, name: "Quốc Bảo", experience: "4 năm" }
+      { id: "st1_1", salonId: 1, name: "Minh Trí", experience: "8 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] },
+      { id: "st1_2", salonId: 1, name: "Hải Yến", experience: "5 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] },
+      { id: "st1_3", salonId: 1, name: "Quốc Bảo", experience: "4 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] }
     ],
     servicesList: [
       { id: "s1_1", salonId: 1, name: "Cắt & tạo kiểu", duration: 45, price: 150000, value: "cat-tao-kieu" },
@@ -63,8 +63,8 @@ const products = [
       closedDays: ["Chủ Nhật"]
     },
     stylists: [
-      { id: "st2_1", salonId: 2, name: "Juno Lee", experience: "10 năm" },
-      { id: "st2_2", salonId: 2, name: "Tuấn Anh", experience: "6 năm" }
+      { id: "st2_1", salonId: 2, name: "Juno Lee", experience: "10 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] },
+      { id: "st2_2", salonId: 2, name: "Tuấn Anh", experience: "6 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] }
     ],
     servicesList: [
       { id: "s2_1", salonId: 2, name: "Cắt & tạo kiểu", duration: 45, price: 180000, value: "cat-tao-kieu" },
@@ -98,8 +98,8 @@ const products = [
       closedDays: []
     },
     stylists: [
-      { id: "st3_1", salonId: 3, name: "Duy Khánh", experience: "7 năm" },
-      { id: "st3_2", salonId: 3, name: "Thế Vinh", experience: "4 năm" }
+      { id: "st3_1", salonId: 3, name: "Duy Khánh", experience: "7 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] },
+      { id: "st3_2", salonId: 3, name: "Thế Vinh", experience: "4 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] }
     ],
     servicesList: [
       { id: "s3_1", salonId: 3, name: "Cắt & tạo kiểu", duration: 30, price: 100000, value: "cat-tao-kieu" },
@@ -134,8 +134,8 @@ const products = [
       closedDays: []
     },
     stylists: [
-      { id: "st4_1", salonId: 4, name: "Nhật Hưng", experience: "9 năm" },
-      { id: "st4_2", salonId: 4, name: "Hoàng Nam", experience: "5 năm" }
+      { id: "st4_1", salonId: 4, name: "Nhật Hưng", experience: "9 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] },
+      { id: "st4_2", salonId: 4, name: "Hoàng Nam", experience: "5 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] }
     ],
     servicesList: [
       { id: "s4_1", salonId: 4, name: "Cắt & tạo kiểu", duration: 40, price: 160000, value: "cat-tao-kieu" },
@@ -170,8 +170,8 @@ const products = [
       closedDays: []
     },
     stylists: [
-      { id: "st5_1", salonId: 5, name: "Minh Đăng", experience: "8 năm" },
-      { id: "st5_2", salonId: 5, name: "Phương Thảo", experience: "6 năm" }
+      { id: "st5_1", salonId: 5, name: "Minh Đăng", experience: "8 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] },
+      { id: "st5_2", salonId: 5, name: "Phương Thảo", experience: "6 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] }
     ],
     servicesList: [
       { id: "s5_1", salonId: 5, name: "Cắt & tạo kiểu", duration: 50, price: 200000, value: "cat-tao-kieu" },
@@ -205,8 +205,8 @@ const products = [
       closedDays: []
     },
     stylists: [
-      { id: "st6_1", salonId: 6, name: "Đỗ Thành", experience: "7 năm" },
-      { id: "st6_2", salonId: 6, name: "Ánh Tuyết", experience: "5 năm" }
+      { id: "st6_1", salonId: 6, name: "Đỗ Thành", experience: "7 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] },
+      { id: "st6_2", salonId: 6, name: "Ánh Tuyết", experience: "5 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] }
     ],
     servicesList: [
       { id: "s6_1", salonId: 6, name: "Cắt & tạo kiểu", duration: 40, price: 150000, value: "cat-tao-kieu" },
@@ -241,8 +241,8 @@ const products = [
       closedDays: ["Chủ Nhật"]
     },
     stylists: [
-      { id: "st7_1", salonId: 7, name: "Chị Mai", experience: "12 năm" },
-      { id: "st7_2", salonId: 7, name: "Văn Hùng", experience: "5 năm" }
+      { id: "st7_1", salonId: 7, name: "Chị Mai", experience: "12 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] },
+      { id: "st7_2", salonId: 7, name: "Văn Hùng", experience: "5 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] }
     ],
     servicesList: [
       { id: "s7_1", salonId: 7, name: "Cắt & tạo kiểu", duration: 35, price: 120000, value: "cat-tao-kieu" },
@@ -277,8 +277,8 @@ const products = [
       closedDays: []
     },
     stylists: [
-      { id: "st8_1", salonId: 8, name: "Susi Nguyễn", experience: "6 năm" },
-      { id: "st8_2", salonId: 8, name: "Thành Đạt", experience: "4 năm" }
+      { id: "st8_1", salonId: 8, name: "Susi Nguyễn", experience: "6 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] },
+      { id: "st8_2", salonId: 8, name: "Thành Đạt", experience: "4 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] }
     ],
     servicesList: [
       { id: "s8_1", salonId: 8, name: "Cắt & tạo kiểu", duration: 45, price: 180000, value: "cat-tao-kieu" },
@@ -313,8 +313,8 @@ const products = [
       closedDays: []
     },
     stylists: [
-      { id: "st9_1", salonId: 9, name: "Khắc Tiệp", experience: "8 năm" },
-      { id: "st9_2", salonId: 9, name: "Mỹ Linh", experience: "3 năm" }
+      { id: "st9_1", salonId: 9, name: "Khắc Tiệp", experience: "8 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] },
+      { id: "st9_2", salonId: 9, name: "Mỹ Linh", experience: "3 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] }
     ],
     servicesList: [
       { id: "s9_1", salonId: 9, name: "Cắt & tạo kiểu", duration: 45, price: 150000, value: "cat-tao-kieu" },
@@ -349,8 +349,8 @@ const products = [
       closedDays: []
     },
     stylists: [
-      { id: "st10_1", salonId: 10, name: "Eric Trần", experience: "11 năm" },
-      { id: "st10_2", salonId: 10, name: "Bích Phương", experience: "7 năm" }
+      { id: "st10_1", salonId: 10, name: "Eric Trần", experience: "11 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] },
+      { id: "st10_2", salonId: 10, name: "Bích Phương", experience: "7 năm", availableHours: ["09:00", "10:30", "14:00", "16:00", "18:30"] }
     ],
     servicesList: [
       { id: "s10_1", salonId: 10, name: "Cắt & tạo kiểu", duration: 45, price: 170000, value: "cat-tao-kieu" },
