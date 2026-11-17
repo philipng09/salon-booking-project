@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const summarySalonName = document.getElementById("summary-salon-name");
     const summarySalonLocation = document.getElementById("summary-salon-location");
     if (summarySalonName) summarySalonName.textContent = product.name || "Đang cập nhật";
-    if (summarySalonLocation) summarySalonLocation.textContent = product.districtName || product.address || "TP.HCM";
+    if (summarySalonLocation) summarySalonLocation.textContent = product.address || product.districtName || "TP.HCM";
 
     // --- BƯỚC 1 & 2: RENDER DỊCH VỤ, GIÁ VÀ ĐỒNG BỘ BẢNG TÓM TẮT ---
     const serviceGrid = document.getElementById("detail-service-grid");
