@@ -270,7 +270,7 @@
             <p class="card-rating">⭐ 4.8 (124 đánh giá)</p>
             <p>📍 34 Phó Đức Chính, Phường Bến Thành, Quận 1, TP.HCM</p>
             <div class="salon-card-footer-links">
-              <a href="product-detail.html?id=1" class="salon-card-link">Xem chi tiết Salon ↗</a>
+              <a href="product-detail.html?salonId=1" class="salon-card-link">Xem chi tiết Salon ↗</a>
               <a href="https://maps.app.goo.gl/72ytADTaG9YJMTUX6" target="_blank" class="salon-card-link map-link">Xem bản đồ ↗</a>
             </div>
           </div>
@@ -286,7 +286,7 @@
             <p class="card-rating">⭐ 5 (198 đánh giá)</p>
             <p>📍 740/20 Sư Vạn Hạnh, Phường 12, Quận 10, TP.HCM</p>
             <div class="salon-card-footer-links">
-              <a href="product-detail.html?id=2" class="salon-card-link">Xem chi tiết Salon ↗</a>
+              <a href="product-detail.html?salonId=2" class="salon-card-link">Xem chi tiết Salon ↗</a>
               <a href="https://maps.app.goo.gl/2MnwfqcCxjoBgvQB9" target="_blank" class="salon-card-link map-link">Xem bản đồ ↗</a>
             </div>
           </div>
@@ -302,7 +302,7 @@
             <p class="card-rating">⭐ 4.8 (145 đánh giá)</p>
             <p>📍 245 Nhật Tảo, Diên Hồng, Hồ Chí Minh</p>
             <div class="salon-card-footer-links">
-              <a href="product-detail.html?id=3" class="salon-card-link">Xem chi tiết Salon ↗</a>
+              <a href="product-detail.html?salonId=3" class="salon-card-link">Xem chi tiết Salon ↗</a>
               <a href="https://maps.app.goo.gl/kdUWxMfpS8smfffh9" target="_blank" class="salon-card-link map-link">Xem bản đồ ↗</a>
             </div>
           </div>
@@ -435,7 +435,7 @@
               <h3>${salon.name}</h3>
               <p class="card-rating">⭐ ${salon.rating} (${salon.reviewCount} đánh giá)</p>
               <p>📍 ${salon.address}</p>
-              <a href="product-detail.html?id=${salon.id}" class="salon-card-link">Xem chi tiết ↗</a>
+              <a href="product-detail.html?salonId=${salon.id}" class="salon-card-link">Xem chi tiết ↗</a>
             </div>
           </article>
         `).join("");
@@ -468,7 +468,7 @@
                   <span class="new-price">${new Intl.NumberFormat("vi-VN").format(discountPrice)}đ</span>
                   <span class="old-price">${new Intl.NumberFormat("vi-VN").format(originalPrice)}đ</span>
                 </div>
-                <a href="product-detail.html?id=${item.salon.id}" class="btn btn-yellow trending-book-btn">Đặt lịch ngay</a>
+                <a href="product-detail.html?salonId=${item.salon.id}&serviceId=${item.service.id}" class="btn btn-yellow trending-book-btn">Đặt lịch ngay</a>
               </div>
             </article>
           `;
