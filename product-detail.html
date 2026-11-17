@@ -1,273 +1,532 @@
+
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0c513f">
-  <meta name="description" content="SalonBook - Khám phá thông tin salon, dịch vụ và lựa chọn lịch làm tóc.">
+  <meta name="description"
+        content="SalonBook - Khám phá salon, dịch vụ và lựa chọn lịch làm tóc.">
+
   <title>Chi tiết salon | SalonBook</title>
 
-  <!-- CSS DÙNG CHUNG CỦA NHÓM -->
+  <!-- CSS DÙNG CHUNG -->
   <link rel="stylesheet" href="css/style.css?v=3">
-  <!-- CSS RIÊNG TRANG CHI TIẾT -->
   <link rel="stylesheet" href="css/product-detail.css">
   <link rel="stylesheet" href="css/responsive-ux.css">
   <link rel="stylesheet" href="css/cart.css">
+
+  <style>
+    .booking-bridge-notice {
+      padding: 13px 16px;
+      margin-top: 12px;
+      background: #eaf4ec;
+      color: #0c513f;
+      border: 1px solid #c9e3d0;
+      border-radius: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .booking-bridge-notice.error {
+      background: #fff1ed;
+      color: #aa3025;
+      border-color: #f2c8bd;
+    }
+
+    .booking-draft-info {
+      padding: 14px;
+      margin: 15px 0;
+      border-radius: 10px;
+      background: #fff8dc;
+      color: #0c513f;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .detail-booking-form button {
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
 
-  <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+  <a class="skip-link" href="#main-content">
+    Chuyển đến nội dung chính
+  </a>
 
- <header class="site-header">
+  <!-- HEADER -->
+  <header class="site-header">
     <div class="container nav-shell">
-        <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
-            <img src="images/salonbook-mark.png" alt="" width="46" height="54">
-            <span>SALON<span class="brand-thin">BOOK</span></span>
-        </a>
 
-        <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
+      <a class="brand"
+         href="index.html"
+         aria-label="SalonBook - Trang chủ">
+        <img src="images/salonbook-mark.png"
+             alt=""
+             width="46"
+             height="54">
+        <span>
+          SALON<span class="brand-thin">BOOK</span>
+        </span>
+      </a>
 
-        <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
-            <a href="index.html" >Trang chủ</a>
-            <a href="products.html" class="active" aria-current="page">Đặt lịch</a>
-            <a href="blog.html">Blog</a>
-            <a href="tuvan.html">Tư vấn</a>
-            <a href="about.html">Giới thiệu</a>
-           
-        </nav>
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-controls="main-nav"
+        aria-expanded="false"
+        aria-label="Mở menu">
+        ☰
+      </button>
 
-        <div class="nav-actions">
-            <!-- 1. Ô tìm kiếm nhanh -->
+      <nav class="main-nav"
+           id="main-nav"
+           aria-label="Điều hướng chính">
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html"
+           class="active"
+           aria-current="page">Đặt lịch</a>
+        <a href="blog.html">Blog</a>
+        <a href="tuvan.html">Tư vấn</a>
+        <a href="about.html">Giới thiệu</a>
+      </nav>
+
+      <div class="nav-actions">
         <div class="header-search-box">
-    <!-- Icon kính lúp nằm chung trong khung -->
-    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="11" cy="11" r="8"></circle>
-        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-    </svg>
-    <input type="text" placeholder="Tìm kiếm salon,..." id="header-quick-search">
-</div>
-
-            <!-- 3. Nút Đăng ký / Đăng nhập nằm cuối -->
-            <div id="auth-action-container">
-                <a class="btn btn-yellow btn-top" href="auth.html">
-                    Đăng ký / Đăng nhập
-                </a>
-            </div>
+          <svg class="search-icon"
+               width="16"
+               height="16"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="2"
+               stroke-linecap="round"
+               stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21"
+                  x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text"
+                 id="header-quick-search"
+                 placeholder="Tìm kiếm salon,...">
         </div>
+
+        <div id="auth-action-container">
+          <a class="btn btn-yellow btn-top"
+             href="auth.html">
+            Đăng ký / Đăng nhập
+          </a>
+        </div>
+      </div>
     </div>
   </header>
-<main id="main-content">
-    <!-- PHẦN 1: THÔNG TIN CHI TIẾT SALON (BƯỚC 2) -->
-    <section class="container detail-hero" aria-labelledby="detail-title">
+
+  <main id="main-content">
+
+    <!-- PHẦN 1: THÔNG TIN SALON -->
+    <section class="container detail-hero"
+             aria-labelledby="detail-title">
+
       <div class="detail-image">
-        <img src="images/salon-01.jpg" alt="Hình ảnh salon" loading="lazy">
+        <img src="images/salon-01.jpg"
+             alt="Hình ảnh salon"
+             loading="lazy">
       </div>
 
       <div class="detail-info">
-        <p class="detail-label" id="detail-category-district">SALON TÓC · QUẬN 1</p>
-        <h1 id="detail-title">Đang tải thông tin salon...</h1>
+        <p class="detail-label"
+           id="detail-category-district">
+          SALON TÓC · QUẬN 1
+        </p>
 
-        <!-- HIỂN THỊ ĐIỂM ĐÁNH GIÁ & SỐ LƯỢT NHẬN XÉT -->
-        <div id="detail-rating-summary" style="display:flex; align-items:center; gap:10px; margin: 6px 0 12px; font-size:14px; font-weight:700; color:#d97706;">
+        <h1 id="detail-title">
+          Đang tải thông tin salon...
+        </h1>
+
+        <div id="detail-rating-summary"
+             style="display:flex;align-items:center;gap:10px;margin:6px 0 12px;font-size:14px;font-weight:700;color:#d97706;">
           ⭐ Đang cập nhật đánh giá
         </div>
 
         <div class="detail-divider"></div>
 
         <h2>Giới thiệu salon</h2>
+
         <p class="detail-description">
           Thông tin mô tả salon đang được cập nhật từ hệ thống.
         </p>
 
-        <!-- ĐỊA CHỈ, GIỜ HOẠT ĐỘNG & GOOGLE MAPS -->
-        <div id="detail-address" class="detail-address"></div>
+        <div id="detail-address"
+             class="detail-address"></div>
 
-        <a href="#booking" class="btn btn-yellow detail-button">
+        <a href="#booking"
+           class="btn btn-yellow detail-button">
           Chọn dịch vụ & lịch dự kiến ↗
         </a>
       </div>
     </section>
 
-    <!-- PHẦN 2: DANH SÁCH DỊCH VỤ & GIÁ (BƯỚC 2) -->
-    <section class="container detail-services" aria-labelledby="detail-services-title">
+    <!-- PHẦN 2: DỊCH VỤ VÀ BẢNG GIÁ -->
+    <section class="container detail-services"
+             aria-labelledby="detail-services-title">
+
       <div class="detail-heading">
-        <p class="detail-label">CHĂM SÓC BẠN THEO CÁCH RIÊNG</p>
-        <h2 id="detail-services-title">Dịch vụ & Bảng giá <span>✳</span></h2>
-        <p>Chọn dịch vụ bên dưới để xem chi tiết giá, thời lượng và đưa vào bảng tóm tắt.</p>
+        <p class="detail-label">
+          CHĂM SÓC BẠN THEO CÁCH RIÊNG
+        </p>
+
+        <h2 id="detail-services-title">
+          Dịch vụ & Bảng giá <span>✳</span>
+        </h2>
+
+        <p>
+          Khám phá các dịch vụ, thời lượng và bảng giá
+          của salon. Bạn có thể lưu dịch vụ vào giỏ
+          trước khi chọn lịch.
+        </p>
       </div>
 
-      <div class="detail-service-grid" id="detail-service-grid">
-        <!-- JS sẽ tự động render toàn bộ servicesList của salon theo salonId -->
+      <div class="detail-service-grid"
+           id="detail-service-grid">
+        <!-- Render từ product-detail.js -->
       </div>
     </section>
 
-    <!-- PHẦN 3: CHỌN THỢ, LỊCH HẸN & BẢNG TÓM TẮT (BƯỚC 1 - KHÔNG ĐẶT HÀNG TRỰC TIẾP TẠI ĐÂY) -->
-    <section class="container detail-booking" id="booking" aria-labelledby="booking-title">
+    <!-- PHẦN 3: CHỌN LỊCH -->
+    <section class="container detail-booking"
+             id="booking"
+             aria-labelledby="booking-title">
+
       <div class="detail-heading">
-        <p class="detail-label">YOUR BEAUTY, YOUR TIME</p>
-        <h2 id="booking-title">Chọn thợ & khung giờ dự kiến <span>✳</span></h2>
-        <p>Hoàn tất lựa chọn để chuyển thông tin sang Giỏ dịch vụ và trang Booking.</p>
+        <p class="detail-label">
+          YOUR BEAUTY, YOUR TIME
+        </p>
+
+        <h2 id="booking-title">
+          Chọn thợ & khung giờ dự kiến <span>✳</span>
+        </h2>
+
+        <p>
+          Thêm dịch vụ vào giỏ hoặc tiếp tục
+          đặt lịch trực tiếp tại salon này.
+        </p>
       </div>
 
       <div class="detail-booking-grid">
-        <!-- BIỂU MẪU CHỌN DỊCH VỤ & LỊCH (BÊN TRÁI) -->
+
+        <!-- FORM CHỌN DỊCH VỤ -->
         <div class="detail-booking-form">
+
           <h3>Thông tin lịch hẹn dự kiến</h3>
 
+          <!-- Thông báo dịch vụ chuyển từ giỏ -->
+          <div id="booking-draft-info"
+               class="booking-draft-info"
+               hidden>
+          </div>
+
           <div class="detail-field">
-            <label for="detail-service-select">01. Chọn dịch vụ</label>
-            <select id="detail-service-select" name="service">
-              <option value="">Chọn dịch vụ</option>
+            <label for="detail-service-select">
+              01. Chọn dịch vụ
+            </label>
+
+            <select id="detail-service-select"
+                    name="service">
+              <option value="">
+                Chọn dịch vụ
+              </option>
             </select>
           </div>
 
           <div class="detail-field">
-            <label for="detail-stylist-select">02. Chọn chuyên viên</label>
+            <label for="detail-stylist-select">
+              02. Chọn chuyên viên
+            </label>
+
             <select id="detail-stylist-select">
-              <option value="">Chọn chuyên viên</option>
+              <option value="">
+                Chọn chuyên viên
+              </option>
             </select>
           </div>
 
           <div class="detail-field">
-            <label for="detail-date">03. Chọn ngày dự kiến</label>
-            <input type="date" id="detail-date" name="date">
+            <label for="detail-date">
+              03. Chọn ngày dự kiến
+            </label>
+
+            <input type="date"
+                   id="detail-date"
+                   name="date">
           </div>
 
           <div class="detail-field">
-            <label>04. Chọn khung giờ</label>
-            <div class="detail-time-grid" id="detail-time-grid">
-              <button type="button" disabled>Vui lòng chọn 02. Chuyên viên</button>
+            <label>
+              04. Chọn khung giờ
+            </label>
+
+            <div class="detail-time-grid"
+                 id="detail-time-grid">
+              <button type="button" disabled>
+                Vui lòng chọn 02. Chuyên viên
+              </button>
             </div>
           </div>
 
-          <button type="button" id="add-to-cart-btn" class="btn btn-outline" style="width: 100%; margin-top: 15px; padding: 12px; border: 2px solid #0c513f; border-radius: 10px; background: #fff; color: #0c513f; font-weight: 700; cursor: pointer;">
+          <!-- THÊM VÀO GIỎ -->
+          <button
+            type="button"
+            id="add-to-cart-btn"
+            class="btn btn-outline"
+            style="width:100%;margin-top:15px;padding:12px;border:2px solid #0c513f;border-radius:10px;background:#fff;color:#0c513f;font-weight:700;cursor:pointer;">
             + Thêm dịch vụ đã chọn vào giỏ
           </button>
+
+          <!-- ĐẶT LỊCH NGAY -->
+          <!-- Nút được bổ sung bởi cart.js.
+               booking-bridge.js xử lý luồng. -->
+
+          <div id="booking-bridge-notice"
+               class="booking-bridge-notice"
+               role="status"
+               aria-live="polite"
+               hidden>
+          </div>
+
         </div>
 
-        <!-- BẢNG TÓM TẮT SALON / DỊCH VỤ (BẢNG XANH BÊN PHẢI) -->
+        <!-- TÓM TẮT LỰA CHỌN -->
         <aside class="detail-summary">
-          <span class="detail-summary-label">SALONBOOK / SUMMARY</span>
+
+          <span class="detail-summary-label">
+            SALONBOOK / SUMMARY
+          </span>
+
           <h3>Tóm tắt lựa chọn</h3>
 
           <div class="detail-summary-item">
             <span>Salon</span>
-            <strong id="summary-salon-name">Đang cập nhật</strong>
+            <strong id="summary-salon-name">
+              Đang cập nhật
+            </strong>
           </div>
 
           <div class="detail-summary-item">
             <span>Địa điểm</span>
-            <strong id="summary-salon-location">Đang cập nhật</strong>
+            <strong id="summary-salon-location">
+              Đang cập nhật
+            </strong>
           </div>
 
           <div class="detail-summary-item">
             <span>Dịch vụ</span>
-            <strong id="summary-service-name">Chưa chọn dịch vụ</strong>
+            <strong id="summary-service-name">
+              Chưa chọn dịch vụ
+            </strong>
           </div>
 
           <div class="detail-summary-item">
             <span>Chuyên viên</span>
-            <strong id="summary-stylist-name">Chưa chọn chuyên viên</strong>
+            <strong id="summary-stylist-name">
+              Chưa chọn chuyên viên
+            </strong>
           </div>
 
           <div class="detail-summary-item">
             <span>Thời gian</span>
-            <strong id="summary-time">Chưa chọn ngày/giờ</strong>
+            <strong id="summary-time">
+              Chưa chọn ngày/giờ
+            </strong>
           </div>
 
           <div class="detail-summary-item">
             <span>Giá dự kiến</span>
-            <strong id="summary-price">Đang cập nhật</strong>
+            <strong id="summary-price">
+              Đang cập nhật
+            </strong>
           </div>
 
-          <!-- CHỈ CHUYỂN SANG GIỎ DỊCH VỤ, KHÔNG ĐẶT HÀNG TRỰC TIẾP Ở TRANG CHI TIẾT -->
-          <a href="cart.html" id="btn-go-cart" class="btn btn-yellow detail-confirm" style="display:block; text-align:center; text-decoration:none;">
+          <a href="cart.html"
+             id="btn-go-cart"
+             class="btn btn-yellow detail-confirm"
+             style="display:block;text-align:center;text-decoration:none;">
             Xem giỏ dịch vụ ↗
           </a>
         </aside>
+
       </div>
     </section>
 
-    <!-- PHẦN 4 (BƯỚC 6): MỤC TUYỂN MẪU TÓC CỦA SALON -->
-    <section class="container" id="salon-hair-models" aria-labelledby="hair-models-title" style="padding: 30px 0 50px;">
+    <!-- PHẦN 4: TUYỂN MẪU TÓC -->
+    <section class="container"
+             id="salon-hair-models"
+             aria-labelledby="hair-models-title"
+             style="padding:30px 0 50px;">
+
       <div class="detail-heading">
-        <p class="detail-label">HAIR MODEL RECRUITMENT</p>
-        <h2 id="hair-models-title">Tuyển mẫu tóc tại salon <span>✳</span></h2>
-        <p>Cơ hội trải nghiệm dịch vụ làm tóc miễn phí hoặc ưu đãi chi phí thuốc trực tiếp tại salon.</p>
+        <p class="detail-label">
+          HAIR MODEL RECRUITMENT
+        </p>
+
+        <h2 id="hair-models-title">
+          Tuyển mẫu tóc tại salon <span>✳</span>
+        </h2>
+
+        <p>
+          Cơ hội trải nghiệm dịch vụ làm tóc
+          miễn phí hoặc ưu đãi chi phí thuốc
+          trực tiếp tại salon.
+        </p>
       </div>
 
-      <div id="hair-models-list" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-        <!-- JS render từ js/hairmodels.js theo salonId -->
+      <div id="hair-models-list"
+           style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;">
+        <!-- Render từ hairmodels.js -->
       </div>
     </section>
 
-    <!-- PHẦN 5 (BƯỚC 6): NHẬN XÉT & ĐÁNH GIÁ CỦA SALON -->
-    <section class="container" id="salon-reviews" aria-labelledby="reviews-title" style="padding: 20px 0 60px;">
+    <!-- PHẦN 5: ĐÁNH GIÁ SALON -->
+    <section class="container"
+             id="salon-reviews"
+             aria-labelledby="reviews-title"
+             style="padding:20px 0 60px;">
+
       <div class="detail-heading">
-        <p class="detail-label">CUSTOMER REVIEWS</p>
-        <h2 id="reviews-title">Nhận xét từ khách hàng <span>✳</span></h2>
-        <p id="reviews-subtitle">Đánh giá thực tế từ khách hàng đã trải nghiệm dịch vụ tại salon.</p>
+        <p class="detail-label">
+          CUSTOMER REVIEWS
+        </p>
+
+        <h2 id="reviews-title">
+          Nhận xét từ khách hàng <span>✳</span>
+        </h2>
+
+        <p id="reviews-subtitle">
+          Đánh giá thực tế từ khách hàng
+          đã trải nghiệm dịch vụ tại salon.
+        </p>
       </div>
 
-      <div style="display:grid; grid-template-columns: 1.3fr 0.7fr; gap: 24px; align-items: start;" class="reviews-layout-grid">
-        <!-- DANH SÁCH NHẬN XÉT -->
-        <div id="salon-reviews-list" style="display:flex; flex-direction:column; gap:14px;">
-          <!-- JS render từ products.js -> reviewsList -->
+      <div class="reviews-layout-grid"
+           style="display:grid;grid-template-columns:1.3fr 0.7fr;gap:24px;align-items:start;">
+
+        <div id="salon-reviews-list"
+             style="display:flex;flex-direction:column;gap:14px;">
+          <!-- Render nhận xét -->
         </div>
 
-        <!-- FORM VIẾT NHẬN XÉT -->
-        <form id="review-form" style="background:#fff; border:1px solid #dce7df; border-radius:20px; padding:24px;">
-          <h3 style="margin-bottom:14px; font-size:18px;">Gửi nhận xét của bạn</h3>
-          <div class="detail-field" style="margin-bottom:14px;">
-            <label for="review-user-name">Tên hiển thị</label>
-            <input type="text" id="review-user-name" placeholder="Nhập tên của bạn..." required>
+        <form id="review-form"
+              style="background:#fff;border:1px solid #dce7df;border-radius:20px;padding:24px;">
+
+          <h3 style="margin-bottom:14px;font-size:18px;">
+            Gửi nhận xét của bạn
+          </h3>
+
+          <div class="detail-field"
+               style="margin-bottom:14px;">
+            <label for="review-user-name">
+              Tên hiển thị
+            </label>
+
+            <input type="text"
+                   id="review-user-name"
+                   placeholder="Nhập tên của bạn..."
+                   required>
           </div>
-          <div class="detail-field" style="margin-bottom:14px;">
-            <label for="review-rating">Mức đánh giá</label>
+
+          <div class="detail-field"
+               style="margin-bottom:14px;">
+            <label for="review-rating">
+              Mức đánh giá
+            </label>
+
             <select id="review-rating">
-              <option value="5">⭐⭐⭐⭐⭐ (5 sao - Rất hài lòng)</option>
-              <option value="4">⭐⭐⭐⭐ (4 sao - Hài lòng)</option>
-              <option value="3">⭐⭐⭐ (3 sao - Bình thường)</option>
-              <option value="2">⭐⭐ (2 sao - Chưa hài lòng)</option>
-              <option value="1">⭐ (1 sao - Rất tệ)</option>
+              <option value="5">
+                ⭐⭐⭐⭐⭐ (5 sao - Rất hài lòng)
+              </option>
+              <option value="4">
+                ⭐⭐⭐⭐ (4 sao - Hài lòng)
+              </option>
+              <option value="3">
+                ⭐⭐⭐ (3 sao - Bình thường)
+              </option>
+              <option value="2">
+                ⭐⭐ (2 sao - Chưa hài lòng)
+              </option>
+              <option value="1">
+                ⭐ (1 sao - Rất tệ)
+              </option>
             </select>
           </div>
-          <div class="detail-field" style="margin-bottom:16px;">
-            <label for="review-comment">Nội dung nhận xét</label>
-            <textarea id="review-comment" rows="3" placeholder="Chia sẻ trải nghiệm về thợ, không gian, dịch vụ..." required style="width:100%; padding:12px; border:1px solid #dce7df; border-radius:12px; background:#fefbf0; font:inherit;"></textarea>
+
+          <div class="detail-field"
+               style="margin-bottom:16px;">
+            <label for="review-comment">
+              Nội dung nhận xét
+            </label>
+
+            <textarea
+              id="review-comment"
+              rows="3"
+              placeholder="Chia sẻ trải nghiệm về thợ, không gian, dịch vụ..."
+              required
+              style="width:100%;padding:12px;border:1px solid #dce7df;border-radius:12px;background:#fefbf0;font:inherit;"></textarea>
           </div>
-          <button type="submit" class="btn btn-yellow" style="width:100%; padding:12px; border-radius:12px;">
+
+          <button type="submit"
+                  class="btn btn-yellow"
+                  style="width:100%;padding:12px;border-radius:12px;">
             Gửi nhận xét
           </button>
         </form>
+
       </div>
     </section>
 
-    <!-- QUAY LẠI DANH SÁCH SALON -->
     <div class="container detail-back">
-      <a href="products.html">← Quay lại danh sách salon</a>
+      <a href="products.html">
+        ← Quay lại danh sách salon
+      </a>
     </div>
+
   </main>
 
-  <!-- FOOTER DÙNG CHUNG -->
+  <!-- FOOTER -->
   <footer class="site-footer">
     <div class="container footer-inner">
+
       <a class="footer-brand" href="index.html">
-        <img src="images/salonbook-mark-white.png" alt="" width="44" height="50">
+        <img src="images/salonbook-mark-white.png"
+             alt=""
+             width="44"
+             height="50">
         SALONBOOK
       </a>
+
       <p>YOUR BEAUTY, YOUR TIME</p>
-      <small>Nguyên mẫu học tập · Nền tảng kết nối nhiều salon</small>
+
+      <small>
+        Nguyên mẫu học tập ·
+        Nền tảng kết nối nhiều salon
+      </small>
     </div>
   </footer>
 
-  <!-- JAVASCRIPT CHUNG CỦA NHÓM -->
+  <!-- JAVASCRIPT -->
+  <!-- Thứ tự tải rất quan trọng -->
+
+  <script src="js/auth.js"></script>
   <script src="js/common.js"></script>
   <script src="js/products.js"></script>
   <script src="js/hairmodels.js"></script>
   <script src="js/cart.js"></script>
   <script src="js/product-detail.js"></script>
+
+  <!-- Logic khôi phục lựa chọn và Booking -->
+  <script src="js/booking-bridge.js"></script>
+
 </body>
 </html>
