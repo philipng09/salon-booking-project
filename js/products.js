@@ -363,4 +363,3 @@ const products = [
     ]
   }
 ];
-```[cite: 32]
