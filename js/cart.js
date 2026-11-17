@@ -275,7 +275,7 @@
       row.querySelector('[data-cart-action="decrease"]').disabled = item.quantity === 1;
       row.querySelector('[data-cart-action="increase"]').disabled = item.quantity === MAX_QUANTITY;
       const edit = row.querySelector('.cart-edit-booking');
-      edit.href = `product-detail.html?id=${encodeURIComponent(item.salonId)}&editKey=${encodeURIComponent(item.key)}#booking`;
+      edit.href = `product-detail.html?salonId=${encodeURIComponent(item.salonId)}&serviceId=${encodeURIComponent(item.serviceId)}&editKey=${encodeURIComponent(item.key)}#booking`;
       edit.textContent = item.isComplete ? '✎ Chỉnh sửa lịch hẹn' : '✎ Bổ sung thông tin lịch hẹn';
       if (!item.isComplete) {
         const warning = row.querySelector('.cart-booking-warning');
