@@ -59,103 +59,63 @@
     </div>
   </header>
 <main id="main-content">
-    <!-- PHẦN 1: THÔNG TIN CHI TIẾT SALON -->
+    <!-- PHẦN 1: THÔNG TIN CHI TIẾT SALON (BƯỚC 2) -->
     <section class="container detail-hero" aria-labelledby="detail-title">
       <div class="detail-image">
         <img src="images/salon-01.jpg" alt="Hình ảnh salon" loading="lazy">
       </div>
 
       <div class="detail-info">
-        <p class="detail-label">SALON TÓC · QUẬN 1</p>
-        <h1 id="detail-title">The Hair Space</h1>
+        <p class="detail-label" id="detail-category-district">SALON TÓC · QUẬN 1</p>
+        <h1 id="detail-title">Đang tải thông tin salon...</h1>
 
-  
+        <!-- HIỂN THỊ ĐIỂM ĐÁNH GIÁ & SỐ LƯỢT NHẬN XÉT -->
+        <div id="detail-rating-summary" style="display:flex; align-items:center; gap:10px; margin: 6px 0 12px; font-size:14px; font-weight:700; color:#d97706;">
+          ⭐ Đang cập nhật đánh giá
+        </div>
 
         <div class="detail-divider"></div>
 
         <h2>Giới thiệu salon</h2>
         <p class="detail-description">
-          The Hair Space là salon được giới thiệu trên nền tảng SalonBook.
+          Thông tin mô tả salon đang được cập nhật từ hệ thống.
         </p>
-<!-- THAY BẰNG THẺ NÀY (ĐÃ DỌN SẠCH CHỮ VÀ ICON CỨNG CŨ) -->
-<div id="detail-address" class="detail-address"></div>
+
+        <!-- ĐỊA CHỈ, GIỜ HOẠT ĐỘNG & GOOGLE MAPS -->
+        <div id="detail-address" class="detail-address"></div>
+
         <a href="#booking" class="btn btn-yellow detail-button">
-          Xem lựa chọn đặt lịch ↗
+          Chọn dịch vụ & lịch dự kiến ↗
         </a>
       </div>
     </section>
 
-    <!-- PHẦN 2: DANH SÁCH DỊCH VỤ -->
+    <!-- PHẦN 2: DANH SÁCH DỊCH VỤ & GIÁ (BƯỚC 2) -->
     <section class="container detail-services" aria-labelledby="detail-services-title">
       <div class="detail-heading">
         <p class="detail-label">CHĂM SÓC BẠN THEO CÁCH RIÊNG</p>
-        <h2 id="detail-services-title">Dịch vụ salon <span>✳</span></h2>
-        <p>Tham khảo các nhóm dịch vụ làm tóc được giới thiệu trên SalonBook.</p>
+        <h2 id="detail-services-title">Dịch vụ & Bảng giá <span>✳</span></h2>
+        <p>Chọn dịch vụ bên dưới để xem chi tiết giá, thời lượng và đưa vào bảng tóm tắt.</p>
       </div>
 
-      <div class="detail-service-grid">
-        <article class="detail-service-card">
-          <span class="detail-service-number">01 / STYLE</span>
-          <h3>Cắt & tạo kiểu</h3>
-          <p>Lựa chọn dịch vụ cắt tóc và tạo kiểu theo nhu cầu cá nhân.</p>
-          <div class="detail-service-bottom">
-            <span>Giá đang cập nhật</span>
-            <a href="#booking">↗</a>
-          </div>
-        </article>
-
-        <article class="detail-service-card">
-          <span class="detail-service-number">02 / COLOR</span>
-          <h3>Nhuộm tóc</h3>
-          <p>Tham khảo các lựa chọn màu tóc và thay đổi phong cách cá nhân.</p>
-          <div class="detail-service-bottom">
-            <span>Giá đang cập nhật</span>
-            <a href="#booking">↗</a>
-          </div>
-        </article>
-
-        <article class="detail-service-card">
-          <span class="detail-service-number">03 / RELAX</span>
-          <h3>Gội & thư giãn</h3>
-          <p>Nhóm dịch vụ làm sạch tóc, chăm sóc và thư giãn.</p>
-          <div class="detail-service-bottom">
-            <span>Giá đang cập nhật</span>
-            <a href="#booking">↗</a>
-          </div>
-        </article>
-
-        <article class="detail-service-card">
-          <span class="detail-service-number">04 / CARE</span>
-          <h3>Phục hồi tóc</h3>
-          <p>Tham khảo nhóm dịch vụ chăm sóc và hỗ trợ phục hồi tóc.</p>
-          <div class="detail-service-bottom">
-            <span>Giá đang cập nhật</span>
-            <a href="#booking">↗</a>
-          </div>
-        </article>
+      <div class="detail-service-grid" id="detail-service-grid">
+        <!-- JS sẽ tự động render toàn bộ servicesList của salon theo salonId -->
       </div>
-
-      <p class="detail-disclaimer">
-        Các nhóm dịch vụ trên được sử dụng để minh họa giao diện SalonBook.
-      </p>
     </section>
 
-    <!-- PHẦN 3: CHỌN THỢ VÀ LỊCH HẸN -->
+    <!-- PHẦN 3: CHỌN THỢ, LỊCH HẸN & BẢNG TÓM TẮT (BƯỚC 1 - KHÔNG ĐẶT HÀNG TRỰC TIẾP TẠI ĐÂY) -->
     <section class="container detail-booking" id="booking" aria-labelledby="booking-title">
-
       <div class="detail-heading">
         <p class="detail-label">YOUR BEAUTY, YOUR TIME</p>
-        <h2 id="booking-title">Chọn thợ & lịch hẹn <span>✳</span></h2>
-        <p>Giao diện lựa chọn dịch vụ, chuyên viên và thời gian đặt lịch.</p>
+        <h2 id="booking-title">Chọn thợ & khung giờ dự kiến <span>✳</span></h2>
+        <p>Hoàn tất lựa chọn để chuyển thông tin sang Giỏ dịch vụ và trang Booking.</p>
       </div>
 
       <div class="detail-booking-grid">
-
-        <!-- BIỂU MẪU ĐẶT LỊCH (BÊN TRÁI) -->
+        <!-- BIỂU MẪU CHỌN DỊCH VỤ & LỊCH (BÊN TRÁI) -->
         <div class="detail-booking-form">
-          <h3>Thông tin lịch hẹn</h3>
+          <h3>Thông tin lịch hẹn dự kiến</h3>
 
-          <!-- CHỌN DỊCH VỤ -->
           <div class="detail-field">
             <label for="detail-service-select">01. Chọn dịch vụ</label>
             <select id="detail-service-select" name="service">
@@ -163,7 +123,6 @@
             </select>
           </div>
 
-          <!-- CHỌN CHUYÊN VIÊN -->
           <div class="detail-field">
             <label for="detail-stylist-select">02. Chọn chuyên viên</label>
             <select id="detail-stylist-select">
@@ -171,54 +130,51 @@
             </select>
           </div>
 
-          <!-- CHỌN NGÀY -->
           <div class="detail-field">
             <label for="detail-date">03. Chọn ngày dự kiến</label>
             <input type="date" id="detail-date" name="date">
           </div>
 
-          <!-- CHỌN KHUNG GIỜ -->
           <div class="detail-field">
             <label>04. Chọn khung giờ</label>
             <div class="detail-time-grid" id="detail-time-grid">
-              <button type="button" disabled>Vui lòng chọn chuyên viên để xem lịch trống</button>
+              <button type="button" disabled>Vui lòng chọn 02. Chuyên viên</button>
             </div>
           </div>
 
-          <!-- ĐÚNG 1 NÚT THÊM VÀO GIỎ Ở DƯỚI CÙNG FORM BÊN TRÁI -->
           <button type="button" id="add-to-cart-btn" class="btn btn-outline" style="width: 100%; margin-top: 15px; padding: 12px; border: 2px solid #0c513f; border-radius: 10px; background: #fff; color: #0c513f; font-weight: 700; cursor: pointer;">
             + Thêm dịch vụ đã chọn vào giỏ
           </button>
         </div>
 
-        <!-- BẢNG TÓM TẮT THÔNG TIN ĐẶT LỊCH (BẢNG XANH BÊN PHẢI) -->
+        <!-- BẢNG TÓM TẮT SALON / DỊCH VỤ (BẢNG XANH BÊN PHẢI) -->
         <aside class="detail-summary">
-          <span class="detail-summary-label">SALONBOOK / BOOKING</span>
-          <h3>Thông tin đặt lịch</h3>
+          <span class="detail-summary-label">SALONBOOK / SUMMARY</span>
+          <h3>Tóm tắt lựa chọn</h3>
 
           <div class="detail-summary-item">
             <span>Salon</span>
-            <strong id="summary-salon-name">The Hair Space</strong>
+            <strong id="summary-salon-name">Đang cập nhật</strong>
           </div>
 
           <div class="detail-summary-item">
             <span>Địa điểm</span>
-            <strong id="summary-salon-location">Quận 1, TP. Hồ Chí Minh</strong>
+            <strong id="summary-salon-location">Đang cập nhật</strong>
           </div>
 
           <div class="detail-summary-item">
             <span>Dịch vụ</span>
-            <strong id="summary-service-name">Chưa xác nhận</strong>
+            <strong id="summary-service-name">Chưa chọn dịch vụ</strong>
           </div>
 
           <div class="detail-summary-item">
             <span>Chuyên viên</span>
-            <strong id="summary-stylist-name">Chưa có dữ liệu</strong>
+            <strong id="summary-stylist-name">Chưa chọn chuyên viên</strong>
           </div>
 
           <div class="detail-summary-item">
             <span>Thời gian</span>
-            <strong id="summary-time">Chưa xác nhận</strong>
+            <strong id="summary-time">Chưa chọn ngày/giờ</strong>
           </div>
 
           <div class="detail-summary-item">
@@ -226,20 +182,73 @@
             <strong id="summary-price">Đang cập nhật</strong>
           </div>
 
-          <button type="button" id="btn-submit-booking" class="btn btn-yellow detail-confirm" disabled style="opacity: 0.5; cursor: not-allowed;">
-            Đi đến giỏ dịch vụ
-          </button>
+          <!-- CHỈ CHUYỂN SANG GIỎ DỊCH VỤ, KHÔNG ĐẶT HÀNG TRỰC TIẾP Ở TRANG CHI TIẾT -->
+          <a href="cart.html" id="btn-go-cart" class="btn btn-yellow detail-confirm" style="display:block; text-align:center; text-decoration:none;">
+            Xem giỏ dịch vụ ↗
+          </a>
         </aside>
-
       </div>
-
     </section>
 
-    <!-- PHẦN 4: QUAY LẠI DANH SÁCH SALON -->
+    <!-- PHẦN 4 (BƯỚC 6): MỤC TUYỂN MẪU TÓC CỦA SALON -->
+    <section class="container" id="salon-hair-models" aria-labelledby="hair-models-title" style="padding: 30px 0 50px;">
+      <div class="detail-heading">
+        <p class="detail-label">HAIR MODEL RECRUITMENT</p>
+        <h2 id="hair-models-title">Tuyển mẫu tóc tại salon <span>✳</span></h2>
+        <p>Cơ hội trải nghiệm dịch vụ làm tóc miễn phí hoặc ưu đãi chi phí thuốc trực tiếp tại salon.</p>
+      </div>
+
+      <div id="hair-models-list" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+        <!-- JS render từ js/hairmodels.js theo salonId -->
+      </div>
+    </section>
+
+    <!-- PHẦN 5 (BƯỚC 6): NHẬN XÉT & ĐÁNH GIÁ CỦA SALON -->
+    <section class="container" id="salon-reviews" aria-labelledby="reviews-title" style="padding: 20px 0 60px;">
+      <div class="detail-heading">
+        <p class="detail-label">CUSTOMER REVIEWS</p>
+        <h2 id="reviews-title">Nhận xét từ khách hàng <span>✳</span></h2>
+        <p id="reviews-subtitle">Đánh giá thực tế từ khách hàng đã trải nghiệm dịch vụ tại salon.</p>
+      </div>
+
+      <div style="display:grid; grid-template-columns: 1.3fr 0.7fr; gap: 24px; align-items: start;" class="reviews-layout-grid">
+        <!-- DANH SÁCH NHẬN XÉT -->
+        <div id="salon-reviews-list" style="display:flex; flex-direction:column; gap:14px;">
+          <!-- JS render từ products.js -> reviewsList -->
+        </div>
+
+        <!-- FORM VIẾT NHẬN XÉT -->
+        <form id="review-form" style="background:#fff; border:1px solid #dce7df; border-radius:20px; padding:24px;">
+          <h3 style="margin-bottom:14px; font-size:18px;">Gửi nhận xét của bạn</h3>
+          <div class="detail-field" style="margin-bottom:14px;">
+            <label for="review-user-name">Tên hiển thị</label>
+            <input type="text" id="review-user-name" placeholder="Nhập tên của bạn..." required>
+          </div>
+          <div class="detail-field" style="margin-bottom:14px;">
+            <label for="review-rating">Mức đánh giá</label>
+            <select id="review-rating">
+              <option value="5">⭐⭐⭐⭐⭐ (5 sao - Rất hài lòng)</option>
+              <option value="4">⭐⭐⭐⭐ (4 sao - Hài lòng)</option>
+              <option value="3">⭐⭐⭐ (3 sao - Bình thường)</option>
+              <option value="2">⭐⭐ (2 sao - Chưa hài lòng)</option>
+              <option value="1">⭐ (1 sao - Rất tệ)</option>
+            </select>
+          </div>
+          <div class="detail-field" style="margin-bottom:16px;">
+            <label for="review-comment">Nội dung nhận xét</label>
+            <textarea id="review-comment" rows="3" placeholder="Chia sẻ trải nghiệm về thợ, không gian, dịch vụ..." required style="width:100%; padding:12px; border:1px solid #dce7df; border-radius:12px; background:#fefbf0; font:inherit;"></textarea>
+          </div>
+          <button type="submit" class="btn btn-yellow" style="width:100%; padding:12px; border-radius:12px;">
+            Gửi nhận xét
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- QUAY LẠI DANH SÁCH SALON -->
     <div class="container detail-back">
       <a href="products.html">← Quay lại danh sách salon</a>
     </div>
-
   </main>
 
   <!-- FOOTER DÙNG CHUNG -->
@@ -257,9 +266,8 @@
   <!-- JAVASCRIPT CHUNG CỦA NHÓM -->
   <script src="js/common.js"></script>
   <script src="js/products.js"></script>
+  <script src="js/hairmodels.js"></script>
   <script src="js/cart.js"></script>
-  <!-- COMMENT LẠI CART-DETAIL.JS ĐỂ KHÔNG BỊ CHÈN NÚT TRÙNG -->
-  <!-- <script src="js/cart-detail.js"></script> -->
   <script src="js/product-detail.js"></script>
 </body>
 </html>
