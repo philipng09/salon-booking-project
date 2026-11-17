@@ -71,7 +71,7 @@ function renderProducts(list) {
           </div>
 
           <a class="salon-detail-button"
-             href="product-detail.html?id=${salon.id}">Xem chi tiết</a>
+             href="product-detail.html?salonId=${salon.id}">Xem chi tiết</a>
         </div>
       </article>
     `;
