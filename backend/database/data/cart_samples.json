@@ -1,0 +1,7 @@
+[
+  { "customer": "customer@salonbook.test", "salonId": 1, "stylistId": "st1_1", "daysFromToday": 3, "time": "10:30", "status": "pending",   "serviceIds": ["s1_1", "s1_4"] },
+  { "customer": "customer@salonbook.test", "salonId": 2, "stylistId": "st2_1", "daysFromToday": 5, "time": "14:00", "status": "confirmed", "serviceIds": ["s2_2"] },
+  { "customer": "customer2@salonbook.test", "salonId": 3, "stylistId": "st3_1", "daysFromToday": 2, "time": "08:30", "status": "confirmed", "serviceIds": ["s3_1", "s3_3"] },
+  { "customer": "customer2@salonbook.test", "salonId": 8, "stylistId": "st8_1", "daysFromToday": 7, "time": "14:00", "status": "pending",   "serviceIds": ["s8_1"] },
+  { "customer": "customer@salonbook.test", "salonId": 10, "stylistId": "st10_2", "daysFromToday": 4, "time": "15:30", "status": "cancelled", "serviceIds": ["s10_4"] }
+]

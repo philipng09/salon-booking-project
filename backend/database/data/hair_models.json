@@ -1,0 +1,46 @@
+[
+  {
+    "id": "hm_1_1",
+    "salonId": 1,
+    "title": "Tuyển mẫu nữ cắt Layer & Uốn sóng lơi Hàn Quốc",
+    "serviceName": "Cắt & tạo kiểu",
+    "requirement": "Tóc dài ngang lưng, chưa tẩy hoặc nhuộm đen trong 6 tháng gần đây.",
+    "cost": "Miễn phí 100% (Tài trợ toàn bộ thuốc uốn & tạo kiểu)",
+    "slots": 3,
+    "deadline": "2026-12-15",
+    "status": "Đang tuyển"
+  },
+  {
+    "id": "hm_1_2",
+    "salonId": 1,
+    "title": "Tuyển mẫu nhuộm tone Nâu Trà Sữa chụp lookbook",
+    "serviceName": "Nhuộm tóc",
+    "requirement": "Nền tóc tự nhiên hoặc nâu trầm, đồng ý quay video/chụp ảnh sau khi làm.",
+    "cost": "Phụ thu thuốc 150.000 ₫ (Giá gốc 650.000 ₫)",
+    "slots": 2,
+    "deadline": "2026-12-20",
+    "status": "Đang tuyển"
+  },
+  {
+    "id": "hm_2_1",
+    "salonId": 2,
+    "title": "Tuyển mẫu nhuộm Balayage / Highlight thời trang",
+    "serviceName": "Nhuộm tóc",
+    "requirement": "Tóc khỏe, không hư tổn nặng, khuôn mặt ưa nhìn.",
+    "cost": "Miễn phí 100%",
+    "slots": 2,
+    "deadline": "2026-12-18",
+    "status": "Đang tuyển"
+  },
+  {
+    "id": "hm_3_1",
+    "salonId": 3,
+    "title": "Tuyển mẫu nam cắt Crop / Mohican & Uốn con sâu",
+    "serviceName": "Cắt & tạo kiểu",
+    "requirement": "Học sinh - sinh viên tại TP.HCM, tóc dài tối thiểu 6cm.",
+    "cost": "Miễn phí 100%",
+    "slots": 5,
+    "deadline": "2026-12-25",
+    "status": "Đang tuyển"
+  }
+]

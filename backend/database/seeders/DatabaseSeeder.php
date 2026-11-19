@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -11,15 +10,21 @@ class DatabaseSeeder extends Seeder
     use WithoutModelEvents;
 
     /**
-     * Seed the application's database.
+     * Thứ tự gọi tuân theo phụ thuộc khóa ngoại:
+     * users -> salons -> services, stylists -> bookings (giỏ dịch vụ) -> reviews -> blogs -> hair_models.
+     * Chạy: php artisan migrate:fresh --seed
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $this->call([
+            UserSeeder::class,
+            SalonSeeder::class,
+            ServiceSeeder::class,
+            StylistSeeder::class,
+            BookingSeeder::class,
+            ReviewSeeder::class,
+            BlogSeeder::class,
+            HairModelSeeder::class,
         ]);
     }
 }

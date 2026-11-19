@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -12,14 +13,22 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->id();                                   // PK users.id
+            $table->string('full_name');                    // Họ và tên hiển thị
+            $table->string('email')->unique();              // Email đăng nhập, không trùng
+            $table->string('phone', 20)->nullable();        // Lưu dạng chuỗi để giữ số 0 đầu
+            $table->string('password_hash');                // Chỉ lưu chuỗi băm (bcrypt)
+            $table->string('role', 20)->default('customer')->index(); // customer | salon_owner | admin
+            $table->timestamp('email_verified_at')->nullable(); // Cột kỹ thuật của Laravel Auth
+            $table->rememberToken();                            // Cột kỹ thuật "ghi nhớ đăng nhập"
             $table->timestamps();
         });
+
+        // Ràng buộc miền giá trị cho role (MySQL 8.0.16+ / MariaDB 10.2+ mới thực thi CHECK)
+        if (in_array(DB::getDriverName(), ['mysql', 'mariadb'])) {
+            DB::statement("ALTER TABLE users ADD CONSTRAINT chk_users_role
+                CHECK (role IN ('customer', 'salon_owner', 'admin'))");
+        }
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
