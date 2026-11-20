@@ -444,50 +444,20 @@
     document.addEventListener("DOMContentLoaded", function () {
       if (typeof products === "undefined") return;
 
-      const HISTORY_KEY = "salonbook_recent_salons";
       const MAX_ITEMS = 3;
-
       const historyGrid = document.getElementById("recently-viewed-grid");
       const emptyMsg = document.getElementById("recently-viewed-empty");
       const clearBtn = document.getElementById("clear-history-btn");
       const bookingForm = document.getElementById("booking");
       const areaSelect = document.getElementById("area-select");
       const serviceSelect = document.getElementById("service-select");
-      const quickSearchInput = document.getElementById("header-quick-search");
-
-      function getHistoryIds() {
-        try {
-          const raw = JSON.parse(localStorage.getItem(HISTORY_KEY));
-          return Array.isArray(raw) ? raw.slice(0, MAX_ITEMS) : [];
-        } catch (e) {
-          return [];
-        }
-      }
-
-      function saveHistoryIds(ids) {
-        localStorage.setItem(HISTORY_KEY, JSON.stringify(ids.slice(0, MAX_ITEMS)));
-      }
-
-      function addSalonsToHistory(matchedSalons) {
-        if (!Array.isArray(matchedSalons) || matchedSalons.length === 0) return;
-
-        let currentIds = getHistoryIds();
-        const newIds = matchedSalons.map(s => s.id);
-
-        currentIds = [...newIds, ...currentIds]
-          .filter((id, idx, arr) => arr.indexOf(id) === idx)
-          .slice(0, MAX_ITEMS);
-
-        saveHistoryIds(currentIds);
-        renderHistory();
-      }
 
       function renderHistory() {
         if (!historyGrid) return;
 
-        const ids = getHistoryIds();
+        const ids = window.SalonBookHistory ? window.SalonBookHistory.getIds() : [];
         const salons = ids
-          .map(id => products.find(s => s.id === id))
+          .map(id => products.find(s => Number(s.id) === Number(id)))
           .filter(Boolean)
           .slice(0, MAX_ITEMS);
 
@@ -514,7 +484,7 @@
         `).join("");
       }
 
-      // Lưu lịch sử khi bấm nút Tìm salon
+      // 1. Bấm Tìm salon ở form trang chủ -> lưu tối đa 3 salon vào lịch sử chung
       if (bookingForm) {
         bookingForm.addEventListener("submit", function () {
           const areaVal = areaSelect ? areaSelect.value.trim().toLowerCase() : "";
@@ -529,31 +499,28 @@
             return matchArea && matchService;
           });
 
-          addSalonsToHistory(matched.slice(0, MAX_ITEMS));
+          if (window.SalonBookHistory) {
+            window.SalonBookHistory.addSalons(matched.slice(0, MAX_ITEMS));
+          }
         });
       }
 
-      // Lưu lịch sử khi tìm nhanh trên thanh header
-      if (quickSearchInput) {
-        quickSearchInput.addEventListener("change", function () {
-          const kw = this.value.trim().toLowerCase();
-          if (!kw) return;
-          const matched = products.filter(s => s.name && s.name.toLowerCase().includes(kw));
-          addSalonsToHistory(matched.slice(0, MAX_ITEMS));
-        });
-      }
-
-      // Nút Xóa lịch sử
+      // 2. Bấm Xóa lịch sử -> xóa sạch qua SalonBookHistory
       if (clearBtn) {
         clearBtn.addEventListener("click", function () {
-          localStorage.removeItem(HISTORY_KEY);
-          renderHistory();
+          if (window.SalonBookHistory) {
+            window.SalonBookHistory.clear();
+          }
         });
       }
 
+      // 3. Nghe tín hiệu cập nhật từ thanh header hoặc trang đặt lịch để vẽ lại ngay
+      window.addEventListener("salonbook:history-updated", renderHistory);
+
+      // Vẽ lần đầu khi mở trang
       renderHistory();
 
-      // RENDER MỤC "ƯU ĐÃI & DỊCH VỤ THỊNH HÀNH"
+      // 4. RENDER MỤC "ƯU ĐÃI & DỊCH VỤ THỊNH HÀNH"
       const trendingGrid = document.getElementById("trending-grid");
       if (trendingGrid) {
         const trendingItems = [
@@ -588,5 +555,3 @@
       }
     });
   </script>
-</body>
-</html>
