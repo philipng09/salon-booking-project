@@ -1,53 +1,28 @@
 
 /*
- * SALONBOOK PROFILE - FIGMA v15
- * Tương thích với Auth demo của nhóm.
+ * SALONBOOK - CUSTOMER PROFILE
+ * Tương thích Auth demo của nhóm.
  *
- * Booking và lịch sử tư vấn phải được tích hợp
- * với nguồn dữ liệu chính thức.
- *
- * window.SalonBookProfileData = {
- *   getBookings: async () => [...],
- *   getConsultations: async () => [...],
- *   getNotifications: async () => [...],
- *   cancelBooking: async (id) => {...}
- * };
- *
- * Không lấy Cart làm lịch sử Booking.
- * Backend phải xác thực quyền sở hữu lịch.
+ * Không sử dụng Cart làm lịch sử Booking.
+ * Booking, thông báo và tư vấn cần nguồn dữ liệu chính thức.
+ * Backend phải xác minh quyền sở hữu trước khi trả dữ liệu.
  */
 
 (() => {
   "use strict";
 
-  const SESSION = "currentUser";
-  const USERS = "salonbook_users";
+  const AUTH_KEY = "currentUser";
+  const USERS_KEY = "salonbook_users";
   const auth = window.SalonBookAuth;
 
   if (!auth || !auth.requireLogin()) return;
 
-  const current = auth.currentUser();
-  if (!current) return;
+  const signedIn = auth.currentUser();
+  if (!signedIn) return;
 
   const $ = id => document.getElementById(id);
   const root = $("profile-main");
   const tabs = [...document.querySelectorAll("[data-panel]")];
-
-  const validEmail = email =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  const validPhone = phone =>
-    /^0\d{9}$/.test(phone);
-
-  const validName = name =>
-    name.length >= 2 &&
-    name.length <= 80 &&
-    /^[\p{L}\s'-]+$/u.test(name);
-
-  const money = price =>
-    Number.isFinite(Number(price))
-      ? new Intl.NumberFormat("vi-VN").format(Number(price)) + " ₫"
-      : "Chưa có";
 
   const statuses = {
     pending: "Chờ xác nhận",
@@ -56,138 +31,174 @@
     cancelled: "Đã hủy"
   };
 
+  const genders = [
+    "female", "male", "other", "undisclosed"
+  ];
+
   let bookings = [];
-  let consultations = [];
   let bookingLoaded = false;
   let consultationLoaded = false;
   let selectedBooking = null;
+  let pendingAvatar = null;
 
-  /* THÔNG BÁO */
+  const dataSource = () => window.SalonBookProfileData;
 
-  function notify(message, ok = false) {
-    const box = $("profile-alert");
+  /* CÁC HÀM CHUNG */
 
-    box.textContent = message;
-    box.classList.toggle("is-success", ok);
-    box.hidden = false;
+  function create(tag, content = "", className = "") {
+    const element = document.createElement(tag);
 
-    box.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest"
-    });
+    if (className) element.className = className;
+
+    element.textContent =
+      content == null ? "—" : String(content);
+
+    return element;
   }
 
-  function clearNotice() {
-    $("profile-alert").hidden = true;
-  }
-
-  /* TÀI KHOẢN */
-
-  function getStoredUsers() {
+  function readUsers() {
     try {
-      const users = JSON.parse(
-        localStorage.getItem(USERS) || "[]"
+      const data = JSON.parse(
+        localStorage.getItem(USERS_KEY) || "[]"
       );
-
-      return Array.isArray(users) ? users : [];
+      return Array.isArray(data) ? data : [];
     } catch {
       return [];
     }
   }
 
-  function writeAccountSession(user) {
-    const session = {
-      userId: user.userId,
-      fullName: user.fullName,
-      email: user.email,
-      phone: user.phone,
-      role: user.role
-    };
-
-    localStorage.setItem(SESSION, JSON.stringify(session));
-
-    document.dispatchEvent(
-      new Event("salonbook:auth-changed")
-    );
+  function currentAccount() {
+    return readUsers().find(user =>
+      String(user.userId) === String(signedIn.userId)
+    ) || null;
   }
 
-  function getCurrentRecord() {
-    return getStoredUsers().find(
-      user => String(user.userId) === String(current.userId)
-    ) || null;
+  function showMessage(message, success = false) {
+    const element = $("profile-alert");
+    if (!element) return;
+
+    element.textContent = message;
+    element.classList.toggle("is-success", success);
+    element.hidden = false;
+
+    element.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest"
+    });
+  }
+
+  function clearMessage() {
+    $("profile-alert").hidden = true;
+  }
+
+  function formatMoney(value) {
+    if (
+      value === null ||
+      value === undefined ||
+      value === "" ||
+      !Number.isFinite(Number(value))
+    ) {
+      return "Chưa có";
+    }
+
+    return new Intl.NumberFormat("vi-VN")
+      .format(Number(value)) + " ₫";
+  }
+
+  function getUserId(item) {
+    return item.userId ?? item.user_id;
+  }
+
+  function belongsToCurrentUser(item) {
+    return item &&
+      getUserId(item) != null &&
+      String(getUserId(item)) === String(signedIn.userId);
+  }
+
+  function userStillValid() {
+    const user = auth.currentUser();
+
+    return Boolean(
+      user &&
+      String(user.userId) === String(signedIn.userId)
+    );
   }
 
   /* ẢNH ĐẠI DIỆN */
 
-  function paintAvatar(container, data, name) {
-    container.replaceChildren();
+  function paintAvatar(element, image, name) {
+    if (!element) return;
+
+    element.replaceChildren();
 
     const validImage =
-      typeof data === "string" &&
-      /^data:image\/(?:png|jpeg|webp);base64,[a-z0-9+/=]+$/i.test(data);
+      typeof image === "string" &&
+      /^data:image\/(?:png|jpeg|webp);base64,[a-z0-9+/=]+$/i
+        .test(image);
 
     if (validImage) {
       const img = document.createElement("img");
-
-      img.src = data;
+      img.src = image;
       img.alt = "";
-
-      container.append(img);
+      element.append(img);
     } else {
-      container.textContent =
-        (name || "S").trim().charAt(0).toUpperCase();
+      element.textContent = (name || "S")
+        .trim().charAt(0).toUpperCase();
     }
   }
 
-  /* HIỂN THỊ THÔNG TIN NGƯỜI DÙNG */
+  /* HIỂN THỊ THÔNG TIN TÀI KHOẢN */
 
-  function drawUser() {
-    const user = auth.currentUser();
-
-    if (
-      !user ||
-      String(user.userId) !== String(current.userId)
-    ) {
-      location.replace("auth.html?returnTo=profile.html");
+  function displayProfile() {
+    if (!userStillValid()) {
+      window.location.replace(
+        "auth.html?returnTo=profile.html"
+      );
       return;
     }
 
-    const record = getCurrentRecord() || user;
+    const session = auth.currentUser();
+    const record = currentAccount() || session;
 
-    $("profile-display-name").textContent = user.fullName;
+    $("profile-display-name").textContent =
+      session.fullName || "Khách hàng";
+
     $("profile-display-role").textContent = "Khách hàng";
-    $("header-user-name").textContent = user.fullName;
+
+    $("header-user-name").textContent =
+      session.fullName || "Khách hàng";
+
+    $("profile-fullname").value = session.fullName || "";
+    $("profile-phone").value = session.phone || "";
+    $("profile-email").value = session.email || "";
+
+    $("profile-birthdate").value =
+      record.birthDate || "";
+
+    $("profile-gender").value =
+      genders.includes(record.gender) ? record.gender : "";
 
     paintAvatar(
       $("profile-avatar"),
       record.avatarData,
-      user.fullName
+      session.fullName
     );
 
     paintAvatar(
       $("profile-avatar-preview"),
       record.avatarData,
-      user.fullName
+      session.fullName
     );
-
-    $("profile-fullname").value = user.fullName;
-    $("profile-email").value = user.email;
-    $("profile-phone").value = user.phone || "";
-    $("profile-birthdate").value = record.birthDate || "";
-
-    $("profile-gender").value =
-      ["female", "male", "other", "undisclosed"].includes(
-        record.gender
-      ) ? record.gender : "";
   }
 
-  /* CHUYỂN MỤC SIDEBAR */
+  /* CHUYỂN TAB */
 
-  function openPanel(panel) {
-    if (!$(`panel-${panel}`)) return;
+  function openPanel(name) {
+    const panel = $(`panel-${name}`);
+    if (!panel) return;
 
     tabs.forEach(button => {
-      const active = button.dataset.panel === panel;
+      const active = button.dataset.panel === name;
 
       button.classList.toggle("is-active", active);
 
@@ -199,23 +210,22 @@
     });
 
     document.querySelectorAll(".profile-panel")
-      .forEach(element => {
-        element.hidden =
-          element.id !== `panel-${panel}`;
+      .forEach(section => {
+        section.hidden = section !== panel;
       });
 
-    clearNotice();
+    clearMessage();
 
-    if (panel === "bookings" && !bookingLoaded) {
+    if (name === "bookings" && !bookingLoaded) {
       loadBookings();
     }
 
-    if (panel === "consultations" && !consultationLoaded) {
-      loadConsultations();
+    if (name === "notifications") {
+      loadNotifications();
     }
 
-    if (panel === "notifications") {
-      loadNotifications();
+    if (name === "consultations" && !consultationLoaded) {
+      loadConsultations();
     }
   }
 
@@ -225,30 +235,27 @@
     });
   });
 
-  document.querySelectorAll("[data-go]").forEach(button => {
-    button.addEventListener("click", () => {
-      openPanel(button.dataset.go);
-    });
-  });
-
   /* ĐĂNG XUẤT */
 
   $("profile-logout").addEventListener("click", () => {
     auth.logout();
   });
 
-  /* GIỚI HẠN NGÀY SINH */
+  /* NGÀY SINH */
 
-  const today = new Date();
+  function getToday() {
+    const now = new Date();
 
-  $("profile-birthdate").max =
-    `${today.getFullYear()}-` +
-    `${String(today.getMonth() + 1).padStart(2, "0")}-` +
-    `${String(today.getDate()).padStart(2, "0")}`;
+    return [
+      now.getFullYear(),
+      String(now.getMonth() + 1).padStart(2, "0"),
+      String(now.getDate()).padStart(2, "0")
+    ].join("-");
+  }
 
-  /* UPLOAD AVATAR */
+  $("profile-birthdate").max = getToday();
 
-  let pendingAvatar = null;
+  /* CHỌN ẢNH ĐẠI DIỆN */
 
   $("profile-avatar-upload").addEventListener(
     "change",
@@ -256,20 +263,20 @@
       const file = event.target.files?.[0];
       if (!file) return;
 
-      const allowedTypes = [
+      const types = [
         "image/jpeg",
         "image/png",
         "image/webp"
       ];
 
       if (
-        !allowedTypes.includes(file.type) ||
+        !types.includes(file.type) ||
         file.size > 2 * 1024 * 1024
       ) {
-        notify(
-          "Ảnh phải là JPG, PNG hoặc WebP và không vượt quá 2 MB."
+        showMessage(
+          "Ảnh phải có định dạng JPG, PNG hoặc WebP " +
+          "và không vượt quá 2 MB."
         );
-
         event.target.value = "";
         return;
       }
@@ -277,156 +284,227 @@
       const reader = new FileReader();
 
       reader.onload = () => {
-        if (typeof reader.result === "string") {
-          pendingAvatar = reader.result;
+        if (typeof reader.result !== "string") return;
 
-          paintAvatar(
-            $("profile-avatar-preview"),
-            pendingAvatar,
-            $("profile-fullname").value
-          );
-        }
+        pendingAvatar = reader.result;
+
+        paintAvatar(
+          $("profile-avatar-preview"),
+          pendingAvatar,
+          $("profile-fullname").value
+        );
       };
 
       reader.onerror = () => {
-        notify("Không thể đọc ảnh đã chọn.");
+        showMessage("Không thể đọc ảnh được chọn.");
       };
 
       reader.readAsDataURL(file);
     }
   );
 
-  /* CẬP NHẬT HỒ SƠ */
+  /* VALIDATION THÔNG TIN */
+
+  function validName(value) {
+    return (
+      value.length >= 2 &&
+      value.length <= 80 &&
+      /^[\p{L}\s'-]+$/u.test(value)
+    );
+  }
+
+  function validPhone(value) {
+    return /^0\d{9}$/.test(value);
+  }
+
+  function validEmail(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  }
+
+  function validBirthDate(value) {
+    if (!value) return true;
+
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      return false;
+    }
+
+    const date = new Date(`${value}T00:00:00`);
+
+    if (Number.isNaN(date.getTime())) {
+      return false;
+    }
+
+    const normalized = [
+      date.getFullYear(),
+      String(date.getMonth() + 1).padStart(2, "0"),
+      String(date.getDate()).padStart(2, "0")
+    ].join("-");
+
+    return normalized === value && value <= getToday();
+  }
+
+  /* LƯU HỒ SƠ */
 
   $("profile-form").addEventListener("submit", event => {
     event.preventDefault();
 
-    const fullName = $("profile-fullname")
-      .value.trim().replace(/\s+/g, " ");
+    if (!userStillValid()) {
+      showMessage("Phiên đăng nhập đã thay đổi.");
+      return;
+    }
 
-    const email = $("profile-email")
-      .value.trim().toLowerCase();
+    const fullName = $("profile-fullname").value
+      .trim().replace(/\s+/g, " ");
 
     const phone = $("profile-phone").value.trim();
+
+    const email = $("profile-email").value
+      .trim().toLowerCase();
+
     const birthDate = $("profile-birthdate").value;
     const gender = $("profile-gender").value;
 
-    if (
-      birthDate &&
-      (
-        !/^\d{4}-\d{2}-\d{2}$/.test(birthDate) ||
-        birthDate > $("profile-birthdate").max
-      )
-    ) {
-      return notify(
-        "Ngày sinh không hợp lệ hoặc nằm trong tương lai."
-      );
-    }
-
-    if (
-      gender &&
-      !["female", "male", "other", "undisclosed"].includes(gender)
-    ) {
-      return notify("Giới tính không hợp lệ.");
-    }
-
     if (!validName(fullName)) {
-      return notify(
-        "Họ tên phải có 2–80 ký tự, chỉ gồm chữ, " +
-        "khoảng trắng, dấu nháy hoặc gạch nối."
+      showMessage(
+        "Họ tên phải gồm 2–80 ký tự và không chứa số " +
+        "hoặc ký tự đặc biệt không hợp lệ."
       );
-    }
-
-    if (!validEmail(email)) {
-      return notify("Vui lòng nhập email hợp lệ.");
+      return;
     }
 
     if (!validPhone(phone)) {
-      return notify(
-        "Số điện thoại Việt Nam phải có 10 chữ số và bắt đầu bằng 0."
+      showMessage(
+        "Số điện thoại phải có 10 chữ số, bắt đầu bằng số 0."
       );
+      return;
     }
 
-    const users = getStoredUsers();
+    if (!validEmail(email)) {
+      showMessage("Email không hợp lệ.");
+      return;
+    }
 
-    const index = users.findIndex(
-      user => String(user.userId) === String(current.userId)
+    if (!validBirthDate(birthDate)) {
+      showMessage(
+        "Ngày sinh không hợp lệ hoặc nằm trong tương lai."
+      );
+      return;
+    }
+
+    if (gender && !genders.includes(gender)) {
+      showMessage("Giới tính không hợp lệ.");
+      return;
+    }
+
+    const users = readUsers();
+
+    const index = users.findIndex(user =>
+      String(user.userId) === String(signedIn.userId)
     );
 
     if (index < 0) {
-      return notify(
+      showMessage(
         "Không tìm thấy tài khoản trong dữ liệu demo. " +
         "Vui lòng đăng nhập lại."
       );
+      return;
     }
 
-    if (
-      users.some((user, i) =>
-        i !== index && user.email === email
-      )
-    ) {
-      return notify(
-        "Email này đã được tài khoản khác sử dụng."
+    const emailUsed = users.some((user, i) =>
+      i !== index &&
+      String(user.email || "").toLowerCase() === email
+    );
+
+    if (emailUsed) {
+      showMessage(
+        "Email này đã được một tài khoản khác sử dụng."
       );
+      return;
     }
 
-    if (
-      users.some((user, i) =>
-        i !== index && user.phone === phone
-      )
-    ) {
-      return notify(
-        "Số điện thoại này đã được tài khoản khác sử dụng."
+    const phoneUsed = users.some((user, i) =>
+      i !== index && user.phone === phone
+    );
+
+    if (phoneUsed) {
+      showMessage(
+        "Số điện thoại này đã được một tài khoản khác sử dụng."
       );
+      return;
     }
 
-    users[index] = {
+    const updated = {
       ...users[index],
       fullName,
-      email,
       phone,
+      email,
       birthDate,
-      gender,
-      ...(pendingAvatar
-        ? { avatarData: pendingAvatar }
-        : {})
+      gender
+    };
+
+    if (pendingAvatar) {
+      updated.avatarData = pendingAvatar;
+    }
+
+    const session = {
+      userId: updated.userId,
+      fullName: updated.fullName,
+      phone: updated.phone,
+      email: updated.email,
+      role: updated.role
     };
 
     try {
+      // Lưu dữ liệu account demo và phiên đăng nhập.
       localStorage.setItem(
-        USERS,
-        JSON.stringify(users)
+        USERS_KEY,
+        JSON.stringify([
+          ...users.slice(0, index),
+          updated,
+          ...users.slice(index + 1)
+        ])
       );
 
-      writeAccountSession(users[index]);
+      localStorage.setItem(
+        AUTH_KEY,
+        JSON.stringify(session)
+      );
 
       pendingAvatar = null;
-      drawUser();
 
-      notify(
+      // Báo cho Header cập nhật tên tài khoản.
+      document.dispatchEvent(
+        new Event("salonbook:auth-changed")
+      );
+
+      displayProfile();
+
+      showMessage(
         "Đã cập nhật hồ sơ trong bản demo trên trình duyệt này.",
         true
       );
-    } catch {
-      notify(
-        "Không thể lưu hồ sơ trên trình duyệt."
+    } catch (error) {
+      console.warn(error);
+      showMessage(
+        "Không thể lưu hồ sơ. Hãy thử dùng ảnh nhỏ hơn " +
+        "hoặc kiểm tra dung lượng lưu trữ của trình duyệt."
       );
     }
   });
 
-  /* ĐỔI MẬT KHẨU */
+  /* MẬT KHẨU DEMO */
 
-  async function sha256(password, salt) {
-    const bytes = new TextEncoder()
+  async function hashPassword(password, salt) {
+    const input = new TextEncoder()
       .encode(`${salt}:${password}`);
 
-    const digest = await crypto.subtle.digest(
+    const result = await crypto.subtle.digest(
       "SHA-256",
-      bytes
+      input
     );
 
     return Array.from(
-      new Uint8Array(digest),
+      new Uint8Array(result),
       byte => byte.toString(16).padStart(2, "0")
     ).join("");
   }
@@ -436,73 +514,80 @@
     async event => {
       event.preventDefault();
 
-      const form = event.currentTarget;
-      const fields = Object.fromEntries(
-        new FormData(form)
-      );
-
-      if (
-        !fields.currentPassword ||
-        !fields.newPassword ||
-        !fields.confirmPassword
-      ) {
-        return notify(
-          "Vui lòng nhập đủ ba trường mật khẩu."
-        );
+      if (!userStillValid()) {
+        showMessage("Phiên đăng nhập đã thay đổi.");
+        return;
       }
 
-      if (fields.newPassword.length < 8) {
-        return notify(
+      const form = event.currentTarget;
+      const values = Object.fromEntries(new FormData(form));
+
+      const oldPassword = values.currentPassword;
+      const newPassword = values.newPassword;
+      const confirmPassword = values.confirmPassword;
+
+      if (
+        !oldPassword ||
+        !newPassword ||
+        !confirmPassword
+      ) {
+        showMessage("Vui lòng nhập đủ ba trường mật khẩu.");
+        return;
+      }
+
+      if (newPassword.length < 8) {
+        showMessage(
           "Mật khẩu mới phải có ít nhất 8 ký tự."
         );
+        return;
       }
 
-      if (
-        fields.newPassword !== fields.confirmPassword
-      ) {
-        return notify(
+      if (newPassword !== confirmPassword) {
+        showMessage(
           "Mật khẩu xác nhận không khớp."
         );
+        return;
       }
 
-      if (
-        fields.currentPassword === fields.newPassword
-      ) {
-        return notify(
+      if (newPassword === oldPassword) {
+        showMessage(
           "Mật khẩu mới phải khác mật khẩu hiện tại."
         );
+        return;
       }
 
-      const users = getStoredUsers();
+      const users = readUsers();
 
-      const index = users.findIndex(
-        user =>
-          String(user.userId) === String(current.userId)
+      const index = users.findIndex(user =>
+        String(user.userId) === String(signedIn.userId)
       );
+
+      if (index < 0) {
+        showMessage("Không tìm thấy tài khoản.");
+        return;
+      }
 
       const user = users[index];
 
-      if (!user?.salt || !user?.passwordHash) {
-        return notify(
-          "Không tìm thấy thông tin mật khẩu demo."
+      if (!user.salt || !user.passwordHash) {
+        showMessage(
+          "Không có thông tin mật khẩu demo của tài khoản."
         );
+        return;
       }
 
       try {
-        const oldHash = await sha256(
-          fields.currentPassword,
-          user.salt
+        const oldHash = await hashPassword(
+          oldPassword, user.salt
         );
 
         if (oldHash !== user.passwordHash) {
-          return notify(
-            "Mật khẩu hiện tại không đúng."
-          );
+          showMessage("Mật khẩu hiện tại không chính xác.");
+          return;
         }
 
-        const newHash = await sha256(
-          fields.newPassword,
-          user.salt
+        const newHash = await hashPassword(
+          newPassword, user.salt
         );
 
         users[index] = {
@@ -511,128 +596,359 @@
         };
 
         localStorage.setItem(
-          USERS,
+          USERS_KEY,
           JSON.stringify(users)
         );
 
         form.reset();
 
-        notify(
-          "Đã đổi mật khẩu demo thành công.",
+        showMessage(
+          "Đã thay đổi mật khẩu demo thành công.",
           true
         );
-      } catch {
-        notify(
-          "Không thể cập nhật mật khẩu. " +
-          "Hãy mở website qua localhost/HTTPS."
+      } catch (error) {
+        console.warn(error);
+        showMessage(
+          "Không thể đổi mật khẩu. Hãy chạy website " +
+          "bằng localhost hoặc HTTPS."
         );
       }
     }
   );
 
-  /* NGUỒN DỮ LIỆU BOOKING */
+  /* HIỂN THỊ DỊCH VỤ */
 
-  const dataSource = () => window.SalonBookProfileData;
+  function serviceText(booking) {
+    const services =
+      booking.services ?? booking.bookingServices;
+
+    if (!Array.isArray(services)) {
+      return booking.serviceName || "Chưa có";
+    }
+
+    const names = services.map(service => {
+      if (typeof service === "string") return service;
+
+      return (
+        service.name ??
+        service.serviceName ??
+        service.service?.name ??
+        "Dịch vụ"
+      );
+    });
+
+    return names.join(", ") || "Chưa có";
+  }
+
+  /* LOAD BOOKING */
 
   async function loadBookings() {
-    const node = $("bookings-message");
+    const box = $("bookings-message");
+    const provider = dataSource();
 
-    if (
-      typeof dataSource()?.getBookings !== "function"
-    ) {
-      node.hidden = false;
-
-      node.textContent =
+    if (typeof provider?.getBookings !== "function") {
+      box.hidden = false;
+      box.textContent =
         "Chưa kết nối nguồn Booking chính thức. " +
-        "Lịch dự kiến trong giỏ hàng sẽ không hiển thị tại đây.";
-
+        "Các dịch vụ đang nằm trong Cart không được tính là lịch hẹn.";
       return;
     }
 
-    node.hidden = false;
-    node.textContent = "Đang tải lịch hẹn…";
+    box.hidden = false;
+    box.textContent = "Đang tải lịch hẹn…";
 
     try {
-      const result =
-        await dataSource().getBookings();
+      const data = await provider.getBookings();
 
-      if (!Array.isArray(result)) {
-        throw new Error(
-          "Booking response is not an array"
-        );
+      if (!Array.isArray(data)) {
+        throw new Error("Booking data không hợp lệ.");
       }
 
-      bookings = result.filter(item =>
-        item &&
-        String(item.userId ?? item.user_id) ===
-          String(current.userId)
-      );
-
+      bookings = data.filter(belongsToCurrentUser);
       bookingLoaded = true;
+
       renderBookings();
     } catch (error) {
-      console.warn(
-        "Profile: Booking unavailable",
-        error
-      );
-
-      node.textContent =
-        "Không thể tải dữ liệu Booking. " +
-        "Vui lòng thử lại khi hệ thống hoạt động.";
+      console.warn(error);
+      box.textContent =
+        "Không thể tải lịch hẹn từ hệ thống Booking.";
     }
   }
 
+  /* HIỂN THỊ BOOKING */
+
+  function renderBookings() {
+    const list = $("booking-list");
+    const box = $("bookings-message");
+
+    list.replaceChildren();
+
+    const status = $("booking-status").value;
+
+    const filtered = bookings.filter(booking =>
+      status === "all" || booking.status === status
+    );
+
+    box.hidden = filtered.length > 0;
+
+    if (!filtered.length) {
+      box.textContent = bookings.length
+        ? "Không có lịch hẹn thuộc trạng thái này."
+        : "Bạn chưa có lịch hẹn trong hệ thống Booking.";
+    }
+
+    filtered.forEach(booking => {
+      const card = create("article", "", "booking-card");
+      const top = create("div", "", "booking-top");
+
+      const salonName =
+        booking.salonName ??
+        booking.salon?.name ??
+        "Salon chưa cập nhật";
+
+      top.append(
+        create("h3", salonName),
+        create(
+          "span",
+          statuses[booking.status] || "Không rõ trạng thái",
+          `booking-status ${booking.status || ""}`
+        )
+      );
+
+      const meta = create("div", "", "booking-meta");
+
+      const rows = [
+        `Dịch vụ: ${serviceText(booking)}`,
+        `Chuyên viên: ${
+          booking.stylistName ??
+          booking.stylist?.name ??
+          "Chưa chọn"
+        }`,
+        `Ngày: ${
+          booking.date ??
+          booking.bookingDate ??
+          booking.booking_date ??
+          "—"
+        }`,
+        `Giờ: ${
+          booking.time ??
+          booking.startTime ??
+          booking.start_time ??
+          "—"
+        }`,
+        `Giá dự kiến: ${
+          formatMoney(
+            booking.totalPrice ?? booking.total_price
+          )
+        }`
+      ];
+
+      rows.forEach(row => {
+        meta.append(create("span", row));
+      });
+
+      const detailButton = create(
+        "button",
+        "Xem chi tiết",
+        "profile-secondary"
+      );
+
+      detailButton.type = "button";
+      detailButton.addEventListener("click", () => {
+        openBooking(booking);
+      });
+
+      card.append(top, meta, detailButton);
+      list.append(card);
+    });
+  }
+
+  $("booking-status").addEventListener(
+    "change",
+    renderBookings
+  );
+
+  /* CHI TIẾT BOOKING */
+
+  function openBooking(booking) {
+    selectedBooking = booking;
+
+    const content = $("booking-dialog-body");
+    content.replaceChildren();
+
+    const rows = [
+      ["Mã lịch", booking.id],
+      [
+        "Salon",
+        booking.salonName ?? booking.salon?.name
+      ],
+      ["Dịch vụ", serviceText(booking)],
+      [
+        "Chuyên viên",
+        booking.stylistName ??
+        booking.stylist?.name ??
+        "Chưa chọn"
+      ],
+      [
+        "Ngày",
+        booking.date ??
+        booking.bookingDate ??
+        booking.booking_date
+      ],
+      [
+        "Giờ",
+        booking.time ??
+        booking.startTime ??
+        booking.start_time
+      ],
+      [
+        "Tổng giá dự kiến",
+        formatMoney(
+          booking.totalPrice ?? booking.total_price
+        )
+      ],
+      [
+        "Trạng thái",
+        statuses[booking.status] ?? "Không rõ"
+      ]
+    ];
+
+    const dl = document.createElement("dl");
+
+    rows.forEach(([title, value]) => {
+      const row = document.createElement("div");
+
+      row.append(
+        create("dt", title),
+        create("dd", value)
+      );
+
+      dl.append(row);
+    });
+
+    content.append(dl);
+
+    // Booking đã hoàn tất/đã hủy không được hủy.
+    // Chỉ bật nút khi chính nguồn Booking cho phép.
+    const canCancel =
+      ["pending", "confirmed"].includes(booking.status) &&
+      booking.canCancel === true &&
+      typeof dataSource()?.cancelBooking === "function";
+
+    $("dialog-cancel-booking").hidden = !canCancel;
+    $("dialog-message").textContent = "";
+
+    $("booking-dialog").showModal();
+  }
+
+  function closeBooking() {
+    $("booking-dialog").close();
+    selectedBooking = null;
+  }
+
+  $("dialog-close").addEventListener(
+    "click",
+    closeBooking
+  );
+
+  $("dialog-dismiss").addEventListener(
+    "click",
+    closeBooking
+  );
+
+  $("booking-dialog").addEventListener("click", event => {
+    if (event.target === $("booking-dialog")) {
+      closeBooking();
+    }
+  });
+
+  /* HỦY LỊCH */
+
+  $("dialog-cancel-booking").addEventListener(
+    "click",
+    async () => {
+      const booking = selectedBooking;
+
+      if (
+        !booking ||
+        !belongsToCurrentUser(booking) ||
+        !["pending", "confirmed"].includes(booking.status) ||
+        booking.canCancel !== true ||
+        typeof dataSource()?.cancelBooking !== "function"
+      ) {
+        return;
+      }
+
+      const agreed = confirm(
+        "Bạn có chắc chắn muốn yêu cầu hủy lịch này?"
+      );
+
+      if (!agreed) return;
+
+      const button = $("dialog-cancel-booking");
+      button.disabled = true;
+
+      try {
+        await dataSource().cancelBooking(booking.id);
+
+        closeBooking();
+        bookingLoaded = false;
+        await loadBookings();
+
+        showMessage(
+          "Đã gửi yêu cầu hủy lịch. " +
+          "Trạng thái mới được cập nhật từ Booking.",
+          true
+        );
+      } catch (error) {
+        console.warn(error);
+
+        $("dialog-message").textContent =
+          "Không thể hủy lịch. Vui lòng kiểm tra " +
+          "điều kiện hủy hoặc thử lại.";
+      } finally {
+        button.disabled = false;
+      }
+    }
+  );
+
   /* THÔNG BÁO */
 
-  function loadNotifications() {
+  async function loadNotifications() {
     const box = $("notifications-message");
+    const list = $("notifications-list");
     const provider = dataSource();
 
-    if (
-      typeof provider?.getNotifications !== "function"
-    ) {
+    list.replaceChildren();
+
+    if (typeof provider?.getNotifications !== "function") {
+      box.hidden = false;
       box.textContent =
         "Chưa kết nối nguồn thông báo của tài khoản.";
-
-      box.hidden = false;
       return;
     }
 
-    box.textContent = "Đang tải thông báo…";
     box.hidden = false;
+    box.textContent = "Đang tải thông báo…";
 
-    Promise.resolve(
-      provider.getNotifications()
-    ).then(data => {
+    try {
+      const data = await provider.getNotifications();
+
       if (!Array.isArray(data)) {
-        throw new Error(
-          "Invalid notifications"
-        );
+        throw new Error("Dữ liệu thông báo không hợp lệ.");
       }
 
-      const mine = data.filter(item =>
-        item &&
-        String(item.userId ?? item.user_id) ===
-          String(current.userId)
-      );
-
-      const list = $("notifications-list");
-      list.replaceChildren();
+      const mine = data.filter(belongsToCurrentUser);
 
       mine.forEach(item => {
-        const card = make(
-          "article",
-          "",
-          "consultation-card"
+        const card = create(
+          "article", "", "consultation-card"
         );
 
         card.append(
-          make("h3", item.title || "Thông báo"),
-          make(
-            "p",
-            item.message || item.content || ""
-          ),
-          make(
+          create("h3", item.title || "Thông báo"),
+          create("p", item.message || item.content || ""),
+          create(
             "small",
             item.createdAt || item.created_at || ""
           )
@@ -644,448 +960,93 @@
       box.hidden = mine.length > 0;
 
       if (!mine.length) {
-        box.textContent =
-          "Bạn chưa có thông báo nào.";
+        box.textContent = "Bạn chưa có thông báo.";
       }
-    }).catch(() => {
-      box.hidden = false;
-      box.textContent =
-        "Không thể tải thông báo.";
-    });
-  }
-
-  /* HÀM TẠO ELEMENT AN TOÀN */
-
-  function make(tag, text, cls) {
-    const element = document.createElement(tag);
-
-    if (cls) {
-      element.className = cls;
+    } catch (error) {
+      console.warn(error);
+      box.textContent = "Không thể tải thông báo.";
     }
-
-    element.textContent =
-      text == null ? "—" : String(text);
-
-    return element;
   }
-
-  function serviceText(item) {
-    const services =
-      item.services ?? item.bookingServices;
-
-    if (Array.isArray(services)) {
-      return services.map(service =>
-        typeof service === "string"
-          ? service
-          : (
-              service.name ??
-              service.serviceName ??
-              service.service?.name ??
-              "Dịch vụ"
-            )
-      ).join(", ") || "Chưa có";
-    }
-
-    return item.serviceName || "Chưa có";
-  }
-
-  /* DANH SÁCH BOOKING */
-
-  function renderBookings() {
-    const list = $("booking-list");
-    list.replaceChildren();
-
-    const filter =
-      $("booking-status").value;
-
-    const filtered = bookings.filter(item =>
-      filter === "all" ||
-      item.status === filter
-    );
-
-    $("bookings-message").hidden =
-      filtered.length > 0;
-
-    if (!filtered.length) {
-      $("bookings-message").textContent =
-        bookings.length
-          ? "Không có lịch hẹn thuộc trạng thái này."
-          : "Bạn chưa có lịch hẹn nào trong hệ thống Booking.";
-    }
-
-    filtered.forEach(item => {
-      const card = make(
-        "article",
-        "",
-        "booking-card"
-      );
-
-      const top = make(
-        "div",
-        "",
-        "booking-top"
-      );
-
-      top.append(
-        make(
-          "h3",
-          item.salonName ??
-          item.salon?.name ??
-          "Salon chưa cập nhật"
-        )
-      );
-
-      top.append(
-        make(
-          "span",
-          statuses[item.status] ||
-            "Không rõ trạng thái",
-          `booking-status ${item.status || ""}`
-        )
-      );
-
-      const meta = make(
-        "div",
-        "",
-        "booking-meta"
-      );
-
-      const values = [
-        `Dịch vụ: ${serviceText(item)}`,
-        `Chuyên viên: ${
-          item.stylistName ??
-          item.stylist?.name ??
-          "Chưa chọn"
-        }`,
-        `Ngày: ${
-          item.date ??
-          item.bookingDate ??
-          item.booking_date ??
-          "—"
-        }`,
-        `Giờ: ${
-          item.time ??
-          item.startTime ??
-          item.start_time ??
-          "—"
-        }`,
-        `Giá dự kiến: ${
-          money(
-            item.totalPrice ??
-            item.total_price
-          )
-        }`
-      ];
-
-      values.forEach(value => {
-        meta.append(
-          make("span", value)
-        );
-      });
-
-      const button = make(
-        "button",
-        "Xem chi tiết",
-        "profile-secondary"
-      );
-
-      button.type = "button";
-
-      button.addEventListener(
-        "click",
-        () => openBooking(item)
-      );
-
-      card.append(top, meta, button);
-      list.append(card);
-    });
-  }
-
-  $("booking-status").addEventListener(
-    "change",
-    renderBookings
-  );
-
-  /* CHI TIẾT LỊCH HẸN */
-
-  function openBooking(item) {
-    selectedBooking = item;
-
-    const body = $("booking-dialog-body");
-    body.replaceChildren();
-
-    const dl = document.createElement("dl");
-
-    const rows = [
-      ["Mã lịch", item.id],
-      [
-        "Salon",
-        item.salonName ?? item.salon?.name
-      ],
-      [
-        "Dịch vụ",
-        serviceText(item)
-      ],
-      [
-        "Chuyên viên",
-        item.stylistName ??
-        item.stylist?.name ??
-        "Chưa chọn"
-      ],
-      [
-        "Ngày",
-        item.date ??
-        item.bookingDate ??
-        item.booking_date
-      ],
-      [
-        "Giờ",
-        item.time ??
-        item.startTime ??
-        item.start_time
-      ],
-      [
-        "Tổng giá dự kiến",
-        money(
-          item.totalPrice ??
-          item.total_price
-        )
-      ],
-      [
-        "Trạng thái",
-        statuses[item.status] ?? "Không rõ"
-      ]
-    ];
-
-    rows.forEach(([name, value]) => {
-      const row = document.createElement("div");
-
-      row.append(
-        make("dt", name),
-        make("dd", value)
-      );
-
-      dl.append(row);
-    });
-
-    body.append(dl);
-
-    // Chỉ cho phép hủy khi nguồn Booking
-    // xác nhận lịch này đủ điều kiện hủy.
-
-    $("dialog-cancel-booking").hidden = !(
-      ["pending", "confirmed"].includes(item.status) &&
-      item.canCancel === true &&
-      typeof dataSource()?.cancelBooking === "function"
-    );
-
-    $("dialog-message").textContent = "";
-
-    $("booking-dialog").showModal();
-  }
-
-  function closeDialog() {
-    $("booking-dialog").close();
-  }
-
-  $("dialog-close").addEventListener(
-    "click",
-    closeDialog
-  );
-
-  $("dialog-dismiss").addEventListener(
-    "click",
-    closeDialog
-  );
-
-  $("booking-dialog").addEventListener(
-    "click",
-    event => {
-      if (
-        event.target === $("booking-dialog")
-      ) {
-        closeDialog();
-      }
-    }
-  );
-
-  /* HỦY LỊCH */
-
-  $("dialog-cancel-booking").addEventListener(
-    "click",
-    async () => {
-      const booking = selectedBooking;
-
-      if (
-        !booking ||
-        !["pending", "confirmed"].includes(booking.status) ||
-        booking.canCancel !== true ||
-        typeof dataSource()?.cancelBooking !== "function"
-      ) {
-        return;
-      }
-
-      if (
-        !confirm(
-          "Bạn chắc chắn muốn gửi yêu cầu hủy lịch này?"
-        )
-      ) {
-        return;
-      }
-
-      const button =
-        $("dialog-cancel-booking");
-
-      button.disabled = true;
-
-      try {
-        await dataSource().cancelBooking(
-          booking.id
-        );
-
-        closeDialog();
-
-        bookingLoaded = false;
-
-        await loadBookings();
-
-        notify(
-          "Yêu cầu hủy lịch đã được gửi. " +
-          "Trạng thái mới được lấy từ hệ thống Booking.",
-          true
-        );
-      } catch (error) {
-        console.warn(error);
-
-        $("dialog-message").textContent =
-          "Không thể hủy lịch. " +
-          "Vui lòng kiểm tra điều kiện hủy và thử lại.";
-      } finally {
-        button.disabled = false;
-      }
-    }
-  );
 
   /* LỊCH SỬ TƯ VẤN */
 
   async function loadConsultations() {
-    const box =
-      $("consultations-message");
+    const box = $("consultations-message");
+    const list = $("consultations-list");
+    const provider = dataSource();
 
-    if (
-      typeof dataSource()?.getConsultations !== "function"
-    ) {
+    list.replaceChildren();
+
+    if (typeof provider?.getConsultations !== "function") {
       box.hidden = false;
-
       box.textContent =
-        "Chưa kết nối lịch sử tư vấn của tài khoản. " +
-        "Không có dữ liệu mẫu được tự tạo.";
-
+        "Chưa kết nối nguồn lịch sử tư vấn. " +
+        "Không sử dụng dữ liệu giả.";
       return;
     }
 
     box.hidden = false;
-    box.textContent =
-      "Đang tải lịch sử tư vấn…";
+    box.textContent = "Đang tải lịch sử tư vấn…";
 
     try {
-      const result =
-        await dataSource().getConsultations();
+      const data = await provider.getConsultations();
 
-      if (!Array.isArray(result)) {
-        throw new Error(
-          "Invalid consultation response"
-        );
+      if (!Array.isArray(data)) {
+        throw new Error("Lịch sử tư vấn không hợp lệ.");
       }
 
-      consultations = result.filter(item =>
-        item &&
-        String(item.userId ?? item.user_id) ===
-          String(current.userId)
-      );
-
+      const mine = data.filter(belongsToCurrentUser);
       consultationLoaded = true;
 
-      const list =
-        $("consultations-list");
-
-      list.replaceChildren();
-
-      box.hidden =
-        consultations.length > 0;
-
-      if (!consultations.length) {
-        box.textContent =
-          "Bạn chưa có lịch sử tư vấn nào.";
-      }
-
-      consultations.forEach(item => {
-        const card = make(
-          "article",
-          "",
-          "consultation-card"
+      mine.forEach(item => {
+        const card = create(
+          "article", "", "consultation-card"
         );
 
         card.append(
-          make(
-            "h3",
-            item.title ?? "Lần tư vấn"
-          )
-        );
-
-        card.append(
-          make(
+          create("h3", item.title || "Lần tư vấn"),
+          create(
             "p",
-            item.summary ??
-            "Chưa có tóm tắt tư vấn"
-          )
-        );
-
-        card.append(
-          make(
+            item.summary || "Chưa có tóm tắt tư vấn"
+          ),
+          create(
             "small",
-            item.createdAt ??
-            item.created_at ??
-            ""
+            item.createdAt || item.created_at || ""
           )
         );
 
         list.append(card);
       });
+
+      box.hidden = mine.length > 0;
+
+      if (!mine.length) {
+        box.textContent = "Bạn chưa có lịch sử tư vấn.";
+      }
     } catch (error) {
       console.warn(error);
-
-      box.textContent =
-        "Không thể tải lịch sử tư vấn.";
+      box.textContent = "Không thể tải lịch sử tư vấn.";
     }
   }
 
-  /* KIỂM TRA THAY ĐỔI PHIÊN ĐĂNG NHẬP */
+  /* THEO DÕI PHIÊN ĐĂNG NHẬP */
 
-  window.addEventListener(
-    "storage",
-    event => {
-      if (event.key === SESSION) {
-        const user =
-          auth.currentUser();
+  window.addEventListener("storage", event => {
+    if (event.key !== AUTH_KEY) return;
 
-        if (
-          !user ||
-          String(user.userId) !==
-            String(current.userId)
-        ) {
-          location.replace(
-            "auth.html?returnTo=profile.html"
-          );
-        } else {
-          drawUser();
-        }
-      }
+    if (!userStillValid()) {
+      window.location.replace(
+        "auth.html?returnTo=profile.html"
+      );
+      return;
     }
-  );
+
+    displayProfile();
+  });
 
   /* KHỞI TẠO */
 
-  drawUser();
+  displayProfile();
+  openPanel("personal");
   root.hidden = false;
 })();
