@@ -961,3 +961,16 @@ img, video {
 .header-search-box input::placeholder {
   color: #9ca3af;
 }
+.booking-filter-wrap {
+  width: 100%;
+  max-width: 1120px; /* Chỉnh bằng đúng max-width của .booking-bar nếu cần */
+  margin: 0 auto;
+}
+
+.filter-chips-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 16px;
+}
