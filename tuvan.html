@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0C513F">
+  <title>AI tư vấn kiểu tóc | SalonBook</title>
+
+  <!-- CSS dùng chung của dự án -->
+  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="css/homepage-v4.css">
+  <link rel="stylesheet" href="css/responsive-ux.css">
+  <link rel="stylesheet" href="css/cart.css">
+  <!-- CSS riêng trang Tư vấn -->
+  <link rel="stylesheet" href="css/tuvan.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+
+  <!-- HEADER DÙNG CHUNG -->
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
+        <img src="images/salonbook-mark.png" alt="" width="46" height="54">
+        <span>SALON<span class="brand-thin">BOOK</span></span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
+
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html">Đặt lịch</a>
+        <a href="blog.html">Blog</a>
+        <a href="tuvan.html" class="active" aria-current="page">Tư vấn</a>
+        <a href="about.html">Giới thiệu</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="header-search-box">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" placeholder="Tìm kiếm salon,..." id="header-quick-search">
+        </div>
+
+        <div id="auth-action-container">
+          <a class="btn btn-yellow btn-top" href="auth.html">Đăng ký / Đăng nhập</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- NỘI DUNG CHÍNH -->
+  <main id="main-content" class="tuvan-page">
+    <div class="container">
+      <!-- TIÊU ĐỀ HERO -->
+      <section class="tuvan-hero">
+        <span class="hero-eyebrow">KHÁM PHÁ PHONG CÁCH CỦA BẠN</span>
+        <h1>AI tư vấn kiểu tóc</h1>
+        <p>Tải ảnh chân dung và khám phá kiểu tóc phù hợp với bạn</p>
+      </section>
+
+      <!-- BỐ CỤC 2 CỘT THEO FIGMA -->
+      <div class="tuvan-grid">
+        <!-- CỘT 1: 01. ẢNH CỦA BẠN -->
+        <section class="tuvan-card card-left" aria-labelledby="title-step-1">
+          <div class="card-top-row">
+            <h2 id="title-step-1" class="step-heading">01. Ảnh của bạn</h2>
+            <span class="photo-badge" id="photo-status-badge" hidden>Đã chọn ảnh</span>
+          </div>
+
+          <!-- Input ẩn chọn file JPG/PNG & Camera -->
+          <input type="file" id="photo-file-input" accept="image/jpeg,image/png" hidden>
+          <input type="file" id="photo-camera-input" accept="image/jpeg,image/png" capture="user" hidden>
+
+          <!-- Trạng thái 1: Vùng tải ảnh mặc định theo Figma -->
+          <div class="upload-area" id="upload-area">
+            <div class="face-scan-icon" aria-hidden="true">
+              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
+                <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
+                <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
+                <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                <line x1="9" y1="9" x2="9.01" y2="9"/>
+                <line x1="15" y1="9" x2="15.01" y2="9"/>
+              </svg>
+            </div>
+
+            <h3 class="upload-title">Tải ảnh chân dung của bạn</h3>
+            <p class="upload-hint">Sử dụng ảnh chính diện, rõ nét và đủ sáng</p>
+
+            <button type="button" class="btn btn-forest btn-choose-img" id="btn-choose-file">
+              Chọn ảnh
+            </button>
+
+            <button type="button" class="btn-camera-link" id="btn-open-camera">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+              </svg>
+              <span>Sử dụng camera</span>
+            </button>
+
+            <span class="upload-format">Hỗ trợ định dạng JPG, PNG (Tối đa 5MB)</span>
+          </div>
+
+          <!-- Trạng thái 2: Đang mở Camera trực tiếp -->
+          <div class="camera-area" id="camera-area" hidden>
+            <video id="camera-video" autoplay playsinline></video>
+            <canvas id="camera-canvas" hidden></canvas>
+            <div class="media-btn-row">
+              <button type="button" class="btn btn-forest" id="btn-capture-photo">Chụp ảnh</button>
+              <button type="button" class="btn btn-outline-forest" id="btn-cancel-camera">Hủy</button>
+            </div>
+          </div>
+
+          <!-- Trạng thái 3: Xem trước ảnh bằng FileReader -->
+          <div class="preview-area" id="preview-area" hidden>
+            <div class="preview-info">
+              <span id="preview-file-name">anh-chan-dung.png</span>
+              <span id="preview-file-size">1.2 MB</span>
+            </div>
+            <div class="preview-img-box">
+              <img id="preview-image" src="" alt="Ảnh chân dung đã tải lên">
+            </div>
+            <div class="media-btn-row">
+              <button type="button" class="btn btn-outline-forest" id="btn-change-photo">Đổi ảnh</button>
+              <button type="button" class="btn btn-danger-outline" id="btn-remove-photo">Xóa ảnh</button>
+            </div>
+          </div>
+
+          <!-- Thông báo lỗi định dạng / dung lượng -->
+          <p class="upload-error" id="upload-error" role="alert" hidden></p>
+
+          <!-- Checkbox đồng ý xử lý ảnh -->
+          <label class="consent-row" for="consent-checkbox">
+            <input type="checkbox" id="consent-checkbox">
+            <span>Tôi đồng ý cho phép xử lý ảnh để tư vấn kiểu tóc</span>
+          </label>
+        </section>
+
+        <!-- CỘT 2: 02. KHÁM PHÁ KIỂU TÓC -->
+        <section class="tuvan-card card-right" aria-labelledby="title-step-2">
+          <div class="card-top-row">
+            <h2 id="title-step-2" class="step-heading">
+              <span class="sparkle-icon" aria-hidden="true">✨</span> 02. Khám phá kiểu tóc
+            </h2>
+            <span class="selected-style-pill" id="selected-style-label">Chưa chọn kiểu</span>
+          </div>
+
+          <div class="ai-intro-box">
+            <h3>AI tư vấn dành riêng cho bạn</h3>
+            <p>AI sẽ phân tích ảnh chân dung và gợi ý những kiểu tóc có thể phù hợp với đặc điểm khuôn mặt và phong cách của bạn.</p>
+            <span class="ai-intro-highlight">✦ Khám phá phong cách phù hợp với bạn</span>
+          </div>
+
+          <!-- Danh sách kiểu tóc mẫu -->
+          <div class="preset-section">
+            <h3 class="preset-title">Thử kiểu tóc có sẵn</h3>
+            <p class="preset-subtitle">Chọn kiểu tóc yêu thích để xem trước trên ảnh chân dung của bạn.</p>
+
+            <!-- Lưới hiển thị kiểu tóc (JS render từ 3 ảnh bạn cung cấp) -->
+            <div class="preset-grid" id="hairstyle-grid" role="radiogroup" aria-label="Danh sách kiểu tóc mẫu"></div>
+          </div>
+
+          <!-- Cụm 2 nút dưới cùng -->
+          <div class="right-cta-group">
+            <button type="button" class="btn btn-yellow btn-full" id="btn-start-consult" disabled>
+              Bắt đầu tư vấn với AI
+            </button>
+            <button type="button" class="btn btn-cream-outline btn-full" id="btn-view-all-styles">
+              Xem tất cả kiểu tóc
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER DÙNG CHUNG -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="footer-brand" href="index.html">
+        <img src="images/salonbook-mark-white.png" alt="" width="44" height="50">
+        SALONBOOK
+      </a>
+      <p>YOUR BEAUTY, YOUR TIME</p>
+      <small>Nguyên mẫu học tập · Nền tảng kết nối nhiều salon · Chưa nhận đặt lịch thật</small>
+    </div>
+  </footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/tuvan.js"></script>
+</body>
+</html>
