@@ -497,14 +497,23 @@
   color: rgba(70, 80, 90, 0.85);
 }
 
+/* Thu nhỏ & giới hạn chiều rộng tối đa của mỗi card để 1 card cũng không bị kéo bè ngang */
 #recently-viewed-section .salon-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 310px));
+  justify-content: start;
   gap: 16px;
+}
+
+#recently-viewed-section .salon-card {
+  width: 100%;
+  max-width: 310px;
 }
 
 #recently-viewed-section .salon-art {
   aspect-ratio: 16 / 10;
-  max-height: 165px;
+  height: 150px;
+  max-height: 150px;
 }
 
 #recently-viewed-section .salon-card-body {
@@ -525,7 +534,6 @@
 #recently-viewed-section .salon-type {
   font-size: 11px;
 }
-
 /* =========================================================================
    KHÔI PHỤC BỐ CỤC DỊCH VỤ NỔI BẬT & CARD
    ========================================================================= */
