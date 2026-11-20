@@ -432,88 +432,59 @@
   <!-- 2. Menu, Footer, trạng thái Header -->
   <script src="js/common.js"></script>
 
-<!-- LIEN KET HEADER VOI HO SO KHACH HANG -->
+
+<!-- SALONBOOK: PROFILE LINK TRONG HEADER -->
 <script>
-(function () {
-  function updateProfileLink() {
-    const auth = window.SalonBookAuth;
-    const container = document.getElementById(
-      "auth-action-container"
-    );
+document.addEventListener("DOMContentLoaded", function () {
+  const container = document.getElementById("auth-action-container");
+  const auth = window.SalonBookAuth;
 
-    if (!auth || !container) return;
+  if (!container || !auth) return;
 
+  function updateProfileHeader() {
     const user = auth.currentUser();
 
-    // Chưa đăng nhập: giữ nút Đăng nhập của Thông.
-    if (!user) return;
+    if (!user) {
+      container.classList.remove("sb-account-actions");
+      return;
+    }
 
-    // auth.js đang tạo span chứa lời chào.
-    const nameSpan = container.querySelector("span");
+    // Không tạo trùng liên kết Profile
+    if (container.querySelector(".sb-profile-link")) return;
 
-    if (!nameSpan) return;
+    // Tên do auth.js tạo
+    const greeting = container.querySelector(":scope > span");
+    if (!greeting) return;
 
-    // Thay lời chào bằng liên kết tới Profile.
     const link = document.createElement("a");
-
     link.href = "profile.html";
-    link.className = "salonbook-account-link";
+    link.className = "sb-profile-link";
     link.title = "Xem hồ sơ cá nhân";
-    link.setAttribute("aria-label", "Xem hồ sơ cá nhân");
 
-    link.style.cssText = `
-      display: inline-flex;
-      align-items: center;
-      gap: 9px;
-      padding: 9px 14px;
-      border-radius: 24px;
-      background: #eaf2ee;
-      color: #17503e;
-      font-size: 13px;
-      font-weight: 700;
-      text-decoration: none;
-      max-width: 220px;
-    `;
-
-    const icon = document.createElement("span");
-    icon.textContent = "●";
-    icon.setAttribute("aria-hidden", "true");
-
-    icon.style.cssText = `
-      display: inline-grid;
-      place-items: center;
-      width: 27px;
-      height: 27px;
-      border-radius: 50%;
-      background: #17503e;
-      color: white;
-      flex-shrink: 0;
-    `;
+    const avatar = document.createElement("span");
+    avatar.className = "sb-profile-avatar";
+    avatar.textContent = "●";
+    avatar.setAttribute("aria-hidden", "true");
 
     const name = document.createElement("span");
+    name.className = "sb-profile-name";
     name.textContent = user.fullName || "Tài khoản";
 
-    name.style.cssText = `
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    `;
+    link.append(avatar, name);
+    greeting.replaceWith(link);
 
-    link.append(icon, name);
-    nameSpan.replaceWith(link);
+    container.classList.add("sb-account-actions");
   }
 
-  // Chạy sau khi Auth đã cập nhật Header.
-  document.addEventListener(
-    "DOMContentLoaded",
-    updateProfileLink
-  );
+  // Theo dõi khi Auth thay đổi nội dung Header
+  const observer = new MutationObserver(updateProfileHeader);
 
-  document.addEventListener(
-    "salonbook:auth-changed",
-    updateProfileLink
-  );
-})();
+  observer.observe(container, {
+    childList: true
+  });
+
+  updateProfileHeader();
+});
 </script>
   <!-- 3. Dữ liệu danh sách salon -->
   <script src="js/products.js"></script>
