@@ -101,67 +101,67 @@
         </div>
       </div>
 
-      <!-- THANH TÌM KIẾM SALON -->
-      <form class="booking-bar" id="booking" aria-label="Tìm salon theo khu vực và dịch vụ">
-        <label>
-          <span class="field-icon" aria-hidden="true">⌖</span>
-          <span>
-            <small>KHU VỰC</small>
-            <select id="area-select" name="area" required>
-              <option value="">Chọn khu vực</option>
-              <option value="Quận 1">Quận 1</option>
-              <option value="Quận 3">Quận 3</option>
-              <option value="Quận 5">Quận 5</option>
-              <option value="Quận 7">Quận 7</option>
-              <option value="Quận 10">Quận 10</option>
-              <option value="Bình Thạnh">Bình Thạnh</option>
-              <option value="Gò Vấp">Gò Vấp</option>
-              <option value="Khu vực khác">Khu vực khác</option>
-            </select>
-          </span>
-        </label>
+    <!-- BỌC CHUNG THANH TÌM KIẾM & BỘ LỌC ĐỂ CĂN GIỮA THẲNG HÀNG -->
+      <div class="booking-filter-wrap">
+        <!-- THANH TÌM KIẾM SALON -->
+        <form class="booking-bar" id="booking" aria-label="Tìm salon theo khu vực và dịch vụ">
+          <label>
+            <span class="field-icon" aria-hidden="true">⌖</span>
+            <span>
+              <small>KHU VỰC</small>
+              <select id="area-select" name="area" required>
+                <option value="">Chọn khu vực</option>
+                <option value="Quận 1">Quận 1</option>
+                <option value="Quận 3">Quận 3</option>
+                <option value="Quận 5">Quận 5</option>
+                <option value="Quận 7">Quận 7</option>
+                <option value="Quận 10">Quận 10</option>
+                <option value="Bình Thạnh">Bình Thạnh</option>
+                <option value="Gò Vấp">Gò Vấp</option>
+                <option value="Khu vực khác">Khu vực khác</option>
+              </select>
+            </span>
+          </label>
 
-        <label>
-          <span class="field-icon" aria-hidden="true">✂</span>
-          <span>
-            <small>DỊCH VỤ</small>
-            <select id="service-select" name="service" required>
-              <option value="">Chọn dịch vụ</option>
-              <option>Cắt & tạo kiểu</option>
-              <option>Nhuộm tóc</option>
-              <option>Gội & thư giãn</option>
-              <option>Phục hồi tóc</option>
-            </select>
-          </span>
-        </label>
+          <label>
+            <span class="field-icon" aria-hidden="true">✂</span>
+            <span>
+              <small>DỊCH VỤ</small>
+              <select id="service-select" name="service" required>
+                <option value="">Chọn dịch vụ</option>
+                <option>Cắt & tạo kiểu</option>
+                <option>Nhuộm tóc</option>
+                <option>Gội & thư giãn</option>
+                <option>Phục hồi tóc</option>
+              </select>
+            </span>
+          </label>
 
-        <label>
-          <span class="field-icon" aria-hidden="true">📅</span>
-          <span>
-            <small>NGÀY DỰ KIẾN</small>
-            <input id="booking-date" name="date" type="date" required>
-          </span>
-        </label>
+          <label>
+            <span class="field-icon" aria-hidden="true">📅</span>
+            <span>
+              <small>NGÀY DỰ KIẾN</small>
+              <input id="booking-date" name="date" type="date" required>
+            </span>
+          </label>
 
-        <button class="btn btn-yellow booking-submit" type="submit">
-          Tìm salon 
-        </button>
-      </form>
+          <button class="btn btn-yellow booking-submit" type="submit">
+            Tìm salon 
+          </button>
+        </form>
+
+        <!-- THANH BỘ LỌC NHANH (Bỏ class container để không bị rộng hơn booking-bar) -->
+        <div class="filter-chips-bar">
+          <a href="products.html" class="filter-chip active">⚙ Tất cả bộ lọc</a>
+          <a href="products.html?type=nam" class="filter-chip">Salon Nam / Barbershop</a>
+          <a href="products.html?type=nu" class="filter-chip">Salon Nữ</a>
+          <a href="products.html?type=unisex" class="filter-chip">Salon Unisex</a>
+          <a href="products.html?service=uon-nhuom" class="filter-chip">Chuyên Uốn / Nhuộm</a>
+          <a href="products.html?service=goi-duong-sinh" class="filter-chip">Gội đầu dưỡng sinh</a>
+          <a href="products.html?service=phuc-hoi" class="filter-chip">Phục hồi tóc</a>
+        </div>
+      </div>
     </section>
-
-    <!-- THANH BỘ LỌC NHANH DƯỚI HERO -->
-    <div class="container filter-chips-bar">
-      <a href="products.html" class="filter-chip active">⚙ Tất cả bộ lọc</a>
-      <a href="products.html?type=nam" class="filter-chip">Salon Nam / Barbershop</a>
-      <a href="products.html?type=nu" class="filter-chip">Salon Nữ</a>
-      <a href="products.html?type=unisex" class="filter-chip">Salon Unisex</a>
-      <a href="products.html?service=uon-nhuom" class="filter-chip">Chuyên Uốn / Nhuộm</a>
-      <a href="products.html?service=goi-duong-sinh" class="filter-chip">Gội đầu dưỡng sinh</a>
-      <a href="products.html?service=phuc-hoi" class="filter-chip">Phục hồi tóc</a>
-    </div>
-
-    <div class="booking-note container" id="booking-message" role="status" aria-live="polite"></div>
-
     <!-- KẾT QUẢ TÌM KIẾM TẠI TRANG CHỦ -->
     <section class="salon-discovery container" id="homepage-search-results" hidden>
       <div class="section-head">
