@@ -432,6 +432,89 @@
   <!-- 2. Menu, Footer, trạng thái Header -->
   <script src="js/common.js"></script>
 
+<!-- LIEN KET HEADER VOI HO SO KHACH HANG -->
+<script>
+(function () {
+  function updateProfileLink() {
+    const auth = window.SalonBookAuth;
+    const container = document.getElementById(
+      "auth-action-container"
+    );
+
+    if (!auth || !container) return;
+
+    const user = auth.currentUser();
+
+    // Chưa đăng nhập: giữ nút Đăng nhập của Thông.
+    if (!user) return;
+
+    // auth.js đang tạo span chứa lời chào.
+    const nameSpan = container.querySelector("span");
+
+    if (!nameSpan) return;
+
+    // Thay lời chào bằng liên kết tới Profile.
+    const link = document.createElement("a");
+
+    link.href = "profile.html";
+    link.className = "salonbook-account-link";
+    link.title = "Xem hồ sơ cá nhân";
+    link.setAttribute("aria-label", "Xem hồ sơ cá nhân");
+
+    link.style.cssText = `
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 14px;
+      border-radius: 24px;
+      background: #eaf2ee;
+      color: #17503e;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      max-width: 220px;
+    `;
+
+    const icon = document.createElement("span");
+    icon.textContent = "●";
+    icon.setAttribute("aria-hidden", "true");
+
+    icon.style.cssText = `
+      display: inline-grid;
+      place-items: center;
+      width: 27px;
+      height: 27px;
+      border-radius: 50%;
+      background: #17503e;
+      color: white;
+      flex-shrink: 0;
+    `;
+
+    const name = document.createElement("span");
+    name.textContent = user.fullName || "Tài khoản";
+
+    name.style.cssText = `
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    `;
+
+    link.append(icon, name);
+    nameSpan.replaceWith(link);
+  }
+
+  // Chạy sau khi Auth đã cập nhật Header.
+  document.addEventListener(
+    "DOMContentLoaded",
+    updateProfileLink
+  );
+
+  document.addEventListener(
+    "salonbook:auth-changed",
+    updateProfileLink
+  );
+})();
+</script>
   <!-- 3. Dữ liệu danh sách salon -->
   <script src="js/products.js"></script>
 
