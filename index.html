@@ -439,22 +439,72 @@
   <script src="js/cart.js"></script>
 
   
-  <!-- Script đồng bộ tự động dữ liệu từ products.js lên trang chủ -->
+<!-- Script đồng bộ lịch sử tìm kiếm (tối đa 3 salon) & ưu đãi thịnh hành -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       if (typeof products === "undefined") return;
 
-      // 1. RENDER MỤC "SALON BẠN VỪA XEM" (Lấy từ id 6 và id 1)
+      const HISTORY_KEY = "salonbook_recent_salons";
+      const MAX_ITEMS = 3;
+
       const historyGrid = document.getElementById("recently-viewed-grid");
-      if (historyGrid) {
-        const historySalons = products.filter(s => s.id === 6 || s.id === 1);
-        historyGrid.innerHTML = historySalons.map(salon => `
+      const emptyMsg = document.getElementById("recently-viewed-empty");
+      const clearBtn = document.getElementById("clear-history-btn");
+      const bookingForm = document.getElementById("booking");
+      const areaSelect = document.getElementById("area-select");
+      const serviceSelect = document.getElementById("service-select");
+      const quickSearchInput = document.getElementById("header-quick-search");
+
+      function getHistoryIds() {
+        try {
+          const raw = JSON.parse(localStorage.getItem(HISTORY_KEY));
+          return Array.isArray(raw) ? raw.slice(0, MAX_ITEMS) : [];
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveHistoryIds(ids) {
+        localStorage.setItem(HISTORY_KEY, JSON.stringify(ids.slice(0, MAX_ITEMS)));
+      }
+
+      function addSalonsToHistory(matchedSalons) {
+        if (!Array.isArray(matchedSalons) || matchedSalons.length === 0) return;
+
+        let currentIds = getHistoryIds();
+        const newIds = matchedSalons.map(s => s.id);
+
+        currentIds = [...newIds, ...currentIds]
+          .filter((id, idx, arr) => arr.indexOf(id) === idx)
+          .slice(0, MAX_ITEMS);
+
+        saveHistoryIds(currentIds);
+        renderHistory();
+      }
+
+      function renderHistory() {
+        if (!historyGrid) return;
+
+        const ids = getHistoryIds();
+        const salons = ids
+          .map(id => products.find(s => s.id === id))
+          .filter(Boolean)
+          .slice(0, MAX_ITEMS);
+
+        if (salons.length === 0) {
+          historyGrid.innerHTML = "";
+          if (emptyMsg) emptyMsg.hidden = false;
+          return;
+        }
+
+        if (emptyMsg) emptyMsg.hidden = true;
+        historyGrid.innerHTML = salons.map(salon => `
           <article class="salon-card">
             <div class="salon-art">
               <img src="${salon.image}" alt="${salon.name}" loading="lazy" onerror="this.src='images/salonbook-mark.png';">
             </div>
             <div class="salon-card-body">
-              <span class="salon-type">${salon.category} · ${salon.districtName}</span>
+              <span class="salon-type">${salon.category || "SALON TÓC"} · ${salon.districtName || ""}</span>
               <h3>${salon.name}</h3>
               <p class="card-rating">⭐ ${salon.rating} (${salon.reviewCount} đánh giá)</p>
               <p>📍 ${salon.address}</p>
@@ -464,7 +514,46 @@
         `).join("");
       }
 
-      // 2. RENDER MỤC "ƯU ĐÃI & DỊCH VỤ THỊNH HÀNH" (Tự động lấy dịch vụ đầu tiên từ products.js)
+      // Lưu lịch sử khi bấm nút Tìm salon
+      if (bookingForm) {
+        bookingForm.addEventListener("submit", function () {
+          const areaVal = areaSelect ? areaSelect.value.trim().toLowerCase() : "";
+          const serviceVal = serviceSelect ? serviceSelect.value.trim().toLowerCase() : "";
+
+          const matched = products.filter(s => {
+            const matchArea = !areaVal ||
+              (s.districtName && s.districtName.toLowerCase().includes(areaVal)) ||
+              (s.address && s.address.toLowerCase().includes(areaVal));
+            const matchService = !serviceVal ||
+              (Array.isArray(s.servicesList) && s.servicesList.some(sv => sv.name && sv.name.toLowerCase().includes(serviceVal)));
+            return matchArea && matchService;
+          });
+
+          addSalonsToHistory(matched.slice(0, MAX_ITEMS));
+        });
+      }
+
+      // Lưu lịch sử khi tìm nhanh trên thanh header
+      if (quickSearchInput) {
+        quickSearchInput.addEventListener("change", function () {
+          const kw = this.value.trim().toLowerCase();
+          if (!kw) return;
+          const matched = products.filter(s => s.name && s.name.toLowerCase().includes(kw));
+          addSalonsToHistory(matched.slice(0, MAX_ITEMS));
+        });
+      }
+
+      // Nút Xóa lịch sử
+      if (clearBtn) {
+        clearBtn.addEventListener("click", function () {
+          localStorage.removeItem(HISTORY_KEY);
+          renderHistory();
+        });
+      }
+
+      renderHistory();
+
+      // RENDER MỤC "ƯU ĐÃI & DỊCH VỤ THỊNH HÀNH"
       const trendingGrid = document.getElementById("trending-grid");
       if (trendingGrid) {
         const trendingItems = [
