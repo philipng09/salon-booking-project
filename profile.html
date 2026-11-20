@@ -1,55 +1,345 @@
+
 <!doctype html>
 <html lang="vi">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0c513f">
-  <title>Tài khoản của tôi | SalonBook</title>
+  <title>Thông tin tài khoản | SalonBook</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/profile.css">
 </head>
+
 <body>
-  <a class="skip-link" href="#profile-main">Chuyển đến nội dung chính</a>
-  <header class="site-header">
-    <div class="container nav-shell">
-      <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ"><img src="images/salonbook-mark.png" width="46" height="54" alt=""><span>SALON<span class="brand-thin">BOOK</span></span></a>
-      <button type="button" class="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
-      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
-        <a href="index.html">Trang chủ</a><a href="products.html">Đặt lịch</a><a href="blog.html">Blog</a><a href="tuvan.html">Tư vấn</a><a href="about.html">Giới thiệu</a>
-      </nav>
-      <div class="nav-actions"><div id="auth-action-container"><a href="auth.html" class="btn btn-yellow btn-top">Đăng nhập</a></div></div>
+<a class="skip-link" href="#profile-main">Chuyển đến nội dung chính</a>
+
+<header class="site-header profile-header">
+  <div class="container nav-shell">
+    <a class="brand" href="index.html" aria-label="SalonBook – Trang chủ">
+      <img src="images/salonbook-mark.png" width="46" height="54" alt="">
+      <span>SALON<span class="brand-thin">BOOK</span></span>
+    </a>
+
+    <button type="button" class="nav-toggle"
+      aria-controls="main-nav" aria-expanded="false"
+      aria-label="Mở menu">☰</button>
+
+    <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+      <a href="index.html">Trang chủ</a>
+      <a href="products.html">Đặt lịch</a>
+      <a href="blog.html">Blog</a>
+      <a href="tuvan.html">Tư vấn</a>
+      <a href="about.html">Giới thiệu</a>
+    </nav>
+
+    <div class="nav-actions profile-header-actions">
+      <form class="profile-header-search" action="products.html"
+        method="get" role="search">
+        <label class="sr-only" for="header-quick-search">Tìm salon</label>
+        <span aria-hidden="true">⌕</span>
+        <input id="header-quick-search" name="q"
+          placeholder="Tìm kiếm salon..." autocomplete="off">
+      </form>
+
+      <a class="profile-cart-link" href="cart.html" aria-label="Giỏ dịch vụ">
+        <span aria-hidden="true">▣</span>
+        <span class="profile-cart-word">Giỏ dịch vụ</span>
+      </a>
+
+      <a class="profile-header-user" href="profile.html" aria-current="page">
+        <span class="profile-user-icon" aria-hidden="true">●</span>
+        <span id="header-user-name">Khách hàng</span>
+      </a>
     </div>
-  </header>
-  <main id="profile-main" class="profile-page" hidden>
-    <div class="profile-shell">
-      <div class="profile-heading"><div><p class="profile-kicker">SALONBOOK / MY ACCOUNT</p><h1>Tài khoản của tôi</h1><p>Quản lý thông tin cá nhân và theo dõi những lịch hẹn của bạn.</p></div><a class="profile-explore" href="products.html">+ Khám phá salon</a></div>
-      <div class="profile-layout">
-        <aside class="profile-aside" aria-label="Điều hướng tài khoản">
-          <div class="profile-identity"><div class="profile-avatar" id="profile-avatar" aria-hidden="true">S</div><div><strong id="profile-display-name">Khách hàng</strong><small id="profile-display-email"></small></div></div>
-          <nav class="profile-nav" aria-label="Các phần tài khoản">
-            <button type="button" class="profile-nav-item is-active" data-panel="overview" aria-current="page">◫ <span>Tổng quan</span></button>
-            <button type="button" class="profile-nav-item" data-panel="personal">♙ <span>Thông tin cá nhân</span></button>
-            <button type="button" class="profile-nav-item" data-panel="bookings">▤ <span>Lịch đặt của tôi</span></button>
-            <button type="button" class="profile-nav-item" data-panel="consultations">◉ <span>Lịch sử tư vấn</span></button>
-            <button type="button" class="profile-nav-item" data-panel="security">♧ <span>Đổi mật khẩu</span></button>
-          </nav>
-          <button type="button" id="profile-logout" class="profile-logout">Đăng xuất <span aria-hidden="true">↗</span></button>
-        </aside>
-        <div class="profile-content">
-          <p class="profile-alert" id="profile-alert" role="status" aria-live="polite" hidden></p>
-          <section id="panel-overview" class="profile-panel" aria-labelledby="overview-title"><div class="panel-title"><div><span class="section-eyebrow">TỔNG QUAN</span><h2 id="overview-title">Xin chào, <span id="overview-name">bạn</span>!</h2><p>Đây là không gian riêng để theo dõi hành trình làm đẹp của bạn.</p></div></div><div class="profile-stat-grid"><div class="profile-stat"><span>Lịch hẹn</span><strong id="stat-bookings">—</strong><small>Chỉ tính lịch từ hệ thống Booking</small></div><div class="profile-stat"><span>Lịch sắp tới</span><strong id="stat-upcoming">—</strong><small>Đang chờ / đã xác nhận</small></div><div class="profile-stat"><span>Lịch sử tư vấn</span><strong id="stat-consultations">—</strong><small>Từ dữ liệu tư vấn của tài khoản</small></div></div><div class="profile-info-card"><h3>Thông tin tài khoản</h3><dl><div><dt>Họ tên</dt><dd id="overview-fullname">—</dd></div><div><dt>Email</dt><dd id="overview-email">—</dd></div><div><dt>Điện thoại</dt><dd id="overview-phone">—</dd></div></dl><button type="button" class="profile-text-button" data-go="personal">Chỉnh sửa thông tin →</button></div></section>
-          <section id="panel-personal" class="profile-panel" aria-labelledby="personal-title" hidden><div class="panel-title"><div><span class="section-eyebrow">THÔNG TIN</span><h2 id="personal-title">Hồ sơ cá nhân</h2><p>Cập nhật thông tin liên hệ để salon thuận tiện xác nhận lịch hẹn.</p></div></div><form id="profile-form" class="profile-form" novalidate><div class="profile-fields"><label>Họ và tên <input name="fullName" id="profile-fullname" maxlength="80" autocomplete="name" required></label><label>Email <input name="email" id="profile-email" type="email" autocomplete="email" required></label><label>Số điện thoại <input name="phone" id="profile-phone" inputmode="tel" autocomplete="tel" maxlength="10" required></label><label>Mã tài khoản <input id="profile-userid" disabled></label></div><p class="profile-hint">Thay đổi được lưu trong tài khoản demo trên trình duyệt hiện tại. Cần tích hợp API User để đồng bộ sang backend.</p><button type="submit" class="profile-primary">Lưu thay đổi</button></form></section>
-          <section id="panel-bookings" class="profile-panel" aria-labelledby="bookings-title" hidden><div class="panel-title"><div><span class="section-eyebrow">LỊCH HẸN</span><h2 id="bookings-title">Lịch đặt của tôi</h2><p>Chỉ hiển thị lịch đã tạo trong hệ thống Booking, không bao gồm giỏ dịch vụ.</p></div></div><div class="profile-filter"><label for="booking-status">Trạng thái</label><select id="booking-status"><option value="all">Tất cả</option><option value="pending">Chờ xác nhận</option><option value="confirmed">Đã xác nhận</option><option value="completed">Hoàn tất</option><option value="cancelled">Đã hủy</option></select></div><div id="bookings-message" class="profile-empty" role="status">Đang kiểm tra dữ liệu lịch hẹn…</div><div id="booking-list" class="booking-list"></div></section>
-          <section id="panel-consultations" class="profile-panel" aria-labelledby="consultations-title" hidden><div class="panel-title"><div><span class="section-eyebrow">TƯ VẤN</span><h2 id="consultations-title">Lịch sử tư vấn</h2><p>Các cuộc tư vấn được lưu trong tài khoản của bạn.</p></div></div><div id="consultations-message" class="profile-empty" role="status">Đang kiểm tra dữ liệu tư vấn…</div><div id="consultations-list" class="consultation-list"></div></section>
-          <section id="panel-security" class="profile-panel" aria-labelledby="security-title" hidden><div class="panel-title"><div><span class="section-eyebrow">BẢO MẬT</span><h2 id="security-title">Đổi mật khẩu</h2><p>Thay đổi mật khẩu tài khoản demo của bạn.</p></div></div><form id="password-form" class="profile-form" novalidate><div class="profile-fields profile-fields-single"><label>Mật khẩu hiện tại <input type="password" name="currentPassword" autocomplete="current-password" required></label><label>Mật khẩu mới <input type="password" name="newPassword" autocomplete="new-password" minlength="8" required></label><label>Nhập lại mật khẩu mới <input type="password" name="confirmPassword" autocomplete="new-password" minlength="8" required></label></div><p class="profile-hint">Tối thiểu 8 ký tự. Đây là xác thực bản demo trên trình duyệt, không thay thế bảo mật máy chủ.</p><button type="submit" class="profile-primary">Cập nhật mật khẩu</button></form></section>
+  </div>
+</header>
+
+<main id="profile-main" class="profile-page" hidden>
+  <div class="profile-shell">
+
+    <div class="profile-heading">
+      <h1>Thông tin tài khoản</h1>
+      <p>Quản lý thông tin cá nhân và bảo mật tài khoản của bạn</p>
+    </div>
+
+    <div class="profile-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="profile-aside" aria-label="Điều hướng tài khoản">
+        <div class="profile-identity">
+          <div class="profile-avatar" id="profile-avatar"
+            aria-label="Ảnh đại diện">●</div>
+          <strong id="profile-display-name">Khách hàng</strong>
+          <small id="profile-display-role">Khách hàng</small>
         </div>
+
+        <nav class="profile-nav" aria-label="Các mục tài khoản">
+          <button type="button"
+            class="profile-nav-item is-active"
+            data-panel="personal" aria-current="page">
+            <span class="profile-menu-icon" aria-hidden="true">♙</span>
+            <span>Thông tin cá nhân</span>
+          </button>
+
+          <button type="button" class="profile-nav-item"
+            data-panel="bookings">
+            <span class="profile-menu-icon" aria-hidden="true">▣</span>
+            <span>Lịch hẹn của tôi</span>
+          </button>
+
+          <button type="button" class="profile-nav-item"
+            data-panel="notifications">
+            <span class="profile-menu-icon" aria-hidden="true">♧</span>
+            <span>Thông báo</span>
+          </button>
+
+          <button type="button" class="profile-nav-item"
+            data-panel="security">
+            <span class="profile-menu-icon" aria-hidden="true">◎</span>
+            <span>Đổi mật khẩu</span>
+          </button>
+
+          <button type="button"
+            class="profile-nav-item profile-nav-secondary"
+            data-panel="consultations">
+            <span class="profile-menu-icon" aria-hidden="true">☷</span>
+            <span>Lịch sử tư vấn</span>
+          </button>
+        </nav>
+
+        <button type="button" id="profile-logout"
+          class="profile-nav-item profile-logout">
+          <span class="profile-menu-icon" aria-hidden="true">↪</span>
+          <span>Đăng xuất</span>
+        </button>
+      </aside>
+
+      <!-- NỘI DUNG BÊN PHẢI -->
+      <div class="profile-content">
+        <p class="profile-alert" id="profile-alert"
+          role="status" aria-live="polite" hidden></p>
+
+        <!-- HỒ SƠ CÁ NHÂN -->
+        <section id="panel-personal" class="profile-panel"
+          aria-labelledby="personal-title">
+
+          <div class="panel-title">
+            <h2 id="personal-title">Hồ sơ cá nhân</h2>
+            <p>Cập nhật thông tin cá nhân của bạn để thuận tiện đặt lịch tại SalonBook.</p>
+          </div>
+
+          <form id="profile-form" class="profile-form" novalidate>
+            <div class="profile-fields">
+
+              <label class="profile-field">
+                Họ và tên
+                <input name="fullName" id="profile-fullname"
+                  maxlength="80" autocomplete="name" required>
+              </label>
+
+              <label class="profile-field">
+                Số điện thoại
+                <input name="phone" id="profile-phone"
+                  autocomplete="tel" inputmode="tel"
+                  maxlength="10" required>
+              </label>
+
+              <label class="profile-field">
+                Email
+                <input name="email" id="profile-email"
+                  type="email" autocomplete="email" required>
+              </label>
+
+              <label class="profile-field">
+                Ngày sinh
+                <input name="birthDate" id="profile-birthdate"
+                  type="date" autocomplete="bday"
+                  aria-describedby="birthdate-hint">
+                <span class="sr-only" id="birthdate-hint">
+                  Không chọn ngày trong tương lai
+                </span>
+              </label>
+
+              <label class="profile-field">
+                Giới tính
+                <select name="gender" id="profile-gender">
+                  <option value="">Chọn giới tính</option>
+                  <option value="female">Nữ</option>
+                  <option value="male">Nam</option>
+                  <option value="other">Khác</option>
+                  <option value="undisclosed">Không muốn tiết lộ</option>
+                </select>
+              </label>
+
+              <div class="profile-photo-field">
+                <div id="profile-avatar-preview"
+                  class="profile-avatar-preview"
+                  aria-hidden="true">●</div>
+
+                <div>
+                  <label class="profile-photo-label"
+                    for="profile-avatar-upload">Ảnh đại diện</label>
+
+                  <label class="profile-upload-button"
+                    for="profile-avatar-upload">
+                    <span aria-hidden="true">▧</span>
+                    Thay đổi ảnh
+                  </label>
+
+                  <input id="profile-avatar-upload" type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    class="sr-only">
+
+                  <small>Ảnh JPG/PNG/WebP, tối đa 2 MB.</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="profile-form-bottom">
+              <p class="profile-hint">
+                Thông tin hiện được lưu trong bản demo trên trình duyệt.
+                Cần API User để đồng bộ trên các thiết bị.
+              </p>
+              <button type="submit" class="profile-primary">
+                Lưu thay đổi
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- LỊCH HẸN -->
+        <section id="panel-bookings" class="profile-panel"
+          aria-labelledby="bookings-title" hidden>
+
+          <div class="panel-title">
+            <h2 id="bookings-title">Lịch hẹn của tôi</h2>
+            <p>Chỉ hiển thị lịch từ Booking đã tạo; không hiển thị dịch vụ vẫn nằm trong giỏ.</p>
+          </div>
+
+          <div class="profile-filter">
+            <label for="booking-status">Trạng thái</label>
+            <select id="booking-status">
+              <option value="all">Tất cả</option>
+              <option value="pending">Chờ xác nhận</option>
+              <option value="confirmed">Đã xác nhận</option>
+              <option value="completed">Hoàn tất</option>
+              <option value="cancelled">Đã hủy</option>
+            </select>
+          </div>
+
+          <div id="bookings-message" class="profile-empty" role="status">
+            Đang kiểm tra dữ liệu lịch hẹn…
+          </div>
+          <div id="booking-list" class="booking-list"></div>
+        </section>
+
+        <!-- THÔNG BÁO -->
+        <section id="panel-notifications" class="profile-panel"
+          aria-labelledby="notifications-title" hidden>
+
+          <div class="panel-title">
+            <h2 id="notifications-title">Thông báo</h2>
+            <p>Các cập nhật liên quan đến tài khoản và lịch hẹn của bạn.</p>
+          </div>
+
+          <div id="notifications-message" class="profile-empty">
+            Chưa kết nối nguồn thông báo của tài khoản.
+          </div>
+          <div id="notifications-list" class="consultation-list"></div>
+        </section>
+
+        <!-- ĐỔI MẬT KHẨU -->
+        <section id="panel-security" class="profile-panel"
+          aria-labelledby="security-title" hidden>
+
+          <div class="panel-title">
+            <h2 id="security-title">Đổi mật khẩu</h2>
+            <p>Thay đổi mật khẩu đăng nhập cho tài khoản demo.</p>
+          </div>
+
+          <form id="password-form" class="profile-form" novalidate>
+            <div class="profile-fields profile-fields-single">
+
+              <label class="profile-field">
+                Mật khẩu hiện tại
+                <input type="password" name="currentPassword"
+                  autocomplete="current-password" required>
+              </label>
+
+              <label class="profile-field">
+                Mật khẩu mới
+                <input type="password" name="newPassword"
+                  autocomplete="new-password" minlength="8" required>
+              </label>
+
+              <label class="profile-field">
+                Xác nhận mật khẩu mới
+                <input type="password" name="confirmPassword"
+                  autocomplete="new-password" minlength="8" required>
+              </label>
+            </div>
+
+            <div class="profile-form-bottom">
+              <p class="profile-hint">
+                Mật khẩu tối thiểu 8 ký tự.
+                Cơ chế demo này không thay thế xác thực backend.
+              </p>
+              <button type="submit" class="profile-primary">
+                Cập nhật mật khẩu
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- LỊCH SỬ TƯ VẤN -->
+        <section id="panel-consultations" class="profile-panel"
+          aria-labelledby="consultations-title" hidden>
+
+          <div class="panel-title">
+            <h2 id="consultations-title">Lịch sử tư vấn</h2>
+            <p>Những cuộc tư vấn được lưu cho tài khoản hiện tại.</p>
+          </div>
+
+          <div id="consultations-message" class="profile-empty"
+            role="status">
+            Đang kiểm tra dữ liệu tư vấn…
+          </div>
+
+          <div id="consultations-list" class="consultation-list"></div>
+        </section>
       </div>
     </div>
-  </main>
-  <footer class="site-footer"></footer>
-  <dialog id="booking-dialog" class="profile-dialog" aria-labelledby="booking-dialog-title"><div class="dialog-header"><h2 id="booking-dialog-title">Chi tiết lịch hẹn</h2><button type="button" id="dialog-close" aria-label="Đóng">✕</button></div><div id="booking-dialog-body"></div><div class="dialog-actions"><button type="button" id="dialog-cancel-booking" class="profile-danger" hidden>Yêu cầu hủy lịch</button><button type="button" id="dialog-dismiss" class="profile-secondary">Đóng</button></div><p id="dialog-message" role="status" aria-live="polite"></p></dialog>
-  <script src="js/auth.js"></script>
-  <script src="js/profile.js"></script>
-  <script src="js/common.js"></script>
+  </div>
+</main>
+
+<footer class="site-footer"></footer>
+
+<!-- CHI TIẾT BOOKING -->
+<dialog id="booking-dialog" class="profile-dialog"
+  aria-labelledby="booking-dialog-title">
+
+  <div class="dialog-header">
+    <h2 id="booking-dialog-title">Chi tiết lịch hẹn</h2>
+    <button type="button" id="dialog-close" aria-label="Đóng">✕</button>
+  </div>
+
+  <div id="booking-dialog-body"></div>
+
+  <div class="dialog-actions">
+    <button type="button" id="dialog-cancel-booking"
+      class="profile-danger" hidden>
+      Yêu cầu hủy lịch
+    </button>
+
+    <button type="button" id="dialog-dismiss"
+      class="profile-secondary">Đóng</button>
+  </div>
+
+  <p id="dialog-message" role="status" aria-live="polite"></p>
+</dialog>
+
+<script src="js/auth.js"></script>
+<script src="js/profile.js"></script>
+<script src="js/common.js"></script>
 </body>
 </html>
