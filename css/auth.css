@@ -1,159 +1,609 @@
 
-/* GIAO DIỆN ĐĂNG NHẬP - ĐĂNG KÝ */
+/* =====================================
+   SALONBOOK AUTH
+   LOGIN / REGISTER / OWNER
+===================================== */
 
-.auth-page {
-  min-height: 75vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f5f8f4;
-  padding: 50px 16px;
-  font-family: Arial, sans-serif;
+.auth-body {
+  min-height: 100vh;
+  background: linear-gradient(
+    150deg,
+    #f1f9f4 0%,
+    #fffdf5 60%,
+    #f9f4e9 100%
+  );
 }
 
-.auth-card {
-  background: white;
-  width: 100%;
-  max-width: 480px;
-  padding: 35px;
-  border-radius: 18px;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
+.auth-page {
+  max-width: 740px;
+  margin: auto;
+  padding: 45px 20px 65px;
+}
+
+/* TIÊU ĐỀ */
+
+.auth-heading {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.auth-monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 22px;
+  background: #0c513f;
+  color: white;
+  font-weight: 900;
+  font-size: 31px;
+  letter-spacing: -3px;
+  box-shadow: 0 12px 25px #0c513f30;
+  margin-bottom: 15px;
+}
+
+.auth-monogram span {
+  color: #ffc501;
 }
 
 .auth-eyebrow {
   font-size: 11px;
+  font-weight: 800;
   letter-spacing: 2px;
-  color: #447965;
-  font-weight: bold;
+  color: #0c513f;
+  margin: 0 0 12px;
 }
 
-.auth-card h1 {
-  font-size: 28px;
-  color: #18372e;
-  margin: 15px 0;
+.auth-heading h1 {
+  font-size: clamp(27px, 4vw, 37px);
+  color: #073e32;
+  line-height: 1.2;
+  margin: 0 0 8px;
+  font-weight: 850;
 }
 
-.auth-subtitle {
+.auth-heading > p:last-child {
+  color: #60766e;
   font-size: 14px;
-  color: #66756e;
-  margin-bottom: 25px;
+  margin: 0;
 }
 
-/* TAB ĐĂNG NHẬP - ĐĂNG KÝ */
+/* KHUNG FORM */
+
+.auth-card {
+  background: white;
+  border: 1px solid #e3eee7;
+  border-radius: 22px;
+  box-shadow: 0 18px 50px #0c513f17;
+  padding: 30px 36px;
+}
+
+/* TAB ĐĂNG NHẬP / ĐĂNG KÝ */
 
 .auth-tabs {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 20px;
+  background: #f0f5f1;
+  border-radius: 12px;
+  padding: 5px;
+  gap: 6px;
+  margin-bottom: 26px;
 }
 
-.auth-tabs button {
-  padding: 12px;
-  border: 1px solid #cedbd4;
+.auth-tab {
+  border: 0;
+  background: transparent;
+  padding: 13px;
   border-radius: 9px;
-  background: #f5f8f4;
-  color: #24503d;
-  font-weight: bold;
+  color: #557168;
+  font-size: 15px;
+  font-weight: 750;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-.auth-tabs button[aria-selected="true"] {
+.auth-tab.is-active {
   background: #0c513f;
   color: white;
-  border-color: #0c513f;
+  box-shadow: 0 4px 12px #0c513f24;
 }
 
-/* FORM */
+.auth-tab:focus-visible {
+  outline: 3px solid #f3c850;
+  outline-offset: 2px;
+}
 
-.auth-card form {
+/* =====================================
+   CHỌN VAI TRÒ
+===================================== */
+
+.role-picker {
+  border: 0;
+  margin: 0 0 17px;
+  padding: 0;
+  min-width: 0;
+}
+
+.role-picker legend {
+  font-size: 15px;
+  font-weight: 750;
+  color: #184e3d;
+  margin-bottom: 14px;
+}
+
+.role-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+}
+
+.role-options label {
+  display: block;
+  cursor: pointer;
+  min-width: 0;
+}
+
+/* ẨN RADIO MẶC ĐỊNH */
+
+.role-options input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+/* GIAO DIỆN HAI Ô */
+
+.role-tile {
+  min-height: 132px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  border: 2px solid transparent;
+  border-radius: 14px;
+  padding: 17px 10px;
+
+  font-size: 18px;
+  font-weight: 800;
+
+  box-shadow: 0 5px 13px #00000012;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.auth-card label {
-  font-size: 14px;
-  font-weight: bold;
-  color: #18372e;
-  margin-top: 10px;
+.role-tile small {
+  font-weight: 500;
+  font-size: 11px;
+  margin-top: 7px;
 }
 
-.auth-card input {
+.role-icon {
+  font-size: 26px;
+  line-height: 1;
+  margin-bottom: 9px;
+}
+
+/* =====================================
+   MẶC ĐỊNH CẢ HAI Ô CÓ MÀU NHẠT
+===================================== */
+
+/* KHÁCH HÀNG CHƯA CHỌN */
+
+.role-customer .role-tile {
+  background: #d5ebd9;
+  color: #4d8060;
+  opacity: 0.75;
+}
+
+/* CHỦ SALON CHƯA CHỌN */
+
+.role-owner .role-tile {
+  background: #fbe3d0;
+  color: #ac784f;
+  opacity: 0.75;
+}
+
+/* =====================================
+   KHI CHỌN KHÁCH HÀNG
+===================================== */
+
+.role-customer input:checked + .role-tile {
+  background: #54ae62;
+  color: #ffffff;
+  opacity: 1;
+
+  border: 2px solid #226e39;
+
+  box-shadow:
+    0 0 0 3px #54ae6220,
+    0 5px 18px #54ae6240;
+
+  transform: translateY(-2px);
+}
+
+/* =====================================
+   KHI CHỌN CHỦ SALON
+===================================== */
+
+.role-owner input:checked + .role-tile {
+  background: #ec8542;
+  color: #ffffff;
+  opacity: 1;
+
+  border: 2px solid #b95b20;
+
+  box-shadow:
+    0 0 0 3px #ec854220,
+    0 5px 18px #ec854240;
+
+  transform: translateY(-2px);
+}
+
+.role-options input:focus-visible + .role-tile {
+  outline: 3px solid #f3c850;
+  outline-offset: 3px;
+}
+
+.role-options label:hover .role-tile {
+  filter: brightness(1.03);
+}
+
+/* =====================================
+   Ô NHẬP EMAIL / MẬT KHẨU
+===================================== */
+
+.auth-field {
+  display: block;
+  color: #21473b;
+  font-size: 13px;
+  font-weight: 750;
+  margin-top: 16px;
+}
+
+.auth-field input {
+  display: block;
   width: 100%;
   box-sizing: border-box;
-  padding: 13px;
-  border: 1px solid #bacdc3;
-  border-radius: 9px;
-  font-size: 15px;
+  margin-top: 8px;
+
+  border: 1.5px solid #d3e1d8;
+  border-radius: 10px;
+  padding: 14px 15px;
+
+  font-size: 14px;
+  color: #183f34;
+  background: #fbfdfb;
+
+  outline: none;
+  transition: 0.2s;
+}
+
+.auth-field input::placeholder {
+  color: #96aaa1;
+}
+
+.auth-field input:focus {
   background: white;
-  color: #18372e;
+  border-color: #289b74;
+  box-shadow: 0 0 0 3px #289b7421;
 }
 
-.auth-card input:focus {
-  outline: 2px solid #83b49b;
+/* TRƯỜNG NHẬP BỊ LỖI */
+
+.auth-field input.is-invalid {
+  border-color: #d34545;
+  background: #fff7f7;
 }
 
-.auth-card input[aria-invalid="true"] {
-  border-color: #b42318;
+.field-error {
+  display: block;
+  min-height: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #bc3333;
+  margin-top: 5px;
 }
+
+/* =====================================
+   NÚT ĐĂNG NHẬP / ĐĂNG KÝ
+===================================== */
 
 .auth-submit {
-  margin-top: 20px;
-  padding: 14px;
+  width: 100%;
+  padding: 15px 18px;
+
+  border: 0;
+  border-radius: 11px;
+
   background: #0c513f;
   color: white;
-  border: none;
-  border-radius: 9px;
+
   font-size: 15px;
-  font-weight: bold;
+  font-weight: 800;
+
+  margin-top: 20px;
   cursor: pointer;
+
+  box-shadow: 0 6px 16px #0c513f22;
+  transition: 0.2s;
 }
 
 .auth-submit:hover {
-  background: #083c2e;
+  background: #087253;
+  transform: translateY(-1px);
 }
 
-/* THÔNG BÁO LỖI / THÀNH CÔNG */
+.auth-submit:focus-visible {
+  outline: 3px solid #f3c850;
+  outline-offset: 3px;
+}
 
-.auth-message {
+/* =====================================
+   THÔNG TIN DEMO CHỦ SALON
+   NẰM BÊN DƯỚI NÚT ĐĂNG NHẬP
+===================================== */
+
+.owner-hint {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-top: 22px;
+  margin-bottom: 8px;
+  padding: 17px 20px;
+
+  background: #fff8ed;
+
+  border: 1px solid #f3d6a6;
+  border-left: 4px solid #ec8542;
+  border-radius: 12px;
+
+  color: #75461f;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* TIÊU ĐỀ */
+
+.owner-hint-title {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 3px;
+}
+
+.owner-hint-icon {
+  font-size: 18px;
+}
+
+.owner-hint-title strong {
   font-size: 14px;
-  line-height: 1.5;
+  font-weight: 800;
+  color: #855021;
 }
 
-.auth-message:not(:empty) {
-  padding: 12px;
-  margin-bottom: 12px;
+/* EMAIL / MẬT KHẨU */
+
+.owner-demo-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px 15px;
+
+  background: #ffffff;
+  padding: 10px 12px;
+
+  border: 1px solid #f4e3cf;
   border-radius: 8px;
-  background: #fff2f0;
-  color: #a12620;
 }
 
-.auth-message.success:not(:empty) {
-  background: #e9f7ed;
-  color: #15603c;
+.owner-demo-row span {
+  color: #957255;
+  font-weight: 600;
 }
 
-.auth-note {
-  margin-top: 20px;
-  font-size: 12px;
-  line-height: 1.5;
-  color: #66756e;
+.owner-demo-row b {
+  color: #75461f;
+  font-weight: 800;
+  overflow-wrap: anywhere;
 }
 
-[hidden] {
+/* GHI CHÚ DEMO */
+
+.owner-hint-description {
+  display: block;
+  color: #957255;
+  font-size: 11px;
+  line-height: 1.6;
+  margin-top: 3px;
+}
+
+/* ẨN DEMO KHI CHỌN KHÁCH HÀNG */
+
+.owner-hint[hidden] {
   display: none !important;
 }
 
-/* GIAO DIỆN ĐIỆN THOẠI */
+/* =====================================
+   THÔNG BÁO LỖI / THÀNH CÔNG
+===================================== */
 
-@media (max-width: 520px) {
+.auth-message {
+  padding: 12px 14px;
+  margin: 0 0 16px;
+  border-radius: 9px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.auth-message.is-error {
+  color: #a32323;
+  background: #fff0f0;
+  border: 1px solid #f4cbcb;
+}
+
+.auth-message.is-success {
+  color: #17633e;
+  background: #e8f7ee;
+  border: 1px solid #c7e9d4;
+}
+
+/* =====================================
+   TAB ĐĂNG KÝ
+===================================== */
+
+.auth-subnote {
+  padding: 11px 13px;
+  background: #eef8f0;
+  border-radius: 9px;
+  color: #225942;
+  font-size: 13px;
+  margin: 0 0 13px;
+}
+
+/* =====================================
+   GHI CHÚ CUỐI FORM
+===================================== */
+
+.auth-disclaimer {
+  text-align: center;
+  color: #7b8e85;
+  font-size: 11px;
+  margin: 18px 0 0;
+  line-height: 1.6;
+}
+
+/* QUAY LẠI TRANG CHỦ */
+
+.auth-back {
+  text-align: center;
+  margin: 20px 0 0;
+  color: #0c513f;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.auth-back a:hover {
+  text-decoration: underline;
+}
+
+/* =====================================
+   HEADER ĐĂNG NHẬP
+===================================== */
+
+.auth-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.auth-user-name {
+  font-weight: 750;
+  color: #0c513f;
+}
+
+.auth-owner-link {
+  color: #0c513f;
+  font-weight: 750;
+  text-decoration: underline;
+}
+
+.auth-logout {
+  border: 1px solid #0c513f;
+  color: #0c513f;
+  background: transparent;
+  padding: 9px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+/* =====================================
+   TRANG QUẢN LÝ CHỦ SALON
+===================================== */
+
+.owner-dashboard {
+  max-width: 850px;
+  margin: 75px auto;
+  padding: 36px;
+
+  background: white;
+  border: 1px solid #dce7df;
+  border-radius: 20px;
+}
+
+.owner-dashboard p {
+  line-height: 1.7;
+  color: #587269;
+}
+
+/* =====================================
+   ẨN CÁC THÀNH PHẦN CHƯA ACTIVE
+===================================== */
+
+[hidden],
+#login-panel[hidden],
+#register-panel[hidden],
+.auth-message[hidden] {
+  display: none !important;
+}
+
+/* =====================================
+   RESPONSIVE MOBILE
+===================================== */
+
+@media (max-width: 600px) {
+
+  .auth-page {
+    padding: 27px 14px 50px;
+  }
+
   .auth-card {
-    padding: 22px;
+    padding: 22px 18px;
+    border-radius: 16px;
   }
 
-  .auth-card h1 {
-    font-size: 24px;
+  .role-tile {
+    min-height: 112px;
+    font-size: 15px;
   }
+
+  .role-tile small {
+    font-size: 10px;
+  }
+
+  .role-options {
+    gap: 10px;
+  }
+
+  .auth-heading h1 {
+    font-size: 25px;
+  }
+
+  .owner-hint {
+    padding: 15px 13px;
+  }
+
+  .owner-demo-row {
+    align-items: flex-start;
+  }
+
+  .auth-header-actions {
+    gap: 5px;
+  }
+
+  .auth-user-name {
+    font-size: 12px;
+  }
+
 }
