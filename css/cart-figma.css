@@ -1,0 +1,72 @@
+/* SalonBook cart restyle: scope to cart.html, preserve cart.js DOM & hooks. */
+.cart-figma .cart-page { background: #fbfaf1; min-height: 75vh; padding: 24px 0 95px; }
+.cart-figma .cart-breadcrumb { display:flex; gap:12px; align-items:center; flex-wrap:wrap; font-size:12px; color:#6e8279; margin: 0 0 33px; }
+.cart-figma .cart-breadcrumb a:hover { color:#0c513f; text-decoration:underline; }
+.cart-figma .cart-breadcrumb strong { color:#0c513f; font-weight:750; }
+.cart-figma .cart-intro { display:flex; justify-content:space-between; align-items:center; gap:25px; margin-bottom:31px; }
+.cart-figma .cart-eyebrow,.cart-figma .cart-kicker { color:#729187; font-size:11px; letter-spacing:.13em; font-weight:800; }
+.cart-figma .cart-intro .cart-eyebrow { margin-bottom:10px; }
+.cart-figma .cart-intro h1 { color:#0c513f; font-size:clamp(31px,4vw,49px); letter-spacing:-.05em; margin:0 0 12px; }
+.cart-figma .cart-heading-accent { position:relative; }
+.cart-figma .cart-heading-accent::after { content:""; width:100%; height:5px; position:absolute; bottom:-4px; left:0; background:#ffc501; border-radius:20px; }
+.cart-figma .cart-lead { max-width:700px; font-size:15px; line-height:1.65; margin:0; }
+.cart-figma .cart-explore-link { background:white; border:1px solid #aacdb7; padding:13px 17px; border-radius:13px; color:#0c513f; font-size:13px; font-weight:800; white-space:nowrap; }
+.cart-figma .cart-explore-link:hover { background:#e5f0e8; }
+.cart-figma .cart-layout { display:grid; grid-template-columns:minmax(0,1.72fr) minmax(280px,.86fr); gap:22px; align-items:start; margin:0; }
+.cart-figma .cart-panel,.cart-figma .cart-summary { min-width:0; background:#fff; border:1px solid #dde8df; box-shadow:0 10px 28px rgba(4,54,38,.055); border-radius:23px; padding:25px; }
+.cart-figma .cart-list-heading { display:flex; align-items:center; justify-content:space-between; gap:15px; margin-bottom:18px; }
+.cart-figma .cart-list-heading h2 { font-size:23px; line-height:1.25; color:#0c513f; margin:6px 0 0; }
+.cart-figma .cart-selected-badge { border-radius:30px; background:#eaf5ec; color:#0c513f; font-weight:800; font-size:12px; padding:9px 12px; white-space:nowrap; }
+.cart-figma .cart-select-all { display:flex; align-items:center; gap:11px; font-size:14px; font-weight:800; color:#0c513f; padding:14px 13px; border:1px solid #d8e5db; border-radius:13px; margin-bottom:17px; background:#f7faf6; cursor:pointer; }
+.cart-figma input[type="checkbox"] { accent-color:#0c513f; width:19px; height:19px; cursor:pointer; flex-shrink:0; }
+.cart-figma .cart-salon-group { background:#fff; border:1px solid #deeadf; border-radius:18px; padding:19px 19px 15px; margin:0 0 17px; box-shadow:none; }
+.cart-figma .cart-salon-title { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; border-bottom:1px solid #e3ece5; padding:0 0 13px; margin:0 0 4px; font-size:19px; color:#0c513f; }
+.cart-figma .cart-salon-title .cart-group-select { display:flex; align-items:center; gap:7px; font-size:12px; color:#5d776b; font-weight:700; cursor:pointer; }
+.cart-figma .cart-group-select input { width:17px; height:17px; }
+.cart-figma .cart-service-row { display:grid; grid-template-columns:24px 82px minmax(0,1fr) auto; align-items:center; gap:14px; padding:18px 0; border-bottom:1px solid #edf1eb; min-width:0; }
+.cart-figma .cart-service-row:last-of-type { border-bottom:0; }
+.cart-figma .cart-service-row.is-unselected { opacity:.62; }
+.cart-figma .cart-service-row > .cart-line-check { display:flex; align-items:center; justify-content:center; }
+.cart-figma .cart-service-image { display:block; width:82px; height:82px; border-radius:12px; object-fit:cover; background:#e5f0e8; }
+.cart-figma .cart-service-info { min-width:0; }
+.cart-figma .cart-service-info h4 { margin:0 0 8px; color:#0c513f; font-size:16px; line-height:1.35; }
+.cart-figma .cart-service-info p { font-size:12px; line-height:1.55; color:#648075; margin:5px 0; overflow-wrap:anywhere; }
+.cart-figma .cart-service-edit { display:inline-block; margin-top:5px; color:#0c513f; font-size:12px; font-weight:750; text-decoration:underline; text-underline-offset:2px; }
+.cart-figma .cart-service-actions { display:flex; flex-direction:column; align-items:flex-end; gap:10px; text-align:right; }
+.cart-figma .cart-service-actions strong { color:#0c513f; font-size:16px; white-space:nowrap; }
+.cart-figma .cart-remove { color:#a23c34; border:0; background:transparent; font-size:12px; padding:6px 0; cursor:pointer; text-decoration:underline; }
+.cart-figma .cart-remove:hover { color:#c4261c; }
+.cart-figma .cart-salon-footer { display:flex; align-items:center; justify-content:space-between; gap:15px; flex-wrap:wrap; margin-top:14px; }
+.cart-figma .cart-salon-footer > strong { font-size:15px; color:#0c513f; }
+.cart-figma .cart-book-salon { padding:12px 18px; border:0; border-radius:11px; background:#0c513f; color:#fff; font-weight:800; font-size:13px; min-height:46px; }
+.cart-figma .cart-book-salon:hover:not(:disabled) { background:#063e32; }
+.cart-figma .cart-book-salon:disabled { opacity:.45; cursor:not-allowed; }
+.cart-figma .cart-continue { text-align:center; padding-top:13px; }
+.cart-figma .cart-continue a { color:#0c513f; font-weight:750; font-size:13px; border-bottom:1px solid #0c513f; padding-bottom:2px; }
+.cart-figma .cart-summary { position:sticky; top:18px; background:linear-gradient(180deg,#fff,#fbfefb); }
+.cart-figma .cart-summary h2 { color:#0c513f; font-size:23px; margin:9px 0 18px; }
+.cart-figma .cart-summary-line { border-bottom:1px solid #e4eee6; padding:15px 0; font-size:14px; }
+.cart-figma .cart-summary-line strong { color:#0c513f; }
+.cart-figma .cart-summary-total { align-items:flex-start; border-bottom:0; margin-top:5px; font-weight:800; }
+.cart-figma .cart-summary-total strong { color:#0c513f; font-size:clamp(20px,2vw,25px); white-space:nowrap; }
+.cart-figma .cart-summary-hint { font-size:12px; color:#60766d; line-height:1.65; margin:5px 0 22px; }
+.cart-figma .cart-booking-guide { display:flex; align-items:flex-start; gap:12px; border:1px solid #dce7df; background:#f1f8f2; border-radius:13px; padding:14px; margin:14px 0; }
+.cart-figma .cart-guide-icon { display:grid; place-items:center; flex:0 0 29px; width:29px; height:29px; border-radius:50%; color:#fff; background:#0c513f; font-weight:900; }
+.cart-figma .cart-booking-guide strong { font-size:13px; color:#0c513f; }
+.cart-figma .cart-booking-guide p { font-size:12px; color:#49675a; line-height:1.55; margin:5px 0 0; }
+.cart-figma .cart-back { display:inline-flex; align-items:center; justify-content:center; min-height:48px; border-radius:12px; padding:12px 20px; border:0; background:#ffc501; color:#0c513f; font-weight:850; font-size:13px; text-decoration:none; }
+.cart-figma .cart-back:hover { background:#f4be00; }
+.cart-figma .cart-back-full { width:100%; }
+.cart-figma .cart-footnote { font-size:12px; line-height:1.7; color:#5f776c; margin:17px 0 0; }
+.cart-figma .cart-empty { text-align:center; padding:65px 22px; }
+.cart-figma .cart-empty-icon { display:grid; place-items:center; margin:auto auto 16px; width:75px; height:75px; border-radius:50%; background:#e5f0e8; color:#0c513f; font-size:38px; }
+.cart-figma .cart-empty h2 { color:#0c513f; font-size:25px; margin-bottom:12px; }
+.cart-figma .cart-empty p { font-size:14px; line-height:1.6; }
+.cart-figma [hidden] { display:none !important; }
+@media(max-width:1030px) { .cart-figma .cart-layout { grid-template-columns:1fr; } .cart-figma .cart-summary {position:static;} }
+@media(max-width:750px) { .cart-figma .cart-intro {align-items:flex-start;flex-direction:column;gap:15px}.cart-figma .cart-page{padding:19px 0 60px}.cart-figma .cart-breadcrumb{margin-bottom:21px}.cart-figma .cart-panel,.cart-figma .cart-summary {padding:19px;border-radius:16px}.cart-figma .cart-intro h1{font-size:34px}.cart-figma .cart-salon-group{padding:14px}.cart-figma .cart-service-row {grid-template-columns:20px 66px minmax(0,1fr);gap:9px;align-items:start}.cart-figma .cart-service-image{width:66px;height:72px}.cart-figma .cart-service-actions{grid-column:3;flex-direction:row;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;text-align:left}.cart-figma .cart-service-info h4{font-size:15px}.cart-figma .cart-salon-footer{align-items:stretch;flex-direction:column}.cart-figma .cart-book-salon{width:100%}.cart-figma .cart-select-all{padding:12px}.cart-figma .cart-selected-badge{font-size:11px;padding:7px 9px} }
+@media(max-width:390px){.cart-figma .cart-list-heading{align-items:flex-start;flex-wrap:wrap}.cart-figma .cart-salon-title{font-size:17px}.cart-figma .cart-service-row {grid-template-columns:20px 58px minmax(0,1fr)}.cart-figma .cart-service-image {width:58px;height:65px}.cart-figma .cart-summary-total strong{white-space:normal}}
+/* Defensive spacing even when older inline cart styles are absent. */
+.cart-figma .cart-summary-line { display:flex; justify-content:space-between; align-items:center; gap:14px; }
+.cart-figma .cart-summary-line > span { flex:1; min-width:0; }
+.cart-figma .cart-summary-line > strong { text-align:right; }

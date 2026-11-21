@@ -1,0 +1,45 @@
+/* UI alignment for the four SalonBook booking screens.
+   This is consistent with existing forest/cream/yellow palette; not a pixel-verified Figma export. */
+.booking-page { background:linear-gradient(180deg,#fffdf4 0%,#f8fbf5 100%); }
+.booking-page .booking-progress { position:relative; gap:10px; }
+.booking-page .booking-step { border-radius:16px; min-height:62px; transition:background .18s,border-color .18s; }
+.booking-page .booking-step.is-current { border-color:#0c513f; background:#e5f2e9; box-shadow:0 4px 12px rgba(4,63,39,.08); }
+.booking-page .booking-step.is-complete { border-color:#b4d2bf; }
+.booking-page .booking-step-number { font-variant-numeric:tabular-nums; }
+.booking-page .booking-card { border-radius:22px; box-shadow:0 9px 26px rgba(6,62,50,.055); }
+.booking-page .booking-card h2 { color:#0c513f; letter-spacing:-.02em; }
+.booking-page .booking-check-option,.booking-page .booking-radio-option { min-height:63px; transition:transform .12s,border-color .12s,background .12s; }
+.booking-page .booking-check-option:focus-within,.booking-page .booking-radio-option:focus-within { outline:2px solid #b8d2c2; outline-offset:2px; }
+.booking-page .booking-check-option:has(input:checked),.booking-page .booking-radio-option:has(input:checked) { border-color:#0c513f; background:#eef8f0; }
+.booking-page .booking-field input,.booking-page .booking-field textarea { min-height:46px; }
+.booking-page .booking-sidebar { border-top:5px solid #0c513f; }
+.booking-page .booking-salon-photo { border-radius:15px; }
+.booking-page .booking-summary-title { margin-top:18px; }
+.booking-page .booking-grand-total { padding-top:19px; font-weight:850; }
+.booking-page .booking-time-option { min-height:45px; }
+.booking-page .booking-time-option[aria-pressed=true] { background:#0c513f; color:white; }
+.booking-page .booking-btn.yellow { background:#ffc501; color:#0c513f; }
+.booking-page .booking-success-icon { border:2px solid #b9d5c2; }
+.booking-page .booking-result-card .booking-card { padding:clamp(20px,3vw,40px); }
+.booking-page .booking-checkmark { cursor:pointer; }
+@media(max-width:930px){
+  .booking-page .booking-sidebar { order:2; position:static; }
+  .booking-page .booking-layout { grid-template-columns:minmax(0,1fr); }
+}
+@media(max-width:660px){
+  .booking-page .booking-container { width:calc(100% - 24px); }
+  .booking-page .booking-progress { gap:5px; }
+  .booking-page .booking-step { display:flex; flex-direction:column; gap:6px; justify-content:center; text-align:center; min-height:77px; padding:10px 4px; font-size:10px; line-height:1.2; }
+  .booking-page .booking-step span:last-child { display:block; color:inherit; overflow-wrap:anywhere; }
+  .booking-page .booking-step-number { flex:0 0 29px; width:29px; height:29px; }
+  .booking-page .booking-card { border-radius:15px; padding:20px 16px; }
+  .booking-page .booking-field-grid,.booking-page .booking-stylist-options,.booking-page .booking-readonly-list { grid-template-columns:1fr; }
+  .booking-page .booking-actions { flex-direction:column-reverse; }
+  .booking-page .booking-actions .booking-btn { width:100%; }
+  .booking-page .booking-service-line { flex-wrap:wrap; }
+}
+@media(max-width:365px){
+  .booking-page .booking-step { font-size:9px; padding:8px 3px; }
+  .booking-page .booking-step-number { width:27px; height:27px; flex-basis:27px; }
+  .booking-page .booking-option-price { white-space:normal; }
+}
