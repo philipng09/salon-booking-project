@@ -57,9 +57,15 @@
   // Bảng tin: hiện trả lời mới nhất ngay dưới bài, giống Threads
   function previewReply(post) {
     const last = post.replies[post.replies.length - 1];
+    const text = String(last.content);
     return `<a class="th-reply-preview" href="${detailUrl(post.id)}" data-stop>
-      ${S.avatarHTML(last.author, "xs")}<span><strong>${esc(last.author.name)}</strong> ${esc(String(last.content).slice(0, 90))}${String(last.content).length > 90 ? "…" : ""}</span>
-      ${post.replyCount > 1 ? `<em>Xem ${post.replyCount} trả lời</em>` : ""}</a>`;
+      ${S.avatarHTML(last.author, "xs")}
+      <span class="th-rp-body">
+        <span class="th-rp-head"><strong>${esc(last.author.name)}</strong>${S.badgeHTML(last.author)}<time datetime="${esc(last.createdAt)}">${S.timeAgo(last.createdAt)}</time></span>
+        <span class="th-rp-text">${esc(text.slice(0, 120))}${text.length > 120 ? "…" : ""}</span>
+        ${post.replyCount > 1 ? `<span class="th-rp-more">Xem tất cả ${post.replyCount} trả lời</span>` : ""}
+      </span>
+    </a>`;
   }
 
   function replyHTML(reply, postId) {

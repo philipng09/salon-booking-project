@@ -340,3 +340,31 @@ img {
 @media (max-width: 360px) {
   .site-header .nav-shell .brand span { font-size: 17px; }
 }
+
+/* --------------------------------------------------------------------------
+   7. HEADER KHI ĐÃ ĐĂNG NHẬP (BUG-H5, Phi 21/11)
+   "Xin chào, <họ tên>" + nút Đăng xuất chiếm chỗ → menu "Trang chủ",
+   "Đặt lịch"... bị xuống 2 dòng và đè lên logo ở màn hình ≤ 1366px.
+   -------------------------------------------------------------------------- */
+.site-header .main-nav a { white-space: nowrap; }
+.site-header .nav-shell .brand { flex: 0 0 auto; }
+.site-header .nav-shell .nav-actions { flex: 0 1 auto; min-width: 0; }
+.site-header #auth-action-container { display: flex; align-items: center; min-width: 0; }
+.site-header #auth-action-container > span {
+  max-width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+.site-header .nav-shell .btn-top { white-space: nowrap; }
+
+/* Màn hình laptop: ẩn lời chào, chỉ giữ nút Đăng xuất; thu ô tìm kiếm */
+@media (max-width: 1439px) {
+  .site-header #auth-action-container > span { display: none; }
+  .site-header .nav-shell .header-search-box { width: 200px; min-width: 0; }
+}
+@media (max-width: 1280px) {
+  .site-header .nav-shell .header-search-box { display: none !important; }
+  .site-header .main-nav { gap: clamp(14px, 2vw, 28px); }
+}

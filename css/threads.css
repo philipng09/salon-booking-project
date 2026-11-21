@@ -25,11 +25,13 @@
 
 /* ---------- Avatar & huy hiệu ---------- */
 .th-avatar {
-  flex: 0 0 auto;
+  flex: 0 0 auto;              /* không co/giãn theo flex của khối cha */
   display: inline-grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
+  aspect-ratio: 1 / 1;
+  line-height: 1;
   border-radius: 50%;
   overflow: hidden;
   background: var(--forest);
@@ -39,8 +41,8 @@
   border: 1px solid var(--line);
 }
 .th-avatar img { width: 100%; height: 100%; object-fit: cover; background: #fff; }
-.th-avatar-sm { width: 34px; height: 34px; font-size: 12px; }
-.th-avatar-xs { width: 22px; height: 22px; font-size: 9px; }
+.th-avatar-sm { width: 32px; height: 32px; font-size: 12px; }
+.th-avatar-xs { width: 24px; height: 24px; font-size: 9.5px; }
 .th-badge {
   display: inline-grid; place-items: center;
   width: 16px; height: 16px; margin-left: 4px;
@@ -209,14 +211,26 @@
 .th-like.pop svg { animation: th-pop .35s ease; }
 @keyframes th-pop { 50% { transform: scale(1.35); } }
 
+/* Trả lời xem trước dưới bài – kiểu Threads: avatar nhỏ + đường nối, không khung nền */
 .th-reply-preview {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 4px; padding: 8px 10px;
-  border-radius: 12px; background: var(--cream); font-size: 13.5px; color: var(--muted);
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 6px;
+  padding: 10px 0 4px;
+  border-top: 1px solid var(--line);
+  color: var(--ink);
 }
-.th-reply-preview span { flex: 1; min-width: 0; color: var(--ink); }
-.th-reply-preview em { font-style: normal; font-weight: 700; color: var(--forest); }
+.th-rp-body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px; font-size: 14px; line-height: 1.45; }
+.th-rp-head { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 6px; }
+.th-rp-head strong { font-weight: 800; }
+.th-rp-head time { color: var(--muted); font-size: 13px; }
+.th-rp-text { color: var(--ink); overflow-wrap: anywhere; }
+.th-rp-more { margin-top: 2px; color: var(--muted); font-size: 13.5px; font-weight: 600; }
 
 @media (hover: hover) {
+  .th-reply-preview:hover .th-rp-more { color: var(--forest); text-decoration: underline; }
   .th-post[data-open]:hover { background: #fcfdfb; }
   .th-act:hover { background: var(--mint); color: var(--forest); }
   .th-like:hover { background: #fde8ef; color: #e0245e; }
@@ -287,9 +301,9 @@
   .th-composer { padding: 12px 14px; border-radius: 18px; }
   .th-post { padding: 14px 14px 8px; gap: 10px; }
   .th-post.is-detail { padding: 16px; }
-  .th-avatar { width: 38px; height: 38px; }
+  .th-avatar { width: 36px; height: 36px; }
   .th-avatar-sm { width: 30px; height: 30px; }
-  .th-avatar-xs { width: 22px; height: 22px; }
+  .th-avatar-xs { width: 24px; height: 24px; }
   .th-feed, .th-replies { border-radius: 18px; }
   .th-composer-actions .compose-note { flex-basis: 100%; }
   .th-composer-actions .btn { flex: 1; }
