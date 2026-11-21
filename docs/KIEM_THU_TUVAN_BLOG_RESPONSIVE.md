@@ -57,6 +57,8 @@ Trang: index, products, product-detail?id=1, cart, auth, profile, tuvan, blog, b
 | BUG-H4 | products/about luôn hiện "Đăng ký / Đăng nhập" kể cả khi đã đăng nhập | Thiếu js/auth.js | Thêm auth.js vào 2 trang | Pass |
 | BUG-T1 | Tư vấn: nút "Bắt đầu tư vấn" chỉ hiện alert | Bước 4 chưa làm | Loading + kết quả mô phỏng + gợi ý salon | Pass |
 | BUG-T2 | Nút "Sử dụng camera" cao 30px | Vùng chạm nhỏ | min-height 44px | Pass |
+| BUG-H5 | Đã đăng nhập: menu "Trang chủ", "Đặt lịch"... xuống 2 dòng, đè lên logo ở ≤1366px | Lời chào "Xin chào, <họ tên>" + nút Đăng xuất chiếm chỗ, link menu được phép xuống dòng | Menu không xuống dòng; ẩn lời chào <1440px; thu/ẩn ô tìm kiếm ≤1280px (responsive-ux.css mục 7) | Pass |
+| BUG-B2 | Avatar trả lời xem trước bị kéo thành hình bầu dục | `.th-reply-preview span {flex:1}` áp cả vào avatar | Tách khối chữ riêng, avatar flex: 0 0 auto + aspect-ratio 1:1 | Pass |
 | BUG-B1 | Bài mới đăng không lên đầu tab "Mới nhất" | So sánh chuỗi ngày có múi giờ khác nhau (+07:00 và Z) | So sánh theo Date.getTime() | Pass |
 | BUG-T3 | Ảnh `src=""` gửi request thừa | Thẻ img để src rỗng | Bỏ thuộc tính src, dùng removeAttribute | Pass |
 
