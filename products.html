@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Khám phá salon | SalonBook</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/products.css">
+  <link rel="stylesheet" href="css/responsive-ux.css">
+  <link rel="stylesheet" href="css/cart.css">
+
+  <!-- FIX: Đồng bộ cả CSS và JS Leaflet cùng một CDN (jsDelivr). -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
+        onerror="this.onerror=null;this.href='https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'">
+  <link rel="stylesheet" href="css/salon-map.css">
+  <style>
+    .salon-price-inputs {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+    .salon-price-inputs label {display:flex;flex-direction:column;gap:5px;font-size:.85rem;min-width:0}
+    .salon-price-inputs input {width:100%;min-width:0;box-sizing:border-box;padding:9px;border:1px solid #bcbcbc;border-radius:6px}
+    .salon-filter-error {color:#b42318;font-size:.85rem;margin:6px 0 0}
+    @media(max-width:420px){.salon-price-inputs{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
+      <img src="images/salonbook-mark.png" alt="" width="46" height="54">
+      <span>SALON<span class="brand-thin">BOOK</span></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
+    <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+      <a href="index.html">Trang chủ</a>
+      <a href="products.html" class="active" aria-current="page">Đặt lịch</a>
+      <a href="blog.html">Blog</a>
+      <a href="tuvan.html">Tư vấn</a>
+      <a href="about.html">Giới thiệu</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="header-search-box">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" id="header-quick-search" placeholder="Tìm kiếm salon,..." aria-label="Tìm kiếm nhanh salon">
+      </div>
+      <div id="auth-action-container"><a class="btn btn-yellow btn-top" href="auth.html">Đăng ký / Đăng nhập</a></div>
+    </div>
+  </div>
+</header>
+
+<main class="products-page"><div class="container">
+  <section class="products-heading">
+    <h1>Khám phá salon</h1>
+    <p>Tìm salon phù hợp với phong cách và nhu cầu làm đẹp của bạn.</p>
+  </section>
+  <div class="products-toolbar">
+    <input type="search" id="salon-search" placeholder="Tìm tên salon..." aria-label="Tìm kiếm salon">
+    <select id="sort-salon" aria-label="Sắp xếp salon">
+      <option value="default">Thứ tự mặc định</option>
+      <option value="name">Tên salon A–Z</option>
+      <option value="name-desc">Tên salon Z–A</option>
+      <option value="price-asc">Giá: Thấp đến cao</option>
+      <option value="price-desc">Giá: Cao xuống thấp</option>
+      <option value="rating-desc">Đánh giá: Cao xuống thấp</option>
+    </select>
+  </div>
+  <div class="products-layout">
+    <aside class="products-sidebar">
+      <h2>Bộ lọc</h2>
+      <div class="filter-group"><h3>Khu vực</h3>
+        <label class="filter-option"><input type="checkbox" name="district" value="quan-1">Quận 1</label>
+        <label class="filter-option"><input type="checkbox" name="district" value="quan-3">Quận 3</label>
+        <label class="filter-option"><input type="checkbox" name="district" value="quan-5">Quận 5</label>
+        <label class="filter-option"><input type="checkbox" name="district" value="quan-7">Quận 7</label>
+        <label class="filter-option"><input type="checkbox" name="district" value="quan-10">Quận 10</label>
+        <label class="filter-option"><input type="checkbox" name="district" value="binh-thanh">Bình Thạnh</label>
+        <label class="filter-option"><input type="checkbox" name="district" value="khac">Khu vực khác</label>
+      </div>
+      <div class="filter-group"><h3>Dịch vụ</h3>
+        <label class="filter-option"><input type="checkbox" name="service" value="cat-tao-kieu">Cắt &amp; tạo kiểu</label>
+        <label class="filter-option"><input type="checkbox" name="service" value="nhuom-toc">Nhuộm tóc</label>
+        <label class="filter-option"><input type="checkbox" name="service" value="goi-thu-gian">Gội &amp; thư giãn</label>
+        <label class="filter-option"><input type="checkbox" name="service" value="phuc-hoi-toc">Phục hồi tóc</label>
+      </div>
+      <div class="filter-group"><h3>Loại salon</h3>
+        <label class="filter-option"><input type="checkbox" name="salon-type" value="nam">Salon Nam / Barbershop</label>
+        <label class="filter-option"><input type="checkbox" name="salon-type" value="nu">Salon Nữ</label>
+        <label class="filter-option"><input type="checkbox" name="salon-type" value="unisex">Salon Unisex</label>
+      </div>
+      <div class="filter-group"><h3>Mức giá dịch vụ</h3>
+        <label class="filter-option"><input type="radio" name="price-range" value="" checked>Tất cả mức giá</label>
+        <label class="filter-option"><input type="radio" name="price-range" value="under-100">Dưới 100.000đ</label>
+        <label class="filter-option"><input type="radio" name="price-range" value="100-300">100.000–300.000đ</label>
+        <label class="filter-option"><input type="radio" name="price-range" value="300-500">300.000–500.000đ</label>
+        <label class="filter-option"><input type="radio" name="price-range" value="over-500">Trên 500.000đ</label>
+        <div class="salon-price-inputs">
+          <label>Giá từ (đ)<input type="number" id="price-min" min="0" step="1000" placeholder="Tối thiểu"></label>
+          <label>Đến (đ)<input type="number" id="price-max" min="0" step="1000" placeholder="Tối đa"></label>
+        </div>
+        <p id="price-error" class="salon-filter-error" role="status" aria-live="polite"></p>
+      </div>
+      <div class="filter-group"><h3>Đánh giá salon</h3>
+        <label class="filter-option"><input type="radio" name="rating-min" value="0" checked>Tất cả đánh giá</label>
+        <label class="filter-option"><input type="radio" name="rating-min" value="3">Từ 3 sao</label>
+        <label class="filter-option"><input type="radio" name="rating-min" value="4">Từ 4 sao</label>
+        <label class="filter-option"><input type="radio" name="rating-min" value="4.5">Từ 4,5 sao</label>
+      </div>
+      <button type="button" class="filter-reset" id="reset-filters">Xóa bộ lọc</button>
+
+      <!-- Bản đồ theo Figma: dưới phần lọc, giữ giao diện danh sách salon. -->
+      <section class="salon-nearby-panel" aria-labelledby="salon-map-heading">
+        <h3 id="salon-map-heading">BẢN ĐỒ SALON GẦN BẠN</h3>
+        <p class="salon-map-description">Xem các salon phù hợp với bộ lọc hiện tại trên bản đồ.</p>
+        <div class="salon-map-controls">
+          <button type="button" id="salon-find-my-location">⌖ Vị trí của tôi</button>
+          <button type="button" id="salon-map-show-all">Xem tất cả</button>
+        </div>
+        <div class="salon-map-frame">
+          <div id="salon-map" role="region" tabindex="0" aria-label="Bản đồ vị trí salon tại TP. Hồ Chí Minh"></div>
+          <span class="salon-map-position-label" id="salon-map-position-label">Khu vực: TP. Hồ Chí Minh</span>
+        </div>
+        <p class="salon-map-status" id="salon-map-status" role="status" aria-live="polite">Đang tải bản đồ...</p>
+        <div class="salon-map-nearest" id="salon-map-nearest" hidden></div>
+        <a class="salon-map-external" id="salon-map-open-external" href="https://www.google.com/maps/@10.7769,106.7009,12z" target="_blank" rel="noopener noreferrer">Mở Google Maps ↗</a>
+      </section>
+    </aside>
+
+    <section class="products-results">
+      <p class="products-count" id="salon-count" aria-live="polite">Đang hiển thị 10 salon</p>
+      <div class="products-grid" id="salon-grid"></div>
+      <div class="products-empty" id="salon-empty">Không tìm thấy salon phù hợp. Hãy thử thay đổi bộ lọc nhé!</div>
+    </section>
+  </div>
+</div></main>
+
+<footer class="site-footer"><div class="container footer-inner">
+  <a class="footer-brand" href="index.html"><img src="images/salonbook-mark-white.png" alt="" width="44" height="50">SALONBOOK</a>
+  <p>YOUR BEAUTY, YOUR TIME</p>
+  <small>Nguyên mẫu học tập · Nền tảng kết nối nhiều salon · Chưa nhận đặt lịch thật</small>
+</div></footer>
+
+<script src="js/common.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/render-products.js"></script>
+<!-- FIX: Nạp thư viện JS cùng phiên bản với CSS. -->
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- Tệp tiện ích đã có sẵn trên GitHub, KHÔNG cần sửa. -->
+<script src="js/salon-map-utils.js"></script>
+<script src="js/salon-map.js"></script>
+
+<script>
+// Nhãn phục vụ hàm render-products.js dùng chung.
+if (typeof window.getSalonTypeLabel !== 'function') {
+  window.getSalonTypeLabel = type => ({nam:'Salon Nam / Barbershop',nu:'Salon Nữ',unisex:'Salon Unisex'})[type] || 'Salon';
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  'use strict';
+  if (typeof products === 'undefined' || typeof renderProducts !== 'function') return;
+  const $ = id => document.getElementById(id);
+  const search = $('salon-search'), header = $('header-quick-search');
+  const sort = $('sort-salon'), min = $('price-min'), max = $('price-max'), error = $('price-error');
+  const params = new URLSearchParams(location.search);
+  const normalize = value => String(value ?? '').toLocaleLowerCase('vi').normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').trim();
+  const selected = name => [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(el => el.value);
+  const one = name => document.querySelector(`input[name="${name}"]:checked`)?.value || '';
+  const choose = (name, value) => {
+    const input = [...document.querySelectorAll(`input[name="${name}"]`)].find(el => el.value === value);
+    if (input) input.checked = true;
+  };
+  const areaMap = {'Quận 1':'quan-1','Quận 3':'quan-3','Quận 5':'quan-5','Quận 7':'quan-7',
+    'Quận 10':'quan-10','Bình Thạnh':'binh-thanh','Khu vực khác':'khac','Gò Vấp':'khac'};
+  const serviceMap = {'Cắt & tạo kiểu':'cat-tao-kieu','Nhuộm tóc':'nhuom-toc',
+    'Gội & thư giãn':'goi-thu-gian','Phục hồi tóc':'phuc-hoi-toc',
+    'uon-nhuom':'nhuom-toc','goi-duong-sinh':'goi-thu-gian','phuc-hoi':'phuc-hoi-toc'};
+  const requestedService = params.get('service') || '';
+  let pendingService = serviceMap[requestedService] ? '' : normalize(requestedService);
+  choose('district', areaMap[params.get('area') || ''] || '');
+  choose('salon-type', params.get('type') || '');
+  choose('service', serviceMap[requestedService] || '');
+  search.value = params.get('q') || params.get('search') || '';
+  if (header) header.value = search.value;
+  if (params.get('date')) {
+    const description = document.querySelector('.products-heading p');
+    if (description) description.textContent = `Ngày dự kiến: ${params.get('date')} — khung giờ trống sẽ được xác nhận khi đặt lịch.`;
+  }
+  const goodPrice = p => typeof p === 'number' && Number.isFinite(p) && p >= 0;
+  const goodRating = s => typeof s.rating === 'number' && Number.isFinite(s.rating) && s.rating >= 0 && s.rating <= 5;
+  const services = s => Array.isArray(s.servicesList) ? s.servicesList : [];
+  function matchingServices(s, f) {
+    const offered = services(s);
+    if (f.services.length && !f.services.every(code => offered.some(item => item.value === code))) return [];
+    return offered.filter(item => {
+      const n = normalize(item.name);
+      return (!f.services.length || f.services.includes(item.value)) &&
+        (!f.pendingService || n.includes(f.pendingService) || f.pendingService.includes(n));
+    });
+  }
+  function inPriceRange(price, f) {
+    if (!goodPrice(price)) return false;
+    const ranges = {'under-100':price < 100000,'100-300':price >= 100000 && price < 300000,
+      '300-500':price >= 300000 && price <= 500000,'over-500':price > 500000};
+    return (!f.range || ranges[f.range] === true) && (f.min === null || price >= f.min) &&
+      (f.max === null || price <= f.max);
+  }
+  function lowestPrice(s, f) {
+    const values = matchingServices(s,f).map(x => x.price).filter(p => inPriceRange(p,f));
+    return values.length ? Math.min(...values) : null;
+  }
+  function readFilters() {
+    return {query:normalize(search.value),districts:selected('district'),types:selected('salon-type'),
+      services:selected('service'),pendingService,range:one('price-range'),
+      min:min.value === '' ? null : Number(min.value),
+      max:max.value === '' ? null : Number(max.value),rating:Number(one('rating-min') || 0)};
+  }
+  function filterSalons(salons, f) {
+    const filterPrice = !!f.range || f.min !== null || f.max !== null;
+    return salons.filter(s => {
+      if (f.query && !normalize(s.name).includes(f.query)) return false;
+      if (f.districts.length && !f.districts.includes(s.district)) return false;
+      if (f.types.length && !f.types.includes(s.salonType)) return false;
+      if (f.rating && (!goodRating(s) || s.rating < f.rating)) return false;
+      const offered = matchingServices(s,f);
+      if ((f.services.length || f.pendingService) && !offered.length) return false;
+      if (filterPrice && !offered.some(x => inPriceRange(x.price,f))) return false;
+      return true;
+    });
+  }
+  function sortSalons(salons, option, f) {
+    const result = [...salons];
+    if (option === 'name' || option === 'name-desc') {
+      result.sort((a,b) => option === 'name' ? a.name.localeCompare(b.name,'vi') : b.name.localeCompare(a.name,'vi'));
+    }
+    if (option === 'rating-desc') result.sort((a,b) => (goodRating(b)?b.rating:-1) - (goodRating(a)?a.rating:-1));
+    if (option === 'price-asc' || option === 'price-desc') {
+      const dir = option === 'price-asc' ? 1 : -1;
+      result.sort((a,b) => {const pa=lowestPrice(a,f), pb=lowestPrice(b,f);
+        if(pa===null) return pb===null ? 0 : 1;
+        if(pb===null) return -1;
+        return dir*(pa-pb);
+      });
+    }
+    return result;
+  }
+  function update() {
+    const f = readFilters();
+    const invalid = (f.min !== null && (!Number.isFinite(f.min) || f.min < 0)) ||
+      (f.max !== null && (!Number.isFinite(f.max) || f.max < 0)) ||
+      (f.min !== null && f.max !== null && f.min > f.max);
+    error.textContent = invalid ? 'Khoảng giá không hợp lệ.' : '';
+    min.setAttribute('aria-invalid', String(invalid));
+    max.setAttribute('aria-invalid', String(invalid));
+    const result = invalid ? [] : sortSalons(filterSalons(products,f),sort.value,f);
+    renderProducts(result);
+    result.forEach(s => {
+      const card = [...document.querySelectorAll('#salon-grid .product-salon-card')]
+        .find(el => el.dataset.id === String(s.id));
+      if (!card) return;
+      if (!goodRating(s)) {
+        const rating = card.querySelector('.salon-rating');
+        if (rating) rating.textContent = 'Chưa có đánh giá';
+      }
+      if (!services(s).some(x => goodPrice(x.price))) {
+        const price = card.querySelector('.salon-price');
+        if (price) price.textContent = 'Chưa cập nhật giá';
+      }
+    });
+    window.SalonBookFilteredSalons = [...result];
+    window.dispatchEvent(new CustomEvent('salonbook:results-changed',
+      {detail:{salons:[...result],count:result.length}}));
+  }
+  search.addEventListener('input',() => {if(header) header.value=search.value;update()});
+  if (header) {
+    header.addEventListener('input',() => {search.value=header.value;update()});
+    header.addEventListener('keydown',e => {if(e.key==='Enter'){e.preventDefault();search.focus()}});
+  }
+  document.querySelectorAll('input[name="district"],input[name="service"],input[name="salon-type"],input[name="price-range"],input[name="rating-min"]')
+    .forEach(el => el.addEventListener('change',() => {if(el.name==='service') pendingService='';update()}));
+  [min,max].forEach(el => el.addEventListener('input',update));
+  sort.addEventListener('change',update);
+  $('reset-filters').addEventListener('click',() => {
+    search.value=''; if(header) header.value='';
+    document.querySelectorAll('input[name="district"],input[name="service"],input[name="salon-type"]')
+      .forEach(el => el.checked=false);
+    choose('price-range','');choose('rating-min','0');
+    min.value='';max.value='';pendingService='';sort.value='default';
+    history.replaceState(null,'',location.pathname);
+    update();
+  });
+  update();
+});
+</script>
+</body>
+</html>
