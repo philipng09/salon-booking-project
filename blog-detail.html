@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0C513F">
+    <meta name="description" content="Blog SalonBook - xu hướng tóc, chăm sóc tóc, review salon và mẹo đặt lịch tại TP.HCM.">
+    <title>Bài viết | Blog SalonBook</title>
+    <!-- CSS dùng chung từ dự án -->
+    <link rel="stylesheet" href="css/style.css?v=3">
+    <!-- CSS riêng cho trang Blog -->
+    <link rel="stylesheet" href="css/blog.css">
+    <link rel="stylesheet" href="css/threads.css">
+  <link rel="stylesheet" href="css/responsive-ux.css">
+  <link rel="stylesheet" href="css/cart.css">
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+
+ <header class="site-header">
+    <div class="container nav-shell">
+        <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
+            <img src="images/salonbook-mark.png" alt="" width="46" height="54">
+            <span>SALON<span class="brand-thin">BOOK</span></span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
+
+        <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+            <a href="index.html" >Trang chủ</a>
+            <a href="products.html">Đặt lịch</a>
+            <a href="blog.html" class="active">Blog</a>
+            <a href="tuvan.html">Tư vấn</a>
+            <a href="about.html">Giới thiệu</a>
+           
+        </nav>
+
+        <div class="nav-actions">
+            <!-- 1. Ô tìm kiếm nhanh -->
+           <div class="header-search-box">
+    <!-- Icon kính lúp SVG nét thanh mảnh, hiện đại -->
+    <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+    <input type="text" placeholder="Tìm kiếm salon,..." id="header-quick-search">
+</div>
+
+            <!-- 3. Nút Đăng ký / Đăng nhập nằm cuối -->
+            <div id="auth-action-container">
+                <a class="btn btn-yellow btn-top" href="auth.html">
+                    Đăng ký / Đăng nhập
+                </a>
+            </div>
+        </div>
+    </div>
+  </header>
+
+<main id="main-content" class="blog-page th-page">
+      <div class="container th-layout">
+        <section class="th-feed-col" aria-label="Bài viết">
+          <nav class="th-back"><a href="blog.html" id="back-link">← Bảng tin</a></nav>
+
+          <div id="thread-root" aria-live="polite"><p class="post-loading">Đang tải bài viết…</p></div>
+
+          <!-- Ô TRẢ LỜI -->
+          <section class="th-composer th-reply-box" id="reply" aria-label="Trả lời bài viết" hidden>
+            <form id="reply-form" novalidate>
+              <div class="th-composer-row">
+                <span id="reply-avatar"></span>
+                <textarea id="reply-content" rows="2" maxlength="300" placeholder="Trả lời…" aria-label="Nội dung trả lời" aria-describedby="err-reply"></textarea>
+                <button type="submit" class="btn btn-yellow th-post-btn" id="reply-submit">Gửi</button>
+              </div>
+              <small class="field-error" id="err-reply" role="alert"></small>
+            </form>
+            <p class="compose-guest" id="reply-guest" hidden>
+              <a href="auth.html" id="reply-login">Đăng nhập</a> để trả lời và thả tim bài viết.
+            </p>
+          </section>
+
+          <section class="th-replies" aria-labelledby="replies-title" id="replies-section" hidden>
+            <h2 id="replies-title" class="th-replies-title">Trả lời <span id="reply-count"></span></h2>
+            <div id="reply-list"></div>
+          </section>
+        </section>
+
+        <aside class="th-side" aria-label="Bài viết liên quan">
+          <section class="side-box">
+            <h2>Cùng chủ đề</h2>
+            <ol class="side-list" id="related-list"></ol>
+          </section>
+          <section class="side-box side-cta">
+            <h2>Sẵn sàng làm tóc?</h2>
+            <p>Thử chọn kiểu tóc trên trang Tư vấn rồi đặt lịch với salon phù hợp.</p>
+            <a class="btn btn-yellow" href="tuvan.html">Tư vấn kiểu tóc</a>
+          </section>
+        </aside>
+      </div>
+    </main>
+
+
+<!-- FOOTER DÙNG CHUNG: chép trực tiếp từ components/footer.html -->
+<footer class="site-footer">
+    <div class="container footer-inner">
+
+        <a class="footer-brand" href="index.html">
+            <img src="images/salonbook-mark-white.png"
+                 alt=""
+                 width="44"
+                 height="50">
+            SALONBOOK
+        </a>
+
+        <p>YOUR BEAUTY, YOUR TIME</p>
+
+        <small>
+            Nguyên mẫu học tập · Nền tảng kết nối nhiều salon ·
+            Chưa nhận đặt lịch thật
+        </small>
+
+    </div>
+</footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/blogs.js"></script>
+  <script src="js/blog-store.js"></script>
+  <script src="js/thread-ui.js"></script>
+  <script src="js/blog-detail.js"></script>
+</body>
+</html>

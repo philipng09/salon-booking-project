@@ -273,3 +273,70 @@ img {
     min-height: var(--tap-size);
   }
 }
+
+/* --------------------------------------------------------------------------
+   6. HEADER DÙNG CHUNG – SỬA TRÀN NGANG (Kiểm thử hoàn thiện 21–22/11, Phi)
+   BUG-H1: ở 768px thanh header (5 menu + ô tìm kiếm + giỏ + nút đăng nhập)
+           rộng hơn màn hình 52–228px trên 8/10 trang.
+   BUG-H2: ở 390px, homepage-v4.css ép .nav-actions hiện (display:flex !important)
+           trên index/tuvan → tràn 196px; các trang khác lại ẩn hẳn nút Đăng nhập.
+   -------------------------------------------------------------------------- */
+@media (max-width: 1100px) {
+  /* Ô tìm kiếm nhanh trên header nhường chỗ; trang Đặt lịch đã có ô tìm kiếm riêng */
+  .site-header .nav-shell .header-search-box { display: none !important; }
+  .site-header .nav-shell .btn-top { padding: 11px 16px; border-radius: 14px; font-size: 13px; }
+  .site-header .nav-shell .nav-actions { gap: 12px; }
+}
+
+/* BUG-H3: 761–900px menu 5 mục chen vào logo → chuyển sang menu ☰ sớm hơn */
+@media (min-width: 761px) and (max-width: 900px) {
+  .site-header .nav-shell .nav-toggle {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    order: 3;
+    margin-left: 4px;
+    font-size: 22px;
+    border: 0;
+    cursor: pointer;
+  }
+  .site-header .nav-shell .nav-actions { order: 2; margin-left: auto; }
+  .site-header .main-nav {
+    display: none;
+    position: absolute;
+    top: 86px;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    background: var(--cream);
+    padding: 18px 22px;
+    box-shadow: var(--shadow);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 4px;
+  }
+  .site-header .main-nav.is-open { display: flex; }
+  .site-header .main-nav a { font-size: 15px; min-height: 44px; display: flex; align-items: center; }
+}
+
+@media (max-width: 760px) {
+  /* Điện thoại: giữ nút Đăng nhập/Đăng xuất, ẩn link giỏ trên header
+     (giỏ đã có trong menu ☰ qua .cart-mobile-link do cart.js chèn) */
+  .site-header .nav-shell .nav-actions {
+    display: flex !important;
+    order: 2;
+    margin-left: auto;
+    gap: 8px !important;
+    min-width: 0;
+  }
+  .site-header .nav-shell .nav-toggle { order: 3; margin-left: 4px; }
+  .site-header .nav-shell .cart-nav-link { display: none !important; }
+  .site-header .nav-shell #auth-action-container { display: flex; align-items: center; min-width: 0; }
+  .site-header .nav-shell #auth-action-container > span { display: none; } /* "Xin chào, ..." */
+  .site-header .nav-shell .btn-top { padding: 10px 12px; min-height: 40px; font-size: 12.5px; }
+}
+
+@media (max-width: 360px) {
+  .site-header .nav-shell .brand span { font-size: 17px; }
+}
