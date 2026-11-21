@@ -59,7 +59,7 @@ function renderProducts(list) {
   ${getSalonTypeLabel(salon.salonType)} · ${salon.districtName}
 </span>
             <span class="salon-rating" style="font-size: 0.9rem; font-weight: 600; color: #d97706;">
-              ⭐ ${salon.rating || 5.0} (${salon.reviewCount || 0} đánh giá)
+              ⭐ ${salon.rating || 5.0}
             </span>
           </div>
 
