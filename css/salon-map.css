@@ -254,3 +254,9 @@
 #salon-map.leaflet-container {
   isolation: isolate;
 }
+
+/* Ẩn lượt đánh giá trên card salon trong trang Khám phá */
+.products-results .salon-rating-count {
+    display: none !important;
+}
+
