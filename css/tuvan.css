@@ -464,3 +464,223 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+/* ==========================================================================
+   BƯỚC 4 – 6: KẾT QUẢ MÔ PHỎNG, BOOKING, LỊCH SỬ, RESPONSIVE (Phi)
+   ========================================================================== */
+
+/* Danh sách điều kiện còn thiếu dưới nút tư vấn */
+.consult-requirements {
+  list-style: none;
+  margin: -2px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.consult-requirements li::before { content: "○ "; }
+.consult-requirements li.is-done { color: var(--forest); }
+.consult-requirements li.is-done::before { content: "✓ "; font-weight: 900; }
+
+/* Ảnh kiểu tóc lỗi */
+.preset-frame.is-broken::after {
+  content: "Không tải được ảnh";
+  position: absolute;
+  inset: 9px;
+  display: grid;
+  place-items: center;
+  background: #f5f7f3;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Khung kết quả + lịch sử dùng chung thẻ trắng */
+.consult-result,
+.consult-history {
+  max-width: 1180px;
+  margin: 24px auto 0;
+  padding: 26px 28px;
+  border-radius: 20px;
+  background: #fff;
+  scroll-margin-top: 96px;
+}
+.consult-result:focus { outline: none; }
+
+/* Loading */
+.consult-loading {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding: 36px 12px;
+  text-align: center;
+}
+.loading-spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid var(--mint);
+  border-top-color: var(--forest);
+  border-radius: 50%;
+  animation: tuvan-spin .8s linear infinite;
+}
+@keyframes tuvan-spin { to { transform: rotate(360deg); } }
+.loading-text { margin: 0; font-weight: 700; color: var(--forest); }
+.loading-bar {
+  width: min(320px, 100%);
+  height: 6px;
+  border-radius: 999px;
+  background: var(--mint);
+  overflow: hidden;
+}
+.loading-bar span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--yellow);
+  transition: width .6s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner { animation-duration: 2.4s; }
+  .loading-bar span { transition: none; }
+}
+
+/* Đầu khối kết quả */
+.result-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.simulation-badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #fff3c4;
+  color: #7a5a00;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+}
+.simulation-note {
+  margin: 12px 0 20px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--yellow);
+  border-radius: 8px;
+  background: #fffbea;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #4a5a54;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+.result-compare {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+.result-compare figure { margin: 0; text-align: center; }
+.result-compare img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center 20%;
+  border-radius: 14px;
+  background: var(--mint);
+}
+.result-compare figcaption { margin-top: 8px; font-size: 13px; font-weight: 700; color: var(--forest); }
+.compare-arrow { font-size: 22px; font-weight: 900; color: var(--forest); }
+
+.result-score-label { margin: 0; font-size: 13px; color: var(--muted); }
+.result-score { margin: 2px 0 8px; font-size: 44px; font-weight: 900; color: var(--forest); line-height: 1; }
+.score-bar { height: 8px; border-radius: 999px; background: var(--mint); overflow: hidden; }
+.score-bar span { display: block; height: 100%; width: 0; background: var(--forest); transition: width .8s ease; }
+.result-detail h3 { margin: 18px 0 6px; font-size: 22px; color: var(--deep); }
+.result-detail > p { margin: 0 0 12px; color: #4a5a54; line-height: 1.55; }
+.result-tips { margin: 0; padding-left: 20px; color: #4a5a54; font-size: 14px; line-height: 1.6; }
+
+/* Salon gợi ý – chuyển sang Booking */
+.result-salons { margin-top: 28px; }
+.result-salons h3 { margin: 0 0 14px; font-size: 18px; color: var(--deep); }
+.salon-suggest-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.salon-suggest-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.salon-suggest-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.salon-suggest-body { display: flex; flex-direction: column; gap: 4px; padding: 14px; flex: 1; }
+.salon-suggest-body h4 { margin: 0; font-size: 16px; color: var(--deep); }
+.salon-suggest-body p { margin: 0; font-size: 13px; color: var(--muted); }
+.salon-suggest-price { font-weight: 700; color: var(--forest) !important; }
+.salon-suggest-body .btn { margin-top: 10px; padding: 11px 14px; border-radius: 10px; font-size: 14px; text-align: center; }
+.suggest-empty { color: var(--muted); }
+
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+.result-actions .btn { padding: 13px 20px; border-radius: 10px; font-size: 14px; min-height: 44px; }
+
+/* Lịch sử */
+.history-note { margin: 6px 0 14px; font-size: 13px; color: var(--muted); }
+.history-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.history-item {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.history-item img { width: 52px; height: 52px; object-fit: cover; object-position: center 20%; border-radius: 10px; }
+.history-item strong { display: block; color: var(--deep); }
+.history-item span { font-size: 13px; color: var(--muted); }
+.history-reselect { padding: 8px 14px; border-radius: 10px; font-size: 13px; min-height: 40px; }
+.btn-link-danger {
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: #b42318;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+/* BƯỚC 6: Responsive cho phần bổ sung */
+@media (max-width: 960px) {
+  .result-grid { grid-template-columns: 1fr; }
+  .salon-suggest-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .tuvan-card,
+  .consult-result,
+  .consult-history { padding: 20px 16px; }
+  .salon-suggest-grid { grid-template-columns: 1fr; }
+  .result-actions { flex-direction: column-reverse; }
+  .result-actions .btn { width: 100%; text-align: center; }
+  .result-score { font-size: 36px; }
+  .history-item { grid-template-columns: 44px minmax(0, 1fr); }
+  .history-item img { width: 44px; height: 44px; }
+  .history-reselect { grid-column: 1 / -1; width: 100%; }
+}
+
+/* Vùng chạm nút "Sử dụng camera" 30px → 44px */
+.btn-camera-link { min-height: 44px; }

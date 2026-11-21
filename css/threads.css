@@ -1,0 +1,297 @@
+/* ===========================================================
+   SALONBOOK – CỘNG ĐỒNG KIỂU THREADS (blog.html, blog-detail.html)
+   Dùng biến màu chung trong style.css. Phụ trách: Nhật Phi
+   =========================================================== */
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.th-page { padding-bottom: 72px; }
+.th-hero { padding: 44px 0 4px; text-align: center; }
+.th-hero h1 { margin: 0 0 10px; font-size: clamp(30px, 3.6vw, 48px); line-height: 1.1; letter-spacing: -.05em; }
+
+/* Bố cục: cột bảng tin hẹp như Threads + cột phụ */
+.th-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 640px) 320px;
+  justify-content: center;
+  gap: 32px;
+  align-items: start;
+  margin-top: 28px;
+}
+.th-feed-col { min-width: 0; }
+.th-side { position: sticky; top: 24px; display: flex; flex-direction: column; gap: 18px; }
+
+/* ---------- Avatar & huy hiệu ---------- */
+.th-avatar {
+  flex: 0 0 auto;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--forest);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 800;
+  border: 1px solid var(--line);
+}
+.th-avatar img { width: 100%; height: 100%; object-fit: cover; background: #fff; }
+.th-avatar-sm { width: 34px; height: 34px; font-size: 12px; }
+.th-avatar-xs { width: 22px; height: 22px; font-size: 9px; }
+.th-badge {
+  display: inline-grid; place-items: center;
+  width: 16px; height: 16px; margin-left: 4px;
+  border-radius: 50%; background: #1d9bf0; color: #fff; font-size: 9px; font-weight: 900;
+}
+.th-badge-salon {
+  width: auto; height: auto; padding: 2px 7px; border-radius: 999px;
+  background: var(--mint); color: var(--forest); font-size: 10.5px; font-weight: 800;
+}
+
+/* ---------- Ô đăng bài ---------- */
+.th-composer {
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: #fff;
+}
+.th-composer-row { display: flex; align-items: center; gap: 12px; }
+.th-composer-trigger {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  border: 0;
+  background: none;
+  text-align: left;
+  font: inherit;
+  font-size: 15px;
+  color: var(--muted);
+  cursor: text;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.th-post-btn { padding: 10px 20px; border-radius: 999px; font-size: 14px; min-height: 40px; }
+.th-composer-form { display: grid; gap: 10px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.th-composer-form input[type="text"],
+.th-composer-form textarea,
+.th-composer-form select,
+.th-reply-box textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--cream);
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+}
+.th-composer-form input[type="text"] { font-weight: 700; }
+.th-composer-form textarea, .th-reply-box textarea { resize: vertical; line-height: 1.5; }
+.th-composer-form :focus, .th-reply-box textarea:focus {
+  outline: none; border-color: var(--forest); box-shadow: 0 0 0 3px rgba(12, 81, 63, .15);
+}
+.th-composer-form [aria-invalid], .th-reply-box [aria-invalid] { border-color: #b42318; }
+.th-composer-meta { display: flex; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--muted); }
+.th-composer-tools { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.th-composer-tools select { width: auto; flex: 1 1 160px; padding: 9px 12px; font-size: 14px; }
+.th-tool span {
+  display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px;
+  border: 1px solid var(--line); border-radius: 999px; font-size: 14px; font-weight: 700; cursor: pointer;
+}
+.th-tool:focus-within span { outline: 3px solid var(--yellow); }
+.th-image-preview { position: relative; max-width: 260px; }
+.th-image-preview img { display: block; width: 100%; border-radius: 14px; }
+.th-image-remove {
+  position: absolute; top: 8px; right: 8px; width: 32px; height: 32px;
+  border: 0; border-radius: 50%; background: rgba(0,0,0,.65); color: #fff; cursor: pointer;
+}
+.th-composer-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 10px; }
+.th-composer-actions .compose-note { margin-right: auto; font-size: 12px; color: var(--muted); }
+.th-composer-actions .btn { padding: 10px 20px; border-radius: 999px; font-size: 14px; min-height: 42px; }
+.field-error { color: #b42318; font-size: 13px; }
+.field-error:empty { display: none; }
+.btn-outline-forest { border: 1px solid var(--forest); background: #fff; color: var(--forest); }
+
+/* ---------- Tab & chip lọc ---------- */
+.th-feed-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 18px;
+  border-bottom: 1px solid var(--line);
+}
+.th-feed-tabs button {
+  min-height: 46px; border: 0; background: none; font: inherit; font-size: 15px; font-weight: 700;
+  color: var(--muted); cursor: pointer; border-bottom: 3px solid transparent;
+}
+.th-feed-tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--forest); }
+.th-topics {
+  display: flex; gap: 8px; padding: 14px 0 4px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.th-topics::-webkit-scrollbar { display: none; }
+.th-topics button {
+  flex: 0 0 auto; min-height: 38px; padding: 0 16px;
+  border: 1px solid var(--line); border-radius: 999px; background: #fff;
+  font: inherit; font-size: 13.5px; font-weight: 700; color: var(--ink); cursor: pointer; white-space: nowrap;
+}
+.th-topics button.is-active { background: var(--forest); border-color: var(--forest); color: #fff; }
+.th-active-filter {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 8px;
+  padding: 6px 8px 6px 14px; border-radius: 999px; background: #fff3c4; font-size: 14px;
+}
+.th-active-filter button {
+  width: 28px; height: 28px; border: 0; border-radius: 50%; background: rgba(0,0,0,.08); cursor: pointer;
+}
+
+/* ---------- Bài viết ---------- */
+.th-feed { margin-top: 10px; border-radius: 22px; background: #fff; border: 1px solid var(--line); overflow: hidden; }
+.th-feed:empty { display: none; }
+.th-post {
+  display: flex;
+  gap: 12px;
+  padding: 18px 18px 12px;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  transition: background-color .15s ease;
+}
+.th-feed .th-post:last-child { border-bottom: 0; }
+.th-post[data-open] { cursor: pointer; }
+.th-post.is-new { animation: th-new 1.6s ease; }
+@keyframes th-new { from { background: #fff7d6; } to { background: #fff; } }
+.th-post.is-detail { border: 1px solid var(--line); border-radius: 22px; padding: 22px; }
+.th-main { flex: 1; min-width: 0; }
+.th-head { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; font-size: 14.5px; }
+.th-name { font-weight: 800; color: var(--ink); }
+.th-handle, .th-time { color: var(--muted); font-size: 13.5px; }
+.th-time::before { content: "· "; }
+.th-more {
+  margin-left: auto; border: 0; background: none; padding: 6px 4px;
+  font: inherit; font-size: 13px; font-weight: 700; color: #b42318; cursor: pointer;
+}
+.th-topic {
+  display: inline-block; margin: 4px 0 2px; font-size: 12px; font-weight: 800; color: var(--forest);
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.th-title { margin: 4px 0 6px; font-size: 18px; line-height: 1.3; letter-spacing: -.02em; }
+.th-post.is-detail .th-title { font-size: clamp(22px, 2.6vw, 28px); }
+.th-content { font-size: 15px; line-height: 1.6; color: var(--ink); overflow-wrap: anywhere; }
+.th-content p { margin: 0 0 6px; }
+.th-post.is-detail .th-content { font-size: 16.5px; }
+.th-content.is-clamped { display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+.th-readmore { font-size: 14px; font-weight: 700; color: var(--muted); }
+.th-tag { color: #1a6fb0; font-weight: 600; }
+.th-mention { color: var(--forest); font-weight: 700; }
+.th-image {
+  display: block; width: 100%; max-height: 520px; margin-top: 10px;
+  object-fit: cover; border-radius: 16px; border: 1px solid var(--line);
+}
+.th-salon-chip {
+  display: flex; align-items: center; gap: 10px; margin-top: 10px; padding: 8px 12px 8px 8px;
+  border: 1px solid var(--line); border-radius: 14px; background: var(--cream); max-width: 100%;
+}
+.th-salon-chip img { width: 44px; height: 44px; border-radius: 10px; object-fit: cover; }
+.th-salon-chip strong { display: block; font-size: 14px; }
+.th-salon-chip small { display: block; font-size: 12.5px; color: var(--muted); }
+
+.th-actions { display: flex; gap: 4px; margin: 8px 0 0 -10px; }
+.th-act {
+  display: inline-flex; align-items: center; gap: 6px; min-width: 44px; min-height: 40px; padding: 0 10px;
+  border: 0; border-radius: 999px; background: none; font: inherit; font-size: 13.5px; font-weight: 600;
+  color: var(--muted); cursor: pointer;
+}
+.th-act svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
+.th-like.is-on { color: #e0245e; }
+.th-like.is-on svg { fill: currentColor; }
+.th-like.pop svg { animation: th-pop .35s ease; }
+@keyframes th-pop { 50% { transform: scale(1.35); } }
+
+.th-reply-preview {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 4px; padding: 8px 10px;
+  border-radius: 12px; background: var(--cream); font-size: 13.5px; color: var(--muted);
+}
+.th-reply-preview span { flex: 1; min-width: 0; color: var(--ink); }
+.th-reply-preview em { font-style: normal; font-weight: 700; color: var(--forest); }
+
+@media (hover: hover) {
+  .th-post[data-open]:hover { background: #fcfdfb; }
+  .th-act:hover { background: var(--mint); color: var(--forest); }
+  .th-like:hover { background: #fde8ef; color: #e0245e; }
+  .th-topics button:not(.is-active):hover { background: var(--mint); }
+}
+.th-act:focus-visible, .th-topics button:focus-visible, .th-feed-tabs button:focus-visible,
+.th-more:focus-visible, .th-composer-trigger:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+.th-load-more { display: block; width: 100%; margin-top: 16px; padding: 13px; border-radius: 14px; font-size: 14px; }
+.blog-empty { margin-top: 10px; padding: 36px 20px; border: 1px dashed var(--line); border-radius: 22px; background: #fff; text-align: center; color: var(--muted); }
+.blog-empty .btn { padding: 11px 20px; border-radius: 999px; }
+
+/* ---------- Trang thread ---------- */
+.th-back { margin-bottom: 12px; }
+.th-back a { display: inline-flex; align-items: center; min-height: 40px; font-weight: 800; color: var(--forest); }
+.th-reply-box { margin-top: 14px; }
+.th-reply-box textarea { min-height: 44px; }
+.compose-guest { margin: 0; font-size: 14px; color: var(--muted); }
+.compose-guest a { color: var(--forest); font-weight: 800; border-bottom: 2px solid var(--yellow); }
+.th-replies { margin-top: 14px; border: 1px solid var(--line); border-radius: 22px; background: #fff; overflow: hidden; }
+.th-replies-title { margin: 0; padding: 14px 18px; font-size: 15px; border-bottom: 1px solid var(--line); }
+.th-replies-title span { color: var(--muted); font-weight: 600; }
+.th-reply { display: flex; gap: 10px; padding: 14px 18px 8px; border-bottom: 1px solid var(--line); }
+.th-reply:last-child { border-bottom: 0; }
+.th-reply:target { background: #fffbea; }
+.th-no-reply { margin: 0; padding: 20px 18px; color: var(--muted); }
+.post-notfound { padding: 40px 16px; text-align: center; background: #fff; border: 1px solid var(--line); border-radius: 22px; }
+.post-notfound p { color: var(--muted); }
+.post-notfound .btn { padding: 12px 22px; border-radius: 999px; }
+.post-loading { color: var(--muted); }
+
+/* ---------- Cột phụ ---------- */
+.th-trending, .th-salon-list { margin: 0; padding: 0; list-style: none; }
+.th-trending li { display: flex; justify-content: space-between; padding: 9px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.th-trending li:first-child { border-top: 0; }
+.th-trending a { font-weight: 800; color: #1a6fb0; }
+.th-trending span { color: var(--muted); font-size: 13px; }
+.th-salon-list a { display: flex; align-items: center; gap: 10px; padding: 7px 0; }
+.th-salon-list strong, .th-side-post strong { display: block; font-size: 14px; line-height: 1.35; }
+.th-salon-list small, .th-side-post small { display: block; font-size: 12.5px; color: var(--muted); }
+.th-side-post { grid-template-columns: 34px minmax(0, 1fr) !important; }
+
+/* ---------- Toast ---------- */
+.th-toast {
+  position: fixed; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); z-index: 60;
+  max-width: calc(100% - 32px); padding: 12px 20px; border-radius: 14px;
+  background: var(--forest); color: #fff; font-size: 14px; font-weight: 700; box-shadow: var(--shadow);
+  opacity: 0; transform: translate(-50%, 12px); pointer-events: none; transition: opacity .2s, transform .2s;
+}
+.th-toast.is-show { opacity: 1; transform: translate(-50%, 0); }
+.th-toast.is-error { background: #b42318; }
+
+@media (prefers-reduced-motion: reduce) {
+  .th-like.pop svg, .th-post.is-new { animation: none; }
+  .th-toast { transition: none; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1024px) {
+  .th-layout { grid-template-columns: minmax(0, 680px); }
+  .th-side { position: static; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .th-side .side-cta { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .th-hero { padding-top: 28px; }
+  .th-layout { margin-top: 18px; gap: 20px; }
+  .th-side { grid-template-columns: 1fr; }
+  .th-composer { padding: 12px 14px; border-radius: 18px; }
+  .th-post { padding: 14px 14px 8px; gap: 10px; }
+  .th-post.is-detail { padding: 16px; }
+  .th-avatar { width: 38px; height: 38px; }
+  .th-avatar-sm { width: 30px; height: 30px; }
+  .th-avatar-xs { width: 22px; height: 22px; }
+  .th-feed, .th-replies { border-radius: 18px; }
+  .th-composer-actions .compose-note { flex-basis: 100%; }
+  .th-composer-actions .btn { flex: 1; }
+  .th-reply { padding: 12px 14px 6px; }
+}
