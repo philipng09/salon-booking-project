@@ -1,0 +1,57 @@
+/* SalonBook – checkbox dịch vụ dùng chung màu xanh rừng / kem / vàng. */
+.sb-multiselect-ready > #detail-service-select {
+  /* Giữ select cho module cũ đọc giá trị; không hiển thị dropdown cũ. */
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.sb-service-checkboxes { display: grid; gap: 10px; }
+.sb-service-option {
+  display: grid !important;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 15px 14px;
+  border: 1px solid #dce7df;
+  border-radius: 14px;
+  background: #fff;
+  cursor: pointer;
+  line-height: 1.45;
+  transition: border-color .15s, background .15s;
+  min-width: 0;
+}
+.sb-service-option:hover { border-color: #93bca6; }
+.sb-service-option.is-checked { background: #ecf6ef; border-color: #0c513f; box-shadow: inset 0 0 0 1px #0c513f; }
+.sb-service-option input[type=checkbox],
+.sb-card-check input[type=checkbox] {
+  width: 19px !important;
+  height: 19px !important;
+  accent-color: #0c513f;
+  padding: 0 !important;
+  margin: 0 !important;
+  flex: 0 0 19px;
+  cursor: pointer;
+}
+.sb-service-name { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.sb-service-name strong { color: #0c513f; font-size: 14px; font-weight: 800; }
+.sb-service-name small { color: #587269; font-size: 12px; font-weight: 400; }
+.sb-service-price { font-size: 14px; font-weight: 800; white-space: nowrap; color: #0c513f; }
+.sb-check-footer { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 10px; font-size: 13px; color: #0c513f; font-weight: 750; }
+.sb-service-clear { padding: 7px 10px; background: none; border: 0; border-radius: 8px; color: #0c513f; font-size: 12px; font-weight: 800; text-decoration: underline; cursor: pointer; }
+.sb-service-clear:hover { background: #eef6ef; }
+#detail-service-grid .detail-service-card.sb-card-selected { border-color: #0c513f; box-shadow: inset 0 0 0 1px #0c513f, 0 7px 19px rgba(12,81,63,.08); }
+#detail-service-grid .sb-card-check {
+  display: flex; align-items: center; gap: 9px; margin-top: 12px;
+  font-size: 13px; font-weight: 750; color: #0c513f; cursor: pointer;
+}
+@media (max-width: 520px) {
+  .sb-service-option { grid-template-columns: 20px minmax(0, 1fr); padding: 12px 11px; gap: 10px; }
+  .sb-service-price { grid-column: 2; font-size: 13px; }
+  .sb-check-footer { font-size: 12px; }
+}
