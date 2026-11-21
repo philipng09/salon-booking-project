@@ -1,89 +1,89 @@
 
 /*
-  SALONBOOK - AUTH DEMO
-  Đăng ký / Đăng nhập / Đăng xuất
-
-  Chỉ dành cho demo frontend.
-  localStorage không phải cơ chế bảo mật thật.
+  SALONBOOK AUTH
+  Đăng ký, đăng nhập, đăng xuất và phân quyền.
+  DEMO FRONTEND - KHÔNG PHẢI BẢO MẬT THẬT.
 */
 
-(() => {
+(function () {
   "use strict";
 
   const USERS_KEY = "salonbook_users";
-  const SESSION_KEY = "currentUser";
+  const CURRENT_KEY = "currentUser";
+  const RETURN_KEY = "salonbook_auth_return";
 
-  // Đọc danh sách người dùng
-  function getUsers() {
+  const DEMO_EMAIL = "owner@salonbook.demo";
+  const DEMO_PASSWORD = "Salon@123";
+
+  // =========================
+  // LOCAL STORAGE
+  // =========================
+
+  function read(key, fallback) {
     try {
-      const users = JSON.parse(
-        localStorage.getItem(USERS_KEY) || "[]"
-      );
-      return Array.isArray(users) ? users : [];
+      return JSON.parse(localStorage.getItem(key)) ?? fallback;
     } catch {
-      return [];
+      return fallback;
     }
   }
 
-  // Lấy người dùng đang đăng nhập
-  function currentUser() {
-    try {
-      const user = JSON.parse(
-        localStorage.getItem(SESSION_KEY) || "null"
-      );
+  function users() {
+    const data = read(USERS_KEY, []);
+    return Array.isArray(data) ? data : [];
+  }
 
-      if (user && user.userId && user.fullName) {
-        return user;
-      }
+  function saveUsers(list) {
+    localStorage.setItem(USERS_KEY, JSON.stringify(list));
+  }
 
-      return null;
-    } catch {
-      return null;
+  // Chỉ là checksum mô phỏng, không an toàn.
+  function hashDemo(value) {
+    let result = 2166136261;
+
+    for (let i = 0; i < value.length; i++) {
+      result ^= value.charCodeAt(i);
+      result = Math.imul(result, 16777619);
+    }
+
+    return (result >>> 0).toString(16);
+  }
+
+  // =========================
+  // TÀI KHOẢN CHỦ SALON DEMO
+  // =========================
+
+  function seedOwner() {
+    const list = users();
+
+    const index = list.findIndex(user =>
+      String(user.email || "").toLowerCase() === DEMO_EMAIL
+    );
+
+    const demo = {
+      id: "salon-owner-demo-1",
+      userId: "salon-owner-demo-1",
+      fullName: "Chủ Salon Demo",
+      email: DEMO_EMAIL,
+      phone: "0900000000",
+      role: "salon_owner",
+      passwordDemoHash: hashDemo(DEMO_PASSWORD)
+    };
+
+    if (index === -1) {
+      list.push(demo);
+      saveUsers(list);
+    } else if (list[index].id === demo.id) {
+      list[index] = demo;
+      saveUsers(list);
     }
   }
 
-  // Kiểm tra email
-  function validEmail(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  }
-
-  // Kiểm tra số điện thoại Việt Nam
-  function validPhone(phone) {
-    return /^0\d{9}$/.test(phone);
-  }
-
-  // Tạo chuỗi ngẫu nhiên
-  function randomHex(size) {
-    const bytes = crypto.getRandomValues(
-      new Uint8Array(size)
-    );
-
-    return Array.from(bytes, byte =>
-      byte.toString(16).padStart(2, "0")
-    ).join("");
-  }
-
-  // Hash mật khẩu cho demo
-  // Không thay thế bảo mật backend
-  async function hashPassword(password, salt) {
-    const text = `${salt}:${password}`;
-    const data = new TextEncoder().encode(text);
-
-    const hash = await crypto.subtle.digest(
-      "SHA-256",
-      data
-    );
-
-    return Array.from(
-      new Uint8Array(hash),
-      byte => byte.toString(16).padStart(2, "0")
-    ).join("");
-  }
-
-  // Thông tin người dùng công khai
   function publicUser(user) {
+    const id = user.id || user.userId;
+
     return {
-      userId: user.userId,
+      id: id,
+      userId: id,
       fullName: user.fullName,
       email: user.email,
       phone: user.phone,
@@ -91,127 +91,431 @@
     };
   }
 
-  // Lưu phiên đăng nhập demo
-  function setSession(user) {
+  function currentUser() {
+    const user = read(CURRENT_KEY, null);
+
+    if (
+      user &&
+      (user.id || user.userId) &&
+      ["customer", "salon_owner"].includes(user.role)
+    ) {
+      return user;
+    }
+
+    return null;
+  }
+
+  // =========================
+  // VALIDATE
+  // =========================
+
+  function emailValid(value) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  }
+
+  function phoneValid(value) {
+    return /^0[35789]\d{8}$/.test(value);
+  }
+
+  function validateRegistration(input) {
+    const errors = {};
+
+    if (!input.fullName.trim()) {
+      errors.fullName = "Vui lòng nhập họ và tên.";
+    }
+
+    if (!input.email) {
+      errors.email = "Vui lòng nhập email.";
+    } else if (!emailValid(input.email)) {
+      errors.email = "Email không đúng định dạng.";
+    }
+
+    if (!input.phone) {
+      errors.phone = "Vui lòng nhập số điện thoại.";
+    } else if (!phoneValid(input.phone)) {
+      errors.phone =
+        "Số điện thoại cần có 10 chữ số và đầu số hợp lệ.";
+    }
+
+    if (!input.password) {
+      errors.password = "Vui lòng nhập mật khẩu.";
+    } else if (
+      input.password.length < 8 ||
+      !/[A-Za-z]/.test(input.password) ||
+      !/\d/.test(input.password)
+    ) {
+      errors.password =
+        "Mật khẩu cần ít nhất 8 ký tự, gồm chữ và số.";
+    }
+
+    if (!input.confirmPassword) {
+      errors.confirmPassword =
+        "Vui lòng xác nhận mật khẩu.";
+    } else if (
+      input.password !== input.confirmPassword
+    ) {
+      errors.confirmPassword =
+        "Mật khẩu xác nhận không khớp.";
+    }
+
+    return errors;
+  }
+
+  // =========================
+  // ĐĂNG KÝ
+  // =========================
+
+  function register(data) {
+    const input = {
+      fullName: String(data.fullName || "").trim(),
+      email: String(data.email || "").trim().toLowerCase(),
+      phone: String(data.phone || "").trim(),
+      password: String(data.password || ""),
+      confirmPassword: String(data.confirmPassword || "")
+    };
+
+    const errors = validateRegistration(input);
+
+    if (Object.keys(errors).length) {
+      return { ok: false, errors };
+    }
+
+    const list = users();
+
+    if (
+      list.some(user =>
+        String(user.email).toLowerCase() === input.email
+      )
+    ) {
+      return {
+        ok: false,
+        errors: {
+          email: "Email này đã được đăng ký."
+        }
+      };
+    }
+
+    const id =
+      window.crypto?.randomUUID?.() ||
+      `customer-${Date.now()}`;
+
+    const user = {
+      id: id,
+      userId: id,
+      fullName: input.fullName,
+      email: input.email,
+      phone: input.phone,
+      role: "customer",
+      passwordDemoHash: hashDemo(input.password)
+    };
+
+    list.push(user);
+    saveUsers(list);
+
     localStorage.setItem(
-      SESSION_KEY,
+      CURRENT_KEY,
       JSON.stringify(publicUser(user))
     );
 
-    document.dispatchEvent(
+    window.dispatchEvent(
       new Event("salonbook:auth-changed")
     );
+
+    return {
+      ok: true,
+      user: publicUser(user)
+    };
   }
 
+  // =========================
+  // ĐĂNG NHẬP
+  // =========================
+
+  function login(email, password, selectedRole = "customer") {
+    const normalized = String(email || "")
+      .trim()
+      .toLowerCase();
+
+    if (!normalized || !password) {
+      return {
+        ok: false,
+        error: "Vui lòng nhập đầy đủ email và mật khẩu."
+      };
+    }
+
+    if (!emailValid(normalized)) {
+      return {
+        ok: false,
+        error: "Email không đúng định dạng."
+      };
+    }
+
+    if (
+      !["customer", "salon_owner"].includes(selectedRole)
+    ) {
+      return {
+        ok: false,
+        error: "Vai trò đăng nhập không hợp lệ."
+      };
+    }
+
+    seedOwner();
+
+    const user = users().find(item =>
+      String(item.email).toLowerCase() === normalized
+    );
+
+    if (
+      !user ||
+      user.passwordDemoHash !== hashDemo(password)
+    ) {
+      return {
+        ok: false,
+        error: "Email hoặc mật khẩu không đúng."
+      };
+    }
+
+    // Kiểm tra quyền đăng nhập
+    if (user.role !== selectedRole) {
+      return {
+        ok: false,
+        error:
+          selectedRole === "salon_owner"
+            ? "Tài khoản này không có quyền Chủ Salon. Vui lòng chọn Khách hàng."
+            : "Đây là tài khoản Chủ Salon. Vui lòng chọn chế độ Chủ Salon."
+      };
+    }
+
+    const session = publicUser(user);
+
+    localStorage.setItem(
+      CURRENT_KEY,
+      JSON.stringify(session)
+    );
+
+    window.dispatchEvent(
+      new Event("salonbook:auth-changed")
+    );
+
+    return {
+      ok: true,
+      user: session
+    };
+  }
+
+  // =========================
   // ĐĂNG XUẤT
-  function logout() {
-    localStorage.removeItem(SESSION_KEY);
+  // =========================
 
-    document.dispatchEvent(
+  function logout() {
+    localStorage.removeItem(CURRENT_KEY);
+    sessionStorage.removeItem(RETURN_KEY);
+
+    window.dispatchEvent(
       new Event("salonbook:auth-changed")
     );
 
-    window.location.href = "index.html";
+    if (
+      location.pathname.endsWith("/salon-owner.html")
+    ) {
+      location.assign("index.html");
+    }
   }
 
-  // Kiểm tra trang quay lại sau đăng nhập
-  function getReturnUrl() {
-    const params = new URLSearchParams(
-      window.location.search
-    );
+  // =========================
+  // ĐIỀU HƯỚNG
+  // =========================
 
-    const returnTo = params.get("returnTo");
-
-    if (!returnTo) {
-      return "index.html";
+  function safeReturn(value) {
+    if (
+      !value ||
+      /[\\\r\n]/.test(value) ||
+      value.startsWith("//")
+    ) {
+      return null;
     }
 
     try {
-      const url = new URL(
-        returnTo,
-        window.location.href
-      );
+      const url = new URL(value, location.href);
 
-      // Chỉ cho quay lại trang thuộc website
-      if (url.origin !== window.location.origin) {
-        return "index.html";
-      }
-
-      const file = url.pathname.split("/").pop();
-
-      const allowedPages = [
-        "index.html",
-        "products.html",
-        "product-detail.html",
-        "cart.html",
-        "profile.html"
-      ];
-
-      if (!allowedPages.includes(file)) {
-        return "index.html";
+      if (
+        url.origin !== location.origin ||
+        /\/(auth|salon-owner)\.html$/.test(url.pathname)
+      ) {
+        return null;
       }
 
       return url.href;
     } catch {
-      return "index.html";
+      return null;
     }
   }
 
-  // Chuyển trang sau đăng nhập
-  function goAfterLogin() {
-    window.location.href = getReturnUrl();
-  }
-
-  // CẬP NHẬT HEADER
-  function renderHeader() {
-    const container = document.getElementById(
-      "auth-action-container"
-    );
-
-    if (!container) {
-      return;
-    }
-
-    container.replaceChildren();
-
+  function requireLogin() {
     const user = currentUser();
 
-    // Chưa đăng nhập
-    if (!user) {
-      const loginLink = document.createElement("a");
+    if (user?.role === "customer") {
+      return true;
+    }
 
-      loginLink.href = "auth.html";
-      loginLink.className = "btn btn-yellow btn-top";
-      loginLink.textContent = "Đăng nhập";
+    if (user?.role === "salon_owner") {
+      alert(
+        "Chỉ tài khoản Khách hàng mới có thể xác nhận đặt lịch."
+      );
+      return false;
+    }
 
-      container.appendChild(loginLink);
+    sessionStorage.setItem(
+      RETURN_KEY,
+      location.href
+    );
+
+    const returnPath =
+      location.pathname.split("/").pop() +
+      location.search +
+      location.hash;
+
+    location.assign(
+      "auth.html?next=" + encodeURIComponent(returnPath)
+    );
+
+    return false;
+  }
+
+  function navigateAfterLogin(user) {
+    if (user.role === "salon_owner") {
+      sessionStorage.removeItem(RETURN_KEY);
+
+      location.assign("salon-owner.html");
       return;
     }
 
-    // Đã đăng nhập
-    const name = document.createElement("span");
+    const query = new URLSearchParams(
+      location.search
+    ).get("next");
 
-    name.textContent = `Xin chào, ${user.fullName}`;
-    name.style.marginRight = "12px";
+    const target =
+      safeReturn(sessionStorage.getItem(RETURN_KEY)) ||
+      safeReturn(query);
 
-    const logoutButton = document.createElement(
-      "button"
-    );
+    sessionStorage.removeItem(RETURN_KEY);
 
-    logoutButton.type = "button";
-    logoutButton.textContent = "Đăng xuất";
-    logoutButton.className = "btn btn-yellow btn-top";
-
-    logoutButton.addEventListener(
-      "click",
-      logout
-    );
-
-    container.append(name, logoutButton);
+    location.assign(target || "index.html");
   }
 
-  // KHỞI TẠO TRANG AUTH
-  function initAuthPage() {
+  // =========================
+  // HEADER
+  // =========================
+
+  function renderHeader() {
+    const user = currentUser();
+
+    document
+      .querySelectorAll("#auth-action-container")
+      .forEach(holder => {
+
+        holder.replaceChildren();
+
+        if (!user) {
+          const link = document.createElement("a");
+
+          link.href = "auth.html";
+          link.className = "btn btn-yellow btn-top";
+          link.textContent = "Đăng nhập";
+
+          holder.append(link);
+          return;
+        }
+
+        const row = document.createElement("div");
+        row.className = "auth-header-actions";
+
+        const name = document.createElement("span");
+        name.className = "auth-user-name";
+        name.textContent = user.fullName;
+        row.append(name);
+
+        if (user.role === "salon_owner") {
+          const link = document.createElement("a");
+
+          link.href = "salon-owner.html";
+          link.className = "auth-owner-link";
+          link.textContent = "Quản lý Salon";
+
+          row.append(link);
+        }
+
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.className = "auth-logout";
+        button.textContent = "Đăng xuất";
+
+        button.addEventListener("click", logout);
+
+        row.append(button);
+        holder.append(row);
+      });
+  }
+
+  // =========================
+  // HIỂN THỊ THÔNG BÁO
+  // =========================
+
+  function showMessage(message = "", type = "error") {
+    const element = document.getElementById(
+      "auth-message"
+    );
+
+    if (!element) return;
+
+    element.textContent = message;
+    element.hidden = !message;
+    element.className = "auth-message is-" + type;
+  }
+
+  function showErrors(prefix, errors = {}) {
+    document
+      .querySelectorAll(
+        `#${prefix}-form .field-error`
+      )
+      .forEach(element => {
+        element.textContent = "";
+      });
+
+    document
+      .querySelectorAll(
+        `#${prefix}-form .is-invalid`
+      )
+      .forEach(element => {
+        element.classList.remove("is-invalid");
+        element.removeAttribute("aria-invalid");
+      });
+
+    Object.entries(errors).forEach(([field, text]) => {
+      const id = `${prefix}-${field}`;
+
+      const input = document.getElementById(id);
+      const error = document.querySelector(
+        `[data-error="${id}"]`
+      );
+
+      if (input) {
+        input.classList.add("is-invalid");
+        input.setAttribute("aria-invalid", "true");
+      }
+
+      if (error) {
+        error.textContent = text;
+      }
+    });
+  }
+
+  // =========================
+  // XỬ LÝ FORM
+  // =========================
+
+  function initForm() {
     const loginForm = document.getElementById(
       "login-form"
     );
@@ -220,18 +524,9 @@
       "register-form"
     );
 
-    // Nếu không phải auth.html thì bỏ qua
-    if (!loginForm || !registerForm) {
-      return;
-    }
+    if (!loginForm || !registerForm) return;
 
-    const loginTab = document.getElementById(
-      "login-tab"
-    );
-
-    const registerTab = document.getElementById(
-      "register-tab"
-    );
+    seedOwner();
 
     const loginPanel = document.getElementById(
       "login-panel"
@@ -241,310 +536,215 @@
       "register-panel"
     );
 
-    const message = document.getElementById(
-      "auth-message"
+    const ownerHint = document.getElementById(
+      "owner-hint"
     );
 
-    // Hiển thị thông báo
-    function showMessage(text, success = false) {
-      message.textContent = text;
-
-      message.classList.toggle(
-        "success",
-        success
-      );
+    // Lấy vai trò đang chọn
+    function selectedRole() {
+      return document.querySelector(
+        'input[name="loginRole"]:checked'
+      )?.value || "customer";
     }
 
-    // Chuyển giữa hai tab
-    function selectTab(tab) {
-      const isRegister = tab === "register";
+    // Hiện / ẩn tài khoản demo
+    function syncDemo() {
+      if (ownerHint) {
+        ownerHint.hidden =
+          loginPanel.hidden ||
+          selectedRole() !== "salon_owner";
+      }
+    }
 
-      loginPanel.hidden = isRegister;
-      registerPanel.hidden = !isRegister;
+    // Chuyển tab
+    function switchTab(tab) {
+      loginPanel.hidden = tab !== "login";
+      registerPanel.hidden = tab !== "register";
 
-      loginTab.setAttribute(
-        "aria-selected",
-        String(!isRegister)
-      );
+      document
+        .querySelectorAll("[data-tab]")
+        .forEach(button => {
+          const active = button.dataset.tab === tab;
 
-      registerTab.setAttribute(
-        "aria-selected",
-        String(isRegister)
-      );
+          button.classList.toggle(
+            "is-active",
+            active
+          );
+
+          button.setAttribute(
+            "aria-selected",
+            String(active)
+          );
+        });
 
       showMessage("");
+      syncDemo();
     }
 
-    loginTab.addEventListener("click", () => {
-      selectTab("login");
+    // Sự kiện chuyển tab
+    document
+      .querySelectorAll("[data-tab]")
+      .forEach(button => {
+        button.addEventListener("click", () => {
+          switchTab(button.dataset.tab);
+        });
+      });
+
+    // Sự kiện chọn vai trò
+    document
+      .querySelectorAll('input[name="loginRole"]')
+      .forEach(radio => {
+        radio.addEventListener("change", () => {
+          showMessage("");
+          syncDemo();
+        });
+      });
+
+    // =========================
+    // NHẤN NÚT ĐĂNG NHẬP
+    // =========================
+
+    loginForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      showMessage("");
+      showErrors("login");
+
+      const email = document
+        .getElementById("login-email")
+        .value.trim();
+
+      const password = document
+        .getElementById("login-password")
+        .value;
+
+      const errors = {};
+
+      if (!email) {
+        errors.email = "Vui lòng nhập email.";
+      } else if (!emailValid(email)) {
+        errors.email = "Email không đúng định dạng.";
+      }
+
+      if (!password) {
+        errors.password = "Vui lòng nhập mật khẩu.";
+      }
+
+      if (Object.keys(errors).length) {
+        showErrors("login", errors);
+
+        showMessage(
+          "Vui lòng kiểm tra thông tin đăng nhập."
+        );
+
+        return;
+      }
+
+      const result = login(
+        email,
+        password,
+        selectedRole()
+      );
+
+      if (!result.ok) {
+        showMessage(result.error);
+        return;
+      }
+
+      showMessage(
+        "Đăng nhập thành công! Đang chuyển trang…",
+        "success"
+      );
+
+      navigateAfterLogin(result.user);
     });
 
-    registerTab.addEventListener("click", () => {
-      selectTab("register");
+    // =========================
+    // NHẤN NÚT ĐĂNG KÝ
+    // =========================
+
+    registerForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      showMessage("");
+
+      const fields = [
+        "fullName",
+        "email",
+        "phone",
+        "password",
+        "confirmPassword"
+      ];
+
+      const input = Object.fromEntries(
+        fields.map(name => [
+          name,
+          document.getElementById(
+            "register-" + name
+          ).value
+        ])
+      );
+
+      const result = register(input);
+
+      showErrors(
+        "register",
+        result.errors || {}
+      );
+
+      if (!result.ok) {
+        showMessage(
+          "Vui lòng kiểm tra các trường được đánh dấu."
+        );
+
+        return;
+      }
+
+      showMessage(
+        "Đăng ký thành công!",
+        "success"
+      );
+
+      navigateAfterLogin(result.user);
     });
 
-    // Mở tab đăng ký qua URL
-    const params = new URLSearchParams(
-      window.location.search
-    );
-
-    if (params.get("tab") === "register") {
-      selectTab("register");
-    }
-
-    // XỬ LÝ ĐĂNG KÝ
-    registerForm.addEventListener(
-      "submit",
-      async function(event) {
-        event.preventDefault();
-
-        const data = Object.fromEntries(
-          new FormData(registerForm)
-        );
-
-        const fullName = data.fullName
-          .trim()
-          .replace(/\s+/g, " ");
-
-        const email = data.email
-          .trim()
-          .toLowerCase();
-
-        const phone = data.phone.trim();
-        const password = data.password;
-        const confirmPassword = data.confirmPassword;
-
-        // Kiểm tra bắt buộc
-        if (
-          !fullName ||
-          !email ||
-          !phone ||
-          !password ||
-          !confirmPassword
-        ) {
-          showMessage(
-            "Vui lòng nhập đầy đủ thông tin."
-          );
-          return;
-        }
-
-        // Kiểm tra họ tên
-        if (
-          fullName.length < 2 ||
-          fullName.length > 80 ||
-          !/^[\p{L}\s'-]+$/u.test(fullName)
-        ) {
-          showMessage(
-            "Họ tên phải có từ 2 đến 80 ký tự hợp lệ."
-          );
-          return;
-        }
-
-        // Kiểm tra email
-        if (!validEmail(email)) {
-          showMessage(
-            "Email không đúng định dạng."
-          );
-          return;
-        }
-
-        // Kiểm tra số điện thoại
-        if (!validPhone(phone)) {
-          showMessage(
-            "Số điện thoại phải có 10 chữ số và bắt đầu bằng 0."
-          );
-          return;
-        }
-
-        // Kiểm tra mật khẩu
-        if (password.length < 8) {
-          showMessage(
-            "Mật khẩu phải có ít nhất 8 ký tự."
-          );
-          return;
-        }
-
-        // Kiểm tra xác nhận mật khẩu
-        if (password !== confirmPassword) {
-          showMessage(
-            "Mật khẩu xác nhận không trùng khớp."
-          );
-          return;
-        }
-
-        const users = getUsers();
-
-        // Kiểm tra email trùng
-        if (users.some(user => user.email === email)) {
-          showMessage(
-            "Email này đã được đăng ký."
-          );
-          return;
-        }
-
-        // Kiểm tra số điện thoại trùng
-        if (users.some(user => user.phone === phone)) {
-          showMessage(
-            "Số điện thoại này đã được đăng ký."
-          );
-          return;
-        }
-
-        try {
-          const salt = randomHex(16);
-
-          const passwordHash = await hashPassword(
-            password,
-            salt
-          );
-
-          // Tạo tài khoản mới
-          const newUser = {
-            userId: crypto.randomUUID(),
-            fullName: fullName,
-            email: email,
-            phone: phone,
-            role: "customer",
-            salt: salt,
-            passwordHash: passwordHash,
-            createdAt: new Date().toISOString()
-          };
-
-          users.push(newUser);
-
-          // Lưu danh sách tài khoản
-          localStorage.setItem(
-            USERS_KEY,
-            JSON.stringify(users)
-          );
-
-          // Tự đăng nhập sau khi đăng ký
-          setSession(newUser);
-
-          showMessage(
-            "Đăng ký thành công!",
-            true
-          );
-
-          goAfterLogin();
-
-        } catch (error) {
-          console.error(error);
-
-          showMessage(
-            "Không thể lưu tài khoản demo."
-          );
-        }
-      }
-    );
-
-    // XỬ LÝ ĐĂNG NHẬP
-    loginForm.addEventListener(
-      "submit",
-      async function(event) {
-        event.preventDefault();
-
-        const data = Object.fromEntries(
-          new FormData(loginForm)
-        );
-
-        const email = data.email
-          .trim()
-          .toLowerCase();
-
-        const password = data.password;
-
-        // Kiểm tra dữ liệu
-        if (!validEmail(email) || !password) {
-          showMessage(
-            "Vui lòng nhập email hợp lệ và mật khẩu."
-          );
-          return;
-        }
-
-        // Tìm tài khoản
-        const users = getUsers();
-
-        const user = users.find(
-          item => item.email === email
-        );
-
-        try {
-          if (!user || !user.salt || !user.passwordHash) {
-            showMessage(
-              "Email hoặc mật khẩu không đúng."
-            );
-            return;
-          }
-
-          const inputHash = await hashPassword(
-            password,
-            user.salt
-          );
-
-          // So sánh mật khẩu
-          if (inputHash !== user.passwordHash) {
-            showMessage(
-              "Email hoặc mật khẩu không đúng."
-            );
-            return;
-          }
-
-          // Đăng nhập thành công
-          setSession(user);
-
-          showMessage(
-            "Đăng nhập thành công!",
-            true
-          );
-
-          goAfterLogin();
-
-        } catch (error) {
-          console.error(error);
-
-          showMessage(
-            "Không thể đăng nhập. Hãy thử lại."
-          );
-        }
-      }
-    );
+    // Mặc định mở tab Đăng nhập
+    switchTab("login");
   }
 
-  // YÊU CẦU ĐĂNG NHẬP TRƯỚC BOOKING
-  function requireLogin() {
-    if (currentUser()) {
-      return true;
-    }
+  // =========================
+  // CUNG CẤP CHỨC NĂNG CHO
+  // BOOKING / PROFILE
+  // =========================
 
-    // Lưu lại URL đang xem
-    const currentPage =
-      window.location.pathname.split("/").pop() +
-      window.location.search +
-      window.location.hash;
-
-    window.location.href =
-      "auth.html?returnTo=" +
-      encodeURIComponent(currentPage);
-
-    return false;
-  }
-
-  // Cho file khác sử dụng Auth
   window.SalonBookAuth = {
     currentUser,
+    requireLogin,
     logout,
     renderHeader,
-    requireLogin
+    validateRegistration,
+    register,
+    login,
+    users,
+    seedOwner
   };
 
-  // Chạy khi HTML tải xong
-  document.addEventListener(
-    "DOMContentLoaded",
-    initAuthPage
-  );
+  // KHỞI TẠO
+  function boot() {
+    renderHeader();
+    initForm();
+  }
 
-  document.addEventListener(
+  if (document.readyState === "loading") {
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot
+    );
+  } else {
+    boot();
+  }
+
+  window.addEventListener(
     "salonbook:auth-changed",
     renderHeader
   );
