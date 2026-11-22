@@ -47,3 +47,6 @@
 /* Nav desktop dùng badge; nav mobile dùng link hiển thị trong menu hamburger. */
 @media (min-width:761px) {.cart-mobile-link {display:none!important}}
 @media (max-width:760px) {.cart-mobile-link {display:block;font-weight:800!important;color:var(--forest,#0c513f)!important;border-top:1px solid var(--line,#dce7df);padding-top:15px!important}}
+
+.cart-nav-icon{flex:0 0 auto;vertical-align:-3px}
+.cart-mobile-link .cart-nav-icon{margin-right:6px}

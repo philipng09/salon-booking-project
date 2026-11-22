@@ -598,7 +598,7 @@
       link.dataset.cartLink = "";
 
       link.innerHTML =
-        '🛍 Giỏ dịch vụ <span class="cart-badge" data-cart-badge>0</span>';
+        '<svg class="cart-nav-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 11.2a1.5 1.5 0 0 1-1.5 1.3H7.7a1.5 1.5 0 0 1-1.5-1.3L5 8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg> Giỏ dịch vụ <span class="cart-badge" data-cart-badge>0</span>';
 
       const search = host.querySelector(
         ".header-search-box"
@@ -621,7 +621,7 @@
       link.dataset.cartMobileLink = "";
 
       link.innerHTML =
-        '🛍 Giỏ dịch vụ (<span data-cart-badge>0</span>)';
+        '<svg class="cart-nav-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1.2 11.2a1.5 1.5 0 0 1-1.5 1.3H7.7a1.5 1.5 0 0 1-1.5-1.3L5 8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/></svg> Giỏ dịch vụ (<span data-cart-badge>0</span>)';
 
       nav.appendChild(link);
     }
