@@ -421,7 +421,7 @@
 
           link.href = "auth.html";
           link.className = "btn btn-yellow btn-top";
-          link.textContent = "Đăng nhập";
+          link.textContent = "Đăng ký/Đăng nhập";
 
           holder.append(link);
           return;
