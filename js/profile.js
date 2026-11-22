@@ -142,8 +142,8 @@
       img.alt = "";
       element.append(img);
     } else {
-      element.textContent = (name || "S")
-        .trim().charAt(0).toUpperCase();
+      // Biểu tượng tài khoản giống Figma khi chưa có ảnh đại diện.
+      element.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="9" r="3.2" fill="currentColor"/><path d="M5.6 18.4c.6-3.4 3-5.2 6.4-5.2s5.8 1.8 6.4 5.2" fill="currentColor"/></svg>`;
     }
   }
 
