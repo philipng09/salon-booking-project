@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0c513f"><title>Thông tin khách hàng | SalonBook</title>
+<link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/responsive-ux.css"><link rel="stylesheet" href="css/cart.css">
+<link rel="stylesheet" href="css/multi-salon-booking.css?v=figma4"></head>
+<body class="sb-fg"><a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+<header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ"><img src="images/salonbook-mark.png" alt="" width="46" height="54"><span>SALON<span class="brand-thin">BOOK</span></span></a>
+    <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
+    <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+      <a href="index.html">Trang chủ</a><a href="products.html" class="active">Đặt lịch</a><a href="blog.html">Blog</a><a href="tuvan.html">Tư vấn</a><a href="about.html">Giới thiệu</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="sb-fg-search" href="products.html" aria-label="Tìm kiếm salon">⌕ <span>Tìm kiếm salon...</span></a>
+      <a class="sb-fg-cart-link" href="cart.html" aria-label="Giỏ dịch vụ">▣ <span>Giỏ dịch vụ</span></a>
+      <div id="auth-action-container"><a class="btn btn-yellow btn-top" href="auth.html">Đăng ký/Đăng nhập</a></div>
+    </div>
+  </div>
+</header>
+<main id="main-content" class="sb-batch-page"><div class="sb-batch-container sb-fg-container">
+  <p class="sb-fg-eyebrow">BOOKING / STEP 02</p>
+  <h1>Thông tin khách hàng</h1>
+  <p class="sb-fg-intro">Điền thông tin liên hệ một lần cho tất cả lịch hẹn tại các salon.</p>
+  <nav class="sb-fg-progress" aria-label="Tiến trình đặt lịch"><div class="sb-fg-progress-step is-done" ><span class="sb-fg-progress-bar"></span><span class="sb-fg-progress-text">01&nbsp; Chọn dịch vụ</span></div><div class="sb-fg-progress-step is-current" aria-current="step"><span class="sb-fg-progress-bar"></span><span class="sb-fg-progress-text">02&nbsp; Thông tin khách hàng</span></div><div class="sb-fg-progress-step " ><span class="sb-fg-progress-bar"></span><span class="sb-fg-progress-text">03&nbsp; Xác nhận</span></div><div class="sb-fg-progress-step " ><span class="sb-fg-progress-bar"></span><span class="sb-fg-progress-text">04&nbsp; Hoàn tất</span></div></nav>
+  <div id="sb-multi-status" class="sb-batch-error" role="alert" hidden></div>
+  <div class="sb-fg-grid sb-fg-customer-grid">
+    <section class="sb-fg-panel">
+      <h2>Thông tin khách hàng</h2>
+      <form id="sb-multi-customer-form" autocomplete="on">
+        <div class="sb-batch-field"><label for="sb-multi-name">Họ và tên <span class="sb-fg-required">*</span></label><input id="sb-multi-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="90" placeholder="Nhập họ và tên" required></div>
+        <div class="sb-batch-field"><label for="sb-multi-phone">Số điện thoại <span class="sb-fg-required">*</span></label><input id="sb-multi-phone" name="phone" type="tel" autocomplete="tel" maxlength="18" placeholder="Ví dụ: 0912345678" required></div>
+        <div class="sb-batch-field"><label for="sb-multi-email">Email (không bắt buộc)</label><input id="sb-multi-email" name="email" type="email" autocomplete="email" maxlength="120" placeholder="vidu@email.com"></div>
+        <div class="sb-batch-field"><label for="sb-multi-note">Ghi chú (không bắt buộc)</label><textarea id="sb-multi-note" name="note" maxlength="400" placeholder="Thông tin cần lưu ý khi đến salon"></textarea></div>
+        <p class="sb-fg-hint">Thông tin này chỉ được giữ tạm trong phiên trình duyệt và sẽ được xóa sau khi xác nhận yêu cầu demo.</p>
+        <p class="sb-batch-error" id="sb-multi-error" role="alert" hidden></p>
+        <button type="submit" class="sb-fg-btn-yellow">Tiếp tục đến xác nhận →</button>
+      </form>
+    </section>
+    <aside class="sb-fg-totals" aria-label="Tóm tắt lịch hẹn">
+      <p class="sb-fg-total-eyebrow">TỔNG THANH TOÁN DỰ KIẾN</p>
+      <strong class="sb-fg-total-amount" id="sb-multi-total">0đ</strong>
+      <p class="sb-fg-total-stats" id="sb-multi-count">Đang kiểm tra lịch</p>
+      <p class="sb-fg-total-explainer">Lịch chỉ được xác nhận sau khi salon chấp nhận yêu cầu.</p>
+      <p class="sb-fg-demo-tip">Đây là giao diện demo; chưa có thanh toán hoặc đặt lịch thật.</p>
+    </aside>
+  </div>
+  <a class="sb-fg-back" href="cart.html">← Quay lại giỏ dịch vụ</a>
+</div></main>
+<footer class="site-footer sb-fg-footer"><div class="container footer-inner">
+  <a class="footer-brand" href="index.html">SALONBOOK</a>
+  <p>YOUR BEAUTY, YOUR TIME</p>
+  <small>Nguyên mẫu học tập · Nền tảng kết nối nhiều salon · Chưa nhận đặt lịch thật</small>
+</div></footer>
+<script src="js/auth.js"></script>
+<script src="js/common.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/multi-salon-booking.js?v=figma4"></script>
+</body></html>
