@@ -785,3 +785,124 @@
     gap: 4px;
   }
 }
+
+/* ================================================
+   FIGMA 22/11 - CHỈ TINH CHỈNH GIAO DIỆN PROFILE
+   Không tác động CSS các trang khác.
+================================================ */
+.profile-header .nav-shell { height: 65px; }
+.profile-header .brand { font-size: 20px; }
+.profile-header .brand img { width: 38px; height: 46px; }
+.profile-header .nav-actions { gap: 14px; }
+.profile-header .main-nav a { font-size: 12px; }
+.profile-header-search { width: 182px; height: 36px; }
+.profile-cart-link { gap: 6px; font-size: 12px; }
+.profile-header-user {
+  padding: 0;
+  max-width: 230px;
+  gap: 12px;
+  background: transparent;
+  text-decoration: none;
+}
+.profile-user-icon {
+  color: #0c513f;
+  background: transparent;
+  width: 34px; height: 34px; flex-basis: 34px;
+}
+.profile-header-name {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 162px;
+  max-width: 162px;
+  height: 37px;
+  padding: 0 13px;
+  border-radius: 25px;
+  background: #e4efe9;
+  color: #111;
+  font-size: 12px;
+  font-weight: 800;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.profile-header-user:hover .profile-header-name { background: #d6e7dd; }
+.profile-page { padding: 40px 0 52px; background: #f8f7f2; }
+.profile-shell { width: min(1078px, calc(100% - 64px)); }
+.profile-heading { margin-bottom: 44px; }
+.profile-heading h1 { font-size: 29px; margin-bottom: 7px; }
+.profile-heading p { font-size: 14px; color: #7d8794; }
+.profile-layout {
+  grid-template-columns: 252px minmax(0,1fr);
+  gap: 12px;
+  align-items: stretch;
+}
+.profile-aside, .profile-content { border-radius: 16px; }
+.profile-aside { padding: 20px 22px 28px; min-height: 520px; }
+.profile-content { min-height: 520px; padding: 40px 30px 32px; }
+.profile-identity { margin-bottom: 17px; gap: 6px; }
+.profile-avatar { width: 58px; height: 58px; font-size: 24px; }
+.profile-identity strong { font-size: 16px; }
+.profile-identity small { font-size: 13px; color: #7d8794; }
+.profile-nav { gap: 11px; }
+.profile-nav-item {
+  min-height: 44px;
+  padding: 10px 10px;
+  border: 1px solid #dceae1;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 750;
+}
+.profile-nav-item.is-active { background: #fff; border-color: #dceae1; }
+.profile-nav-item.is-active:hover { background: #f0f7f2; }
+.profile-menu-icon { display: inline-flex; justify-content: center; align-items: center; }
+.profile-logout { margin-top: 18px; }
+.panel-title { margin-bottom: 42px; }
+.panel-title h2 { font-size: 21px; margin-bottom: 4px; }
+.panel-title p { font-size: 13px; }
+#panel-personal { display: flex; flex-direction: column; min-height: 445px; }
+#panel-personal .profile-form { display: flex; flex-direction: column; flex: 1; }
+.profile-fields { gap: 17px 25px; }
+.profile-field { gap: 8px; color: #333; font-size: 13px; font-weight: 500; }
+.profile-field input, .profile-field select {
+  height: 42px;
+  padding: 9px 11px;
+  background: #dfe7e0;
+  font-size: 13px;
+  border-radius: 6px;
+}
+.profile-photo-field { padding-top: 16px; }
+.profile-avatar-preview { width: 57px; height: 57px; flex-basis: 57px; }
+.profile-upload-button { background: #dfe7e0; }
+.profile-form-bottom { margin-top: auto; justify-content: flex-end; padding-top: 38px; }
+.profile-primary { min-width: 173px; min-height: 43px; border-radius: 8px; }
+.profile-hint { max-width: 430px; }
+.profile-consultations-entry { margin: 0 0 15px; }
+.profile-page .profile-avatar svg,
+.profile-page .profile-avatar-preview svg { width: 28px; height: 28px; }
+@media (max-width: 1150px) {
+  .profile-header-name { width: 120px; }
+  .profile-header-search { width: 150px; }
+}
+@media (max-width: 900px) {
+  .profile-shell { width: min(740px, calc(100% - 40px)); }
+  .profile-layout { grid-template-columns: 1fr; }
+  .profile-aside { min-height: 0; }
+  .profile-content { min-height: 520px; }
+  .profile-header .nav-shell { height: 70px; }
+}
+@media (max-width: 600px) {
+  .profile-page { padding: 28px 0 45px; }
+  .profile-shell { width: calc(100% - 28px); }
+  .profile-heading { margin-bottom: 24px; }
+  .profile-heading h1 { font-size: 26px; }
+  .profile-aside, .profile-content { padding: 22px 18px; }
+  .profile-layout { gap: 13px; }
+  .profile-fields { grid-template-columns: 1fr; }
+  #panel-personal { min-height: 0; }
+  .profile-form-bottom { padding-top: 28px; }
+  .profile-primary { width: 100%; }
+  .profile-header-user { display: inline-flex; }
+  .profile-header-name { display: none; }
+  .profile-user-icon { width: 30px; height: 30px; flex-basis: 30px; }
+}
