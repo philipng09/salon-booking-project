@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0c513f"><title>Hoàn tất yêu cầu đặt lịch | SalonBook</title>
+<link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/responsive-ux.css"><link rel="stylesheet" href="css/cart.css">
+<link rel="stylesheet" href="css/multi-salon-booking.css?v=figma4"></head>
+<body class="sb-fg"><a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+<header class="site-header">
+  <div class="container nav-shell">
+    <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ"><img src="images/salonbook-mark.png" alt="" width="46" height="54"><span>SALON<span class="brand-thin">BOOK</span></span></a>
+    <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
+    <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+      <a href="index.html">Trang chủ</a><a href="products.html" class="active">Đặt lịch</a><a href="blog.html">Blog</a><a href="tuvan.html">Tư vấn</a><a href="about.html">Giới thiệu</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="sb-fg-search" href="products.html" aria-label="Tìm kiếm salon">⌕ <span>Tìm kiếm salon...</span></a>
+      <a class="sb-fg-cart-link" href="cart.html" aria-label="Giỏ dịch vụ">▣ <span>Giỏ dịch vụ</span></a>
+      <div id="auth-action-container"><a class="btn btn-yellow btn-top" href="auth.html">Đăng ký/Đăng nhập</a></div>
+    </div>
+  </div>
+</header>
+<main id="main-content" class="sb-batch-page"><div class="sb-batch-container sb-fg-container sb-fg-result-container">
+  <p class="sb-fg-eyebrow">BOOKING / STEP 04</p>
+  <h1>Hoàn tất yêu cầu đặt lịch</h1>
+  <p class="sb-fg-intro">Thông tin yêu cầu demo đã được lưu. Các salon chưa xác nhận lịch hẹn.</p>
+  <nav class="sb-fg-progress" aria-label="Tiến trình đặt lịch"><div class="sb-fg-progress-step is-done" ><span class="sb-fg-progress-bar"></span><span class="sb-fg-progress-text">01&nbsp; Chọn dịch vụ</span></div><div class="sb-fg-progress-step is-done" ><span class="sb-fg-progress-bar"></span><span class="sb-fg-progress-text">02&nbsp; Thông tin khách hàng</span></div><div class="sb-fg-progress-step is-done" ><span class="sb-fg-progress-bar"></span><span class="sb-fg-progress-text">03&nbsp; Xác nhận</span></div><div class="sb-fg-progress-step is-current" aria-current="step"><span class="sb-fg-progress-bar"></span><span class="sb-fg-progress-text">04&nbsp; Hoàn tất</span></div></nav>
+  <p class="sb-batch-error" id="sb-multi-result-missing" role="alert" hidden></p>
+  <div class="sb-fg-panel sb-fg-result-panel">
+    <span class="sb-fg-success-icon" aria-hidden="true">✓</span>
+    <h2>Yêu cầu đã được lưu</h2>
+    <p>Đây là yêu cầu thử nghiệm, không phải xác nhận đã có chỗ tại salon.</p>
+    <strong class="sb-batch-code" id="sb-multi-result-code">Đang đọc mã demo</strong>
+    <p class="sb-batch-count" id="sb-multi-result-count"></p>
+    <div class="sb-fg-result-total"><span>Tổng giá dự kiến</span><strong id="sb-multi-result-total">—</strong></div>
+  </div>
+  <section class="sb-fg-panel sb-fg-result-appointments"><h2>Lịch hẹn theo salon</h2><div id="sb-multi-result-appointments"></div>
+    <p class="sb-fg-hint">Hệ thống chưa gửi yêu cầu đến salon và chưa xác minh thời gian trống thực tế.</p>
+    <div class="sb-fg-result-links"><a href="cart.html" class="sb-fg-btn-outline">Quay lại giỏ dịch vụ</a><a href="products.html" class="sb-fg-btn-yellow">Khám phá salon khác →</a></div>
+  </section>
+</div></main>
+<footer class="site-footer sb-fg-footer"><div class="container footer-inner">
+  <a class="footer-brand" href="index.html">SALONBOOK</a>
+  <p>YOUR BEAUTY, YOUR TIME</p>
+  <small>Nguyên mẫu học tập · Nền tảng kết nối nhiều salon · Chưa nhận đặt lịch thật</small>
+</div></footer>
+<script src="js/auth.js"></script>
+<script src="js/common.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/multi-salon-booking.js?v=figma4"></script>
+</body></html>
