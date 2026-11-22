@@ -1,274 +1,686 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#0C513F">
-  <title>AI tư vấn kiểu tóc | SalonBook</title>
+/* ==========================================================================
+   SALONBOOK - TRANG TƯ VẤN KIỂU TÓC (BƯỚC 1, 2, 3)
+   ========================================================================== */
 
-  <!-- CSS dùng chung của dự án -->
-  <link rel="stylesheet" href="css/style.css?v=3">
-  <link rel="stylesheet" href="css/homepage-v4.css">
-  <link rel="stylesheet" href="css/responsive-ux.css">
-  <link rel="stylesheet" href="css/cart.css">
-  <!-- CSS riêng trang Tư vấn -->
-  <link rel="stylesheet" href="css/tuvan.css">
-  <link rel="stylesheet" href="css/header-unified.css">
-</head>
-<body>
-  <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+.tuvan-page {
+  padding: 28px 0 68px;
+}
 
-  <!-- HEADER DÙNG CHUNG -->
-  <header class="site-header">
-    <div class="container nav-shell">
-      <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
-        <img src="images/salonbook-mark.png" alt="" width="46" height="54">
-        <span>SALON<span class="brand-thin">BOOK</span></span>
-      </a>
+/* Giữ thanh tìm kiếm Header bo tròn viên thuốc đồng bộ toàn site */
+.site-header .header-search-box {
+  border-radius: 999px !important;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  padding: 7px 14px;
+}
 
-      <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
+/* --- HERO SECTION --- */
+.tuvan-hero {
+  text-align: center;
+  margin-bottom: 32px;
+}
 
-      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
-        <a href="index.html">Trang chủ</a>
-        <a href="products.html">Đặt lịch</a>
-        <a href="blog.html">Blog</a>
-        <a href="tuvan.html" class="active" aria-current="page">Tư vấn</a>
-        <a href="about.html">Giới thiệu</a>
-      </nav>
+.hero-eyebrow {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: var(--forest);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
 
-      <div class="nav-actions">
-        <div class="header-search-box">
-          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <input type="text" placeholder="Tìm kiếm salon,..." id="header-quick-search">
-        </div>
+.tuvan-hero h1 {
+  font-size: clamp(28px, 3.4vw, 40px);
+  font-weight: 900;
+  color: var(--deep);
+  margin-bottom: 8px;
+}
 
-        <div id="auth-action-container">
-          <a class="btn btn-yellow btn-top" href="auth.html">Đăng ký / Đăng nhập</a>
-        </div>
-      </div>
-    </div>
-  </header>
+.tuvan-hero p {
+  font-size: 15px;
+  color: var(--muted);
+  margin: 0;
+}
 
-  <!-- NỘI DUNG CHÍNH -->
-  <main id="main-content" class="tuvan-page">
-    <div class="container">
-      <!-- TIÊU ĐỀ HERO -->
-      <section class="tuvan-hero">
-        <span class="hero-eyebrow">KHÁM PHÁ PHONG CÁCH CỦA BẠN</span>
-        <h1>AI tư vấn kiểu tóc</h1>
-        <p>Tải ảnh chân dung và khám phá kiểu tóc phù hợp với bạn</p>
-      </section>
+/* --- BỐ CỤC 2 CỘT --- */
+.tuvan-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.38fr;
+  gap: 24px;
+  align-items: stretch;
+  max-width: 1180px;
+  margin: 0 auto;
+}
 
-      <!-- BỐ CỤC 2 CỘT THEO FIGMA -->
-      <div class="tuvan-grid">
-        <!-- CỘT 1: 01. ẢNH CỦA BẠN -->
-        <section class="tuvan-card card-left" aria-labelledby="title-step-1">
-          <div class="card-top-row">
-            <h2 id="title-step-1" class="step-heading">01. Ảnh của bạn</h2>
-            <span class="photo-badge" id="photo-status-badge" hidden>Đã chọn ảnh</span>
-          </div>
+.tuvan-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 26px 28px;
+  display: flex;
+  flex-direction: column;
+}
 
-          <!-- Input ẩn chọn file JPG/PNG & Camera -->
-          <input type="file" id="photo-file-input" accept="image/jpeg,image/png" hidden>
-          <input type="file" id="photo-camera-input" accept="image/jpeg,image/png" capture="user" hidden>
+.card-left {
+  border: 1px solid #e6ece7;
+}
 
-          <!-- Trạng thái 1: Vùng tải ảnh mặc định theo Figma -->
-          <div class="upload-area" id="upload-area">
-            <div class="face-scan-icon" aria-hidden="true">
-              <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
-                <path d="M17 3h2a2 2 0 0 1 2 2v2"/>
-                <path d="M21 17v2a2 2 0 0 1-2 2h-2"/>
-                <path d="M7 21H5a2 2 0 0 1-2-2v-2"/>
-                <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
-                <line x1="9" y1="9" x2="9.01" y2="9"/>
-                <line x1="15" y1="9" x2="15.01" y2="9"/>
-              </svg>
-            </div>
+.card-right {
+  border: 1.5px solid var(--yellow);
+}
 
-            <h3 class="upload-title">Tải ảnh chân dung của bạn</h3>
-            <p class="upload-hint">Sử dụng ảnh chính diện, rõ nét và đủ sáng</p>
+.card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 18px;
+}
 
-            <button type="button" class="btn btn-forest btn-choose-img" id="btn-choose-file">
-              Chọn ảnh
-            </button>
+.step-heading {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--forest);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
 
-            <button type="button" class="btn-camera-link" id="btn-open-camera">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                <circle cx="12" cy="13" r="4"/>
-              </svg>
-              <span>Sử dụng camera</span>
-            </button>
+.photo-badge,
+.selected-style-pill {
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--cream);
+  color: var(--muted);
+  border: 1px solid var(--line);
+}
 
-            <span class="upload-format">Hỗ trợ định dạng JPG, PNG (Tối đa 5MB)</span>
-          </div>
+.photo-badge.is-active,
+.selected-style-pill.is-active {
+  background: var(--mint);
+  color: var(--forest);
+  border-color: #b7d6c3;
+}
 
-          <!-- Trạng thái 2: Đang mở Camera trực tiếp -->
-          <div class="camera-area" id="camera-area" hidden>
-            <video id="camera-video" autoplay playsinline></video>
-            <canvas id="camera-canvas" hidden></canvas>
-            <div class="media-btn-row">
-              <button type="button" class="btn btn-forest" id="btn-capture-photo">Chụp ảnh</button>
-              <button type="button" class="btn btn-outline-forest" id="btn-cancel-camera">Hủy</button>
-            </div>
-          </div>
+/* --- CỘT TRÁI: UPLOAD, CAMERA & PREVIEW --- */
+.upload-area {
+  flex: 1;
+  background: #f2f4f1;
+  border: 2px dashed transparent;
+  border-radius: 16px;
+  padding: 40px 24px;
+  min-height: 410px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: border-color 0.2s, background 0.2s;
+}
 
-          <!-- Trạng thái 3: Xem trước ảnh bằng FileReader -->
-          <div class="preview-area" id="preview-area" hidden>
-            <div class="preview-info">
-              <span id="preview-file-name">anh-chan-dung.png</span>
-              <span id="preview-file-size">1.2 MB</span>
-            </div>
-            <div class="preview-img-box">
-              <img id="preview-image" alt="Ảnh chân dung đã tải lên">
-            </div>
-            <div class="media-btn-row">
-              <button type="button" class="btn btn-outline-forest" id="btn-change-photo">Đổi ảnh</button>
-              <button type="button" class="btn btn-danger-outline" id="btn-remove-photo">Xóa ảnh</button>
-            </div>
-          </div>
+.upload-area.is-dragover {
+  border-color: var(--forest);
+  background: var(--mint);
+}
 
-          <!-- Thông báo lỗi định dạng / dung lượng -->
-          <p class="upload-error" id="upload-error" role="alert" hidden></p>
+.face-scan-icon {
+  color: var(--forest);
+  margin-bottom: 14px;
+}
 
-          <!-- Checkbox đồng ý xử lý ảnh -->
-          <label class="consent-row" for="consent-checkbox">
-            <input type="checkbox" id="consent-checkbox">
-            <span>Tôi đồng ý cho phép xử lý ảnh để tư vấn kiểu tóc</span>
-          </label>
-        </section>
+.upload-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--forest);
+  margin-bottom: 6px;
+}
 
-        <!-- CỘT 2: 02. KHÁM PHÁ KIỂU TÓC -->
-        <section class="tuvan-card card-right" aria-labelledby="title-step-2">
-          <div class="card-top-row">
-            <h2 id="title-step-2" class="step-heading">
-              <span class="sparkle-icon" aria-hidden="true">✨</span> 02. Khám phá kiểu tóc
-            </h2>
-            <span class="selected-style-pill" id="selected-style-label">Chưa chọn kiểu</span>
-          </div>
+.upload-hint {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 22px;
+}
 
-          <div class="ai-intro-box">
-            <h3>AI tư vấn dành riêng cho bạn</h3>
-            <p>AI sẽ phân tích ảnh chân dung và gợi ý những kiểu tóc có thể phù hợp với đặc điểm khuôn mặt và phong cách của bạn.</p>
-            <span class="ai-intro-highlight">✦ Khám phá phong cách phù hợp với bạn</span>
-          </div>
+.btn-forest {
+  background: var(--forest);
+  color: #ffffff;
+  border-radius: 10px;
+  padding: 12px 34px;
+  font-size: 14px;
+  font-weight: 700;
+}
 
-          <!-- Danh sách kiểu tóc mẫu -->
-          <div class="preset-section">
-            <h3 class="preset-title">Thử kiểu tóc có sẵn</h3>
-            <p class="preset-subtitle">Chọn kiểu tóc yêu thích để xem trước trên ảnh chân dung của bạn.</p>
+.btn-forest:hover {
+  background: var(--deep);
+}
 
-            <!-- Lưới hiển thị kiểu tóc (JS render từ 3 ảnh bạn cung cấp) -->
-            <div class="preset-grid" id="hairstyle-grid" role="radiogroup" aria-label="Danh sách kiểu tóc mẫu"></div>
-          </div>
+.btn-outline-forest {
+  background: #ffffff;
+  color: var(--forest);
+  border: 1.5px solid var(--forest);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
+}
 
-          <!-- Cụm 2 nút dưới cùng -->
-          <div class="right-cta-group">
-            <button type="button" class="btn btn-yellow btn-full" id="btn-start-consult" disabled aria-describedby="consult-requirements">
-              Bắt đầu tư vấn với AI
-            </button>
-            <!-- Bước 6: cho người dùng biết còn thiếu điều kiện nào -->
-            <ul class="consult-requirements" id="consult-requirements" aria-live="polite">
-              <li data-req="photo">Tải ảnh chân dung</li>
-              <li data-req="consent">Đồng ý cho phép xử lý ảnh</li>
-              <li data-req="style">Chọn 1 kiểu tóc</li>
-            </ul>
-            <button type="button" class="btn btn-cream-outline btn-full" id="btn-view-all-styles">
-              Xem tất cả kiểu tóc
-            </button>
-          </div>
-        </section>
-      </div>
+.btn-outline-forest:hover {
+  background: var(--mint);
+}
 
-      <!-- BƯỚC 4: LOADING + KẾT QUẢ TƯ VẤN MÔ PHỎNG -->
-      <section class="consult-result" id="consult-result" aria-labelledby="result-title" hidden tabindex="-1">
-        <!-- Trạng thái đang xử lý -->
-        <div class="consult-loading" id="consult-loading" role="status" aria-live="polite" hidden>
-          <span class="loading-spinner" aria-hidden="true"></span>
-          <p class="loading-text" id="loading-text">Đang phân tích ảnh chân dung…</p>
-          <div class="loading-bar" aria-hidden="true"><span id="loading-bar-fill"></span></div>
-        </div>
+.btn-danger-outline {
+  background: #ffffff;
+  color: #b42318;
+  border: 1.5px solid #fecdca;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 700;
+}
 
-        <!-- Kết quả -->
-        <div class="consult-output" id="consult-output" hidden>
-          <div class="result-head">
-            <h2 id="result-title" class="step-heading">03. Kết quả tư vấn</h2>
-            <span class="simulation-badge">KẾT QUẢ MÔ PHỎNG</span>
-          </div>
-          <p class="simulation-note" role="note">
-            Đây là kết quả <strong>mô phỏng</strong> dùng cho bản demo học tập, <strong>không phải phân tích của AI thật</strong>.
-            Ảnh của bạn chỉ hiển thị trên trình duyệt, không được gửi lên máy chủ và không được lưu lại.
-          </p>
+.btn-danger-outline:hover {
+  background: #fef3f2;
+}
 
-          <div class="result-grid">
-            <div class="result-compare">
-              <figure>
-                <img id="result-user-photo" alt="Ảnh chân dung của bạn">
-                <figcaption>Ảnh của bạn</figcaption>
-              </figure>
-              <span class="compare-arrow" aria-hidden="true">→</span>
-              <figure>
-                <img id="result-style-photo" alt="">
-                <figcaption id="result-style-caption">Kiểu tóc</figcaption>
-              </figure>
-            </div>
+.btn-camera-link {
+  margin-top: 16px;
+  background: transparent;
+  border: 0;
+  color: var(--forest);
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+}
 
-            <div class="result-detail">
-              <p class="result-score-label">Mức độ phù hợp (mô phỏng)</p>
-              <p class="result-score"><span id="result-score">0</span>%</p>
-              <div class="score-bar" aria-hidden="true"><span id="score-bar-fill"></span></div>
-              <h3 id="result-style-name">—</h3>
-              <p id="result-style-desc"></p>
-              <ul class="result-tips" id="result-tips"></ul>
-            </div>
-          </div>
+.btn-camera-link:hover {
+  text-decoration: underline;
+}
 
-          <!-- BƯỚC 5: CHUYỂN SANG BOOKING -->
-          <div class="result-salons">
-            <h3>Salon gợi ý cho kiểu tóc này</h3>
-            <div class="salon-suggest-grid" id="salon-suggest"></div>
-          </div>
+.upload-format {
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--muted);
+}
 
-          <div class="result-actions">
-            <button type="button" class="btn btn-outline-forest" id="btn-consult-again">Thử kiểu tóc khác</button>
-            <a class="btn btn-forest" href="products.html" id="btn-go-booking">Xem tất cả salon để đặt lịch</a>
-          </div>
-        </div>
-      </section>
+/* Khung Camera & Xem trước ảnh */
+.camera-area,
+.preview-area {
+  flex: 1;
+  background: #f2f4f1;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
-      <!-- BƯỚC 5: LỊCH SỬ TƯ VẤN MÔ PHỎNG (localStorage) -->
-      <section class="consult-history" id="consult-history" aria-labelledby="history-title" hidden>
-        <div class="result-head">
-          <h2 id="history-title" class="step-heading">Lịch sử tư vấn gần đây</h2>
-          <button type="button" class="btn-link-danger" id="btn-clear-history">Xóa lịch sử</button>
-        </div>
-        <p class="history-note">Chỉ lưu kiểu tóc, điểm mô phỏng và thời gian trên trình duyệt này — không lưu ảnh.</p>
-        <ol class="history-list" id="history-list"></ol>
-      </section>
-    </div>
-  </main>
+#camera-video {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 340px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #111;
+  transform: scaleX(-1);
+}
 
-  <!-- FOOTER DÙNG CHUNG -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <a class="footer-brand" href="index.html">
-        <img src="images/salonbook-mark-white.png" alt="" width="44" height="50">
-        SALONBOOK
-      </a>
-      <p>YOUR BEAUTY, YOUR TIME</p>
-      <small>Nguyên mẫu học tập · Nền tảng kết nối nhiều salon · Chưa nhận đặt lịch thật</small>
-    </div>
-  </footer>
+.preview-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
 
-  <script src="js/common.js"></script>
-  <script src="js/auth.js"></script>
-  <script src="js/header-unified.js"></script>
-  <script src="js/products.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/tuvan.js"></script>
-</body>
-</html>
+.preview-img-box {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 330px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid var(--line);
+}
+
+.preview-img-box img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.media-btn-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.upload-error {
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fef3f2;
+  border: 1px solid #fecdca;
+  color: #b42318;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Checkbox đồng ý */
+.consent-row {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  color: #4a5a54;
+  cursor: pointer;
+}
+
+.consent-row input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--forest);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* --- CỘT PHẢI: KHÁM PHÁ KIỂU TÓC --- */
+.ai-intro-box {
+  background: #f5f7f3;
+  border: 1px solid #49665c;
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.ai-intro-box h3 {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--forest);
+  margin-bottom: 6px;
+}
+
+.ai-intro-box p {
+  font-size: 13px;
+  color: #556861;
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+
+.ai-intro-highlight {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #9a6b00;
+}
+
+.preset-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--forest);
+  margin-bottom: 4px;
+}
+
+.preset-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+/* Lưới 3 thẻ kiểu tóc đều nhau */
+.preset-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.preset-card {
+  position: relative;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.2s;
+}
+
+.preset-card:hover {
+  transform: translateY(-2px);
+}
+
+.preset-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #e1e6e1;
+  padding: 9px;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.preset-card.is-selected .preset-frame {
+  border-color: var(--forest);
+  background: var(--mint);
+}
+
+.preset-frame img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center 20%;
+  display: block;
+  background: #ffffff;
+}
+
+.preset-check {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--forest);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 900;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.preset-card.is-selected .preset-check {
+  display: flex;
+}
+
+.preset-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--forest);
+}
+
+/* Cụm 2 nút hành động bên phải */
+.right-cta-group {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-full {
+  width: 100%;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+/* Trạng thái nút Bắt đầu tư vấn khi bị khóa (Bước 3) */
+#btn-start-consult:disabled {
+  background: #e2e6e1;
+  color: #8a9691;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-cream-outline {
+  background: var(--cream);
+  color: var(--forest);
+  border: 1px solid #49665c;
+}
+
+.btn-cream-outline:hover {
+  background: var(--mint);
+}
+
+/* Responsive Tablet & Mobile */
+@media (max-width: 960px) {
+  .tuvan-grid {
+    grid-template-columns: 1fr;
+  }
+  .upload-area {
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 560px) {
+  .preset-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+/* ==========================================================================
+   BƯỚC 4 – 6: KẾT QUẢ MÔ PHỎNG, BOOKING, LỊCH SỬ, RESPONSIVE (Phi)
+   ========================================================================== */
+
+/* Danh sách điều kiện còn thiếu dưới nút tư vấn */
+.consult-requirements {
+  list-style: none;
+  margin: -2px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.consult-requirements li::before { content: "○ "; }
+.consult-requirements li.is-done { color: var(--forest); }
+.consult-requirements li.is-done::before { content: "✓ "; font-weight: 900; }
+
+/* Ảnh kiểu tóc lỗi */
+.preset-frame.is-broken::after {
+  content: "Không tải được ảnh";
+  position: absolute;
+  inset: 9px;
+  display: grid;
+  place-items: center;
+  background: #f5f7f3;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Khung kết quả + lịch sử dùng chung thẻ trắng */
+.consult-result,
+.consult-history {
+  max-width: 1180px;
+  margin: 24px auto 0;
+  padding: 26px 28px;
+  border-radius: 20px;
+  background: #fff;
+  scroll-margin-top: 96px;
+}
+.consult-result:focus { outline: none; }
+
+/* Loading */
+.consult-loading {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  padding: 36px 12px;
+  text-align: center;
+}
+.loading-spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid var(--mint);
+  border-top-color: var(--forest);
+  border-radius: 50%;
+  animation: tuvan-spin .8s linear infinite;
+}
+@keyframes tuvan-spin { to { transform: rotate(360deg); } }
+.loading-text { margin: 0; font-weight: 700; color: var(--forest); }
+.loading-bar {
+  width: min(320px, 100%);
+  height: 6px;
+  border-radius: 999px;
+  background: var(--mint);
+  overflow: hidden;
+}
+.loading-bar span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--yellow);
+  transition: width .6s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner { animation-duration: 2.4s; }
+  .loading-bar span { transition: none; }
+}
+
+/* Đầu khối kết quả */
+.result-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.simulation-badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #fff3c4;
+  color: #7a5a00;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+}
+.simulation-note {
+  margin: 12px 0 20px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--yellow);
+  border-radius: 8px;
+  background: #fffbea;
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: #4a5a54;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+.result-compare {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+}
+.result-compare figure { margin: 0; text-align: center; }
+.result-compare img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center 20%;
+  border-radius: 14px;
+  background: var(--mint);
+}
+.result-compare figcaption { margin-top: 8px; font-size: 13px; font-weight: 700; color: var(--forest); }
+.compare-arrow { font-size: 22px; font-weight: 900; color: var(--forest); }
+
+.result-score-label { margin: 0; font-size: 13px; color: var(--muted); }
+.result-score { margin: 2px 0 8px; font-size: 44px; font-weight: 900; color: var(--forest); line-height: 1; }
+.score-bar { height: 8px; border-radius: 999px; background: var(--mint); overflow: hidden; }
+.score-bar span { display: block; height: 100%; width: 0; background: var(--forest); transition: width .8s ease; }
+.result-detail h3 { margin: 18px 0 6px; font-size: 22px; color: var(--deep); }
+.result-detail > p { margin: 0 0 12px; color: #4a5a54; line-height: 1.55; }
+.result-tips { margin: 0; padding-left: 20px; color: #4a5a54; font-size: 14px; line-height: 1.6; }
+
+/* Salon gợi ý – chuyển sang Booking */
+.result-salons { margin-top: 28px; }
+.result-salons h3 { margin: 0 0 14px; font-size: 18px; color: var(--deep); }
+.salon-suggest-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.salon-suggest-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.salon-suggest-card img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.salon-suggest-body { display: flex; flex-direction: column; gap: 4px; padding: 14px; flex: 1; }
+.salon-suggest-body h4 { margin: 0; font-size: 16px; color: var(--deep); }
+.salon-suggest-body p { margin: 0; font-size: 13px; color: var(--muted); }
+.salon-suggest-price { font-weight: 700; color: var(--forest) !important; }
+.salon-suggest-body .btn { margin-top: 10px; padding: 11px 14px; border-radius: 10px; font-size: 14px; text-align: center; }
+.suggest-empty { color: var(--muted); }
+
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+.result-actions .btn { padding: 13px 20px; border-radius: 10px; font-size: 14px; min-height: 44px; }
+
+/* Lịch sử */
+.history-note { margin: 6px 0 14px; font-size: 13px; color: var(--muted); }
+.history-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.history-item {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.history-item img { width: 52px; height: 52px; object-fit: cover; object-position: center 20%; border-radius: 10px; }
+.history-item strong { display: block; color: var(--deep); }
+.history-item span { font-size: 13px; color: var(--muted); }
+.history-reselect { padding: 8px 14px; border-radius: 10px; font-size: 13px; min-height: 40px; }
+.btn-link-danger {
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: #b42318;
+  cursor: pointer;
+  padding: 8px 0;
+}
+
+/* BƯỚC 6: Responsive cho phần bổ sung */
+@media (max-width: 960px) {
+  .result-grid { grid-template-columns: 1fr; }
+  .salon-suggest-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .tuvan-card,
+  .consult-result,
+  .consult-history { padding: 20px 16px; }
+  .salon-suggest-grid { grid-template-columns: 1fr; }
+  .result-actions { flex-direction: column-reverse; }
+  .result-actions .btn { width: 100%; text-align: center; }
+  .result-score { font-size: 36px; }
+  .history-item { grid-template-columns: 44px minmax(0, 1fr); }
+  .history-item img { width: 44px; height: 44px; }
+  .history-reselect { grid-column: 1 / -1; width: 100%; }
+}
+
+/* Vùng chạm nút "Sử dụng camera" 30px → 44px */
+.btn-camera-link { min-height: 44px; }
