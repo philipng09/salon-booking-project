@@ -14,62 +14,57 @@
   <link rel="stylesheet" href="css/cart.css">
 
   <style>
-    /* Chỉ áp dụng cho khu vực tài khoản ở Header trang chủ */
-    .site-header #auth-action-container.sb-account-actions {
+    /* Chỉ ảnh hưởng header tài khoản trên TRANG CHỦ */
+    .site-header #auth-action-container.sb-account-actions .auth-header-actions {
       display: flex;
       align-items: center;
-      flex-wrap: nowrap;
-      gap: 10px;
-      min-width: 0;
+      gap: 9px;
     }
-
     .site-header #auth-action-container .sb-profile-link {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      max-width: 210px;
+      gap: 12px;
       min-width: 0;
-      padding: 6px 12px 6px 6px;
-      border-radius: 999px;
-      background: #eaf2ee;
-      color: #164a3a;
+      color: #0c513f;
       text-decoration: none;
-      font-size: 12px;
-      font-weight: 700;
       white-space: nowrap;
     }
-
-    .site-header #auth-action-container .sb-profile-link:hover {
-      background: #dcebe2;
-    }
-
     .site-header #auth-action-container .sb-profile-avatar {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      flex: 0 0 27px;
-      width: 27px;
-      height: 27px;
-      border-radius: 50%;
-      background: #185d49;
-      color: white;
-      font-size: 12px;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      color: #0c513f;
     }
-
     .site-header #auth-action-container .sb-profile-name {
+      display: block;
+      max-width: 172px;
+      padding: 12px 21px;
+      border-radius: 999px;
+      background: #e4efe9;
+      font-size: 12px;
+      font-weight: 800;
       overflow: hidden;
       text-overflow: ellipsis;
-      min-width: 0;
+      text-align: center;
     }
-
+    .site-header #auth-action-container .sb-profile-link:hover .sb-profile-name {
+      background: #d3e6dc;
+    }
     .site-header #auth-action-container .sb-profile-link:focus-visible {
-      outline: 2px solid #e8ab00;
+      outline: 2px solid #ffc501;
       outline-offset: 3px;
+      border-radius: 20px;
     }
-
-    @media (max-width: 600px) {
-      .site-header #auth-action-container .sb-profile-link {
-        max-width: 130px;
+    @media (max-width: 800px) {
+      .site-header #auth-action-container .sb-profile-name {
+        max-width: 110px;
+        padding: 9px 11px;
+      }
+      .site-header #auth-action-container .sb-profile-avatar {
+        width: 27px; height: 27px; flex-basis: 27px;
       }
     }
   </style>
@@ -493,72 +488,54 @@
   <!-- 2. Menu, Footer, trạng thái Header -->
   <script src="js/common.js"></script>
 
-  <!-- SALONBOOK: PROFILE LINK TRONG HEADER - không sửa auth.js/common.js -->
+  <!-- SALONBOOK PROFILE: chỉ thay giao diện tài khoản tại trang chủ.
+       Giữ nguyên auth.js, common.js và toàn bộ phần còn lại. -->
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", () => {
       const container = document.getElementById("auth-action-container");
       const auth = window.SalonBookAuth;
-
       if (!container || !auth || typeof auth.currentUser !== "function") return;
 
-      function updateProfileHeader() {
-        const user = auth.currentUser();
+      const avatarMarkup = `<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="3.2" fill="currentColor"/><path d="M5.7 18.2c.7-3.3 3-5 6.3-5s5.6 1.7 6.3 5" fill="currentColor"/></svg>`;
 
+      function syncAccountLink() {
+        const user = auth.currentUser();
         if (!user) {
           container.classList.remove("sb-account-actions");
-          return;
+          return; // Đăng nhập vẫn được auth.js xử lý như cũ.
         }
 
-        let link = container.querySelector(".sb-profile-link");
+        // auth.js của nhóm tạo .auth-header-actions chứa .auth-user-name
+        // và .auth-logout. Chỉ sửa phần hiển thị trên trang chủ.
+        const row = container.querySelector(".auth-header-actions");
+        if (!row) return;
 
+        let link = row.querySelector(".sb-profile-link");
         if (!link) {
-          // Chỉ thay lời chào do Auth tạo, không xóa nút Đăng xuất.
-          const greeting = Array.from(container.children).find(element =>
-            element.tagName === "SPAN" &&
-            !element.classList.contains("sb-profile-avatar")
-          );
-
-          if (!greeting) return;
-
+          const nameNode = row.querySelector(".auth-user-name");
           link = document.createElement("a");
-          link.href = "profile.html";
           link.className = "sb-profile-link";
+          link.href = "profile.html";
           link.title = "Xem hồ sơ cá nhân";
-
-          const avatar = document.createElement("span");
-          avatar.className = "sb-profile-avatar";
-          avatar.textContent = "●";
-          avatar.setAttribute("aria-hidden", "true");
-
-          const name = document.createElement("span");
-          name.className = "sb-profile-name";
-
-          link.append(avatar, name);
-          greeting.replaceWith(link);
+          link.innerHTML = `<span class="sb-profile-avatar">${avatarMarkup}</span><span class="sb-profile-name"></span>`;
+          if (nameNode) nameNode.replaceWith(link);
+          else row.prepend(link);
         }
 
         const name = link.querySelector(".sb-profile-name");
+        const fullName = user.fullName || "Tài khoản";
+        if (name && name.textContent !== fullName) name.textContent = fullName;
 
-        if (name) {
-          const nextName = user.fullName || "Tài khoản";
-          if (name.textContent !== nextName) {
-            name.textContent = nextName;
-          }
-        }
-
+        // Nút đăng xuất vẫn tồn tại TRONG Profile; chỉ ẩn trên trang chủ.
+        // remove() ở đây không sửa auth.js hoặc chức năng logout.
+        row.querySelector(".auth-logout")?.remove();
         container.classList.add("sb-account-actions");
       }
 
-      // Theo dõi khi Auth thay đổi nội dung Header.
-      const observer = new MutationObserver(updateProfileHeader);
-
-      observer.observe(container, {
-        childList: true
-      });
-
-      document.addEventListener("salonbook:auth-changed", updateProfileHeader);
-
-      updateProfileHeader();
+      const observer = new MutationObserver(syncAccountLink);
+      observer.observe(container, {childList: true, subtree: true});
+      document.addEventListener("salonbook:auth-changed", syncAccountLink);
+      syncAccountLink();
     });
   </script>
 
