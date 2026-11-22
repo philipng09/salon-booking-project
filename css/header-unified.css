@@ -1,0 +1,63 @@
+/* SALONBOOK - Header đồng bộ với index, chỉ giới hạn trong .site-header. */
+.site-header { background: var(--cream, #fefbf0); }
+.site-header .container.nav-shell {
+  width: min(1410px, calc(100% - 76px)); max-width: 1410px;
+  padding-left: 0; padding-right: 0; margin-left: auto; margin-right: auto;
+  min-height: 86px; height: 86px; display: flex; align-items: center;
+  justify-content: space-between; gap: clamp(12px, 1.5vw, 26px);
+}
+.site-header .brand { display: flex; align-items: center; gap: 9px;
+  flex: 0 0 auto; font-size: 25px; font-weight: 900; letter-spacing: -1.3px; white-space: nowrap; }
+.site-header .brand img { width: 51px; height: 65px; object-fit: contain; }
+.site-header .main-nav { display: flex; align-items: center;
+  gap: clamp(14px, 2vw, 35px); flex: 0 1 auto; }
+.site-header .main-nav a { font: 700 14px/1.4 Arial, "Segoe UI", sans-serif;
+  padding: 11px 0; white-space: nowrap; }
+.site-header .nav-actions { display: flex; align-items: center; flex: 0 1 auto;
+  gap: clamp(8px, 1vw, 15px); min-width: 0; }
+.site-header .header-search-box { display: inline-flex; align-items: center;
+  width: 230px; min-width: 0; height: 39px; padding: 6px 13px;
+  border: 1px solid #cbd5d1; border-radius: 999px; background: #fff;
+  gap: 8px; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+.site-header .header-search-box input { background: transparent !important; border: 0 !important;
+  outline: 0 !important; box-shadow: none !important; width: 100%; min-width: 0;
+  padding: 0 !important; font-size: 14px; }
+.site-header .header-search-box .search-icon { width: 16px; height: 16px; flex-shrink: 0; }
+.site-header .cart-nav-link { font-size: 13px; font-weight: 800; white-space: nowrap; }
+.site-header #auth-action-container .auth-header-actions { display: flex; align-items: center; gap: 9px; }
+.site-header .sb-profile-link { display: inline-flex; align-items: center; gap: 11px;
+  min-width: 0; white-space: nowrap; color: #0c513f; }
+.site-header .sb-profile-avatar { display: inline-flex; width: 31px; height: 31px;
+  align-items: center; justify-content: center; flex: 0 0 31px; }
+.site-header .sb-profile-name { display: inline-block; max-width: 175px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  background: #e4efe9; border-radius: 999px; padding: 12px 17px;
+  font-size: 13px; font-weight: 800; text-align: center; }
+.site-header .sb-profile-link:hover .sb-profile-name { background: #d8e9e0; }
+.site-header .auth-owner-link, .site-header .auth-logout { font-size: 12px; white-space: nowrap; }
+.site-header .sb-profile-link:focus-visible { outline: 3px solid #ffc501; border-radius: 20px; }
+@media (max-width: 1320px) {
+  .site-header .header-search-box { width: 175px; }
+  .site-header .main-nav { gap: 17px; }
+  .site-header .sb-profile-name { max-width: 135px; padding: 10px 13px; }
+}
+@media (max-width: 1160px) {
+  .site-header .header-search-box { display: none !important; }
+  .site-header .brand { font-size: 22px; }
+  .site-header .brand img { width: 45px; height: 56px; }
+}
+@media (min-width: 761px) and (max-width: 900px) {
+  .site-header .main-nav { display: none; }
+  .site-header .main-nav.is-open { display: flex; }
+  .site-header .nav-toggle { display: inline-flex; }
+}
+@media (max-width: 760px) {
+  .site-header .container.nav-shell { width: calc(100% - 32px); min-height: 76px; height: 76px; gap: 8px; }
+  .site-header .main-nav { display: none; }
+  .site-header .main-nav.is-open { display: flex; }
+  .site-header .nav-actions { margin-left: auto; gap: 8px; }
+  .site-header .sb-profile-name { display: none; }
+  .site-header .brand { font-size: 19px; }
+  .site-header .brand img { width: 36px; height: 49px; }
+  .site-header .cart-nav-link { display: none !important; }
+}
