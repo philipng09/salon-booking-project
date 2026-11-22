@@ -61,3 +61,12 @@
   .site-header .brand img { width: 36px; height: 49px; }
   .site-header .cart-nav-link { display: none !important; }
 }
+
+/* Customer account: avatar và tên nằm CHUNG trong một khung mint, không đổi nav khác. */
+.site-header .sb-profile-link {
+  background: #e4efe9; border-radius: 999px; padding: 4px 9px 4px 7px; gap: 4px;
+}
+.site-header .sb-profile-avatar { width: 30px; height: 30px; flex-basis: 30px; }
+.site-header .sb-profile-name { background: transparent; padding: 8px 11px 8px 5px; }
+.site-header .sb-profile-link:hover { background: #d8e9e0; }
+.site-header .sb-profile-link:hover .sb-profile-name { background: transparent; }
