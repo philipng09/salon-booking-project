@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0c513f">
+  <meta name="description" content="Giỏ dịch vụ SalonBook - Chọn dịch vụ salon và tiếp tục đặt lịch.">
+  <title>Giỏ dịch vụ | SalonBook</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive-ux.css">
+  <link rel="stylesheet" href="css/cart.css">
+  <link rel="stylesheet" href="css/cart-figma.css?v=fix-20261122">
+  <link rel="stylesheet" href="css/multi-salon-booking.css?v=1">
+  <style id="salonbook-cart-layout-fix">
+
+  /* CART FIX - Bản vững chắc: cart.js chỉ tạo 2 phần (info/actions),
+     script mở rộng sẽ tạo checkbox + ảnh để trở thành 4 phần. */
+  .cart-figma .cart-salon-group,
+  .cart-figma .cart-service-row,
+  .cart-figma .cart-service-info { min-width: 0; }
+
+  /* Trạng thái gốc: 2 thành phần => 2 cột, KHÔNG bao giờ chia thành 4 cột. */
+  .cart-figma .cart-service-row:not(.is-cart-enhanced) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    align-items: center;
+    gap: 18px;
+  }
+  .cart-figma .cart-service-row:not(.is-cart-enhanced) > .cart-service-info { grid-column:1; }
+  .cart-figma .cart-service-row:not(.is-cart-enhanced) > .cart-service-actions {
+    grid-column:2; min-width:max-content;
+  }
+
+  /* Trạng thái đã có checkbox + ảnh => 4 cột hợp lệ. */
+  .cart-figma .cart-service-row.is-cart-enhanced {
+    display:grid;
+    grid-template-columns: 24px 76px minmax(0,1fr) max-content;
+    align-items:center;
+    gap:13px;
+  }
+  .cart-figma .cart-service-row.is-cart-enhanced > .cart-line-check { grid-column:1; }
+  .cart-figma .cart-service-row.is-cart-enhanced > .cart-service-image {grid-column:2;width:76px;height:80px}
+  .cart-figma .cart-service-row.is-cart-enhanced > .cart-service-info {grid-column:3}
+  .cart-figma .cart-service-row.is-cart-enhanced > .cart-service-actions {grid-column:4}
+  .cart-figma .cart-service-row .cart-service-info h4,
+  .cart-figma .cart-service-row .cart-service-info p {
+    word-break:normal; overflow-wrap:normal; white-space:normal;
+  }
+  .cart-figma .cart-service-row .cart-service-info h4 { font-size:16px;line-height:1.45 }
+  .cart-figma .cart-service-actions { flex-shrink:0; }
+  .cart-figma .cart-service-actions strong {white-space:nowrap}
+
+  @media(max-width:750px) {
+    .cart-figma .cart-service-row.is-cart-enhanced {
+      grid-template-columns:20px 64px minmax(0,1fr);
+      gap:10px;
+      align-items:start;
+    }
+    .cart-figma .cart-service-row.is-cart-enhanced > .cart-service-image {width:64px;height:70px}
+    .cart-figma .cart-service-row.is-cart-enhanced > .cart-service-info {grid-column:3}
+    .cart-figma .cart-service-row.is-cart-enhanced > .cart-service-actions {
+      grid-column:3;
+      flex-direction:row;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      text-align:left;
+      min-width:0;
+    }
+  }
+  @media(max-width:520px) {
+    .cart-figma .cart-service-row:not(.is-cart-enhanced) {grid-template-columns:minmax(0,1fr);gap:10px}
+    .cart-figma .cart-service-row:not(.is-cart-enhanced) > .cart-service-actions {
+      grid-column:1;min-width:0;flex-direction:row;align-items:center;
+      justify-content:space-between;
+    }
+    .cart-figma .cart-service-row.is-cart-enhanced {
+      grid-template-columns:20px 54px minmax(0,1fr);gap:8px;
+    }
+    .cart-figma .cart-service-row.is-cart-enhanced > .cart-service-image {width:54px;height:62px}
+    .cart-figma .cart-service-row.is-cart-enhanced > .cart-service-actions {grid-column:2/-1}
+    .cart-figma .cart-service-row.is-cart-enhanced > .cart-service-info {grid-column:3}
+    .cart-figma .cart-service-row .cart-service-info h4 {font-size:15px}
+    .cart-figma .cart-service-actions strong {font-size:14px}
+  }
+
+  </style>
+</head>
+<body class="cart-figma">
+  <a class="skip-link" href="#main-content">Chuyển đến nội dung chính</a>
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="index.html" aria-label="SalonBook - Trang chủ">
+        <img src="images/salonbook-mark.png" alt="" width="46" height="54">
+        <span>SALON<span class="brand-thin">BOOK</span></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-controls="main-nav" aria-expanded="false" aria-label="Mở menu">☰</button>
+      <nav class="main-nav" id="main-nav" aria-label="Điều hướng chính">
+        <a href="index.html">Trang chủ</a>
+        <a href="products.html" class="active" aria-current="page">Đặt lịch</a>
+        <a href="blog.html">Blog</a>
+        <a href="tuvan.html">Tư vấn</a>
+        <a href="about.html">Giới thiệu</a>
+      </nav>
+      <div class="nav-actions">
+        <div id="auth-action-container"><a class="btn btn-yellow btn-top" href="auth.html">Đăng nhập</a></div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="cart-page">
+    <div class="container">
+      <nav class="cart-breadcrumb" aria-label="Đường dẫn trang">
+        <a href="index.html">Trang chủ</a><span aria-hidden="true">/</span>
+        <a href="products.html">Khám phá salon</a><span aria-hidden="true">/</span>
+        <strong aria-current="page">Giỏ dịch vụ</strong>
+      </nav>
+      <div class="cart-intro">
+        <div>
+          <div class="cart-eyebrow">SALONBOOK / YOUR SELECTION</div>
+          <h1>Giỏ dịch vụ <span class="cart-heading-accent">của bạn</span></h1>
+          <p class="cart-lead">Chọn các dịch vụ yêu thích, kiểm tra tổng giá và tiếp tục đặt lịch. Mỗi salon được đặt lịch riêng.</p>
+        </div>
+        <a class="cart-explore-link" href="products.html">+ Khám phá salon khác</a>
+      </div>
+
+      <section class="cart-empty cart-panel" id="cart-empty" aria-live="polite" hidden>
+        <div class="cart-empty-icon" aria-hidden="true">✦</div>
+        <h2>Giỏ dịch vụ của bạn đang trống</h2>
+        <p>Bạn chưa chọn dịch vụ nào. Hãy khám phá các salon và chọn dịch vụ bạn thích nhé!</p>
+        <a href="products.html" class="cart-back">Khám phá salon →</a>
+      </section>
+
+      <div class="cart-layout" id="cart-filled" hidden>
+        <section class="cart-panel" aria-labelledby="cart-list-title">
+          <div class="cart-list-heading">
+            <div>
+              <span class="cart-kicker">DANH SÁCH ĐÃ LƯU</span>
+              <h2 id="cart-list-title">Dịch vụ trong giỏ</h2>
+            </div>
+            <span id="cart-selected-badge" class="cart-selected-badge" aria-live="polite">0 dịch vụ</span>
+          </div>
+          <label class="cart-select-all">
+            <input id="cart-select-all" type="checkbox" checked>
+            <span>Chọn tất cả dịch vụ</span>
+          </label>
+          <!-- Giữ nguyên ID để js/cart.js render nhóm salon từ products.js -->
+          <div id="cart-items" aria-live="polite"></div>
+          <div class="cart-continue"><a href="products.html">← Tiếp tục khám phá salon</a></div>
+        </section>
+
+        <aside class="cart-summary" aria-label="Tóm tắt giỏ dịch vụ">
+          <span class="cart-kicker">SALONBOOK / SUMMARY</span>
+          <h2>Tóm tắt lựa chọn</h2>
+          <div class="cart-summary-line"><span>Số dịch vụ đã chọn</span><strong id="cart-total-quantity">0</strong></div>
+          <div class="cart-summary-line"><span>Số salon</span><strong id="cart-selected-salon-count">0</strong></div>
+          <div class="cart-summary-line cart-summary-total"><span>Tổng giá dự kiến</span><strong id="cart-total-money">0 ₫</strong></div>
+          <p class="cart-summary-hint">Chỉ các dịch vụ được tích chọn mới được tính vào tổng tiền và chuyển sang bước đặt lịch.</p>
+          <div class="cart-booking-guide">
+            <div class="cart-guide-icon" aria-hidden="true">✓</div>
+            <div><strong>Sẵn sàng đặt lịch?</strong><p>Nhấn <b>Đặt lịch</b> tại salon tương ứng để chọn chuyên viên, ngày và giờ.</p></div>
+          </div>
+          <button id="cart-book-all" type="button" class="cart-back cart-back-full sb-batch-book-btn">Đặt các lịch đã chọn →</button>
+          <p id="cart-batch-error" class="sb-batch-error" role="alert" hidden></p>
+          <p class="sb-batch-small">Tất cả lịch phải có đủ dịch vụ, chuyên viên, ngày và giờ. Hệ thống kiểm tra chồng lấn cả thời lượng, không tính thời gian di chuyển.</p>
+          <a class="cart-back cart-back-full" href="products.html">+ Chọn thêm dịch vụ</a>
+          <p class="cart-footnote"><strong>Lưu ý:</strong> Giá và giờ hiển thị chỉ mang tính tham khảo. Website đang là bản demo, chưa nhận lịch thật hoặc xử lý thanh toán.</p>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <a class="footer-brand" href="index.html"><img src="images/salonbook-mark-white.png" alt="" width="44" height="50">SALONBOOK</a>
+      <p>YOUR BEAUTY, YOUR TIME</p>
+      <small>Nguyên mẫu học tập · Nền tảng kết nối nhiều salon · Chưa nhận đặt lịch thật</small>
+    </div>
+  </footer>
+  <script src="js/auth.js"></script>
+  <script src="js/common.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <!-- Đọc SalonCart và bổ sung checkbox/tổng tiền theo lựa chọn, không sửa cart.js -->
+  <!-- Fix tại chỗ: không phụ thuộc file js/cart-figma.js đang bị 404 -->
+  <script id="salonbook-cart-selection-logic">
+/* SalonBook cart UI enhancement. Read-only integration with existing SalonCart API.
+ * Checkboxes select services for a single-salon booking; no checkout/payment occurs.
+ * This script must load AFTER js/cart.js on cart.html.
+ */
+(function () {
+  'use strict';
+  const selectedKeys = new Set();
+  let knownKeys = new Set();
+  const $ = id => document.getElementById(id);
+  const money = value => Number(value || 0).toLocaleString('vi-VN') + ' ₫';
+  const getItems = () => window.SalonCart?.getTotals?.().items || [];
+  let refreshScheduled = false;
+
+  function requestRefresh() {
+    if (refreshScheduled) return;
+    refreshScheduled = true;
+    window.requestAnimationFrame(() => {
+      refreshScheduled = false;
+      refresh();
+    });
+  }
+
+  function reconcile(items) {
+    const current = new Set(items.map(i => i.key));
+    for (const key of [...selectedKeys]) if (!current.has(key)) selectedKeys.delete(key);
+    for (const key of current) if (!knownKeys.has(key)) selectedKeys.add(key);
+    knownKeys = current;
+  }
+
+  function buildSelectionRow(row, item) {
+    row.dataset.itemKey = item.key;
+    row.classList.toggle('is-unselected', !selectedKeys.has(item.key));
+    let input = row.querySelector('.cart-line-check input');
+    if (!input) {
+      const wrapper = document.createElement('label');
+      wrapper.className = 'cart-line-check';
+      input = document.createElement('input');
+      input.type = 'checkbox';
+      input.dataset.selectKey = item.key;
+      input.setAttribute('aria-label', `Chọn dịch vụ ${item.serviceName} của ${item.salonName}`);
+      wrapper.appendChild(input);
+      row.prepend(wrapper);
+    }
+    input.checked = selectedKeys.has(item.key);
+    let image = row.querySelector('.cart-service-image');
+    if (!image) {
+      image = document.createElement('img');
+      image.className = 'cart-service-image';
+      image.alt = `Ảnh ${item.salonName}`;
+      image.loading = 'lazy';
+      image.onerror = function () {
+        this.onerror = null;
+        this.src = 'images/salonbook-mark.png';
+      };
+      const info = row.querySelector('.cart-service-info');
+      if (info) row.insertBefore(image, info);
+    }
+    if (image.getAttribute('src') !== item.image) image.src = item.image || 'images/salonbook-mark.png';
+    const info = row.querySelector('.cart-service-info');
+    row.classList.add('is-cart-enhanced');
+    if (info && !info.querySelector('.cart-service-edit')) {
+      const edit = document.createElement('a');
+      edit.className = 'cart-service-edit';
+      edit.href = 'product-detail.html?salonId=' + encodeURIComponent(item.salonId) + '&serviceId=' + encodeURIComponent(item.serviceId) + '#booking';
+      edit.textContent = 'Chỉnh sửa lịch dự kiến';
+      info.appendChild(edit);
+    }
+  }
+
+  function updateGroup(section, group) {
+    const heading = section.querySelector('.cart-salon-title');
+    const chosen = group.items.filter(item => selectedKeys.has(item.key));
+    if (heading) {
+      let allInput = heading.querySelector('input[data-select-salon]');
+      if (!allInput) {
+        const label = document.createElement('label');
+        label.className = 'cart-group-select';
+        allInput = document.createElement('input');
+        allInput.type = 'checkbox';
+        allInput.dataset.selectSalon = String(group.salonId);
+        label.append(allInput, document.createTextNode('Chọn cả salon'));
+        heading.appendChild(label);
+      }
+      allInput.checked = chosen.length === group.items.length && chosen.length > 0;
+      allInput.indeterminate = chosen.length > 0 && chosen.length < group.items.length;
+    }
+    section.querySelectorAll('.cart-service-row').forEach((row, index) => {
+      if (group.items[index]) buildSelectionRow(row, group.items[index]);
+    });
+    const price = section.querySelector('.cart-salon-footer > strong');
+    if (price) price.textContent = `Đã chọn: ${money(chosen.reduce((sum, item) => sum + Number(item.price || 0), 0))}`;
+    const book = section.querySelector('[data-book-salon]');
+    if (book) {
+      book.disabled = chosen.length === 0;
+      book.textContent = chosen.length ? `Đặt lịch ${chosen.length} dịch vụ đã chọn →` : 'Chọn dịch vụ để đặt lịch';
+      book.setAttribute('aria-label', `Đặt lịch ${chosen.length} dịch vụ của ${group.salonName}`);
+    }
+  }
+
+  function refresh() {
+    const api = window.SalonCart;
+    const root = $('cart-items');
+    if (!api || !root) return;
+    const items = getItems();
+    reconcile(items);
+    const groups = api.groupBySalon(items);
+    const sections = [...root.querySelectorAll(':scope > .cart-salon-group')];
+    for (const group of groups) {
+      const section = sections.find(s => String(s.querySelector('[data-book-salon]')?.dataset.bookSalon) === String(group.salonId));
+      if (section) updateGroup(section, group);
+    }
+    const chosen = items.filter(item => selectedKeys.has(item.key));
+    const count = chosen.length;
+    if ($('cart-total-quantity')) $('cart-total-quantity').textContent = String(count);
+    if ($('cart-total-money')) $('cart-total-money').textContent = money(chosen.reduce((total, item) => total + Number(item.price || 0), 0));
+    if ($('cart-selected-salon-count')) $('cart-selected-salon-count').textContent = String(new Set(chosen.map(item => String(item.salonId))).size);
+    if ($('cart-selected-badge')) $('cart-selected-badge').textContent = `${count} dịch vụ`;
+    const all = $('cart-select-all');
+    if (all) {
+      all.checked = count > 0 && count === items.length;
+      all.indeterminate = count > 0 && count < items.length;
+    }
+    window.dispatchEvent(new CustomEvent('salonbook:cart-selection-change'));
+  }
+
+  function onChange(event) {
+    const target = event.target;
+    if (!(target instanceof HTMLInputElement)) return;
+    const items = getItems();
+    if (target.id === 'cart-select-all') {
+      for (const item of items) target.checked ? selectedKeys.add(item.key) : selectedKeys.delete(item.key);
+    } else if (target.dataset.selectSalon) {
+      for (const item of items.filter(i => String(i.salonId) === target.dataset.selectSalon)) {
+        target.checked ? selectedKeys.add(item.key) : selectedKeys.delete(item.key);
+      }
+    } else if (target.dataset.selectKey) {
+      target.checked ? selectedKeys.add(target.dataset.selectKey) : selectedKeys.delete(target.dataset.selectKey);
+    } else return;
+    refresh();
+  }
+
+  function interceptBook(event) {
+    if (!(event.target instanceof Element)) return;
+    const button = event.target.closest('.cart-figma [data-book-salon]');
+    if (!button) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const salonId = String(button.dataset.bookSalon || '');
+    const chosen = getItems().filter(item => String(item.salonId) === salonId && selectedKeys.has(item.key));
+    if (!chosen.length) { alert('Vui lòng chọn ít nhất một dịch vụ của salon này.'); return; }
+    // Dùng chung màn xác nhận; giữ nguyên chuyên viên/ngày/giờ đã chọn.
+    if (window.SalonBookMultiBooking?.startFromCartItems) {
+      window.SalonBookMultiBooking.startFromCartItems(chosen);
+    } else {
+      alert('Trang đặt nhiều lịch chưa tải xong. Vui lòng tải lại.');
+    }
+  }
+
+  // Expose the exact checked items to the multi-salon checkout without touching cart.js.
+  window.SalonBookCartSelection = Object.freeze({
+    getSelectedItems: () => getItems().filter(item => selectedKeys.has(item.key))
+  });
+
+  function init() {
+    const root = $('cart-items');
+    if (!root || !window.SalonCart) return;
+    root.addEventListener('change', onChange);
+    $('cart-select-all')?.addEventListener('change', onChange);
+    new MutationObserver(requestRefresh).observe(root, { childList: true });
+    window.addEventListener('saloncart:change', requestRefresh);
+    refresh();
+  }
+  // Capture handler wins over the legacy delegated bubble handler without modifying js/cart.js.
+  document.addEventListener('click', interceptBook, true);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+
+  </script>
+  <script src="js/multi-salon-booking.js?v=1"></script>
+</body>
+</html>
