@@ -14,58 +14,63 @@
   <link rel="stylesheet" href="css/cart.css">
 
   <style>
-    /* Chỉ ảnh hưởng header tài khoản trên TRANG CHỦ */
-    .site-header #auth-action-container.sb-account-actions .auth-header-actions {
+    /* PROFILE-HEADER FIX: chỉ tác động vùng tài khoản khách hàng, không chỉnh menu chung */
+    .site-header #auth-action-container.sb-customer-header {
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+    .site-header #auth-action-container.sb-customer-header .auth-header-actions {
       display: flex;
       align-items: center;
-      gap: 9px;
+      gap: 0;
+      min-width: 0;
     }
-    .site-header #auth-action-container .sb-profile-link {
+    .site-header #auth-action-container.sb-customer-header .sb-profile-link {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
+      justify-content: flex-end;
+      gap: 7px;
+      max-width: 172px;
       min-width: 0;
-      color: #0c513f;
-      text-decoration: none;
       white-space: nowrap;
+      text-decoration: none;
+      color: #0c513f;
     }
-    .site-header #auth-action-container .sb-profile-avatar {
+    .site-header #auth-action-container.sb-customer-header .sb-profile-avatar {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 34px;
-      height: 34px;
-      flex: 0 0 34px;
-      color: #0c513f;
+      width: 26px;
+      height: 26px;
+      flex: 0 0 26px;
     }
-    .site-header #auth-action-container .sb-profile-name {
+    .site-header #auth-action-container.sb-customer-header .sb-profile-name {
       display: block;
-      max-width: 172px;
-      padding: 12px 21px;
+      box-sizing: border-box;
+      min-width: 0;
+      max-width: 139px;
+      padding: 10px 12px;
       border-radius: 999px;
       background: #e4efe9;
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 700;
+      line-height: 1.2;
       overflow: hidden;
       text-overflow: ellipsis;
       text-align: center;
     }
-    .site-header #auth-action-container .sb-profile-link:hover .sb-profile-name {
+    .site-header #auth-action-container.sb-customer-header .sb-profile-link:hover .sb-profile-name {
       background: #d3e6dc;
     }
-    .site-header #auth-action-container .sb-profile-link:focus-visible {
+    .site-header #auth-action-container.sb-customer-header .sb-profile-link:focus-visible {
       outline: 2px solid #ffc501;
       outline-offset: 3px;
       border-radius: 20px;
     }
-    @media (max-width: 800px) {
-      .site-header #auth-action-container .sb-profile-name {
-        max-width: 110px;
-        padding: 9px 11px;
-      }
-      .site-header #auth-action-container .sb-profile-avatar {
-        width: 27px; height: 27px; flex-basis: 27px;
-      }
+    /* Ở màn hình hẹp, chỉ hiện icon: không ép logo/menu/giỏ hàng */
+    @media (max-width: 1280px) {
+      .site-header #auth-action-container.sb-customer-header .sb-profile-name { display: none; }
+      .site-header #auth-action-container.sb-customer-header .sb-profile-link { max-width: 30px; }
     }
   </style>
 </head>
@@ -488,28 +493,24 @@
   <!-- 2. Menu, Footer, trạng thái Header -->
   <script src="js/common.js"></script>
 
-  <!-- SALONBOOK PROFILE: chỉ thay giao diện tài khoản tại trang chủ.
-       Giữ nguyên auth.js, common.js và toàn bộ phần còn lại. -->
+  <!-- SALONBOOK PROFILE: chỉ xử lý liên kết Customer Profile, không sửa Auth chung -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const container = document.getElementById("auth-action-container");
       const auth = window.SalonBookAuth;
       if (!container || !auth || typeof auth.currentUser !== "function") return;
 
-      const avatarMarkup = `<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="3.2" fill="currentColor"/><path d="M5.7 18.2c.7-3.3 3-5 6.3-5s5.6 1.7 6.3 5" fill="currentColor"/></svg>`;
+      const avatarMarkup = `<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="9" r="3.2" fill="currentColor"/><path d="M5.7 18.2c.7-3.3 3-5 6.3-5s5.6 1.7 6.3 5" fill="currentColor"/></svg>`;
 
-      function syncAccountLink() {
+      function syncCustomerHeader() {
         const user = auth.currentUser();
-        if (!user) {
-          container.classList.remove("sb-account-actions");
-          return; // Đăng nhập vẫn được auth.js xử lý như cũ.
+        // Owner/Admin: giữ nguyên Header do auth.js của nhóm tạo.
+        if (!user || user.role !== "customer") {
+          container.classList.remove("sb-customer-header");
+          return;
         }
-
-        // auth.js của nhóm tạo .auth-header-actions chứa .auth-user-name
-        // và .auth-logout. Chỉ sửa phần hiển thị trên trang chủ.
         const row = container.querySelector(".auth-header-actions");
         if (!row) return;
-
         let link = row.querySelector(".sb-profile-link");
         if (!link) {
           const nameNode = row.querySelector(".auth-user-name");
@@ -521,21 +522,17 @@
           if (nameNode) nameNode.replaceWith(link);
           else row.prepend(link);
         }
-
         const name = link.querySelector(".sb-profile-name");
-        const fullName = user.fullName || "Tài khoản";
-        if (name && name.textContent !== fullName) name.textContent = fullName;
-
-        // Nút đăng xuất vẫn tồn tại TRONG Profile; chỉ ẩn trên trang chủ.
-        // remove() ở đây không sửa auth.js hoặc chức năng logout.
+        if (name) name.textContent = user.fullName || "Tài khoản";
+        // Customer có Đăng xuất trong Profile. Chỉ ẩn nút ở trang chủ.
         row.querySelector(".auth-logout")?.remove();
-        container.classList.add("sb-account-actions");
+        container.classList.add("sb-customer-header");
       }
 
-      const observer = new MutationObserver(syncAccountLink);
-      observer.observe(container, {childList: true, subtree: true});
-      document.addEventListener("salonbook:auth-changed", syncAccountLink);
-      syncAccountLink();
+      const observer = new MutationObserver(syncCustomerHeader);
+      observer.observe(container, { childList: true, subtree: true });
+      document.addEventListener("salonbook:auth-changed", syncCustomerHeader);
+      syncCustomerHeader();
     });
   </script>
 
