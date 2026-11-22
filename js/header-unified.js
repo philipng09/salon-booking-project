@@ -39,3 +39,20 @@
   document.addEventListener('salonbook:auth-changed', sync);
   sync();
 })();
+
+/* Header quick search: Enter chuyển sang Khám phá salon trên trang Đặt lịch. */
+(function () {
+  'use strict';
+  const input = document.getElementById('header-quick-search');
+  if (!input) return;
+  input.setAttribute('aria-label', 'Tìm kiếm salon theo tên hoặc khu vực');
+  input.addEventListener('keydown', function (event) {
+    if (event.key !== 'Enter' || event.isComposing) return;
+    const term = input.value.trim();
+    if (!term) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const params = new URLSearchParams({ q: term });
+    window.location.assign('products.html?' + params.toString() + '#salon-grid');
+  }, true);
+})();
