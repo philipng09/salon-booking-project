@@ -165,7 +165,8 @@
 
     $("profile-display-role").textContent = "Khách hàng";
 
-    $("header-user-name").textContent =
+    const headerUserName = $("header-user-name");
+    if (headerUserName) headerUserName.textContent =
       session.fullName || "Khách hàng";
 
     $("profile-fullname").value = session.fullName || "";
