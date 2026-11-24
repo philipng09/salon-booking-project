@@ -3,447 +3,917 @@
 <html lang="vi">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
 
-  <title>Đăng nhập - Đăng ký | SalonBook</title>
+    <meta charset="UTF-8">
 
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/auth.css">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#0C513F">
+
+    <title>Đăng nhập - Đăng ký | SalonBook</title>
+
+    <!-- CSS DÙNG CHUNG -->
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/responsive-ux.css">
+
+    <link rel="stylesheet" href="css/cart.css">
+
+    <link rel="stylesheet" href="css/auth.css">
+
+    <link rel="stylesheet" href="css/header-unified.css">
+
+    <style>
+
+        /* LOGO CHÍNH THỨC SALONBOOK */
+
+        .auth-heading .auth-logo-image {
+            display: block;
+            width: 85px;
+            height: 105px;
+            object-fit: contain;
+            margin: 0 auto 18px;
+        }
+
+        .site-header {
+            background: #faf9ef;
+        }
+
+        .auth-body {
+            background: #faf9ef;
+        }
+
+        .header-search-box {
+            margin: 0;
+        }
+
+        .cart-nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #0c513f;
+            text-decoration: none;
+            white-space: nowrap;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .auth-cart-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-width: 22px;
+            height: 22px;
+
+            padding: 3px;
+
+            background: #ffc501;
+            color: #0c513f;
+
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+        @media (max-width: 480px) {
+
+            .auth-heading .auth-logo-image {
+                width: 65px;
+                height: 85px;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 <body class="auth-body">
 
-  <!-- HEADER SALONBOOK -->
-  <header class="site-header">
-    <div class="container nav-shell">
+    <!-- =====================================
+         HEADER SALONBOOK
+         ===================================== -->
 
-      <a class="brand" href="index.html">
-        <img
-          src="images/salonbook-mark.png"
-          alt=""
-          width="46"
-          height="54">
+    <header class="site-header">
 
-        <span>
-          SALON<span class="brand-thin">BOOK</span>
-        </span>
-      </a>
+        <div class="container nav-shell">
 
-      <nav class="main-nav">
-        <a href="index.html">Trang chủ</a>
-        <a href="products.html">Đặt lịch</a>
-        <a href="about.html">Giới thiệu</a>
-      </nav>
+            <!-- LOGO -->
 
-      <div class="nav-actions">
-        <div id="auth-action-container"></div>
-      </div>
+            <a class="brand"
+               href="index.html"
+               aria-label="SalonBook - Trang chủ">
 
-    </div>
-  </header>
+                <img
+                    src="images/salonbook-mark.png"
+                    alt="Logo SalonBook"
+                    width="46"
+                    height="54">
 
-  <!-- TRANG ĐĂNG NHẬP / ĐĂNG KÝ -->
-  <main class="auth-page">
-
-    <!-- LOGO VÀ TIÊU ĐỀ -->
-    <div class="auth-heading">
-
-      <div class="auth-monogram">
-        S<span>B</span>
-      </div>
-
-      <p class="auth-eyebrow">
-        SALONBOOK · YOUR BEAUTY, YOUR TIME
-      </p>
-
-      <h1>Chào mừng đến SalonBook</h1>
-
-      <p>
-        Đặt lịch làm đẹp dễ dàng,
-        quản lý salon thuận tiện.
-      </p>
-
-    </div>
-
-    <!-- KHUNG FORM -->
-    <section
-      class="auth-card"
-      aria-label="Đăng nhập và đăng ký">
-
-      <!-- TAB ĐĂNG NHẬP / ĐĂNG KÝ -->
-      <div
-        class="auth-tabs"
-        role="tablist"
-        aria-label="Chọn biểu mẫu">
-
-        <button
-          class="auth-tab is-active"
-          type="button"
-          id="login-tab"
-          data-tab="login"
-          role="tab"
-          aria-controls="login-panel"
-          aria-selected="true">
-          Đăng nhập
-        </button>
-
-        <button
-          class="auth-tab"
-          type="button"
-          id="register-tab"
-          data-tab="register"
-          role="tab"
-          aria-controls="register-panel"
-          aria-selected="false">
-          Đăng ký
-        </button>
-
-      </div>
-
-      <!-- THÔNG BÁO LỖI / THÀNH CÔNG -->
-      <p
-        id="auth-message"
-        class="auth-message"
-        role="status"
-        aria-live="polite"
-        hidden>
-      </p>
-
-      <!-- ================================= -->
-      <!-- TAB ĐĂNG NHẬP -->
-      <!-- ================================= -->
-      <section
-        id="login-panel"
-        role="tabpanel"
-        aria-labelledby="login-tab">
-
-        <form id="login-form" novalidate>
-
-          <!-- CHỌN VAI TRÒ -->
-          <fieldset class="role-picker">
-
-            <legend>
-              Bạn muốn đăng nhập với vai trò nào?
-            </legend>
-
-            <div class="role-options">
-
-              <!-- KHÁCH HÀNG -->
-              <label class="role-customer">
-
-                <input
-                  type="radio"
-                  name="loginRole"
-                  value="customer"
-                  checked>
-
-                <span class="role-tile">
-
-                  <span class="role-icon">✦</span>
-
-                  <span>Khách hàng</span>
-
-                  <small>
-                    Đặt lịch &amp; theo dõi lịch hẹn
-                  </small>
-
+                <span>
+                    SALON<span class="brand-thin">BOOK</span>
                 </span>
 
-              </label>
+            </a>
 
-              <!-- CHỦ SALON -->
-              <label class="role-owner">
+            <!-- MENU MOBILE -->
 
-                <input
-                  type="radio"
-                  name="loginRole"
-                  value="salon_owner">
+            <button
+                class="nav-toggle"
+                type="button"
+                aria-controls="main-nav"
+                aria-expanded="false"
+                aria-label="Mở menu">
 
-                <span class="role-tile">
+                ☰
 
-                  <span class="role-icon">✂</span>
+            </button>
 
-                  <span>Chủ Salon</span>
+            <!-- MENU ĐIỀU HƯỚNG -->
 
-                  <small>
-                    Quản lý salon &amp; lịch hẹn
-                  </small>
+            <nav
+                class="main-nav"
+                id="main-nav"
+                aria-label="Điều hướng chính">
 
-                </span>
+                <a href="index.html">
+                    Trang chủ
+                </a>
 
-              </label>
+                <a href="products.html">
+                    Đặt lịch
+                </a>
+
+                <a href="blog.html">
+                    Blog
+                </a>
+
+                <a href="tuvan.html">
+                    Tư vấn
+                </a>
+
+                <a href="about.html">
+                    Giới thiệu
+                </a>
+
+            </nav>
+
+            <!-- TÌM KIẾM VÀ GIỎ DỊCH VỤ -->
+
+            <div class="nav-actions">
+
+                <!-- THANH TÌM KIẾM -->
+
+                <div class="header-search-box">
+
+                    <svg
+                        class="search-icon"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round">
+
+                        <circle
+                            cx="11"
+                            cy="11"
+                            r="8">
+                        </circle>
+
+                        <line
+                            x1="21"
+                            y1="21"
+                            x2="16.65"
+                            y2="16.65">
+                        </line>
+
+                    </svg>
+
+                    <input
+                        type="search"
+                        placeholder="Tìm kiếm salon,..."
+                        id="header-quick-search"
+                        aria-label="Tìm kiếm salon">
+
+                </div>
+
+                <!-- GIỎ DỊCH VỤ -->
+
+                <a href="cart.html"
+                   class="cart-nav-link"
+                   aria-label="Giỏ dịch vụ">
+
+                    <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8">
+
+                        <rect
+                            x="4"
+                            y="7"
+                            width="16"
+                            height="14"
+                            rx="2">
+                        </rect>
+
+                        <path
+                            d="M8 9V6a4 4 0 0 1 8 0v3">
+                        </path>
+
+                    </svg>
+
+                    <span>Giỏ dịch vụ</span>
+
+                    <span
+                        id="cart-count"
+                        class="cart-count auth-cart-count">
+
+                        0
+
+                    </span>
+
+                </a>
+
+                <!-- ĐĂNG KÝ / ĐĂNG NHẬP -->
+
+                <div id="auth-action-container">
+
+                    <a
+                        class="btn btn-yellow btn-top"
+                        href="auth.html">
+
+                        Đăng ký/Đăng nhập
+
+                    </a>
+
+                </div>
 
             </div>
 
-          </fieldset>
+        </div>
 
-          <!-- EMAIL -->
-          <label class="auth-field">
-            Email
+    </header>
 
-            <input
-              type="email"
-              id="login-email"
-              name="email"
-              placeholder="Nhập địa chỉ email"
-              autocomplete="email"
-              required>
+    <!-- =====================================
+         NỘI DUNG TRANG ĐĂNG NHẬP
+         ===================================== -->
 
-            <small
-              class="field-error"
-              data-error="login-email">
-            </small>
+    <main class="auth-page">
 
-          </label>
+        <!-- LOGO VÀ TIÊU ĐỀ -->
 
-          <!-- MẬT KHẨU -->
-          <label class="auth-field">
-            Mật khẩu
+        <div class="auth-heading">
 
-            <input
-              type="password"
-              id="login-password"
-              name="password"
-              placeholder="Nhập mật khẩu"
-              autocomplete="current-password"
-              required>
+            <img
+                src="images/salonbook-mark.png"
+                alt="SalonBook"
+                class="auth-logo-image">
 
-            <small
-              class="field-error"
-              data-error="login-password">
-            </small>
+            <p class="auth-eyebrow">
 
-          </label>
+                SALONBOOK · YOUR BEAUTY, YOUR TIME
 
-          <!-- NÚT ĐĂNG NHẬP -->
-          <button
-            class="auth-submit"
-            type="submit">
-            Đăng nhập vào SalonBook
-          </button>
+            </p>
 
-        </form>
+            <h1>
 
-        <!-- ================================= -->
-        <!-- DEMO CHỦ SALON -->
-        <!-- CHỈ HIỆN KHI CHỌN CHỦ SALON -->
-        <!-- NẰM NGAY DƯỚI NÚT ĐĂNG NHẬP -->
-        <!-- ================================= -->
+                Chào mừng đến SalonBook
 
-        <div
-          id="owner-hint"
-          class="owner-hint"
-          hidden>
+            </h1>
 
-          <div class="owner-hint-title">
-            <span class="owner-hint-icon">🔑</span>
-            <strong>Tài khoản Chủ Salon demo</strong>
-          </div>
+            <p>
 
-          <div class="owner-demo-row">
-            <span>Email</span>
-            <b>owner@salonbook.demo</b>
-          </div>
+                Đặt lịch làm đẹp dễ dàng,
+                quản lý salon thuận tiện.
 
-          <div class="owner-demo-row">
-            <span>Mật khẩu</span>
-            <b>Salon@123</b>
-          </div>
-
-          <small class="owner-hint-description">
-            Chỉ tài khoản có quyền Chủ Salon
-            (salon_owner) mới có thể truy cập
-            trang quản lý Salon.
-          </small>
+            </p>
 
         </div>
 
-      </section>
+        <!-- KHUNG FORM -->
 
-      <!-- ================================= -->
-      <!-- TAB ĐĂNG KÝ -->
-      <!-- ================================= -->
-      <section
-        id="register-panel"
-        role="tabpanel"
-        aria-labelledby="register-tab"
-        hidden>
+        <section
+            class="auth-card"
+            aria-label="Đăng nhập và đăng ký">
 
-        <p class="auth-subnote">
-          Tài khoản mới sẽ được tạo với vai trò
-          <strong>Khách hàng</strong>.
+            <!-- TAB ĐĂNG NHẬP / ĐĂNG KÝ -->
+
+            <div
+                class="auth-tabs"
+                role="tablist"
+                aria-label="Chọn biểu mẫu">
+
+                <button
+                    class="auth-tab is-active"
+                    type="button"
+                    id="login-tab"
+                    data-tab="login"
+                    role="tab"
+                    aria-controls="login-panel"
+                    aria-selected="true">
+
+                    Đăng nhập
+
+                </button>
+
+                <button
+                    class="auth-tab"
+                    type="button"
+                    id="register-tab"
+                    data-tab="register"
+                    role="tab"
+                    aria-controls="register-panel"
+                    aria-selected="false">
+
+                    Đăng ký
+
+                </button>
+
+            </div>
+
+            <!-- THÔNG BÁO -->
+
+            <p
+                id="auth-message"
+                class="auth-message"
+                role="status"
+                aria-live="polite"
+                hidden>
+            </p>
+
+            <!-- =====================================
+                 FORM ĐĂNG NHẬP
+                 ===================================== -->
+
+            <section
+                id="login-panel"
+                role="tabpanel"
+                aria-labelledby="login-tab">
+
+                <form id="login-form" novalidate>
+
+                    <!-- CHỌN VAI TRÒ -->
+
+                    <fieldset class="role-picker">
+
+                        <legend>
+
+                            Bạn muốn đăng nhập với vai trò nào?
+
+                        </legend>
+
+                        <div class="role-options">
+
+                            <!-- KHÁCH HÀNG -->
+
+                            <label class="role-customer">
+
+                                <input
+                                    type="radio"
+                                    name="loginRole"
+                                    value="customer"
+                                    checked>
+
+                                <span class="role-tile">
+
+                                    <span class="role-icon">
+
+                                        ✦
+
+                                    </span>
+
+                                    <span>
+
+                                        Khách hàng
+
+                                    </span>
+
+                                    <small>
+
+                                        Đặt lịch &amp; theo dõi lịch hẹn
+
+                                    </small>
+
+                                </span>
+
+                            </label>
+
+                            <!-- CHỦ SALON -->
+
+                            <label class="role-owner">
+
+                                <input
+                                    type="radio"
+                                    name="loginRole"
+                                    value="salon_owner">
+
+                                <span class="role-tile">
+
+                                    <span class="role-icon">
+
+                                        ✂
+
+                                    </span>
+
+                                    <span>
+
+                                        Chủ Salon
+
+                                    </span>
+
+                                    <small>
+
+                                        Quản lý salon &amp; lịch hẹn
+
+                                    </small>
+
+                                </span>
+
+                            </label>
+
+                            <!-- QUẢN TRỊ VIÊN -->
+
+                            <label class="role-admin">
+
+                                <input
+                                    type="radio"
+                                    name="loginRole"
+                                    value="admin">
+
+                                <span class="role-tile">
+
+                                    <span class="role-icon">
+
+                                        ⚙
+
+                                    </span>
+
+                                    <span>
+
+                                        Quản trị viên
+
+                                    </span>
+
+                                    <small>
+
+                                        Quản lý hệ thống
+
+                                    </small>
+
+                                </span>
+
+                            </label>
+
+                        </div>
+
+                    </fieldset>
+
+                    <!-- EMAIL -->
+
+                    <label class="auth-field">
+
+                        Email
+
+                        <input
+                            type="email"
+                            id="login-email"
+                            name="email"
+                            placeholder="Nhập địa chỉ email"
+                            autocomplete="email"
+                            required>
+
+                        <small
+                            class="field-error"
+                            data-error="login-email">
+                        </small>
+
+                    </label>
+
+                    <!-- MẬT KHẨU -->
+
+                    <label class="auth-field">
+
+                        Mật khẩu
+
+                        <input
+                            type="password"
+                            id="login-password"
+                            name="password"
+                            placeholder="Nhập mật khẩu"
+                            autocomplete="current-password"
+                            required>
+
+                        <small
+                            class="field-error"
+                            data-error="login-password">
+                        </small>
+
+                    </label>
+
+                    <!-- NÚT ĐĂNG NHẬP -->
+
+                    <button
+                        class="auth-submit"
+                        type="submit">
+
+                        Đăng nhập vào SalonBook
+
+                    </button>
+
+                </form>
+
+                <!-- =====================================
+                     TÀI KHOẢN DEMO CHỦ SALON
+                     ===================================== -->
+
+                <div
+                    id="owner-hint"
+                    class="owner-hint"
+                    hidden>
+
+                    <div class="owner-hint-title">
+
+                        <span class="owner-hint-icon">
+
+                            🔑
+
+                        </span>
+
+                        <strong>
+
+                            Tài khoản Chủ Salon demo
+
+                        </strong>
+
+                    </div>
+
+                    <div class="owner-demo-row">
+
+                        <span>Email</span>
+
+                        <b>owner@salonbook.demo</b>
+
+                    </div>
+
+                    <div class="owner-demo-row">
+
+                        <span>Mật khẩu</span>
+
+                        <b>Salon@123</b>
+
+                    </div>
+
+                    <small class="owner-hint-description">
+
+                        Chỉ tài khoản có quyền Chủ Salon
+                        (salon_owner) mới có thể truy cập
+                        trang quản lý Salon.
+
+                    </small>
+
+                </div>
+
+                <!-- =====================================
+                     TÀI KHOẢN DEMO ADMIN
+                     ===================================== -->
+
+                <div
+                    id="admin-hint"
+                    class="admin-demo-hint"
+                    hidden>
+
+                    <h4>
+
+                        🔑 Tài khoản Quản trị viên Demo
+
+                    </h4>
+
+                    <div class="admin-demo-row">
+
+                        <span>Email</span>
+
+                        <b>admin@salonbook.test</b>
+
+                    </div>
+
+                    <div class="admin-demo-row">
+
+                        <span>Mật khẩu</span>
+
+                        <b>Admin123</b>
+
+                    </div>
+
+                    <small>
+
+                        Chỉ tài khoản có quyền quản trị viên
+                        (admin) mới được truy cập trang
+                        quản trị hệ thống SalonBook.
+
+                        Tài khoản này chỉ sử dụng để demo
+                        Frontend.
+
+                    </small>
+
+                </div>
+
+            </section>
+
+            <!-- =====================================
+                 FORM ĐĂNG KÝ
+                 ===================================== -->
+
+            <section
+                id="register-panel"
+                role="tabpanel"
+                aria-labelledby="register-tab"
+                hidden>
+
+                <p class="auth-subnote">
+
+                    Tài khoản mới sẽ được tạo với vai trò
+
+                    <strong>Khách hàng</strong>.
+
+                </p>
+
+                <form id="register-form" novalidate>
+
+                    <!-- HỌ VÀ TÊN -->
+
+                    <label class="auth-field">
+
+                        Họ và tên
+
+                        <input
+                            type="text"
+                            id="register-fullName"
+                            name="fullName"
+                            placeholder="Nguyễn Văn A"
+                            autocomplete="name"
+                            required>
+
+                        <small
+                            class="field-error"
+                            data-error="register-fullName">
+                        </small>
+
+                    </label>
+
+                    <!-- EMAIL -->
+
+                    <label class="auth-field">
+
+                        Email
+
+                        <input
+                            type="email"
+                            id="register-email"
+                            name="email"
+                            placeholder="example@gmail.com"
+                            autocomplete="email"
+                            required>
+
+                        <small
+                            class="field-error"
+                            data-error="register-email">
+                        </small>
+
+                    </label>
+
+                    <!-- SỐ ĐIỆN THOẠI -->
+
+                    <label class="auth-field">
+
+                        Số điện thoại
+
+                        <input
+                            type="tel"
+                            id="register-phone"
+                            name="phone"
+                            placeholder="09xxxxxxxx"
+                            autocomplete="tel"
+                            required>
+
+                        <small
+                            class="field-error"
+                            data-error="register-phone">
+                        </small>
+
+                    </label>
+
+                    <!-- MẬT KHẨU -->
+
+                    <label class="auth-field">
+
+                        Mật khẩu
+
+                        <input
+                            type="password"
+                            id="register-password"
+                            name="password"
+                            placeholder="Ít nhất 8 ký tự, gồm chữ và số"
+                            autocomplete="new-password"
+                            required>
+
+                        <small
+                            class="field-error"
+                            data-error="register-password">
+                        </small>
+
+                    </label>
+
+                    <!-- XÁC NHẬN MẬT KHẨU -->
+
+                    <label class="auth-field">
+
+                        Xác nhận mật khẩu
+
+                        <input
+                            type="password"
+                            id="register-confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Nhập lại mật khẩu"
+                            autocomplete="new-password"
+                            required>
+
+                        <small
+                            class="field-error"
+                            data-error="register-confirmPassword">
+                        </small>
+
+                    </label>
+
+                    <!-- NÚT ĐĂNG KÝ -->
+
+                    <button
+                        class="auth-submit"
+                        type="submit">
+
+                        Tạo tài khoản
+
+                    </button>
+
+                </form>
+
+            </section>
+
+            <!-- GHI CHÚ -->
+
+            <p class="auth-disclaimer">
+
+                Bản demo phục vụ học tập.
+                Không sử dụng mật khẩu thật.
+
+            </p>
+
+        </section>
+
+        <!-- QUAY VỀ TRANG CHỦ -->
+
+        <p class="auth-back">
+
+            <a href="index.html">
+
+                ← Quay về trang chủ
+
+            </a>
+
         </p>
 
-        <form id="register-form" novalidate>
+    </main>
 
-          <!-- HỌ VÀ TÊN -->
-          <label class="auth-field">
-            Họ và tên
+    <!-- =====================================
+         KẾT NỐI JAVASCRIPT
+         ===================================== -->
 
-            <input
-              type="text"
-              id="register-fullName"
-              name="fullName"
-              placeholder="Nguyễn Văn A"
-              autocomplete="name"
-              required>
+    <!-- XỬ LÝ ĐĂNG NHẬP KHÁCH HÀNG / CHỦ SALON -->
 
-            <small
-              class="field-error"
-              data-error="register-fullName">
-            </small>
-          </label>
+    <script src="js/auth.js"></script>
 
-          <!-- EMAIL -->
-          <label class="auth-field">
-            Email
+    <!-- CHỨC NĂNG DÙNG CHUNG -->
 
-            <input
-              type="email"
-              id="register-email"
-              name="email"
-              placeholder="example@gmail.com"
-              autocomplete="email"
-              required>
+    <script src="js/common.js"></script>
 
-            <small
-              class="field-error"
-              data-error="register-email">
-            </small>
-          </label>
+    <!-- XỬ LÝ ĐĂNG NHẬP ADMIN -->
 
-          <!-- SỐ ĐIỆN THOẠI -->
-          <label class="auth-field">
-            Số điện thoại
+    <script src="js/admin-auth.js"></script>
 
-            <input
-              type="tel"
-              id="register-phone"
-              name="phone"
-              placeholder="09xxxxxxxx"
-              autocomplete="tel"
-              required>
+    <!-- =====================================
+         HIỂN THỊ TÀI KHOẢN DEMO THEO VAI TRÒ
+         ===================================== -->
 
-            <small
-              class="field-error"
-              data-error="register-phone">
-            </small>
-          </label>
+    <script>
 
-          <!-- MẬT KHẨU -->
-          <label class="auth-field">
-            Mật khẩu
+        document.addEventListener(
 
-            <input
-              type="password"
-              id="register-password"
-              name="password"
-              placeholder="Ít nhất 8 ký tự, gồm chữ và số"
-              autocomplete="new-password"
-              required>
+            "DOMContentLoaded",
 
-            <small
-              class="field-error"
-              data-error="register-password">
-            </small>
-          </label>
+            function () {
 
-          <!-- XÁC NHẬN MẬT KHẨU -->
-          <label class="auth-field">
-            Xác nhận mật khẩu
+                const ownerHint =
+                    document.getElementById("owner-hint");
 
-            <input
-              type="password"
-              id="register-confirmPassword"
-              name="confirmPassword"
-              placeholder="Nhập lại mật khẩu"
-              autocomplete="new-password"
-              required>
+                const adminHint =
+                    document.getElementById("admin-hint");
 
-            <small
-              class="field-error"
-              data-error="register-confirmPassword">
-            </small>
-          </label>
+                const loginPanel =
+                    document.getElementById("login-panel");
 
-          <!-- NÚT ĐĂNG KÝ -->
-          <button
-            class="auth-submit"
-            type="submit">
-            Tạo tài khoản
-          </button>
+                const loginTab =
+                    document.getElementById("login-tab");
 
-        </form>
+                const registerTab =
+                    document.getElementById("register-tab");
 
-      </section>
+                function updateDemo() {
 
-      <!-- GHI CHÚ CUỐI FORM -->
-      <p class="auth-disclaimer">
-        Bản demo phục vụ học tập.
-        Không sử dụng mật khẩu thật.
-      </p>
+                    const selectedRole =
+                        document.querySelector(
+                            'input[name="loginRole"]:checked'
+                        )?.value || "customer";
 
-    </section>
+                    const isLogin = !loginPanel.hidden;
 
-    <!-- QUAY VỀ TRANG CHỦ -->
-    <p class="auth-back">
-      <a href="index.html">
-        ← Quay về trang chủ
-      </a>
-    </p>
+                    ownerHint.hidden = !(
+                        selectedRole === "salon_owner" &&
+                        isLogin
+                    );
 
-  </main>
+                    adminHint.hidden = !(
+                        selectedRole === "admin" &&
+                        isLogin
+                    );
 
-  <!-- JAVASCRIPT -->
-  <script src="js/auth.js"></script>
-  <script src="js/common.js"></script>
+                }
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
+                document.querySelectorAll(
+                    'input[name="loginRole"]'
+                ).forEach(function (radio) {
 
-  const customerRadio = document.querySelector(
-    'input[name="loginRole"][value="customer"]'
-  );
+                    radio.addEventListener(
 
-  const ownerRadio = document.querySelector(
-    'input[name="loginRole"][value="salon_owner"]'
-  );
+                        "change",
 
-  const ownerHint = document.getElementById("owner-hint");
-  const loginPanel = document.getElementById("login-panel");
+                        function () {
 
-  if (!customerRadio || !ownerRadio || !ownerHint) {
-    console.warn("Không tìm thấy phần chọn vai trò hoặc demo.");
-    return;
-  }
+                            updateDemo();
 
-  function updateDemo() {
-    const isLogin = !loginPanel.hidden;
+                            requestAnimationFrame(
+                                updateDemo
+                            );
 
-    // Chỉ hiện demo khi chọn Chủ Salon ở tab Đăng nhập
-    ownerHint.hidden = !(ownerRadio.checked && isLogin);
-  }
+                        }
 
-  customerRadio.addEventListener("change", updateDemo);
-  ownerRadio.addEventListener("change", updateDemo);
+                    );
 
-  document.getElementById("login-tab")
-    .addEventListener("click", function () {
-      requestAnimationFrame(updateDemo);
-    });
+                });
 
-  document.getElementById("register-tab")
-    .addEventListener("click", function () {
-      ownerHint.hidden = true;
-    });
+                loginTab.addEventListener(
 
-  // Kiểm tra trạng thái khi vừa mở trang
-  updateDemo();
+                    "click",
 
-});
-</script>
+                    function () {
+
+                        requestAnimationFrame(
+                            updateDemo
+                        );
+
+                    }
+
+                );
+
+                registerTab.addEventListener(
+
+                    "click",
+
+                    function () {
+
+                        ownerHint.hidden = true;
+
+                        adminHint.hidden = true;
+
+                    }
+
+                );
+
+                updateDemo();
+
+            }
+
+        );
+
+    </script>
 
 </body>
+
 </html>
