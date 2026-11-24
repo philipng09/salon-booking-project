@@ -71,11 +71,24 @@
 
     if (index === -1) {
       list.push(demo);
-      saveUsers(list);
     } else if (list[index].id === demo.id) {
       list[index] = demo;
-      saveUsers(list);
     }
+    // Tài khoản dùng cho thực nghiệm The Hair Space; giữ nguyên owner@salonbook.demo.
+    const extraEmail = "owner1@salonbook.test";
+    if (!list.some(user => String(user.email || "").toLowerCase() === extraEmail)) {
+      list.push({
+        id: "salon-owner-the-hair-space-1",
+        userId: "salon-owner-the-hair-space-1",
+        salonId: 1,
+        fullName: "Chủ The Hair Space",
+        email: extraEmail,
+        phone: "0900000000",
+        role: "salon_owner",
+        passwordDemoHash: hashDemo(DEMO_PASSWORD)
+      });
+    }
+    saveUsers(list);
   }
 
   function publicUser(user) {
