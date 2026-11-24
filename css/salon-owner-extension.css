@@ -1,0 +1,13 @@
+/* Additive dashboard components; existing Salon Owner layout remains unchanged. */
+.owner-note {background:#f3f7f0;border:1px solid #dfe8da;padding:13px 15px;border-radius:10px;color:#496258;line-height:1.6}
+.owner-stylist-grid {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:18px}
+.owner-stylist-card {border:1px solid #dde6dc;background:#fff;border-radius:14px;padding:20px;min-width:0}
+.owner-stylist-card h3 {margin:0 0 8px;color:#0c513f}.owner-stylist-card small{font-size:12px;font-weight:400;color:#708077}
+.owner-stylist-card p {color:#718078;margin:0 0 14px;font-size:14px}
+.owner-slot-grid {display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:8px}
+.owner-slot {padding:9px 4px;border-radius:8px;border:1px solid #d7dfd7;background:#f5f6f2;color:#506058;font-size:13px}
+.owner-slot.selected {background:#e5f3e9;border-color:#0c513f;color:#0c513f;font-weight:700}
+.owner-slot:disabled {opacity:.68;cursor:not-allowed;border-style:dashed}
+.owner-presets {display:flex;gap:7px;flex-wrap:wrap;margin-top:14px}.owner-presets .btn {font-size:12px;padding:8px 10px}
+.owner-slot:focus-visible, .owner-presets button:focus-visible {outline:3px solid #ffc501;outline-offset:2px}
+@media(max-width:700px){.owner-stylist-grid{grid-template-columns:1fr}.owner-slot-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
