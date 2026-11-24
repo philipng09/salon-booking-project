@@ -1,0 +1,2005 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Quản lý Salon | SalonBook</title>
+
+    <style>
+
+        :root {
+            --green: #0c513f;
+            --yellow: #ffc501;
+            --cream: #faf9ef;
+            --white: #ffffff;
+            --text: #173b32;
+            --muted: #718078;
+            --border: #e0e6db;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--cream);
+            color: var(--text);
+            font-family: Arial, sans-serif;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* SIDEBAR */
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+
+            width: 260px;
+            background: var(--green);
+            color: white;
+
+            padding: 25px 18px;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            font-size: 23px;
+            font-weight: 800;
+
+            margin-bottom: 35px;
+        }
+
+        .brand img {
+            width: 43px;
+            height: 58px;
+            object-fit: contain;
+        }
+
+        .brand small {
+            display: block;
+            font-size: 8px;
+            letter-spacing: 1px;
+            margin-top: 5px;
+        }
+
+        .sidebar-title {
+            color: #b7d1c6;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .nav-menu {
+            display: grid;
+            gap: 8px;
+        }
+
+        .nav-menu button {
+            border: none;
+            background: transparent;
+            color: white;
+
+            padding: 15px;
+            border-radius: 9px;
+
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-menu button:hover {
+            background: #ffffff20;
+        }
+
+        .nav-menu button.active {
+            background: var(--yellow);
+            color: var(--green);
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            border-top: 1px solid #ffffff30;
+            padding-top: 20px;
+        }
+
+        .sidebar-bottom a,
+        .sidebar-bottom button {
+            display: block;
+            width: 100%;
+
+            padding: 12px;
+            color: white;
+
+            background: transparent;
+            border: none;
+            text-align: left;
+
+            font-size: 14px;
+        }
+
+        /* MAIN */
+
+        .main {
+            margin-left: 260px;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+
+            padding: 18px 30px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .breadcrumb {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+
+            background: var(--cream);
+            color: var(--green);
+
+            border-radius: 50%;
+
+            display: grid;
+            place-items: center;
+
+            font-weight: 800;
+        }
+
+        .profile small {
+            display: block;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+
+        .workspace {
+            padding: 30px;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        .eyebrow {
+            color: var(--green);
+            font-size: 11px;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin: 10px 0;
+            color: var(--green);
+        }
+
+        h2 {
+            font-size: 20px;
+            color: var(--green);
+            margin-top: 0;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin-bottom: 25px;
+        }
+
+        /* BANNER */
+
+        .welcome-banner {
+            background: var(--green);
+            color: white;
+
+            padding: 30px;
+            border-radius: 16px;
+
+            margin-bottom: 25px;
+        }
+
+        .welcome-banner h2 {
+            color: white;
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-banner p {
+            color: #d3e5dd;
+            line-height: 1.6;
+        }
+
+        /* THỐNG KÊ */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card,
+        .panel {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+
+            box-shadow: 0 5px 20px #0c513f08;
+        }
+
+        .stat-card span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .stat-card strong {
+            display: block;
+            font-size: 32px;
+            color: var(--green);
+            margin-top: 15px;
+        }
+
+        /* BUTTON */
+
+        .btn {
+            border: none;
+            border-radius: 9px;
+            padding: 10px 16px;
+            font-weight: 700;
+        }
+
+        .btn-yellow {
+            background: var(--yellow);
+            color: var(--green);
+        }
+
+        .btn-green {
+            background: var(--green);
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            color: var(--green);
+            border: 1px solid var(--green);
+        }
+
+        .btn-danger {
+            background: #fbe9e7;
+            color: #a33128;
+        }
+
+        /* TABLE */
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            min-width: 650px;
+        }
+
+        th {
+            background: #f1f5ef;
+            color: var(--green);
+            font-size: 13px;
+        }
+
+        th,
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        td {
+            font-size: 14px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            background: #e0f1e5;
+            color: #21633c;
+        }
+
+        .pending {
+            background: #fff2c2;
+            color: #896600;
+        }
+
+        .cancelled {
+            background: #fbe5e3;
+            color: #a33128;
+        }
+
+        /* TOOLBAR */
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .toolbar input {
+            flex: 1;
+        }
+
+        input,
+        select,
+        textarea {
+            border: 1px solid var(--border);
+            border-radius: 9px;
+
+            padding: 11px 13px;
+
+            color: var(--text);
+            background: white;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: 2px solid #0c513f30;
+            border-color: var(--green);
+        }
+
+        /* FORM */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-field {
+            display: grid;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            margin-top: 25px;
+        }
+
+        /* MODAL */
+
+        dialog {
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            width: min(500px, 92vw);
+            color: var(--text);
+        }
+
+        dialog::backdrop {
+            background: #00000065;
+        }
+
+        dialog label {
+            display: grid;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        /* TOAST */
+
+        #toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+
+            background: var(--green);
+            color: white;
+
+            border-radius: 10px;
+            padding: 15px 22px;
+
+            z-index: 200;
+        }
+
+        .empty {
+            text-align: center;
+            color: var(--muted);
+            padding: 35px;
+        }
+
+        footer {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 30px;
+        }
+
+        #menu-toggle {
+            display: none;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1100px) {
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.2s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+                box-shadow: 0 0 0 100vmax #0005;
+            }
+
+            .main {
+                margin-left: 0;
+            }
+
+            #menu-toggle {
+                display: block;
+                background: var(--yellow);
+                border: none;
+                border-radius: 8px;
+                padding: 10px;
+            }
+
+            .topbar {
+                padding: 15px;
+            }
+
+            .workspace {
+                padding: 20px 15px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .breadcrumb {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body hidden>
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <a class="brand" href="index.html">
+
+            <img
+                src="images/salonbook-mark-white.png"
+                alt="SalonBook">
+
+            <div>
+                SALONBOOK
+
+                <small>
+                    YOUR BEAUTY, YOUR TIME
+                </small>
+            </div>
+
+        </a>
+
+        <p class="sidebar-title">
+            QUẢN LÝ SALON
+        </p>
+
+        <nav class="nav-menu">
+
+            <button
+                class="active"
+                data-tab="overview">
+                ▦ &nbsp; Tổng quan
+            </button>
+
+            <button data-tab="appointments">
+                ▣ &nbsp; Quản lý lịch hẹn
+            </button>
+
+            <button data-tab="services">
+                ✂ &nbsp; Quản lý dịch vụ
+            </button>
+
+            <button data-tab="stylists">
+                ♙ &nbsp; Quản lý Stylist
+            </button>
+
+            <button data-tab="salon">
+                ⌂ &nbsp; Thông tin Salon
+            </button>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="index.html">
+                ↗ Về trang chủ
+            </a>
+
+            <button id="logout">
+                ⇥ Đăng xuất
+            </button>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <button id="menu-toggle">
+                ☰
+            </button>
+
+            <span class="breadcrumb">
+                SalonBook / Quản lý Salon
+            </span>
+
+            <div class="profile">
+
+                <div class="avatar">S</div>
+
+                <div>
+
+                    <strong id="owner-name">
+                        Chủ Salon
+                    </strong>
+
+                    <small>
+                        Salon Owner
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+        <div class="workspace">
+
+            <p class="eyebrow">
+                SALONBOOK / OWNER
+            </p>
+
+            <h1 id="page-title">
+                Tổng quan Salon
+            </h1>
+
+            <p class="subtitle" id="page-subtitle">
+                Quản lý hoạt động và lịch hẹn của Salon.
+            </p>
+
+            <section id="content"></section>
+
+            <footer>
+                © 2026 SALONBOOK · Your beauty, your time
+            </footer>
+
+        </div>
+
+    </main>
+
+    <!-- MODAL -->
+
+    <dialog id="modal">
+
+        <h2 id="modal-title"></h2>
+
+        <form id="modal-form">
+
+            <div id="modal-fields"></div>
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    class="btn btn-outline"
+                    id="close-modal">
+                    Hủy
+                </button>
+
+                <button
+                    type="submit"
+                    class="btn btn-yellow">
+                    Lưu thay đổi
+                </button>
+
+            </div>
+
+        </form>
+
+    </dialog>
+
+    <div id="toast" hidden></div>
+
+    <script>
+
+        (() => {
+
+            "use strict";
+
+            const $ = id =>
+                document.getElementById(id);
+
+            // ===============================
+            // KIỂM TRA QUYỀN CHỦ SALON
+            // ===============================
+
+            let currentUser = null;
+
+            try {
+
+                currentUser = JSON.parse(
+                    localStorage.getItem("currentUser")
+                );
+
+            } catch {
+
+                currentUser = null;
+            }
+
+            if (!currentUser) {
+
+                window.location.replace("auth.html");
+                return;
+            }
+
+            if (
+                currentUser.role !== "salon_owner" ||
+                currentUser.status === "locked"
+            ) {
+
+                alert(
+                    "Bạn không có quyền truy cập trang Chủ Salon."
+                );
+
+                window.location.replace("index.html");
+                return;
+            }
+
+            const ownerId =
+                currentUser.userId || currentUser.id;
+
+            if (!ownerId) {
+
+                window.location.replace("auth.html");
+                return;
+            }
+
+            $("owner-name").textContent =
+                currentUser.fullName ||
+                currentUser.name ||
+                "Chủ Salon";
+
+            // ===============================
+            // DỮ LIỆU DEMO
+            // ===============================
+
+            const STORAGE_KEY =
+                "salonbook.owner." + ownerId;
+
+            const seed = {
+
+                salon: {
+                    salonId: "demo-" + ownerId,
+                    ownerId: ownerId,
+                    name: "The Hair Space",
+                    address: "34 Phó Đức Chính, Quận 1, TP.HCM",
+                    phone: "0900000000",
+                    opening: "09:00",
+                    closing: "20:00",
+                    description:
+                        "Không gian làm tóc phong cách Hàn Quốc."
+                },
+
+                appointments: [
+
+                    {
+                        bookingId: "BK001",
+                        customer: "Nguyễn Minh Anh",
+                        service: "Cắt & tạo kiểu",
+                        date: "2026-11-25",
+                        time: "09:00",
+                        status: "pending"
+                    },
+
+                    {
+                        bookingId: "BK002",
+                        customer: "Trần Thị Liễu",
+                        service: "Nhuộm tóc",
+                        date: "2026-11-25",
+                        time: "10:30",
+                        status: "confirmed"
+                    }
+
+                ],
+
+                services: [
+
+                    {
+                        serviceId: "SV001",
+                        name: "Cắt & tạo kiểu",
+                        price: 150000,
+                        duration: 45
+                    },
+
+                    {
+                        serviceId: "SV002",
+                        name: "Nhuộm tóc",
+                        price: 650000,
+                        duration: 90
+                    },
+
+                    {
+                        serviceId: "SV003",
+                        name: "Phục hồi tóc",
+                        price: 450000,
+                        duration: 60
+                    }
+
+                ],
+
+                stylists: [
+
+                    {
+                        stylistId: "ST001",
+                        name: "Minh Anh",
+                        specialty: "Cắt & tạo kiểu",
+                        status: "active"
+                    },
+
+                    {
+                        stylistId: "ST002",
+                        name: "Hoàng Nam",
+                        specialty: "Uốn & nhuộm",
+                        status: "active"
+                    }
+
+                ]
+
+            };
+
+            let data;
+
+            try {
+
+                data = JSON.parse(
+                    localStorage.getItem(STORAGE_KEY)
+                ) || seed;
+
+            } catch {
+
+                data = seed;
+
+            }
+
+            let currentTab = "overview";
+            let modalCallback = null;
+            let toastTimer;
+
+            // ===============================
+            // HÀM DÙNG CHUNG
+            // ===============================
+
+            function escapeHtml(value) {
+
+                return String(value ?? "").replace(
+                    /[&<>"']/g,
+                    char => ({
+                        "&": "&amp;",
+                        "<": "&lt;",
+                        ">": "&gt;",
+                        '"': "&quot;",
+                        "'": "&#39;"
+                    })[char]
+                );
+
+            }
+
+            const esc = escapeHtml;
+
+            function money(value) {
+
+                return Number(value).toLocaleString(
+                    "vi-VN"
+                ) + " ₫";
+
+            }
+
+            function notify(message) {
+
+                $("toast").textContent = message;
+                $("toast").hidden = false;
+
+                clearTimeout(toastTimer);
+
+                toastTimer = setTimeout(() => {
+                    $("toast").hidden = true;
+                }, 3000);
+
+            }
+
+            function save() {
+
+                try {
+
+                    localStorage.setItem(
+                        STORAGE_KEY,
+                        JSON.stringify(data)
+                    );
+
+                    render();
+
+                    notify("Đã lưu thay đổi.");
+
+                    return true;
+
+                } catch {
+
+                    notify("Không thể lưu dữ liệu.");
+
+                    return false;
+                }
+
+            }
+
+            const statuses = {
+
+                pending: "Chờ xác nhận",
+                confirmed: "Đã xác nhận",
+                completed: "Hoàn thành",
+                cancelled: "Đã hủy",
+                active: "Đang làm việc",
+                inactive: "Đang nghỉ"
+
+            };
+
+            function statusBadge(status) {
+
+                return `
+                    <span class="status ${esc(status)}">
+                        ${esc(statuses[status] || status)}
+                    </span>
+                `;
+
+            }
+
+            function button(action, id, text, type) {
+
+                return `
+                    <button
+                        type="button"
+                        class="btn ${type || "btn-outline"}"
+                        data-action="${esc(action)}"
+                        data-id="${esc(id)}">
+                        ${esc(text)}
+                    </button>
+                `;
+
+            }
+
+            function table(headers, rows) {
+
+                return `
+                    <div class="table-wrap">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    ${headers.map(
+                                        h => `<th>${esc(h)}</th>`
+                                    ).join("")}
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                ${rows.length
+                                    ? rows.map(row => `
+                                        <tr>
+                                            ${row.map(
+                                                cell =>
+                                                    `<td>${cell}</td>`
+                                            ).join("")}
+                                        </tr>
+                                    `).join("")
+                                    : `
+                                        <tr>
+                                            <td
+                                                class="empty"
+                                                colspan="${headers.length}">
+                                                Chưa có dữ liệu.
+                                            </td>
+                                        </tr>
+                                    `
+                                }
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+                `;
+
+            }
+
+            // ===============================
+            // TỔNG QUAN
+            // ===============================
+
+            function overview() {
+
+                $("content").innerHTML = `
+
+                    <div class="welcome-banner">
+
+                        <p class="eyebrow"
+                           style="color:#ffc501">
+                            SALONBOOK / PARTNER
+                        </p>
+
+                        <h2>
+                            Xin chào, ${esc(data.salon.name)}!
+                        </h2>
+
+                        <p>
+                            Theo dõi lịch hẹn, quản lý dịch vụ
+                            và đội ngũ Stylist của Salon.
+                        </p>
+
+                        <button
+                            class="btn btn-yellow"
+                            data-go="appointments">
+                            Xem lịch hẹn ↗
+                        </button>
+
+                    </div>
+
+                    <div class="stats">
+
+                        <div class="stat-card">
+
+                            <span>Tổng lịch hẹn</span>
+
+                            <strong>
+                                ${data.appointments.length}
+                            </strong>
+
+                        </div>
+
+                        <div class="stat-card">
+
+                            <span>Chờ xác nhận</span>
+
+                            <strong>
+                                ${data.appointments.filter(
+                                    item => item.status === "pending"
+                                ).length}
+                            </strong>
+
+                        </div>
+
+                        <div class="stat-card">
+
+                            <span>Dịch vụ</span>
+
+                            <strong>
+                                ${data.services.length}
+                            </strong>
+
+                        </div>
+
+                        <div class="stat-card">
+
+                            <span>Stylist</span>
+
+                            <strong>
+                                ${data.stylists.length}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                    <div class="panel">
+
+                        <h2>Lịch hẹn gần đây</h2>
+
+                        ${appointmentTable(data.appointments)}
+
+                    </div>
+                `;
+
+            }
+
+            // ===============================
+            // QUẢN LÝ LỊCH HẸN
+            // ===============================
+
+            function appointmentTable(list) {
+
+                return table(
+
+                    [
+                        "Mã lịch",
+                        "Khách hàng",
+                        "Dịch vụ",
+                        "Ngày giờ",
+                        "Trạng thái",
+                        "Thao tác"
+                    ],
+
+                    list.map(item => [
+
+                        esc(item.bookingId),
+
+                        esc(item.customer),
+
+                        esc(item.service),
+
+                        esc(item.date + " " + item.time),
+
+                        statusBadge(item.status),
+
+                        button(
+                            "editBooking",
+                            item.bookingId,
+                            "Cập nhật"
+                        )
+
+                    ])
+
+                );
+
+            }
+
+            function appointments() {
+
+                $("content").innerHTML = `
+
+                    <div class="panel">
+
+                        <div class="toolbar">
+
+                            <input
+                                id="booking-search"
+                                placeholder="Tìm khách hàng hoặc dịch vụ...">
+
+                            <select id="booking-filter">
+
+                                <option value="">
+                                    Tất cả trạng thái
+                                </option>
+
+                                <option value="pending">
+                                    Chờ xác nhận
+                                </option>
+
+                                <option value="confirmed">
+                                    Đã xác nhận
+                                </option>
+
+                                <option value="completed">
+                                    Hoàn thành
+                                </option>
+
+                                <option value="cancelled">
+                                    Đã hủy
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div id="booking-table">
+                            ${appointmentTable(data.appointments)}
+                        </div>
+
+                    </div>
+                `;
+
+                function filterBookings() {
+
+                    const query =
+                        $("booking-search").value.toLowerCase();
+
+                    const status =
+                        $("booking-filter").value;
+
+                    const list = data.appointments.filter(
+                        item =>
+                            (
+                                !status ||
+                                item.status === status
+                            ) &&
+                            (
+                                item.customer.toLowerCase()
+                                    .includes(query) ||
+                                item.service.toLowerCase()
+                                    .includes(query)
+                            )
+                    );
+
+                    $("booking-table").innerHTML =
+                        appointmentTable(list);
+
+                }
+
+                $("booking-search").oninput =
+                    filterBookings;
+
+                $("booking-filter").onchange =
+                    filterBookings;
+
+            }
+
+            // ===============================
+            // QUẢN LÝ DỊCH VỤ
+            // ===============================
+
+            function services() {
+
+                $("content").innerHTML = `
+
+                    <div class="panel">
+
+                        <div class="toolbar">
+
+                            <h2>Danh sách dịch vụ</h2>
+
+                            ${button(
+                                "addService",
+                                "",
+                                "+ Thêm dịch vụ",
+                                "btn-yellow"
+                            )}
+
+                        </div>
+
+                        ${table(
+
+                            [
+                                "Mã dịch vụ",
+                                "Tên dịch vụ",
+                                "Giá",
+                                "Thời lượng",
+                                "Thao tác"
+                            ],
+
+                            data.services.map(item => [
+
+                                esc(item.serviceId),
+
+                                esc(item.name),
+
+                                money(item.price),
+
+                                esc(item.duration) + " phút",
+
+                                button(
+                                    "editService",
+                                    item.serviceId,
+                                    "Sửa"
+                                )
+
+                                + " " +
+
+                                button(
+                                    "deleteService",
+                                    item.serviceId,
+                                    "Xóa",
+                                    "btn-danger"
+                                )
+
+                            ])
+
+                        )}
+
+                    </div>
+                `;
+
+            }
+
+            // ===============================
+            // QUẢN LÝ STYLIST
+            // ===============================
+
+            function stylists() {
+
+                $("content").innerHTML = `
+
+                    <div class="panel">
+
+                        <div class="toolbar">
+
+                            <h2>Đội ngũ Stylist</h2>
+
+                            ${button(
+                                "addStylist",
+                                "",
+                                "+ Thêm Stylist",
+                                "btn-yellow"
+                            )}
+
+                        </div>
+
+                        ${table(
+
+                            [
+                                "Mã Stylist",
+                                "Họ tên",
+                                "Chuyên môn",
+                                "Trạng thái",
+                                "Thao tác"
+                            ],
+
+                            data.stylists.map(item => [
+
+                                esc(item.stylistId),
+
+                                esc(item.name),
+
+                                esc(item.specialty),
+
+                                statusBadge(item.status),
+
+                                button(
+                                    "editStylist",
+                                    item.stylistId,
+                                    "Sửa"
+                                )
+
+                                + " " +
+
+                                button(
+                                    "toggleStylist",
+                                    item.stylistId,
+
+                                    item.status === "active"
+                                        ? "Cho nghỉ"
+                                        : "Kích hoạt"
+                                )
+
+                            ])
+
+                        )}
+
+                    </div>
+                `;
+
+            }
+
+            // ===============================
+            // THÔNG TIN SALON
+            // ===============================
+
+            function salon() {
+
+                const item = data.salon;
+
+                $("content").innerHTML = `
+
+                    <div class="panel">
+
+                        <h2>Thông tin cửa hàng</h2>
+
+                        <form id="salon-form">
+
+                            <div class="form-grid">
+
+                                <label class="form-field">
+
+                                    Tên Salon
+
+                                    <input
+                                        name="name"
+                                        value="${esc(item.name)}"
+                                        required>
+
+                                </label>
+
+                                <label class="form-field">
+
+                                    Số điện thoại
+
+                                    <input
+                                        name="phone"
+                                        value="${esc(item.phone)}"
+                                        pattern="0[0-9]{9}"
+                                        required>
+
+                                </label>
+
+                                <label class="form-field full-width">
+
+                                    Địa chỉ
+
+                                    <input
+                                        name="address"
+                                        value="${esc(item.address)}"
+                                        required>
+
+                                </label>
+
+                                <label class="form-field">
+
+                                    Giờ mở cửa
+
+                                    <input
+                                        type="time"
+                                        name="opening"
+                                        value="${esc(item.opening)}"
+                                        required>
+
+                                </label>
+
+                                <label class="form-field">
+
+                                    Giờ đóng cửa
+
+                                    <input
+                                        type="time"
+                                        name="closing"
+                                        value="${esc(item.closing)}"
+                                        required>
+
+                                </label>
+
+                                <label class="form-field full-width">
+
+                                    Giới thiệu Salon
+
+                                    <textarea name="description">${esc(item.description)}</textarea>
+
+                                </label>
+
+                            </div>
+
+                            <div class="form-actions">
+
+                                <button
+                                    class="btn btn-yellow"
+                                    type="submit">
+
+                                    Lưu thông tin
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                `;
+
+                $("salon-form").onsubmit = event => {
+
+                    event.preventDefault();
+
+                    const values = Object.fromEntries(
+                        new FormData(event.target)
+                    );
+
+                    if (values.opening >= values.closing) {
+
+                        notify(
+                            "Giờ đóng cửa phải sau giờ mở cửa."
+                        );
+
+                        return;
+                    }
+
+                    data.salon = {
+                        ...data.salon,
+                        ...values
+                    };
+
+                    save();
+
+                };
+
+            }
+
+            // ===============================
+            // HIỂN THỊ MODAL
+            // ===============================
+
+            function openModal(title, fields, callback) {
+
+                $("modal-title").textContent = title;
+
+                $("modal-fields").innerHTML = fields;
+
+                modalCallback = callback;
+
+                $("modal").showModal();
+
+            }
+
+            $("close-modal").onclick = () => {
+
+                $("modal").close();
+
+            };
+
+            $("modal-form").onsubmit = event => {
+
+                event.preventDefault();
+
+                const values = Object.fromEntries(
+                    new FormData(event.target)
+                );
+
+                if (
+                    modalCallback &&
+                    modalCallback(values) !== false
+                ) {
+
+                    $("modal").close();
+
+                }
+
+            };
+
+            // ===============================
+            // FORM DỊCH VỤ
+            // ===============================
+
+            function serviceForm(item) {
+
+                openModal(
+
+                    item
+                        ? "Chỉnh sửa dịch vụ"
+                        : "Thêm dịch vụ mới",
+
+                    `
+                        <label>
+
+                            Tên dịch vụ
+
+                            <input
+                                name="name"
+                                value="${esc(item?.name || "")}"
+                                required>
+
+                        </label>
+
+                        <label>
+
+                            Giá dịch vụ (VNĐ)
+
+                            <input
+                                type="number"
+                                name="price"
+                                min="0"
+                                value="${esc(item?.price || "")}"
+                                required>
+
+                        </label>
+
+                        <label>
+
+                            Thời lượng (phút)
+
+                            <input
+                                type="number"
+                                name="duration"
+                                min="1"
+                                value="${esc(item?.duration || "")}"
+                                required>
+
+                        </label>
+                    `,
+
+                    values => {
+
+                        if (!values.name.trim()) {
+                            notify("Vui lòng nhập tên dịch vụ.");
+                            return false;
+                        }
+
+                        const service = {
+
+                            name: values.name.trim(),
+
+                            price: Number(values.price),
+
+                            duration: Number(values.duration)
+
+                        };
+
+                        if (item) {
+
+                            Object.assign(item, service);
+
+                        } else {
+
+                            data.services.push({
+
+                                serviceId: "SV-" + Date.now(),
+
+                                ...service
+
+                            });
+
+                        }
+
+                        return save();
+
+                    }
+
+                );
+
+            }
+
+            // ===============================
+            // FORM STYLIST
+            // ===============================
+
+            function stylistForm(item) {
+
+                openModal(
+
+                    item
+                        ? "Chỉnh sửa Stylist"
+                        : "Thêm Stylist",
+
+                    `
+                        <label>
+
+                            Họ và tên
+
+                            <input
+                                name="name"
+                                value="${esc(item?.name || "")}"
+                                required>
+
+                        </label>
+
+                        <label>
+
+                            Chuyên môn
+
+                            <input
+                                name="specialty"
+                                value="${esc(item?.specialty || "")}"
+                                required>
+
+                        </label>
+                    `,
+
+                    values => {
+
+                        if (
+                            !values.name.trim() ||
+                            !values.specialty.trim()
+                        ) {
+
+                            notify("Vui lòng nhập đầy đủ thông tin.");
+                            return false;
+                        }
+
+                        if (item) {
+
+                            Object.assign(item, values);
+
+                        } else {
+
+                            data.stylists.push({
+
+                                stylistId: "ST-" + Date.now(),
+
+                                ...values,
+
+                                status: "active"
+
+                            });
+
+                        }
+
+                        return save();
+
+                    }
+
+                );
+
+            }
+
+            // ===============================
+            // XỬ LÝ THAO TÁC
+            // ===============================
+
+            $("content").addEventListener(
+                "click",
+                event => {
+
+                    const btn = event.target.closest(
+                        "button"
+                    );
+
+                    if (!btn) return;
+
+                    if (btn.dataset.go) {
+
+                        go(btn.dataset.go);
+                        return;
+
+                    }
+
+                    const action = btn.dataset.action;
+                    const id = btn.dataset.id;
+
+                    switch (action) {
+
+                        case "editBooking": {
+
+                            const item = data.appointments.find(
+                                x => x.bookingId === id
+                            );
+
+                            if (!item) return;
+
+                            const transitions = {
+                                pending: [
+                                    "pending",
+                                    "confirmed",
+                                    "cancelled"
+                                ],
+                                confirmed: [
+                                    "confirmed",
+                                    "completed",
+                                    "cancelled"
+                                ],
+                                completed: ["completed"],
+                                cancelled: ["cancelled"]
+                            };
+
+                            const allowed =
+                                transitions[item.status] || [];
+
+                            openModal(
+
+                                "Cập nhật lịch hẹn",
+
+                                `
+                                    <label>
+
+                                        Trạng thái
+
+                                        <select name="status">
+
+                                            ${allowed.map(value => `
+
+                                                <option
+                                                    value="${value}"
+                                                    ${item.status === value
+                                                        ? "selected"
+                                                        : ""}>
+
+                                                    ${statuses[value]}
+
+                                                </option>
+
+                                            `).join("")}
+
+                                        </select>
+
+                                    </label>
+                                `,
+
+                                values => {
+
+                                    if (
+                                        !allowed.includes(values.status)
+                                    ) return false;
+
+                                    item.status = values.status;
+
+                                    return save();
+
+                                }
+
+                            );
+
+                            break;
+
+                        }
+
+                        case "addService":
+
+                            serviceForm();
+                            break;
+
+                        case "editService":
+
+                            serviceForm(
+                                data.services.find(
+                                    x => x.serviceId === id
+                                )
+                            );
+
+                            break;
+
+                        case "deleteService":
+
+                            if (confirm("Xóa dịch vụ này?")) {
+
+                                data.services =
+                                    data.services.filter(
+                                        x => x.serviceId !== id
+                                    );
+
+                                save();
+
+                            }
+
+                            break;
+
+                        case "addStylist":
+
+                            stylistForm();
+                            break;
+
+                        case "editStylist":
+
+                            stylistForm(
+                                data.stylists.find(
+                                    x => x.stylistId === id
+                                )
+                            );
+
+                            break;
+
+                        case "toggleStylist": {
+
+                            const item = data.stylists.find(
+                                x => x.stylistId === id
+                            );
+
+                            if (!item) return;
+
+                            item.status =
+                                item.status === "active"
+                                    ? "inactive"
+                                    : "active";
+
+                            save();
+
+                            break;
+
+                        }
+
+                    }
+
+                }
+
+            );
+
+            // ===============================
+            // CHUYỂN TAB
+            // ===============================
+
+            const pages = {
+
+                overview: [
+                    "Tổng quan Salon",
+                    "Theo dõi hoạt động của Salon.",
+                    overview
+                ],
+
+                appointments: [
+                    "Quản lý lịch hẹn",
+                    "Tiếp nhận và cập nhật lịch hẹn khách hàng.",
+                    appointments
+                ],
+
+                services: [
+                    "Quản lý dịch vụ",
+                    "Quản lý danh mục dịch vụ và bảng giá.",
+                    services
+                ],
+
+                stylists: [
+                    "Quản lý Stylist",
+                    "Quản lý đội ngũ chuyên viên của Salon.",
+                    stylists
+                ],
+
+                salon: [
+                    "Thông tin Salon",
+                    "Cập nhật thông tin và giờ hoạt động.",
+                    salon
+                ]
+
+            };
+
+            function render() {
+
+                const page = pages[currentTab];
+
+                $("page-title").textContent = page[0];
+
+                $("page-subtitle").textContent = page[1];
+
+                page[2]();
+
+            }
+
+            function go(tab) {
+
+                if (!Object.hasOwn(pages, tab)) return;
+
+                currentTab = tab;
+
+                document.querySelectorAll("[data-tab]")
+                    .forEach(btn => {
+
+                        btn.classList.toggle(
+                            "active",
+                            btn.dataset.tab === tab
+                        );
+
+                    });
+
+                $("sidebar").classList.remove("open");
+
+                render();
+
+            }
+
+            document.querySelectorAll("[data-tab]")
+                .forEach(btn => {
+
+                    btn.onclick = () => {
+
+                        go(btn.dataset.tab);
+
+                    };
+
+                });
+
+            $("menu-toggle").onclick = () => {
+
+                $("sidebar").classList.toggle("open");
+
+            };
+
+            document.addEventListener("keydown", event => {
+
+                if (event.key === "Escape") {
+
+                    $("sidebar").classList.remove("open");
+
+                }
+
+            });
+
+            // ===============================
+            // ĐĂNG XUẤT
+            // ===============================
+
+            $("logout").onclick = () => {
+
+                if (!confirm("Bạn muốn đăng xuất?")) {
+
+                    return;
+
+                }
+
+                localStorage.removeItem("currentUser");
+
+                sessionStorage.removeItem(
+                    "salonbook_auth_return"
+                );
+
+                window.location.replace("auth.html");
+
+            };
+
+            // ===============================
+            // KHỞI TẠO
+            // ===============================
+
+            render();
+
+            document.body.hidden = false;
+
+        })();
+
+    </script>
+
+</body>
+
+</html>
