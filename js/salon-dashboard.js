@@ -1,9 +1,6 @@
 (function () {
   'use strict';
 
-  // ============================================================
-  //  HẰNG SỐ & KEYS
-  // ============================================================
   const KEYS = {
     user: 'currentUser',
     salon: 'salon_1_profile',
@@ -13,7 +10,7 @@
     recruits: 'salon_1_recruitment',
     seeded: 'salon_1_seeded_v1',
   };
-  const SALON_ID = 1;                        // Bước 2: salonId = 1
+  const SALON_ID = 1;
   const OWNER_EMAIL = 'owner1@salonbook.test';
   const SALON_NAME = 'The Hair Space';
 
@@ -39,9 +36,6 @@
     cancelled: 'Đã hủy',
   };
 
-  // ============================================================
-  //  LOCAL STORAGE HELPERS
-  // ============================================================
   const LS = {
     get(key, fb) {
       try {
@@ -52,11 +46,7 @@
     set(key, val) { localStorage.setItem(key, JSON.stringify(val)); },
   };
 
-  // ============================================================
-  //  SEED DEMO DATA
-  // ============================================================
   function seedDemo() {
-    // Tài khoản chủ salon (Bước 2)
     LS.set(KEYS.user, {
       id: 'owner-1',
       email: OWNER_EMAIL,
@@ -64,7 +54,6 @@
       role: 'salon_owner',
       salonId: SALON_ID,
     });
-
     LS.set(KEYS.salon, {
       id: SALON_ID,
       name: SALON_NAME,
@@ -74,7 +63,6 @@
       openTime: '08:00',
       closeTime: '20:00',
     });
-
     LS.set(KEYS.stylists, [
       {
         id: 'st1', name: 'Minh Anh', avatar: 'MA',
@@ -166,9 +154,6 @@
     if (!LS.get(KEYS.seeded, false)) seedDemo();
   }
 
-  // ============================================================
-  //  STATE
-  // ============================================================
   const state = {
     user: null,
     salon: null,
@@ -180,9 +165,6 @@
     bookingFilter: 'all',
   };
 
-  // ============================================================
-  //  UTILS
-  // ============================================================
   function el(tag, attrs = {}, html) {
     const e = document.createElement(tag);
     Object.entries(attrs).forEach(([k, v]) => {
@@ -211,9 +193,6 @@
     LS.set(KEYS[what], state[what]);
   }
 
-  // ============================================================
-  //  BƯỚC 2 — AUTH GUARD
-  // ============================================================
   function checkAuth() {
     const user = LS.get(KEYS.user, null);
     const guard = document.getElementById('auth-guard');
@@ -240,9 +219,6 @@
     state.selectedStylistId = state.stylists[0]?.id || null;
   }
 
-  // ============================================================
-  //  HEADER
-  // ============================================================
   function renderHeader() {
     document.getElementById('owner-email').textContent = state.user.email;
     document.getElementById('owner-salon').textContent = state.salon.name || '—';
@@ -253,9 +229,6 @@
       });
   }
 
-  // ============================================================
-  //  TAB: TỔNG QUAN
-  // ============================================================
   function renderOverview() {
     const today = todayISO();
     const todayBookings = state.bookings.filter(b => b.date === today);
@@ -304,9 +277,6 @@
     box.appendChild(tbl);
   }
 
-  // ============================================================
-  //  BƯỚC 4a — TAB LỊCH HẸN
-  // ============================================================
   function renderBookings() {
     const list = state.bookings
       .filter(b => state.bookingFilter === 'all' || b.status === state.bookingFilter)
@@ -362,9 +332,6 @@
     renderOverview();
   }
 
-  // ============================================================
-  //  BƯỚC 3 — STYLIST & AVAILABLE HOURS
-  // ============================================================
   function renderStylistList() {
     const box = document.getElementById('stylist-list');
     box.innerHTML = '';
@@ -454,7 +421,6 @@
     });
     box.appendChild(daysBox);
 
-    // Quick shift
     box.querySelectorAll('[data-shift]').forEach(chip => {
       chip.addEventListener('click', () => {
         const day = chip.dataset.day;
@@ -468,7 +434,6 @@
       });
     });
 
-    // Save -> localStorage
     box.querySelector('#save-hours').addEventListener('click', () => {
       save('stylists');
       renderStylistList();
@@ -476,9 +441,6 @@
     });
   }
 
-  // ============================================================
-  //  TAB: DỊCH VỤ & SALON
-  // ============================================================
   function renderSalonForm() {
     const form = document.getElementById('salon-info-form');
     form.innerHTML = '';
@@ -594,9 +556,6 @@
     });
   }
 
-  // ============================================================
-  //  BƯỚC 4b — TAB TUYỂN MẪU TÓC
-  // ============================================================
   function renderRecruits() {
     const box = document.getElementById('recruits-list');
     box.innerHTML = '';
@@ -686,9 +645,6 @@
     });
   }
 
-  // ============================================================
-  //  MODAL / TOAST UTILS
-  // ============================================================
   function mountModal(inner) {
     const root = document.getElementById('modal-root');
     root.innerHTML = '';
@@ -709,9 +665,6 @@
     setTimeout(() => t.remove(), 2200);
   }
 
-  // ============================================================
-  //  TAB SWITCHING
-  // ============================================================
   const TAB_META = {
     overview: { title: 'Tổng quan',                  subtitle: 'Xin chào, đây là hoạt động của salon hôm nay.' },
     bookings: { title: 'Lịch hẹn',                   subtitle: 'Xác nhận, hoàn thành hoặc hủy lịch hẹn của khách.' },
@@ -730,9 +683,6 @@
     }
   }
 
-  // ============================================================
-  //  THÊM STYLIST
-  // ============================================================
   function openAddStylistModal() {
     const modal = el('div', { class: 'modal' }, `
       <h3>Thêm stylist mới</h3>
@@ -762,9 +712,6 @@
     });
   }
 
-  // ============================================================
-  //  INIT
-  // ============================================================
   function init() {
     if (!checkAuth()) {
       const btn = document.getElementById('seed-demo-btn');
@@ -793,23 +740,19 @@
     renderServices();
     renderRecruits();
 
-    // Tab nav
     document.querySelectorAll('.nav-item').forEach(btn => {
       btn.addEventListener('click', () => switchTab(btn.dataset.tab));
     });
 
-    // Filter
     document.getElementById('booking-status-filter').addEventListener('change', (e) => {
       state.bookingFilter = e.target.value;
       renderBookings();
     });
 
-    // Add buttons
     document.getElementById('add-service-btn').addEventListener('click', () => openServiceModal(null));
     document.getElementById('add-recruit-btn').addEventListener('click', openRecruitModal);
     document.getElementById('add-stylist-btn').addEventListener('click', openAddStylistModal);
 
-    // Logout
     document.getElementById('logout-btn').addEventListener('click', () => {
       if (!confirm('Đăng xuất khỏi bảng điều khiển?')) return;
       localStorage.removeItem(KEYS.user);
