@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salon Owner Dashboard – SalonBook</title>
+  <link rel="stylesheet" href="salon-dashboard.css" />
+</head>
+<body>
+  <!-- ============ AUTH GUARD (Bước 2) ============ -->
+  <div id="auth-guard" class="auth-guard hidden">
+    <div class="auth-card">
+      <div class="auth-icon">🔒</div>
+      <h1>Yêu cầu quyền chủ salon</h1>
+      <p>Trang này chỉ dành cho tài khoản có <code>role === "salon_owner"</code>.</p>
+      <p>Đăng nhập bằng tài khoản chủ salon để truy cập bảng điều khiển.</p>
+      <div class="auth-actions">
+        <button id="seed-demo-btn" class="btn btn-primary">
+          Tạo tài khoản demo (owner1@salonbook.test)
+        </button>
+        <a href="auth.html" class="btn btn-ghost">Đến trang đăng nhập</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DASHBOARD (Bước 1) ============ -->
+  <div id="dashboard" class="dashboard hidden">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-logo">SB</div>
+        <div>
+          <div class="brand-name">SalonBook</div>
+          <div class="brand-sub">Owner Center</div>
+        </div>
+      </div>
+
+      <nav class="nav" id="nav-tabs">
+        <button class="nav-item active" data-tab="overview"><span class="nav-icon">📊</span> Tổng quan</button>
+        <button class="nav-item" data-tab="bookings"><span class="nav-icon">📅</span> Lịch hẹn</button>
+        <button class="nav-item" data-tab="stylists"><span class="nav-icon">✂️</span> Stylist &amp; Khung giờ</button>
+        <button class="nav-item" data-tab="services"><span class="nav-icon">💇</span> Dịch vụ &amp; Salon</button>
+        <button class="nav-item" data-tab="recruits"><span class="nav-icon">🎯</span> Tuyển mẫu tóc</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="owner-info">
+          <div class="owner-avatar" id="owner-avatar">?</div>
+          <div class="owner-meta">
+            <div class="owner-name" id="owner-email">—</div>
+            <div class="owner-salon" id="owner-salon">—</div>
+          </div>
+        </div>
+        <button id="logout-btn" class="btn btn-ghost btn-block">Đăng xuất</button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1 class="page-title" id="page-title">Tổng quan</h1>
+          <p class="page-subtitle" id="page-subtitle">Xin chào, đây là hoạt động của salon hôm nay.</p>
+        </div>
+        <div class="topbar-right">
+          <div class="date-pill" id="today-pill">—</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <!-- Tab: Tổng quan -->
+        <section class="tab-panel active" data-panel="overview">
+          <div class="stats-grid" id="stats-grid"></div>
+          <div class="card">
+            <div class="card-head"><h2>Lịch hẹn hôm nay</h2></div>
+            <div id="today-bookings"></div>
+          </div>
+        </section>
+
+        <!-- Tab: Lịch hẹn -->
+        <section class="tab-panel" data-panel="bookings">
+          <div class="card">
+            <div class="card-head">
+              <h2>Danh sách lịch hẹn</h2>
+              <div class="filter-group">
+                <select id="booking-status-filter">
+                  <option value="all">Tất cả trạng thái</option>
+                  <option value="pending">Chờ xác nhận</option>
+                  <option value="confirmed">Đã xác nhận</option>
+                  <option value="completed">Hoàn thành</option>
+                  <option value="cancelled">Đã hủy</option>
+                </select>
+              </div>
+            </div>
+            <div id="bookings-table"></div>
+          </div>
+        </section>
+
+        <!-- Tab: Stylist & Khung giờ -->
+        <section class="tab-panel" data-panel="stylists">
+          <div class="stylists-layout">
+            <div class="card">
+              <div class="card-head">
+                <h2>Stylist</h2>
+                <button class="btn btn-primary btn-sm" id="add-stylist-btn">+ Thêm</button>
+              </div>
+              <div id="stylist-list" class="stylist-list"></div>
+            </div>
+            <div class="card">
+              <div id="stylist-editor"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tab: Dịch vụ & Salon -->
+        <section class="tab-panel" data-panel="services">
+          <div class="two-col">
+            <div class="card">
+              <div class="card-head"><h2>Thông tin Salon</h2></div>
+              <form id="salon-info-form" class="form"></form>
+            </div>
+            <div class="card">
+              <div class="card-head">
+                <h2>Dịch vụ</h2>
+                <button class="btn btn-primary btn-sm" id="add-service-btn">+ Thêm dịch vụ</button>
+              </div>
+              <div id="services-table"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tab: Tuyển mẫu tóc -->
+        <section class="tab-panel" data-panel="recruits">
+          <div class="card">
+            <div class="card-head">
+              <h2>Bài tuyển mẫu tóc</h2>
+              <button class="btn btn-primary btn-sm" id="add-recruit-btn">+ Đăng bài</button>
+            </div>
+            <div id="recruits-list"></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal-root" class="modal-root hidden"></div>
+
+  <script src="salon-dashboard.js"></script>
+</body>
+</html>
