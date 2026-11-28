@@ -1,0 +1,38 @@
+/* Bổ sung giao diện cho các thao tác lọc, CRUD và quản lý đơn ứng tuyển. */
+.bookings-card-head { align-items: flex-start; }
+.filter-group { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.filter-group label { color: var(--muted); font-size: 12px; font-weight: 600; }
+.filter-group input[type="date"] { width: 155px; }
+.filter-group select { width: 180px; }
+.section-note { color: var(--muted); font-size: 13px; margin-top: 5px; }
+.stylist-item { cursor: default; justify-content: space-between; }
+.stylist-select { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; cursor: pointer; }
+.stylist-item-actions { display: flex; gap: 5px; flex-wrap: wrap; }
+.stylist-editor-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.recruit-actions, .application-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.recruit-application-table { width: 100%; margin-top: 10px; }
+.recruit-application-table th, .recruit-application-table td { padding: 9px 7px; font-size: 13px; }
+.badge-approved { background: var(--success-soft); color: #047857; }
+.badge-rejected { background: var(--danger-soft); color: #b91c1c; }
+.badge-open { background: var(--success-soft); color: #047857; }
+.badge-closed { background: var(--warning-soft); color: #92400e; }
+.modal { width: min(560px, calc(100vw - 32px)); max-height: calc(100vh - 40px); overflow: auto; }
+.modal textarea { resize: vertical; }
+.modal .form-field small { display: block; margin-top: 5px; color: var(--muted); }
+.toast-root { position: fixed; right: 20px; bottom: 20px; z-index: 500; display: grid; gap: 8px; }
+.toast-message { background: #172554; color: white; border-radius: 10px; padding: 12px 16px; box-shadow: 0 8px 24px rgba(0,0,0,.16); font-size: 13px; }
+.empty { color: var(--muted); padding: 18px 8px; text-align: center; }
+@media (max-width: 900px) {
+  .filter-group { width: 100%; }
+  .filter-group input[type="date"], .filter-group select { flex: 1 1 160px; }
+  .two-col, .stylists-layout { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .content { padding: 16px; }
+  .topbar { padding: 18px 16px; }
+  .filter-group label { flex-basis: 100%; }
+  .recruit-head { flex-direction: column; }
+  .stylist-item { align-items: flex-start; }
+}
+.table-wrap { width: 100%; overflow-x: auto; }
+.table-wrap table { min-width: 720px; }

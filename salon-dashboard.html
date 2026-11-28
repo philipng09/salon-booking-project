@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Salon Owner Dashboard – SalonBook</title>
-  <link rel="stylesheet" href="css/salon-dashboard.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Salon Owner Dashboard | SalonBook</title>
+  <link rel="stylesheet" href="css/salon-dashboard.css">
+  <link rel="stylesheet" href="css/salon-dashboard-enhancements.css">
 </head>
 <body>
   <div id="auth-guard" class="auth-guard hidden">
     <div class="auth-card">
       <div class="auth-icon">🔒</div>
       <h1>Yêu cầu quyền chủ salon</h1>
-      <p>Trang này chỉ dành cho tài khoản có <code>role === "salon_owner"</code>.</p>
-      <p>Đăng nhập bằng tài khoản chủ salon để truy cập bảng điều khiển.</p>
+      <p>Trang này chỉ dành cho tài khoản chủ salon của The Hair Space.</p>
+      <p>Đăng nhập bằng <strong>owner1@salonbook.test</strong> với vai trò <strong>Chủ Salon</strong>.</p>
       <div class="auth-actions">
-        <button id="seed-demo-btn" class="btn btn-primary">
-          Tạo tài khoản demo (owner1@salonbook.test)
-        </button>
-        <a href="auth.html" class="btn btn-ghost">Đến trang đăng nhập</a>
+        <a href="auth.html" class="btn btn-primary">Đến trang đăng nhập</a>
+        <a href="index.html" class="btn btn-ghost">Về trang chủ</a>
       </div>
     </div>
   </div>
@@ -32,7 +31,7 @@
         </div>
       </div>
 
-      <nav class="nav" id="nav-tabs">
+      <nav class="nav" id="nav-tabs" aria-label="Các khu vực quản lý">
         <button class="nav-item active" data-tab="overview"><span class="nav-icon">📊</span> Tổng quan</button>
         <button class="nav-item" data-tab="bookings"><span class="nav-icon">📅</span> Lịch hẹn</button>
         <button class="nav-item" data-tab="stylists"><span class="nav-icon">✂️</span> Stylist &amp; Khung giờ</button>
@@ -42,13 +41,13 @@
 
       <div class="sidebar-footer">
         <div class="owner-info">
-          <div class="owner-avatar" id="owner-avatar">?</div>
+          <div class="owner-avatar" id="owner-avatar">TH</div>
           <div class="owner-meta">
             <div class="owner-name" id="owner-email">—</div>
-            <div class="owner-salon" id="owner-salon">—</div>
+            <div class="owner-salon" id="owner-salon">The Hair Space</div>
           </div>
         </div>
-        <button id="logout-btn" class="btn btn-ghost btn-block">Đăng xuất</button>
+        <button id="logout-btn" class="btn btn-ghost btn-block" type="button">Đăng xuất</button>
       </div>
     </aside>
 
@@ -56,27 +55,28 @@
       <header class="topbar">
         <div>
           <h1 class="page-title" id="page-title">Tổng quan</h1>
-          <p class="page-subtitle" id="page-subtitle">Xin chào, đây là hoạt động của salon hôm nay.</p>
+          <p class="page-subtitle" id="page-subtitle">Theo dõi hoạt động của The Hair Space.</p>
         </div>
-        <div class="topbar-right">
-          <div class="date-pill" id="today-pill">—</div>
-        </div>
+        <div class="topbar-right"><div class="date-pill" id="today-pill">—</div></div>
       </header>
 
       <div class="content">
         <section class="tab-panel active" data-panel="overview">
           <div class="stats-grid" id="stats-grid"></div>
           <div class="card">
-            <div class="card-head"><h2>Lịch hẹn hôm nay</h2></div>
+            <div class="card-head"><h2>Lịch hẹn sắp tới</h2></div>
             <div id="today-bookings"></div>
           </div>
         </section>
 
         <section class="tab-panel" data-panel="bookings">
           <div class="card">
-            <div class="card-head">
+            <div class="card-head bookings-card-head">
               <h2>Danh sách lịch hẹn</h2>
               <div class="filter-group">
+                <label for="booking-date-filter">Ngày</label>
+                <input type="date" id="booking-date-filter">
+                <label for="booking-status-filter">Trạng thái</label>
                 <select id="booking-status-filter">
                   <option value="all">Tất cả trạng thái</option>
                   <option value="pending">Chờ xác nhận</option>
@@ -84,6 +84,7 @@
                   <option value="completed">Hoàn thành</option>
                   <option value="cancelled">Đã hủy</option>
                 </select>
+                <button class="btn btn-ghost btn-sm" id="clear-booking-filters" type="button">Xóa lọc</button>
               </div>
             </div>
             <div id="bookings-table"></div>
@@ -94,14 +95,12 @@
           <div class="stylists-layout">
             <div class="card">
               <div class="card-head">
-                <h2>Stylist</h2>
-                <button class="btn btn-primary btn-sm" id="add-stylist-btn">+ Thêm</button>
+                <h2>Danh sách Stylist</h2>
+                <button class="btn btn-primary btn-sm" id="add-stylist-btn" type="button">+ Thêm</button>
               </div>
               <div id="stylist-list" class="stylist-list"></div>
             </div>
-            <div class="card">
-              <div id="stylist-editor"></div>
-            </div>
+            <div class="card"><div id="stylist-editor"></div></div>
           </div>
         </section>
 
@@ -114,7 +113,7 @@
             <div class="card">
               <div class="card-head">
                 <h2>Dịch vụ</h2>
-                <button class="btn btn-primary btn-sm" id="add-service-btn">+ Thêm dịch vụ</button>
+                <button class="btn btn-primary btn-sm" id="add-service-btn" type="button">+ Thêm dịch vụ</button>
               </div>
               <div id="services-table"></div>
             </div>
@@ -124,8 +123,8 @@
         <section class="tab-panel" data-panel="recruits">
           <div class="card">
             <div class="card-head">
-              <h2>Bài tuyển mẫu tóc</h2>
-              <button class="btn btn-primary btn-sm" id="add-recruit-btn">+ Đăng bài</button>
+              <div><h2>Tin tuyển mẫu tóc</h2><p class="section-note">Quản lý tin tuyển và xử lý đơn ứng tuyển cho The Hair Space.</p></div>
+              <button class="btn btn-primary btn-sm" id="add-recruit-btn" type="button">+ Đăng tin</button>
             </div>
             <div id="recruits-list"></div>
           </div>
@@ -135,7 +134,12 @@
   </div>
 
   <div id="modal-root" class="modal-root hidden"></div>
+  <div id="toast-root" class="toast-root" aria-live="polite"></div>
 
+  <!-- Nạp dữ liệu gốc trước, sau đó áp dụng các thay đổi do chủ salon lưu -->
+  <script src="js/products.js"></script>
+  <script src="js/hairmodels.js"></script>
+  <script src="js/salon-data-bridge.js"></script>
   <script src="js/salon-dashboard.js"></script>
 </body>
 </html>
